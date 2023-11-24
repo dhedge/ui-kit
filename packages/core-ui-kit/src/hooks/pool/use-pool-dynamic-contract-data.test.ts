@@ -1,0 +1,245 @@
+import { PoolLogicAbi } from 'abi'
+import { optimism } from 'const'
+import { formatDuration, intervalToDuration } from 'date-fns'
+import * as web3Hooks from 'hooks/web3'
+import { renderHook } from 'test-utils'
+import { TEST_ADDRESS } from 'tests/mocks'
+
+import {
+  getDataFromSummary,
+  usePoolDynamicContractData,
+} from './use-pool-dynamic-contract-data'
+
+vi.mock('hooks/web3', () => ({
+  useAccount: vi.fn(),
+  useContractReads: vi.fn(),
+  useContractReadsErrorLogging: vi.fn(),
+}))
+
+describe('getDataFromSummary', () => {
+  it('should parse summary data', () => {
+    const summary = {
+      creationTime: BigInt(0),
+      exitFeeDenominator: BigInt(0),
+      exitFeeNumerator: BigInt(0),
+      manager: TEST_ADDRESS,
+      managerFeeDenominator: BigInt(0),
+      managerFeeNumerator: BigInt(0),
+      managerName: 'managerName',
+      name: 'name',
+      performanceFeeNumerator: BigInt(0),
+      privatePool: true,
+      totalFundValue: BigInt(0),
+      totalSupply: BigInt(0),
+      entryFeeNumerator: BigInt(0),
+    }
+    expect(getDataFromSummary(summary)).toEqual({
+      isPrivate: summary.privatePool,
+      performanceFee: summary.performanceFeeNumerator.toString(),
+      streamingFee: summary.managerFeeNumerator.toString(),
+      totalSupply: summary.totalSupply.toString(),
+      totalValue: summary.totalFundValue.toString(),
+      entryFee: summary.entryFeeNumerator.toString(),
+    })
+  })
+})
+
+describe('usePoolDynamicContractData', () => {
+  it('should call getExitRemainingCooldown and getFundSummary methods on PoolLogicAbi', () => {
+    const summary = {
+      creationTime: BigInt(0),
+      exitFeeDenominator: BigInt(0),
+      exitFeeNumerator: BigInt(0),
+      manager: TEST_ADDRESS,
+      managerFeeDenominator: BigInt(0),
+      managerFeeNumerator: BigInt(0),
+      managerName: 'managerName',
+      name: 'name',
+      performanceFeeNumerator: BigInt(0),
+      privatePool: true,
+      totalFundValue: BigInt(0),
+      totalSupply: BigInt(0),
+      entryFeeNumerator: BigInt(0),
+    }
+    const exitCooldown = BigInt(1)
+    const chainId = optimism.id
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+      () =>
+        ({
+          data: [{ result: exitCooldown }, { result: summary }],
+          isFetched: true,
+        }) as ReturnType<typeof web3Hooks.useContractReads>,
+    )
+
+    renderHook(() =>
+      usePoolDynamicContractData({
+        address: TEST_ADDRESS,
+        chainId,
+      }),
+    )
+
+    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledWith(
+      expect.objectContaining({
+        contracts: expect.arrayContaining([
+          expect.objectContaining({
+            abi: PoolLogicAbi,
+            functionName: 'getExitRemainingCooldown',
+          }),
+          expect.objectContaining({
+            abi: PoolLogicAbi,
+            functionName: 'getFundSummary',
+          }),
+        ]),
+      }),
+    )
+  })
+
+  it('should resolve positive cooldown data', () => {
+    const summary = {
+      creationTime: BigInt(0),
+      exitFeeDenominator: BigInt(0),
+      exitFeeNumerator: BigInt(0),
+      manager: TEST_ADDRESS,
+      managerFeeDenominator: BigInt(0),
+      managerFeeNumerator: BigInt(0),
+      managerName: 'managerName',
+      name: 'name',
+      performanceFeeNumerator: BigInt(0),
+      privatePool: true,
+      totalFundValue: BigInt(0),
+      totalSupply: BigInt(0),
+      entryFeeNumerator: BigInt(0),
+    }
+    const exitCooldown = BigInt(1)
+    const chainId = optimism.id
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+      () =>
+        ({
+          data: [{ result: exitCooldown }, { result: summary }],
+          isFetched: true,
+        }) as ReturnType<typeof web3Hooks.useContractReads>,
+    )
+
+    const { result } = renderHook(() =>
+      usePoolDynamicContractData({
+        address: TEST_ADDRESS,
+        chainId,
+      }),
+    )
+
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        cooldownActive: true,
+        cooldownEndsInTime: formatDuration(
+          intervalToDuration({ start: 0, end: Number(exitCooldown) * 1000 }),
+        ),
+      }),
+    )
+  })
+
+  it('should resolve zero cooldown data', () => {
+    const summary = {
+      creationTime: BigInt(0),
+      exitFeeDenominator: BigInt(0),
+      exitFeeNumerator: BigInt(0),
+      manager: TEST_ADDRESS,
+      managerFeeDenominator: BigInt(0),
+      managerFeeNumerator: BigInt(0),
+      managerName: 'managerName',
+      name: 'name',
+      performanceFeeNumerator: BigInt(0),
+      privatePool: true,
+      totalFundValue: BigInt(0),
+      totalSupply: BigInt(0),
+      entryFeeNumerator: BigInt(0),
+    }
+    const exitCooldown = undefined
+    const chainId = optimism.id
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+      () =>
+        ({
+          data: [{ result: exitCooldown }, { result: summary }],
+          isFetched: true,
+        }) as ReturnType<typeof web3Hooks.useContractReads>,
+    )
+
+    const { result } = renderHook(() =>
+      usePoolDynamicContractData({
+        address: TEST_ADDRESS,
+        chainId,
+      }),
+    )
+
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        cooldownActive: false,
+        cooldownEndsInTime: formatDuration(
+          intervalToDuration({ start: 0, end: 0 }),
+        ),
+      }),
+    )
+  })
+
+  it('should return parsed fund summary data', () => {
+    const summary = {
+      creationTime: BigInt(0),
+      exitFeeDenominator: BigInt(0),
+      exitFeeNumerator: BigInt(0),
+      manager: TEST_ADDRESS,
+      managerFeeDenominator: BigInt(0),
+      managerFeeNumerator: BigInt(0),
+      managerName: 'managerName',
+      name: 'name',
+      performanceFeeNumerator: BigInt(0),
+      privatePool: true,
+      totalFundValue: BigInt(0),
+      totalSupply: BigInt(0),
+      entryFeeNumerator: BigInt(0),
+    }
+    const exitCooldown = undefined
+    const chainId = optimism.id
+    const isFetched = true
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+      () =>
+        ({
+          data: [{ result: exitCooldown }, { result: summary }],
+          isFetched,
+        }) as ReturnType<typeof web3Hooks.useContractReads>,
+    )
+
+    const { result } = renderHook(() =>
+      usePoolDynamicContractData({
+        address: TEST_ADDRESS,
+        chainId,
+      }),
+    )
+
+    expect(result.current).toEqual(
+      expect.objectContaining({
+        ...getDataFromSummary(summary),
+        isFetched,
+      }),
+    )
+  })
+})
