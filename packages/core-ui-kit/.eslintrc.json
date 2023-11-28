@@ -4,9 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "import/no-unresolved": "off" // TODO: configure parser to chack imports
-      },
+      "rules": {},
       "parserOptions": {
         "project": ["packages/core-ui-kit/tsconfig.json"]
       }
