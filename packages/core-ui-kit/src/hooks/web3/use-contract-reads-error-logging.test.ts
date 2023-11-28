@@ -1,5 +1,6 @@
-import { renderHook } from 'test-utils'
 import { vi } from 'vitest'
+
+import { renderHook } from 'test-utils'
 
 import { useContractReadsErrorLogging } from './use-contract-reads-error-logging'
 

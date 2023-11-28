@@ -1,6 +1,7 @@
+import { useCallback } from 'react'
+
 import { DEFAULT_DEPOSIT_LOCKTIME_MAP, DEFAULT_DEPOSIT_METHOD } from 'const'
 import { useTradingPanelPoolConfig } from 'hooks/state'
-import { useCallback } from 'react'
 import type {
   TradingPanelActionsState,
   TradingPanelState,

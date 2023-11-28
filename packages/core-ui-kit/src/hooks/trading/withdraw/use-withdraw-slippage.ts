@@ -1,4 +1,7 @@
 import type BigNumber from 'bignumber.js'
+import debounce from 'lodash.debounce'
+import noop from 'lodash.noop'
+import { useEffect, useRef } from 'react'
 
 import { usePoolDynamicContractData } from 'hooks/pool'
 import {
@@ -10,9 +13,6 @@ import {
 } from 'hooks/state'
 import { useIsInsufficientBalance } from 'hooks/user'
 import { useBlockNumber } from 'hooks/web3'
-import debounce from 'lodash.debounce'
-import noop from 'lodash.noop'
-import { useEffect, useRef } from 'react'
 import type { SendEstimationResult } from 'types/web3.types'
 
 interface WithdrawSlippageParams {

@@ -1,5 +1,9 @@
+import chunk from 'lodash.chunk'
+
+import { useMemo } from 'react'
+
 import { PoolManagerLogicAbi, erc20ABI } from 'abi'
-import { DEFAULT_PRECISION } from 'const'
+import { BRIDGED_TOKENS_SYMBOLS, DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress } from 'hooks/pool'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import {
@@ -7,8 +11,6 @@ import {
   useContractReads,
   useContractReadsErrorLogging,
 } from 'hooks/web3'
-import chunk from 'lodash.chunk'
-import { useMemo } from 'react'
 import type { PoolComposition } from 'types/pool.types'
 import type { Address, PoolContractCallParams } from 'types/web3.types'
 import { shortenAddress } from 'utils'
@@ -94,6 +96,7 @@ export const useContractPoolComposition = ({
         rate: assetsRates?.[i]?.toString() ?? '0',
         amount: assetsBalances?.[i]?.toString() ?? '0',
         tokenName:
+          BRIDGED_TOKENS_SYMBOLS[tokenAddress.toLowerCase()] ??
           symbol?.result?.toString() ??
           fallbackAssetMap?.[tokenAddress]?.tokenName ??
           shortenAddress(tokenAddress),

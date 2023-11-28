@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
 import BigNumber from 'bignumber.js'
 
-import { AddressZero, USDC_OPTIMISM, optimism } from 'const'
+import { AddressZero, BRIDGED_USDC_OPTIMISM, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
 
 import { useTradingSettleHandler } from 'hooks/trading'
@@ -71,7 +71,7 @@ describe('useDeposit', () => {
 
   it('should process deposits with auto slippage and not native token', async () => {
     const depositMethod = 'deposit'
-    const sendToken = { ...USDC_OPTIMISM, value: '5', isLoading: false }
+    const sendToken = { ...BRIDGED_USDC_OPTIMISM, value: '5', isLoading: false }
     const receiveToken = {
       symbol: 'USDy',
       address: '0x123',
@@ -153,7 +153,7 @@ describe('useDeposit', () => {
     } as unknown as DynamicTradingToken
     const slippage = 0.15
     const tradingParams = {
-      poolDepositAddress: USDC_OPTIMISM.address,
+      poolDepositAddress: BRIDGED_USDC_OPTIMISM.address,
       receiveAssetAddress: receiveToken.address,
       sendAssetAddress: sendToken.address,
       receiveAssetInputValue: receiveToken.value,

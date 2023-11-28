@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
+
 import { usePoolTokenPrice } from 'hooks/pool'
 import { useReceiveTokenInput, useSendTokenInput } from 'hooks/state'
-import { useEffect } from 'react'
 import type { PoolConfig } from 'types/config.types'
 
 import { useAssetPrice } from '../use-asset-price'

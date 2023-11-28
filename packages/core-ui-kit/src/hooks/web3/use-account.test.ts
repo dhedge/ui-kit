@@ -1,6 +1,7 @@
+import * as w from 'wagmi'
+
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
-import * as w from 'wagmi'
 
 import { useAccount } from './use-account'
 

@@ -1,6 +1,7 @@
+import { useMemo } from 'react'
+
 import { DEFAULT_DEPOSIT_METHOD, EMPTY_POOL_CONFIG } from 'const'
 import { useUpdatePoolFallbackData } from 'hooks/state'
-import { useMemo } from 'react'
 import type { PoolConfig } from 'types/config.types'
 import type {
   TradingPanelActionsState,

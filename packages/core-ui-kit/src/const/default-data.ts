@@ -1,9 +1,9 @@
 import { formatDuration } from 'date-fns'
+import { optimism } from 'wagmi/chains'
 
 import type { PoolConfig } from 'types/config.types'
 import type { DepositMethodName } from 'types/trading-panel.types'
 import type { PoolDepositMethodName } from 'types/trading.types'
-import { optimism } from 'wagmi/chains'
 
 import { AddressZero } from './web3'
 

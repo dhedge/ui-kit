@@ -1,7 +1,8 @@
+import { useMemo } from 'react'
+
 import { MANAGER_FEE_DENOMINATOR } from 'const'
 import { usePoolDynamicContractData } from 'hooks/pool'
 import { useTradingPanelEntryFee } from 'hooks/state'
-import { useMemo } from 'react'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatNumeratorToPercentage } from 'utils'
 

@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
+import isNumber from 'lodash.isnumber'
 
 import { DEFAULT_PRECISION } from 'const'
 import * as stateHooks from 'hooks/state'
-import isNumber from 'lodash.isnumber'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 import type { TradingToken } from 'types'

@@ -1,3 +1,7 @@
+import uniqBy from 'lodash.uniqby'
+
+import { useMemo } from 'react'
+
 import { erc20ABI } from 'abi'
 import { AddressZero, CHAIN_NATIVE_TOKENS, DEFAULT_PRECISION } from 'const'
 import { usePoolComposition } from 'hooks/pool'
@@ -8,8 +12,6 @@ import {
   useContractReads,
   useContractReadsErrorLogging,
 } from 'hooks/web3'
-import uniqBy from 'lodash.uniqby'
-import { useMemo } from 'react'
 import type { TradingToken } from 'types/trading-panel.types'
 import type { Address } from 'types/web3.types'
 import { normalizeNumber } from 'utils'

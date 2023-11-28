@@ -1,5 +1,6 @@
-import { TradingPanelActionsContext, TradingPanelStateContext } from 'providers'
 import { useContext } from 'react'
+
+import { TradingPanelActionsContext, TradingPanelStateContext } from 'providers'
 
 export const useTradingPanelState = () => useContext(TradingPanelStateContext)
 

@@ -2,7 +2,7 @@ import { act } from '@testing-library/react'
 
 import {
   AddressZero,
-  USDC_OPTIMISM,
+  BRIDGED_USDC_OPTIMISM,
   contractsAddressesMap,
   optimism,
 } from 'const'
@@ -45,7 +45,7 @@ describe('useDepositAllowance', () => {
   })
 
   it('should return approve fn and check send token allowance when token is not native', () => {
-    const sendToken = { ...USDC_OPTIMISM, value: '1', isLoading: false }
+    const sendToken = { ...BRIDGED_USDC_OPTIMISM, value: '1', isLoading: false }
     const canSpend = true
     const updateApprovingStatusMock = vi.fn()
     const approveMock = vi.fn()

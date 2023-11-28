@@ -1,8 +1,9 @@
+import type { Chain } from 'wagmi/chains'
+import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains'
+
 import type { ContractId } from 'const'
 import { AddressZero, contractsAbisMap, contractsAddressesMap } from 'const'
 import type { Address, ChainId } from 'types/web3.types'
-import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains'
-import type { Chain } from 'wagmi/chains'
 
 export { formatUnits, formatEther, encodeFunctionData } from 'viem'
 export { getContract } from 'wagmi/actions'
@@ -41,3 +42,6 @@ export const getChainData = (chainId: number): Chain | undefined => {
 
 export const commify = (value: string) =>
   value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+export const isEqualAddress = (a: string | undefined, b: string | undefined) =>
+  a?.toLowerCase() === b?.toLowerCase()

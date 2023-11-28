@@ -1,8 +1,8 @@
 import { PoolLogicAbi } from 'abi'
 import { AddressZero, optimism } from 'const'
 import * as web3Hooks from 'hooks/web3'
+import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
-import { renderHook } from 'tests/test-utils'
 
 import { useCheckWhitelist } from './use-check-whitelist'
 

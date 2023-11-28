@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import {
   useIsDepositTradingPanelType,
   useSendTokenInput,
@@ -5,7 +7,6 @@ import {
 } from 'hooks/state'
 import { useTradingPriceDiff } from 'hooks/trading'
 import { useDebounce } from 'hooks/utils'
-import { useEffect } from 'react'
 
 export const useDepositSlippage = (receiveAssetInputValue: string) => {
   const isDeposit = useIsDepositTradingPanelType()

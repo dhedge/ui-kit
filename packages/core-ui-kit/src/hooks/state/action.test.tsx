@@ -1,6 +1,11 @@
 import { vi } from 'vitest'
 
-import { AddressZero, DEFAULT_PRECISION, USDC_OPTIMISM, polygon } from 'const'
+import {
+  AddressZero,
+  BRIDGED_USDC_OPTIMISM,
+  DEFAULT_PRECISION,
+  polygon,
+} from 'const'
 import { useTradingPanelState } from 'hooks/state/context'
 import { EstimationError } from 'models'
 import { TestProviders, act, renderHook } from 'test-utils'
@@ -90,7 +95,7 @@ describe('useUpdateReceiveTokenInput', () => {
     expect(result.current.state.input.receiveToken.address).toBe(TEST_ADDRESS)
 
     const testTradingToken: TradingToken = {
-      ...USDC_OPTIMISM,
+      ...BRIDGED_USDC_OPTIMISM,
       value: '100',
     }
 

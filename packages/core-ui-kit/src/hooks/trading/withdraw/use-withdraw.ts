@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from 'react'
+
 import {
   DEFAULT_PRECISION,
   DEFAULT_WITHDRAW_METHOD,
@@ -13,7 +15,6 @@ import {
 import { useTradingSettleHandler } from 'hooks/trading'
 import { useContractFunction } from 'hooks/web3'
 import { DefaultSellingParams } from 'models'
-import { useCallback, useMemo } from 'react'
 
 import type { TradingParams } from 'types/trading.types'
 import type { ContractActionFunc, SendEstimationResult } from 'types/web3.types'

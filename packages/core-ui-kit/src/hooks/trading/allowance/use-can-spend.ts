@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { useTokenAllowance } from 'hooks/web3'
 import { useMemo } from 'react'
 
+import { useTokenAllowance } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 
 interface UseCanSpendParams {

@@ -1,6 +1,7 @@
+import { formatDuration, intervalToDuration } from 'date-fns'
+
 import { PoolLogicAbi } from 'abi'
 import { optimism } from 'const'
-import { formatDuration, intervalToDuration } from 'date-fns'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'

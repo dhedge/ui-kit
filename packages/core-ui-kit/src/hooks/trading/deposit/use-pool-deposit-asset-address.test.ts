@@ -1,7 +1,7 @@
 import {
+  BRIDGED_USDC_OPTIMISM,
+  BRIDGED_USDC_POLYGON,
   PAXG_POLYGON,
-  USDC_OPTIMISM,
-  USDC_POLYGON,
   WBTC_OPTIMISM,
   WBTC_POLYGON,
   WMATIC_POLYGON,
@@ -81,8 +81,8 @@ describe('usePoolDepositAssetAddress', () => {
 
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       {
-        tokenAddress: USDC_OPTIMISM.address,
-        tokenName: USDC_OPTIMISM.symbol,
+        tokenAddress: BRIDGED_USDC_OPTIMISM.address,
+        tokenName: BRIDGED_USDC_OPTIMISM.symbol,
         isDeposit: true,
       } as unknown as PoolComposition,
       {
@@ -100,7 +100,7 @@ describe('usePoolDepositAssetAddress', () => {
         symbol,
       }),
     )
-    expect(result.current).toEqual(USDC_OPTIMISM.address)
+    expect(result.current).toEqual(BRIDGED_USDC_OPTIMISM.address)
   })
 
   it('should return the fallback asset address if initialInvestToken exists, isCustomTokenDeposit is true, and fallback asset symbol is found (should prefer wrapped native token) #2', () => {
@@ -111,8 +111,8 @@ describe('usePoolDepositAssetAddress', () => {
 
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       {
-        tokenAddress: USDC_POLYGON.address,
-        tokenName: USDC_POLYGON.symbol,
+        tokenAddress: BRIDGED_USDC_POLYGON.address,
+        tokenName: BRIDGED_USDC_POLYGON.symbol,
         isDeposit: false,
       } as unknown as PoolComposition,
       {
@@ -139,8 +139,8 @@ describe('usePoolDepositAssetAddress', () => {
   })
 
   it('should return the initialInvestToken address if initialInvestToken exists, isCustomTokenDeposit is true, and fallback asset symbol is not found', () => {
-    const investAssetAddress = USDC_POLYGON.address
-    const symbol = USDC_POLYGON.symbol
+    const investAssetAddress = BRIDGED_USDC_POLYGON.address
+    const symbol = BRIDGED_USDC_POLYGON.symbol
     const productPoolAddress = TEST_ADDRESS
     const chainId = polygon.id
 

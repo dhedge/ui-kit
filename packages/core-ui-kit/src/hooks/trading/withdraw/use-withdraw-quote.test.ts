@@ -1,3 +1,4 @@
+import { DEFAULT_PRECISION, optimism } from 'const'
 import * as poolHooks from 'hooks/pool'
 
 import * as stateHooks from 'hooks/state'
@@ -7,7 +8,6 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import type { TradingToken } from 'types'
 
 import { useWithdrawQuote } from './use-withdraw-quote'
-import { DEFAULT_PRECISION, optimism } from '../../../const'
 
 vi.mock('hooks/pool', () => ({
   usePoolTokenPrice: vi.fn(),

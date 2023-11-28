@@ -24,7 +24,6 @@
 		"paths": {
 			"test-utils": ["./tests/test-utils.tsx"]
 		},
-		"declarationMap": true
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["src", "tsup.config.ts", "vite.config.ts", "scripts"]

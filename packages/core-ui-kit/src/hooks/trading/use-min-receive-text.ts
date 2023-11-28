@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import isNumber from 'lodash.isnumber'
 
 import {
   DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
@@ -9,7 +10,6 @@ import {
   useTradingPanelSettings,
   useTradingPanelType,
 } from 'hooks/state'
-import isNumber from 'lodash.isnumber'
 import type { TradingPanelState, TradingPanelType } from 'types'
 
 export const receiveAppliedSlippage = (

@@ -1,6 +1,7 @@
+import * as w from 'wagmi'
+
 import { DEFAULT_CHAIN_ID, optimism, polygon } from 'const'
 import { renderHook } from 'test-utils'
-import * as w from 'wagmi'
 
 import { useNetwork } from './use-network'
 

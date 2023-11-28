@@ -1,8 +1,10 @@
+import { useMemo } from 'react'
+
 import {
+  BRIDGED_USDC_OPTIMISM,
+  BRIDGED_USDC_POLYGON,
   DAI_OPTIMISM,
   DAI_POLYGON,
-  USDC_OPTIMISM,
-  USDC_POLYGON,
   USDT_OPTIMISM,
   USDT_POLYGON,
   WBTC_OPTIMISM,
@@ -14,18 +16,25 @@ import {
   polygon,
 } from 'const'
 import { usePoolComposition } from 'hooks/pool'
-import { useMemo } from 'react'
 import type { TradingToken } from 'types/trading-panel.types'
 import type { Address, ChainId } from 'types/web3.types'
 
-const FALLBACK_ASSET_SYMBOLS = ['WMATIC', 'WETH', 'USDC', 'USDT', 'DAI', 'WBTC']
+const FALLBACK_ASSET_SYMBOLS = [
+  'WMATIC',
+  'WETH',
+  'USDCe',
+  'USDC',
+  'USDT',
+  'DAI',
+  'WBTC',
+]
 const FALLBACK_ASSETS_ADRESSES_MAP: Record<
   ChainId,
   Record<string, TradingToken>
 > = {
   [optimism.id]: {
     WETH: WETH_OPTIMISM,
-    USDC: USDC_OPTIMISM,
+    USDC: BRIDGED_USDC_OPTIMISM,
     USDT: USDT_OPTIMISM,
     DAI: DAI_OPTIMISM,
     WBTC: WBTC_OPTIMISM,
@@ -33,7 +42,7 @@ const FALLBACK_ASSETS_ADRESSES_MAP: Record<
   [polygon.id]: {
     WMATIC: WMATIC_POLYGON,
     WETH: WETH_POLYGON,
-    USDC: USDC_POLYGON,
+    USDC: BRIDGED_USDC_POLYGON,
     USDT: USDT_POLYGON,
     DAI: DAI_POLYGON,
     WBTC: WBTC_POLYGON,

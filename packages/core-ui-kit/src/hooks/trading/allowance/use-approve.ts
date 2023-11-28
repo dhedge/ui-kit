@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import { MaxUint256 } from 'const'
 import {
   useTradingPanelApprovingStatus,
@@ -8,7 +10,6 @@ import {
 } from 'hooks/state'
 import { useTradingSettleHandler } from 'hooks/trading'
 import { useContractFunction } from 'hooks/web3'
-import { useCallback } from 'react'
 
 import type { TradingToken } from 'types/trading-panel.types'
 import type { Address } from 'types/web3.types'

@@ -1,7 +1,8 @@
 import { act } from '@testing-library/react'
 
-import { renderHook } from 'test-utils'
 import { vi } from 'vitest'
+
+import { renderHook } from 'test-utils'
 
 import { useDebounce } from './use-debounce'
 

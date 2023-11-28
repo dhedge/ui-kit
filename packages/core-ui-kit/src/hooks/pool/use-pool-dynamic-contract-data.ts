@@ -1,6 +1,7 @@
+import { formatDuration, intervalToDuration } from 'date-fns'
+
 import { PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
-import { formatDuration, intervalToDuration } from 'date-fns'
 import {
   useAccount,
   useContractReads,

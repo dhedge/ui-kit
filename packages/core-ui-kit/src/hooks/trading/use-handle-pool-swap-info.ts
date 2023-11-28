@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import {
   useTradingPanelDepositMethod,
   useTradingPanelEntryFee,
@@ -5,7 +7,6 @@ import {
 } from 'hooks/state'
 import { useEasySwapperStableData } from 'hooks/trading'
 import { useIsPoolManagerAccount } from 'hooks/user'
-import { useEffect } from 'react'
 import { getPercent, isBigInt } from 'utils'
 
 export const useHandlePoolSwapInfo = () => {

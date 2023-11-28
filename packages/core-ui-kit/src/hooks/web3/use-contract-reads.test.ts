@@ -1,5 +1,6 @@
-import { renderHook } from 'test-utils'
 import * as w from 'wagmi'
+
+import { renderHook } from 'test-utils'
 
 import { useContractReads } from './use-contract-reads'
 

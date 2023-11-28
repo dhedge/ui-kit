@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from 'react'
+
 import { DEFAULT_DEPOSIT_SLIPPAGE } from 'const'
 import {
   useReceiveTokenInput,
@@ -12,7 +14,6 @@ import { useDepositSlippage } from 'hooks/trading/deposit'
 import { useContractFunction } from 'hooks/web3'
 
 import { BuyingWithEasyswapperArgs, BuyingWithNativeAssetArgs } from 'models'
-import { useCallback, useMemo } from 'react'
 import type { TradingParams } from 'types/trading.types'
 import type { ContractActionFunc } from 'types/web3.types'
 import { getOrderedTxArgs, isNativeToken, logTransactionArguments } from 'utils'

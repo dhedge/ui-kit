@@ -1,6 +1,7 @@
+import * as w from 'wagmi'
+
 import { DEFAULT_PRECISION } from 'const'
 import { renderHook } from 'test-utils'
-import * as w from 'wagmi'
 
 import { useBalance } from './use-balance'
 

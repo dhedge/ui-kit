@@ -1,3 +1,5 @@
+import { expect } from 'vitest'
+
 import { DEFAULT_PRECISION, MaxUint256, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
 import * as web3Hooks from 'hooks/web3'
@@ -5,7 +7,6 @@ import { act, renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
 import type { TradingToken } from 'types'
-import { expect } from 'vitest'
 
 import { useApprove } from './use-approve'
 

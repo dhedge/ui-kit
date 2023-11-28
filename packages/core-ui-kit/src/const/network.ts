@@ -1,10 +1,11 @@
-import type { ChainNativeTokenMap } from 'types/trading.types'
-import type { Chain, ChainId } from 'types/web3.types'
 import { arbitrum, optimism, polygon } from 'wagmi/chains'
+
+import type { ChainNativeTokenMap } from 'types/trading.types'
+import type { ChainId } from 'types/web3.types'
 
 import { DEFAULT_PRECISION } from './default-data'
 
-export const CHAIN_MAP: Record<ChainId, Chain> = {
+export const CHAIN_MAP = {
   [polygon.id]: polygon,
   [optimism.id]: optimism,
   [arbitrum.id]: arbitrum,

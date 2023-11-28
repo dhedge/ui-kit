@@ -1,5 +1,8 @@
-import { DhedgeEasySwapperAbi } from 'abi'
 import BigNumber from 'bignumber.js'
+
+import { useEffect } from 'react'
+
+import { DhedgeEasySwapperAbi } from 'abi'
 import {
   DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
   DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
@@ -13,7 +16,6 @@ import {
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useDebounce } from 'hooks/utils'
 import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
-import { useEffect } from 'react'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'
 

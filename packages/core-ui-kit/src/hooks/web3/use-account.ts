@@ -1,5 +1,6 @@
-import type { Address } from 'types'
 import { useAccount as useWagmiAccount } from 'wagmi'
+
+import type { Address } from 'types'
 
 export const useAccount = (): Pick<
   ReturnType<typeof useWagmiAccount>,

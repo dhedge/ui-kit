@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { useCallback, useMemo } from 'react'
 
 import { usePoolDynamicContractData } from 'hooks/pool'
 import {
@@ -7,7 +8,6 @@ import {
 } from 'hooks/state'
 import { useEasySwapperStableData } from 'hooks/trading'
 import { useIsPoolManagerAccount } from 'hooks/user'
-import { useCallback, useMemo } from 'react'
 import type { DepositMethodName } from 'types/trading-panel.types'
 
 export const useDepositMethodHandler = (): [

@@ -1,4 +1,9 @@
-import { SUSD_OPTIMISM, USDC_OPTIMISM, WETH_OPTIMISM, optimism } from 'const'
+import {
+  BRIDGED_USDC_OPTIMISM,
+  SUSD_OPTIMISM,
+  WETH_OPTIMISM,
+  optimism,
+} from 'const'
 import type { Address, CallbackConfig, PoolConfig } from 'types'
 
 export const ETHY_OPTIMISM_POOL_MOCK: PoolConfig = {
@@ -14,7 +19,7 @@ export const ETHY_OPTIMISM_POOL_MOCK: PoolConfig = {
       WETH_OPTIMISM,
       {
         ...SUSD_OPTIMISM,
-        intermediateToken: USDC_OPTIMISM,
+        intermediateToken: BRIDGED_USDC_OPTIMISM,
         method: 'withdrawSUSD',
       },
     ],

@@ -1,5 +1,6 @@
-import { DEFAULT_ERROR_MESSAGE } from 'const'
 import { CustomError } from 'ts-custom-error'
+
+import { DEFAULT_ERROR_MESSAGE } from 'const'
 
 interface EstimationErrorParams {
   txArgs: unknown[]

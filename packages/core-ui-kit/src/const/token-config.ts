@@ -16,9 +16,9 @@ export const WETH_POLYGON: TradingToken = {
   value: '',
 }
 
-export const USDC_POLYGON: TradingToken = {
+export const BRIDGED_USDC_POLYGON: TradingToken = {
   address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-  symbol: 'USDC',
+  symbol: 'USDCe',
   decimals: 6,
   value: '',
 }
@@ -59,9 +59,9 @@ export const DAI_POLYGON: TradingToken = {
 
 // OPTIMISM
 
-export const USDC_OPTIMISM: TradingToken = {
+export const BRIDGED_USDC_OPTIMISM: TradingToken = {
   address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
-  symbol: 'USDC',
+  symbol: 'USDCe',
   decimals: 6,
   value: '',
 }
@@ -116,9 +116,9 @@ export const LINK_OPTIMISM: TradingToken = {
 
 // Arbitrum
 
-export const USDC_ARBITRUM: TradingToken = {
+export const BRIDGED_USDC_ARBITRUM: TradingToken = {
   address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
-  symbol: 'USDC',
+  symbol: 'USDCe',
   decimals: 6,
   value: '',
 }
@@ -128,4 +128,10 @@ export const WETH_ARBITRUM: TradingToken = {
   symbol: 'WETH',
   decimals: DEFAULT_PRECISION,
   value: '',
+}
+
+export const BRIDGED_TOKENS_SYMBOLS: Record<string, string> = {
+  [BRIDGED_USDC_ARBITRUM.address.toLowerCase()]: 'USDCe',
+  [BRIDGED_USDC_OPTIMISM.address.toLowerCase()]: 'USDCe',
+  [BRIDGED_USDC_POLYGON.address.toLowerCase()]: 'USDCe',
 }

@@ -1,9 +1,10 @@
+import { useEffect } from 'react'
+
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
   useTradingPanelType,
 } from 'hooks/state'
-import { useEffect } from 'react'
 
 import { usePoolDepositTokens } from './use-pool-deposit-tokens'
 

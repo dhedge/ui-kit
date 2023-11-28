@@ -1,6 +1,6 @@
-import { useBrowserStorage } from 'hooks/utils'
 import { useEffect } from 'react'
 
+import { useBrowserStorage } from 'hooks/utils'
 import type { UseReferralProgramProps } from 'types'
 
 const REFERRER = 'referrer'

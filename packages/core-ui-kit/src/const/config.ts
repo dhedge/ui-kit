@@ -1,3 +1,5 @@
+import { arbitrum, optimism, polygon } from 'wagmi/chains'
+
 import {
   AaveLendingPoolAbi,
   DHedgeStakingV2Abi,
@@ -9,7 +11,6 @@ import {
   erc20ABI,
 } from 'abi'
 import type { Address, ChainId } from 'types/web3.types'
-import { arbitrum, optimism, polygon } from 'wagmi/chains'
 
 import {
   AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,

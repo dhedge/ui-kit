@@ -1,6 +1,7 @@
+import { useCallback, useMemo } from 'react'
+
 import { TRADING_LOG_EVENT_PARAM, TRADING_PANEL_LOG_EVENT } from 'const'
 import { useTradingPanelLogger, useTradingPanelSettings } from 'hooks/state'
-import { useCallback, useMemo } from 'react'
 
 export const useTokenAllowanceHandler = (): [
   boolean,

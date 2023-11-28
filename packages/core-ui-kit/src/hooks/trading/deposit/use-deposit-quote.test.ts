@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
-import { DhedgeEasySwapperAbi } from 'abi'
 import BigNumber from 'bignumber.js'
 
+import { DhedgeEasySwapperAbi } from 'abi'
 import { AddressZero, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'

@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 
 import {
   useIsDepositTradingPanelType,
@@ -7,7 +8,6 @@ import {
   useTradingPanelPoolConfig,
 } from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
-import { useMemo } from 'react'
 import type { TradingParams } from 'types/trading.types'
 
 export const useTradingParams = (): TradingParams => {

@@ -1,9 +1,10 @@
-import { DEFAULT_CHAIN_ID } from 'const'
-import type { Chain, ChainId } from 'types/web3.types'
 import {
   useNetwork as useWagmiNetwork,
   useSwitchNetwork as useWagmiSwitchNetwork,
 } from 'wagmi'
+
+import { DEFAULT_CHAIN_ID } from 'const'
+import type { Chain, ChainId } from 'types/web3.types'
 
 const isSupportedChainId = (
   data: unknown,

@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 
 import { usePoolTokenPrice } from 'hooks/pool'
 import { useTradingPanelPoolConfig } from 'hooks/state'
-import { useMemo } from 'react'
 import type { Address } from 'types/web3.types'
 import { getConventionalTokenPriceDecimals } from 'utils'
 

@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
 
-import { usePoolComposition, usePoolDynamicContractData } from 'hooks/pool'
 import { useMemo } from 'react'
 
+import { usePoolComposition, usePoolDynamicContractData } from 'hooks/pool'
 import type {
   PoolComposition,
   PoolCompositionWithFraction,

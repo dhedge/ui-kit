@@ -1,9 +1,10 @@
+import { expect } from 'vitest'
+
 import { optimism } from 'const'
 import * as webHooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
-import { expect } from 'vitest'
 
 import { useCanSpend } from './use-can-spend'
 

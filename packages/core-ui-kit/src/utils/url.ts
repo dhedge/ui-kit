@@ -11,7 +11,7 @@ export function getExplorerLink(
   if (!chainId) return
 
   const blockExplorerUrl =
-    CHAIN_MAP[chainId as keyof typeof CHAIN_MAP]?.blockExplorers?.etherscan?.url
+    CHAIN_MAP[chainId as keyof typeof CHAIN_MAP]?.blockExplorers?.etherscan.url
   if (blockExplorerUrl) {
     switch (type) {
       case 'transaction':

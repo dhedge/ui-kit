@@ -1,3 +1,5 @@
+import type { WaitForTransactionReceiptReturnType } from 'viem'
+
 import type { EstimationError } from 'models'
 import type { PoolConfig, PoolFallbackData } from 'types/config.types'
 import type {
@@ -17,7 +19,6 @@ import type {
   SimulateTransactionParams,
   SimulateTransactionResponse,
 } from 'types/web3.types'
-import type { WaitForTransactionReceiptReturnType } from 'viem'
 
 export interface TradingPanelState {
   settings: {
@@ -87,7 +88,6 @@ export interface CallbackConfig {
     txHash?: Address,
   ) => void
   onTransactionSuccess: (
-    // data: ReturnType<typeof useWaitForTransaction>,
     data: WaitForTransactionReceiptReturnType,
     action: TransactionAction | undefined,
     link?: string,

@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import {
   useSendTokenInput,
   useTradingPanelApprovingStatus,
@@ -5,7 +7,6 @@ import {
   useTradingPanelTransactions,
 } from 'hooks/state'
 import type { SettledCallback } from 'hooks/web3'
-import { useCallback } from 'react'
 import type { PendingTransaction } from 'types/trading-panel.types'
 import { getExplorerLink } from 'utils'
 

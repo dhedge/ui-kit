@@ -1,5 +1,6 @@
-import { renderHook } from 'test-utils'
 import * as w from 'wagmi'
+
+import { renderHook } from 'test-utils'
 
 import { useBlockNumber } from './use-block-number'
 

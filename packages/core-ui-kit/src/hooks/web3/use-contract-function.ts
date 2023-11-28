@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import type { ContractId } from 'const'
 import {
   AddressZero,
@@ -16,7 +18,6 @@ import {
   useWalletClient,
 } from 'hooks/web3'
 import { EstimationError } from 'models'
-import { useCallback } from 'react'
 import type {
   Address,
   ChainId,

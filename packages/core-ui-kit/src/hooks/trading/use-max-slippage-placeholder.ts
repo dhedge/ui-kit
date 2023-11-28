@@ -1,9 +1,10 @@
+import isNumber from 'lodash.isnumber'
+
 import {
   DEFAULT_DEPOSIT_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
 } from 'const'
 import { useTradingPanelSettings, useTradingPanelType } from 'hooks/state'
-import isNumber from 'lodash.isnumber'
 
 export const useMaxSlippagePlaceholder = () => {
   const [tradingType] = useTradingPanelType()

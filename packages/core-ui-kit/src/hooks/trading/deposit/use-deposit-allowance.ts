@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 
+import { useEffect } from 'react'
+
 import { AddressZero } from 'const'
 import {
   useSendTokenInput,
@@ -8,7 +10,6 @@ import {
 } from 'hooks/state'
 import { useApprove, useCanSpend } from 'hooks/trading/allowance'
 import { useAccount } from 'hooks/web3'
-import { useEffect } from 'react'
 import { getContractAddressById, isNativeToken } from 'utils'
 
 export const useDepositAllowance = () => {
