@@ -24,7 +24,8 @@
     "strictNullChecks": true,
 		"baseUrl": ".",
 		"paths": {
-			"@dhedge/core-ui-kit": ["packages/core-ui-kit/src/index.ts"]
+			"@dhedge/core-ui-kit": ["packages/core-ui-kit/src/index.ts"],
+      "@dhedge/trading-widget": ["packages/trading-widget/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
