@@ -1,0 +1,52 @@
+import { DhedgeEasySwapperAbi } from 'abi'
+import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import type { Address, ChainId } from 'types/web3.types'
+import { getContractAddressById } from 'utils'
+
+interface EasySwapperStableData {
+  poolAddress: Address
+  chainId: ChainId
+  skip?: boolean
+}
+
+export const useEasySwapperStableData = ({
+  poolAddress,
+  chainId,
+  skip,
+}: EasySwapperStableData) => {
+  const { data } = useContractReads({
+    contracts: [
+      {
+        address: getContractAddressById('easySwapper', chainId),
+        abi: DhedgeEasySwapperAbi,
+        functionName: 'allowedPools',
+        args: [poolAddress],
+        chainId,
+      },
+      {
+        address: getContractAddressById('easySwapper', chainId),
+        abi: DhedgeEasySwapperAbi,
+        functionName: 'feeNumerator',
+        chainId,
+      },
+      {
+        address: getContractAddressById('easySwapper', chainId),
+        abi: DhedgeEasySwapperAbi,
+        functionName: 'feeDenominator',
+        chainId,
+      },
+    ],
+    enabled: !skip,
+    staleTime: Infinity,
+  })
+  useContractReadsErrorLogging(data)
+  const isEasySwapperAllowedPool = !!data?.[0]?.result
+  const feeNumerator = data?.[1]?.result
+  const feeDenominator = data?.[2]?.result
+
+  return {
+    isEasySwapperAllowedPool,
+    feeNumerator,
+    feeDenominator,
+  }
+}

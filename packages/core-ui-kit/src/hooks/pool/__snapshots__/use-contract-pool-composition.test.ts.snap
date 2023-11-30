@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useContractPoolComposition > should return extended fund composition data 1`] = `
+[
+  {
+    "amount": "1",
+    "asset": {
+      "iconSymbols": [
+        "fallback_iconSymbol",
+      ],
+    },
+    "isDeposit": true,
+    "precision": 18,
+    "rate": "1",
+    "tokenAddress": "0xtest",
+    "tokenName": "symbol",
+  },
+]
+`;

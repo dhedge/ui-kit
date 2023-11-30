@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useDeposit > should process deposits with auto slippage and not native token 1`] = `
+[
+  BuyingWithEasyswapperArgs {
+    "fromTokenAmount": "5000000",
+    "poolDepositAddress": "0x111",
+    "receiveAssetAddress": "0x123",
+    "receiveAssetInputValue": "10",
+    "sendAssetAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+  },
+]
+`;
+
+exports[`useDeposit > should process deposits with auto slippage and not native token 2`] = `
+[
+  "0x123",
+  "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+  "5000000",
+  "0x111",
+  "10000000000000000000",
+]
+`;
+
+exports[`useDeposit > should process deposits with custom slippage, custom cooldown and native token 1`] = `
+[
+  BuyingWithNativeAssetArgs {
+    "fromTokenAmount": "5000000000000000000",
+    "poolDepositAddress": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+    "receiveAssetAddress": "0x123",
+    "receiveAssetInputValue": "10",
+  },
+]
+`;
+
+exports[`useDeposit > should process deposits with custom slippage, custom cooldown and native token 2`] = `
+[
+  "0x123",
+  "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+  "9985000000000000000",
+  {
+    "value": 5000000000000000000n,
+  },
+]
+`;
