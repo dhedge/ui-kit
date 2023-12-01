@@ -23,6 +23,13 @@ export const BRIDGED_USDC_POLYGON: TradingToken = {
   value: '',
 }
 
+export const USDC_POLYGON: TradingToken = {
+  address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+  symbol: 'USDC',
+  decimals: 6,
+  value: '',
+}
+
 export const PAXG_POLYGON: TradingToken = {
   address: '0x553d3d295e0f695b9228246232edf400ed3560b5',
   symbol: 'PAXG',
@@ -62,6 +69,13 @@ export const DAI_POLYGON: TradingToken = {
 export const BRIDGED_USDC_OPTIMISM: TradingToken = {
   address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
   symbol: 'USDCe',
+  decimals: 6,
+  value: '',
+}
+
+export const USDC_OPTIMISM: TradingToken = {
+  address: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+  symbol: 'USDC',
   decimals: 6,
   value: '',
 }
@@ -119,6 +133,13 @@ export const LINK_OPTIMISM: TradingToken = {
 export const BRIDGED_USDC_ARBITRUM: TradingToken = {
   address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
   symbol: 'USDCe',
+  decimals: 6,
+  value: '',
+}
+
+export const USDC_ARBITRUM: TradingToken = {
+  address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+  symbol: 'USDC',
   decimals: 6,
   value: '',
 }
