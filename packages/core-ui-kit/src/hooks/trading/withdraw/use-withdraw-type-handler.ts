@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { TRADING_LOG_EVENT_PARAM, TRADING_PANEL_LOG_EVENT } from 'const'
 import { useTradingPanelLogger, useTradingPanelSettings } from 'hooks/state'
@@ -13,6 +13,13 @@ export const useWithdrawTypeHandler = (): [
   const log = useTradingPanelLogger()
 
   const disabled = useIsPoolManagerAccount()
+
+  // Disable multi asset withdrawal for dHEDGE managers
+  useEffect(() => {
+    if (disabled) {
+      setSettings({ isMultiAssetWithdrawalEnabled: false })
+    }
+  }, [disabled, setSettings])
 
   const setMultiAssetWithdrawal = useCallback(
     (isMultiAssetWithdrawalEnabled: boolean) => {
