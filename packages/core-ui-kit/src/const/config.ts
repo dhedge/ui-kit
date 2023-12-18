@@ -8,6 +8,7 @@ import {
   PoolLogicAbi,
   PoolManagerLogicAbi,
   RewardDistributionAbi,
+  SynthetixV3AssetGuard,
   erc20ABI,
 } from 'abi'
 import type { Address, ChainId } from 'types/web3.types'
@@ -24,6 +25,7 @@ import {
   FACTORY_ADDRESS_POLYGON,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
   STAKING_V2_ADDRESS_OPTIMISM,
+  SYNTHETIX_V3_ASSET_GUARD_OPTIMISM,
 } from './contract'
 
 export type ContractId =
@@ -36,6 +38,7 @@ export type ContractId =
   | 'poolManagerLogic'
   | 'erc20'
   | 'poolLogic'
+  | 'synthetixV3AssetGuard'
 
 type ContractsAddressesMap = Readonly<
   Record<ChainId, { [id in ContractId]?: Address }>
@@ -54,6 +57,7 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     rewardDistribution: REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
     stakingV2: STAKING_V2_ADDRESS_OPTIMISM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
+    synthetixV3AssetGuard: SYNTHETIX_V3_ASSET_GUARD_OPTIMISM,
   },
   [arbitrum.id]: {
     factory: FACTORY_ADDRESS_ARBITRUM,
@@ -72,4 +76,5 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   poolManagerLogic: PoolManagerLogicAbi,
   erc20: erc20ABI,
   poolLogic: PoolLogicAbi,
+  synthetixV3AssetGuard: SynthetixV3AssetGuard,
 }
