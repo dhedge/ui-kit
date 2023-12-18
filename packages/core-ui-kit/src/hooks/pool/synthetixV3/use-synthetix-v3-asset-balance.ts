@@ -1,6 +1,6 @@
-import { SYNTHETIX_V3_ASSET_ADDRESS } from '../../../const'
-import { useStaticCall } from '../../web3'
-import type { Address, ChainId } from '../../../types'
+import { SYNTHETIX_V3_ASSET_ADDRESS } from 'const'
+import { useStaticCall } from 'hooks/web3'
+import type { Address, ChainId } from 'types'
 
 interface UseSynthetixV3AssetBalanceVariables {
   vaultAddress: Address

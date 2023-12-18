@@ -2,7 +2,7 @@ import { PoolLogicAbi } from 'abi'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import { useContractRead, useContractReadErrorLogging } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
-import { formatEther, isZeroAddress, isSynthetixVault } from 'utils'
+import { formatEther, isSynthetixVault, isZeroAddress } from 'utils'
 
 import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
 
