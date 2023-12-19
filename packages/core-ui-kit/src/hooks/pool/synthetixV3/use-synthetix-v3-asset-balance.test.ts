@@ -1,4 +1,4 @@
-import { SYNTHETIX_V3_ASSET_ADDRESS, optimism } from 'const'
+import { SYNTHETIX_V3_ASSETS_MAP, optimism } from 'const'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
@@ -29,7 +29,7 @@ describe('useSynthetixV3AssetBalance', () => {
       contractId: 'synthetixV3AssetGuard',
       disabled: false,
       functionName: 'getBalanceMutable',
-      args: [vaultAddress, SYNTHETIX_V3_ASSET_ADDRESS],
+      args: [vaultAddress, SYNTHETIX_V3_ASSETS_MAP[optimism.id]],
     })
 
     expect(result.current).toBe('10')

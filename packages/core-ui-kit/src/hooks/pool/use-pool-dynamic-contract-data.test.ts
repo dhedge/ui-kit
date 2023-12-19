@@ -3,7 +3,7 @@ import { formatDuration, intervalToDuration } from 'date-fns'
 import { expect } from 'vitest'
 
 import { PoolLogicAbi } from 'abi'
-import { AddressZero, SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
+import { SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
 import * as poolHooks from 'hooks/pool'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
@@ -246,7 +246,7 @@ describe('usePoolDynamicContractData', () => {
     )
 
     expect(poolHooks.useManagerLogicAddress).toHaveBeenCalledWith({
-      address: AddressZero,
+      address: TEST_ADDRESS,
       chainId,
     })
 

@@ -57,7 +57,7 @@ export const usePoolDynamicContractData = ({
   const { account } = useAccount()
   const isSynthetixV3Vault = isSynthetixVault(address)
   const managerLogicAddress = useManagerLogicAddress({
-    address: isSynthetixV3Vault ? address : AddressZero,
+    address,
     chainId,
   })
   const totalFundValueMutable = useTotalFundValueMutable({

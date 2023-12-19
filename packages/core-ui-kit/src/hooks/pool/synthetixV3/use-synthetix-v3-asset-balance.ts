@@ -1,4 +1,6 @@
-import { SYNTHETIX_V3_ASSET_ADDRESS } from 'const'
+import { zeroAddress } from 'viem'
+
+import { SYNTHETIX_V3_ASSETS_MAP } from 'const'
 import { useStaticCall } from 'hooks/web3'
 import type { Address, ChainId } from 'types'
 
@@ -18,5 +20,8 @@ export const useSynthetixV3AssetBalance = ({
     chainId,
     disabled,
     functionName: 'getBalanceMutable',
-    args: [vaultAddress, SYNTHETIX_V3_ASSET_ADDRESS],
+    args: [
+      vaultAddress,
+      chainId ? SYNTHETIX_V3_ASSETS_MAP[chainId] : zeroAddress,
+    ],
   })?.toString() ?? '0'

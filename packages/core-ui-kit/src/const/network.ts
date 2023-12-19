@@ -1,7 +1,6 @@
-import { arbitrum, optimism, polygon } from 'wagmi/chains'
+import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 
-import type { ChainNativeTokenMap } from 'types/trading.types'
-import type { ChainId } from 'types/web3.types'
+import type { ChainId, ChainNativeTokenMap } from 'types'
 
 import { DEFAULT_PRECISION } from './default-data'
 
@@ -38,4 +37,4 @@ export const MAX_GAS_LIMIT_MAP: Record<ChainId, number> = {
   [arbitrum.id]: 29900000,
 }
 
-export { polygon, optimism, arbitrum }
+export { polygon, optimism, arbitrum, base }

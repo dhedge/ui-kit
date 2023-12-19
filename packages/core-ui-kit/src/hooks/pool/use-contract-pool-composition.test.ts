@@ -3,7 +3,7 @@ import { expect } from 'vitest'
 import { PoolManagerLogicAbi, erc20ABI } from 'abi'
 import {
   DEFAULT_PRECISION,
-  SYNTHETIX_V3_ASSET_ADDRESS,
+  SYNTHETIX_V3_ASSETS_MAP,
   SYNTHETIX_V3_VAULT_ADDRESSES,
   optimism,
 } from 'const'
@@ -243,7 +243,7 @@ describe('useContractPoolComposition', () => {
     const contractFundComposition = [
       [
         { asset: TEST_ADDRESS, isDeposit: true },
-        { asset: SYNTHETIX_V3_ASSET_ADDRESS, isDeposit: false },
+        { asset: SYNTHETIX_V3_ASSETS_MAP[chainId], isDeposit: false },
       ],
       [BigInt(1), BigInt(2)],
       [BigInt(1), BigInt(2)],

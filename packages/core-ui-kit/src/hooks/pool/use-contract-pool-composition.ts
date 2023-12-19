@@ -3,11 +3,7 @@ import chunk from 'lodash.chunk'
 import { useMemo } from 'react'
 
 import { PoolManagerLogicAbi, erc20ABI } from 'abi'
-import {
-  BRIDGED_TOKENS_SYMBOLS,
-  DEFAULT_PRECISION,
-  SYNTHETIX_V3_ASSET_ADDRESS,
-} from 'const'
+import { BRIDGED_TOKENS_SYMBOLS, DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress, useSynthetixV3AssetBalance } from 'hooks/pool'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import {
@@ -17,7 +13,7 @@ import {
 } from 'hooks/web3'
 import type { PoolComposition } from 'types/pool.types'
 import type { Address, PoolContractCallParams } from 'types/web3.types'
-import { isEqualAddress, isSynthetixVault, shortenAddress } from 'utils'
+import { isSynthetixAsset, isSynthetixVault, shortenAddress } from 'utils'
 
 interface FallbackAssetsMap {
   [address: string]: Pick<PoolComposition, 'tokenName' | 'precision' | 'asset'>
@@ -63,9 +59,7 @@ export const useContractPoolComposition = ({
   // https://github.com/dhedge/dhedge-v2/blob/master/contracts/guards/assetGuards/synthetixV3/SynthetixV3AssetGuard.sol#L66
   const includesSynthetixV3Asset =
     isSynthetixV3Vault &&
-    !!fundAssets?.some(({ asset }) =>
-      isEqualAddress(asset, SYNTHETIX_V3_ASSET_ADDRESS),
-    )
+    !!fundAssets?.some(({ asset }) => isSynthetixAsset(asset))
   const synthetixV3AssetBalance = useSynthetixV3AssetBalance({
     vaultAddress: address,
     chainId,
@@ -107,10 +101,7 @@ export const useContractPoolComposition = ({
 
     return fundAssets.map(({ asset, isDeposit }, i) => {
       const tokenAddress = asset.toLowerCase() as Address
-      const isSynthetixV3Asset = isEqualAddress(
-        tokenAddress,
-        SYNTHETIX_V3_ASSET_ADDRESS,
-      )
+      const isSynthetixV3Asset = isSynthetixAsset(tokenAddress)
       const [symbol, decimals] = chunked[i] ?? []
       return {
         tokenAddress,
