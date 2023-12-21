@@ -3,8 +3,8 @@ import { expect } from 'vitest'
 import { PoolManagerLogicAbi, erc20ABI } from 'abi'
 import {
   DEFAULT_PRECISION,
-  SYNTHETIX_V3_ASSETS_MAP,
-  SYNTHETIX_V3_VAULT_ADDRESSES,
+  DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
+  DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
   optimism,
 } from 'const'
 import * as poolHooks from 'hooks/pool'
@@ -226,7 +226,7 @@ describe('useContractPoolComposition', () => {
   })
 
   it('should return extended fund composition data with synthetix v3 asset balance', () => {
-    const address = SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
+    const address = DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
     const chainId = optimism.id
     const fallbackPoolComposition: PoolComposition = {
       tokenName: 'fallback_tokenName',
@@ -243,7 +243,7 @@ describe('useContractPoolComposition', () => {
     const contractFundComposition = [
       [
         { asset: TEST_ADDRESS, isDeposit: true },
-        { asset: SYNTHETIX_V3_ASSETS_MAP[chainId], isDeposit: false },
+        { asset: DHEDGE_SYNTHETIX_V3_ASSETS_MAP[chainId], isDeposit: false },
       ],
       [BigInt(1), BigInt(2)],
       [BigInt(1), BigInt(2)],

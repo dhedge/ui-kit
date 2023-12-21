@@ -1,5 +1,5 @@
 import { PoolLogicAbi } from 'abi'
-import { SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
+import { DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
@@ -60,7 +60,7 @@ describe('usePoolTokenPrice', () => {
   })
 
   it('should call usePoolTokenPriceMutable hook for synthetix v3 vault', () => {
-    const address = SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
+    const address = DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
     const chainId = optimism.id
     const tokenPrice = BigInt(123)
     const poolData = { tokenPrice: '1' }

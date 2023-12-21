@@ -3,7 +3,7 @@ import { formatDuration, intervalToDuration } from 'date-fns'
 import { expect } from 'vitest'
 
 import { PoolLogicAbi } from 'abi'
-import { SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
+import { DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
 import * as poolHooks from 'hooks/pool'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
@@ -281,7 +281,7 @@ describe('usePoolDynamicContractData', () => {
     const exitCooldown = undefined
     const chainId = optimism.id
     const isFetched = true
-    const address = SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
+    const address = DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
     const managerLogicAddress = '0x123' as Address
     const customTotalFundValue = '1111111'
 
