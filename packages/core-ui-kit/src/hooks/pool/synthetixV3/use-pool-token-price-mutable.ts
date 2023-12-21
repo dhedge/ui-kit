@@ -21,34 +21,46 @@ export const usePoolTokenPriceMutable = ({
   chainId,
   disabled,
 }: PoolTokenPriceParams): bigint | undefined => {
-  const { data: [poolManagerLogic, totalSupply] = [] } = useContractReads({
-    contracts: [
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'poolManagerLogic',
-        chainId,
-      },
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'totalSupply',
-        chainId,
-      },
-    ],
-    enabled: !!address && !isZeroAddress(address) && !disabled,
-  })
+  const { data: [poolManagerLogic, totalSupply, managerFee] = [] } =
+    useContractReads({
+      contracts: [
+        {
+          address,
+          abi: PoolLogicAbi,
+          functionName: 'poolManagerLogic',
+          chainId,
+        },
+        {
+          address,
+          abi: PoolLogicAbi,
+          functionName: 'totalSupply',
+          chainId,
+        },
+        {
+          address,
+          abi: PoolLogicAbi,
+          functionName: 'availableManagerFee',
+          chainId,
+        },
+      ],
+      enabled: !!address && !isZeroAddress(address) && !disabled,
+    })
 
   const totalFundValueMutable = useTotalFundValueMutable({
     vaultManagerLogicAddress: poolManagerLogic?.result ?? AddressZero,
     chainId,
     disabled,
   })
+  const totalSupplyWithManagerFee = totalSupply?.result
+    ? new BigNumber(totalSupply.result.toString()).plus(
+        managerFee?.result?.toString() ?? '0',
+      )
+    : null
 
-  return totalFundValueMutable && totalSupply?.result
+  return totalFundValueMutable && totalSupplyWithManagerFee
     ? BigInt(
         new BigNumber(totalFundValueMutable)
-          .dividedBy(totalSupply.result.toString())
+          .dividedBy(totalSupplyWithManagerFee.toFixed())
           .shiftedBy(DEFAULT_PRECISION)
           .toFixed(0),
       )

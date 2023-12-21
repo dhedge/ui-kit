@@ -20,14 +20,19 @@ describe('usePoolTokenPriceMutable', () => {
   it('should calculate token price based on totalSupply and totalFundValue', () => {
     const vaultManagerLogicAddress = '0x123'
     const totalSupply = BigInt(100)
+    const managerFee = BigInt(10)
     const chainId = 10
     vi.mocked(web3Hooks.useContractReads).mockImplementationOnce(
       () =>
         ({
-          data: [{ result: vaultManagerLogicAddress }, { result: totalSupply }],
+          data: [
+            { result: vaultManagerLogicAddress },
+            { result: totalSupply },
+            { result: managerFee },
+          ],
         }) as ReturnType<typeof web3Hooks.useContractReads>,
     )
-    vi.mocked(useTotalFundValueMutable).mockImplementationOnce(() => '100')
+    vi.mocked(useTotalFundValueMutable).mockImplementationOnce(() => '110')
 
     const { result } = renderHook(() =>
       usePoolTokenPriceMutable({
@@ -49,6 +54,11 @@ describe('usePoolTokenPriceMutable', () => {
           expect.objectContaining({
             abi: PoolLogicAbi,
             functionName: 'totalSupply',
+            chainId,
+          }),
+          expect.objectContaining({
+            abi: PoolLogicAbi,
+            functionName: 'availableManagerFee',
             chainId,
           }),
         ],
