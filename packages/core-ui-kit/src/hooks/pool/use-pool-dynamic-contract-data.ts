@@ -9,7 +9,7 @@ import {
   useContractReadsErrorLogging,
 } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
-import { isSynthetixVault, isZeroAddress } from 'utils'
+import { isSynthetixV3Vault, isZeroAddress } from 'utils'
 
 interface FundSummary {
   creationTime: bigint
@@ -55,7 +55,7 @@ export const usePoolDynamicContractData = ({
   chainId,
 }: PoolDynamicContractDataParams) => {
   const { account } = useAccount()
-  const isSynthetixV3Vault = isSynthetixVault(address)
+  const isSynthetixVault = isSynthetixV3Vault(address)
   const managerLogicAddress = useManagerLogicAddress({
     address,
     chainId,
@@ -63,7 +63,7 @@ export const usePoolDynamicContractData = ({
   const totalFundValueMutable = useTotalFundValueMutable({
     vaultManagerLogicAddress: managerLogicAddress,
     chainId,
-    disabled: !isSynthetixV3Vault,
+    disabled: !isSynthetixVault,
   })
 
   const { data, isFetched } = useContractReads({
@@ -97,7 +97,7 @@ export const usePoolDynamicContractData = ({
     cooldownActive: cooldown > 0,
     cooldownEndsInTime,
     ...summary,
-    totalValue: isSynthetixV3Vault
+    totalValue: isSynthetixVault
       ? totalFundValueMutable ?? summary.totalValue
       : summary.totalValue,
     isFetched,

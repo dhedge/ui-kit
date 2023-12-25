@@ -1042,8 +1042,14 @@ export const PoolLogicAbi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'availableManagerFee',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'fundValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'calculateAvailableManagerFee',
     outputs: [
       {
         internalType: 'uint256',

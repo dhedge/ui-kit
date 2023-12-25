@@ -11,6 +11,7 @@ import { useTotalFundValueMutable } from './use-total-funds-value-mutable'
 
 vi.mock('hooks/web3', () => ({
   useContractReads: vi.fn(),
+  useContractRead: vi.fn(),
 }))
 vi.mock('./use-total-funds-value-mutable', () => ({
   useTotalFundValueMutable: vi.fn(),
@@ -25,12 +26,14 @@ describe('usePoolTokenPriceMutable', () => {
     vi.mocked(web3Hooks.useContractReads).mockImplementationOnce(
       () =>
         ({
-          data: [
-            { result: vaultManagerLogicAddress },
-            { result: totalSupply },
-            { result: managerFee },
-          ],
+          data: [{ result: vaultManagerLogicAddress }, { result: totalSupply }],
         }) as ReturnType<typeof web3Hooks.useContractReads>,
+    )
+    vi.mocked(web3Hooks.useContractRead).mockImplementationOnce(
+      () =>
+        ({
+          data: managerFee,
+        }) as ReturnType<typeof web3Hooks.useContractRead>,
     )
     vi.mocked(useTotalFundValueMutable).mockImplementationOnce(() => '110')
 
@@ -56,12 +59,17 @@ describe('usePoolTokenPriceMutable', () => {
             functionName: 'totalSupply',
             chainId,
           }),
-          expect.objectContaining({
-            abi: PoolLogicAbi,
-            functionName: 'availableManagerFee',
-            chainId,
-          }),
         ],
+      }),
+    )
+    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
+      expect.objectContaining({
+        address: TEST_ADDRESS,
+        abi: PoolLogicAbi,
+        functionName: 'calculateAvailableManagerFee',
+        chainId,
+        enabled: true,
+        args: [BigInt('110')],
       }),
     )
     expect(useTotalFundValueMutable).toHaveBeenCalledWith({

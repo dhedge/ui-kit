@@ -16,7 +16,6 @@ import type { Address, ChainId } from 'types/web3.types'
 import {
   AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,
   AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
-  AAVE_LENDING_POOL_V3_ADDRESS_BASE,
   AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
   AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
   EASY_SWAPPER_ADDRESS_ARBITRUM,
@@ -70,7 +69,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
   },
   [base.id]: {
     factory: FACTORY_ADDRESS_BASE,
-    aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_BASE,
     easySwapper: EASY_SWAPPER_ADDRESS_BASE,
   },
 }

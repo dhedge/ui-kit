@@ -5,12 +5,12 @@ import {
 
 import { isEqualAddress } from './web3'
 
-export const isSynthetixVault = (address: string) =>
+export const isSynthetixV3Vault = (address: string) =>
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES.some((vault) =>
     isEqualAddress(vault, address),
   )
 
-export const isSynthetixAsset = (address: string) =>
+export const isSynthetixV3Asset = (address: string) =>
   Object.values(DHEDGE_SYNTHETIX_V3_ASSETS_MAP).some((asset) =>
     isEqualAddress(asset, address),
   )

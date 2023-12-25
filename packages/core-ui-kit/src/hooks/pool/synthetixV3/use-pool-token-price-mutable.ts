@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { PoolLogicAbi } from 'abi'
 import { AddressZero, DEFAULT_PRECISION } from 'const'
-import { useContractReads } from 'hooks/web3'
+import { useContractRead, useContractReads } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { isZeroAddress } from 'utils'
 
@@ -14,46 +14,46 @@ interface PoolTokenPriceParams {
   disabled?: boolean
 }
 
-// TODO: add available manager fee to token price calculations
-// https://github.com/dhedge/dhedge-v2/pull/821/files#diff-ef65448920630318c6d283f1624a24d941804de54d7e9a0e2944d6e5f54d9152
 export const usePoolTokenPriceMutable = ({
   address,
   chainId,
   disabled,
 }: PoolTokenPriceParams): bigint | undefined => {
-  const { data: [poolManagerLogic, totalSupply, managerFee] = [] } =
-    useContractReads({
-      contracts: [
-        {
-          address,
-          abi: PoolLogicAbi,
-          functionName: 'poolManagerLogic',
-          chainId,
-        },
-        {
-          address,
-          abi: PoolLogicAbi,
-          functionName: 'totalSupply',
-          chainId,
-        },
-        {
-          address,
-          abi: PoolLogicAbi,
-          functionName: 'availableManagerFee',
-          chainId,
-        },
-      ],
-      enabled: !!address && !isZeroAddress(address) && !disabled,
-    })
+  const { data: [poolManagerLogic, totalSupply] = [] } = useContractReads({
+    contracts: [
+      {
+        address,
+        abi: PoolLogicAbi,
+        functionName: 'poolManagerLogic',
+        chainId,
+      },
+      {
+        address,
+        abi: PoolLogicAbi,
+        functionName: 'totalSupply',
+        chainId,
+      },
+    ],
+    enabled: !!address && !isZeroAddress(address) && !disabled,
+  })
 
   const totalFundValueMutable = useTotalFundValueMutable({
     vaultManagerLogicAddress: poolManagerLogic?.result ?? AddressZero,
     chainId,
     disabled,
   })
+  const { data: managerFee } = useContractRead({
+    address,
+    abi: PoolLogicAbi,
+    functionName: 'calculateAvailableManagerFee',
+    chainId,
+    args: [totalFundValueMutable ? BigInt(totalFundValueMutable) : BigInt(0)],
+    enabled: !!totalFundValueMutable,
+  })
+
   const totalSupplyWithManagerFee = totalSupply?.result
     ? new BigNumber(totalSupply.result.toString()).plus(
-        managerFee?.result?.toString() ?? '0',
+        managerFee?.toString() ?? '0',
       )
     : null
 
