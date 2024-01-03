@@ -10,11 +10,13 @@ import { getContractAddressById, isZeroAddress } from 'utils'
 type AssetPriceParams = PoolContractCallParams & {
   chainId: ChainId
   watch?: boolean
+  disabled?: boolean
 }
 export const useRawAssetPrice = ({
   address,
   chainId,
   watch = false,
+  disabled = false,
 }: AssetPriceParams): bigint | undefined => {
   const { supportedChainId } = useNetwork()
 
@@ -28,7 +30,7 @@ export const useRawAssetPrice = ({
         chainId,
       },
     ],
-    enabled: !isZeroAddress(address),
+    enabled: !isZeroAddress(address) && !disabled,
     watch,
   })
   useContractReadsErrorLogging(data)

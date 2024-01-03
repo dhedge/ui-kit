@@ -1,4 +1,4 @@
-import { DEFAULT_PRECISION } from 'const'
+import { DEFAULT_PRECISION, MULTI_ASSET_TOKEN } from 'const'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -7,6 +7,8 @@ import {
 } from 'hooks/state'
 import { usePoolDepositTokens } from 'hooks/trading/deposit'
 import type { TradingPanelType } from 'types/trading-panel.types'
+
+import { isSynthetixV3Vault } from 'utils'
 
 export const useOnTradingTypeChange = () => {
   const poolConfig = useTradingPanelPoolConfig()
@@ -31,14 +33,21 @@ export const useOnTradingTypeChange = () => {
   }
 
   const onWithdrawSwitch = () => {
-    const [initialWithdrawToken] = poolConfig.withdrawParams.customTokens
+    const [customWithdrawToken] = poolConfig.withdrawParams.customTokens
     updateSendToken({
       address: poolConfig.address,
       symbol: poolConfig.symbol,
       decimals: DEFAULT_PRECISION,
       value: '',
     })
-    updateReceiveToken({ ...initialWithdrawToken, value: '', isLoading: false })
+    // Set "All assets" as default withdraw option in Synthetix V3 vaults
+    updateReceiveToken({
+      ...(isSynthetixV3Vault(poolConfig.address)
+        ? MULTI_ASSET_TOKEN
+        : customWithdrawToken),
+      value: '',
+      isLoading: false,
+    })
   }
 
   return (type: TradingPanelType) => {
