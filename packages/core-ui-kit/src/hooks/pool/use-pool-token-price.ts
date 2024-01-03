@@ -10,12 +10,14 @@ interface PoolTokenPriceParams {
   address: Address
   chainId: ChainId
   formatter?: (tokenPrice: bigint) => string
+  disabled?: boolean
 }
 
 export const usePoolTokenPrice = ({
   address,
   chainId,
   formatter = formatEther,
+  disabled,
 }: PoolTokenPriceParams): string => {
   const [poolData] = useTradingPanelPoolFallbackData()
   const isSynthetixVault = isSynthetixV3Vault(address)
@@ -28,14 +30,15 @@ export const usePoolTokenPrice = ({
     abi: PoolLogicAbi,
     functionName: 'tokenPrice',
     chainId,
-    enabled: !!address && !isZeroAddress(address) && !isSynthetixVault,
+    enabled:
+      !!address && !isZeroAddress(address) && !isSynthetixVault && !disabled,
   })
   useContractReadErrorLogging({ error, status })
 
   const mutableTokenPrice = usePoolTokenPriceMutable({
     address,
     chainId,
-    disabled: !isSynthetixVault,
+    disabled: !isSynthetixVault || disabled,
   })
 
   const contractTokenPrice = isSynthetixVault ? mutableTokenPrice : tokenPrice
