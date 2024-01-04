@@ -7,18 +7,24 @@ import {
   optimism,
 } from 'const'
 import * as stateHooks from 'hooks/state'
+import { useTradingPanelPoolConfig } from 'hooks/state'
 import * as allowanceHooks from 'hooks/trading/allowance'
-import { useAccount } from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
 
 import { useDepositAllowance } from './use-deposit-allowance'
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 vi.mock('hooks/state', () => ({
   useSendTokenInput: vi.fn(),
   useTradingPanelApprovingStatus: vi.fn(),
-  useTradingPanelPoolConfig: vi.fn(),
+  useTradingPanelPoolConfig: vi.fn().mockImplementation(
+    () =>
+      ({
+        chainId,
+      }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+  ),
 }))
 
 vi.mock('hooks/trading/allowance', () => ({
@@ -27,23 +33,14 @@ vi.mock('hooks/trading/allowance', () => ({
 }))
 
 vi.mock('hooks/web3', () => ({
-  useAccount: vi.fn(),
+  useAccount: vi.fn().mockImplementation(() => ({ account: TEST_ADDRESS })),
+}))
+vi.mock('../use-is-easy-swapper-trading', () => ({
+  useIsEasySwapperTrading: vi.fn(),
 }))
 const chainId = optimism.id
 
 describe('useDepositAllowance', () => {
-  beforeEach(() => {
-    vi.mocked(useAccount).mockImplementationOnce(
-      () => ({ account: TEST_ADDRESS }) as ReturnType<typeof useAccount>,
-    )
-    vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementationOnce(
-      () =>
-        ({
-          chainId,
-        }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
-    )
-  })
-
   it('should return approve fn and check send token allowance when token is not native', () => {
     const sendToken = { ...BRIDGED_USDC_OPTIMISM, value: '1', isLoading: false }
     const canSpend = true
@@ -61,6 +58,10 @@ describe('useDepositAllowance', () => {
     vi.mocked(allowanceHooks.useApprove).mockImplementationOnce(
       () => approveMock,
     )
+    vi.mocked(allowanceHooks.useApprove).mockImplementationOnce(
+      () => approveMock,
+    )
+    vi.mocked(useIsEasySwapperTrading).mockImplementationOnce(() => true)
 
     const { result } = renderHook(() => useDepositAllowance())
 
@@ -105,6 +106,7 @@ describe('useDepositAllowance', () => {
       () => ['success', updateApprovingStatusMock],
     )
     vi.mocked(allowanceHooks.useApprove).mockImplementationOnce(() => vi.fn())
+    vi.mocked(useIsEasySwapperTrading).mockImplementationOnce(() => true)
 
     renderHook(() => useDepositAllowance())
 
@@ -119,5 +121,34 @@ describe('useDepositAllowance', () => {
     })
     expect(updateApprovingStatusMock).toHaveBeenCalledTimes(1)
     expect(updateApprovingStatusMock).toHaveBeenCalledWith(undefined)
+  })
+
+  it('should use correct contract address to check PoolLogic allowance', () => {
+    const sendToken = { ...BRIDGED_USDC_OPTIMISM, value: '1', isLoading: false }
+
+    vi.mocked(stateHooks.useSendTokenInput).mockImplementationOnce(() => [
+      sendToken,
+      vi.fn(),
+    ])
+    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockImplementationOnce(
+      () => ['pending', vi.fn()],
+    )
+    vi.mocked(useTradingPanelPoolConfig).mockImplementationOnce(
+      () =>
+        ({
+          address: '0xPool',
+          chainId: optimism.id,
+        }) as unknown as ReturnType<typeof useTradingPanelPoolConfig>,
+    )
+    vi.mocked(useIsEasySwapperTrading).mockImplementationOnce(() => false)
+
+    renderHook(() => useDepositAllowance())
+
+    expect(allowanceHooks.useCanSpend).toHaveBeenCalledWith(
+      expect.objectContaining({
+        spenderAddress: '0xPool',
+        chainId,
+      }),
+    )
   })
 })
