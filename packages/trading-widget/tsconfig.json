@@ -27,13 +27,10 @@
     "vite.config.ts",
     "postcss.config.js",
     "tailwind.config.js"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.storybook.json"
+    }
   ]
-  //  "references": [
-  //    {
-  //      "path": "./tsconfig.lib.json"
-  //    },
-  //    {
-  //      "path": "./tsconfig.spec.json"
-  //    }
-  //  ]
 }

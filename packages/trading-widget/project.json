@@ -8,7 +8,8 @@
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "packages/trading-widget/dist"
+        "outputPath": "packages/trading-widget/dist",
+        "postcssConfig": "packages/trading-widget/postcss.config.js"
       }
     },
     "publish": {
@@ -31,6 +32,31 @@
           "packages/trading-widget/**/*.ts",
           "packages/trading-widget/package.json"
         ]
+      }
+    },
+    "storybook": {
+      "executor": "@nx/storybook:storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "packages/trading-widget/.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nx/storybook:build",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/trading-widget",
+        "configDir": "packages/trading-widget/.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
       }
     }
   },
