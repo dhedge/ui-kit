@@ -82,6 +82,7 @@ describe('usePoolTokenPrice', () => {
         address,
         chainId,
         formatter: (price) => price.toString(),
+        disabled: false,
       }),
     )
 

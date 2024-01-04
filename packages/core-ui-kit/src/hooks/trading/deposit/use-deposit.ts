@@ -10,7 +10,7 @@ import {
   useTradingPanelTransactions,
 } from 'hooks/state'
 import { useTradingSettleHandler } from 'hooks/trading'
-import { useDepositSlippage} from 'hooks/trading/deposit'
+import { useDepositSlippage } from 'hooks/trading/deposit'
 import { useContractFunction } from 'hooks/web3'
 
 import {
