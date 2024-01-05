@@ -5,6 +5,13 @@ import { TradingWidget as TradingWidgetComponent } from './trading-widget'
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof TradingWidget> = {
   component: TradingWidgetComponent,
+  decorators: [
+    (Story) => (
+      <div className="dtw-bg-themeDark-800 dtw-text-white dtw-rounded-xl dtw-p-4">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
