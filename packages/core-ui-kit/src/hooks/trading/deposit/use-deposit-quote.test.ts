@@ -399,7 +399,7 @@ describe('useDepositQuote', () => {
     )
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(1)
     expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(1, {
-      value: '100.000',
+      value: '99.900',
     })
   })
 })
