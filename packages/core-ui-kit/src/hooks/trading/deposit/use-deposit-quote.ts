@@ -6,6 +6,7 @@ import { DhedgeEasySwapperAbi } from 'abi'
 import {
   DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
   DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
+  DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER,
 } from 'const'
 import { usePoolTokenPrice } from 'hooks/pool'
 import {
@@ -130,6 +131,7 @@ export const useDepositQuote = ({
         .shiftedBy(-sendToken.decimals)
         .multipliedBy(sendTokenPrice)
         .dividedBy(vaultTokenPrice)
+        .multipliedBy(DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER)
         .toFixed(receiveToken.decimals),
     })
   }, [
