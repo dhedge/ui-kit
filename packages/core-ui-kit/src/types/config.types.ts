@@ -20,6 +20,7 @@ export interface PoolConfig {
     customTokens: WithdrawTradingToken[]
   }
   deprecated?: boolean
+  usePoolLogicDeposit?: boolean
 }
 
 export interface PoolFallbackData {

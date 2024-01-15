@@ -6,7 +6,9 @@ import { DhedgeEasySwapperAbi } from 'abi'
 import {
   DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
   DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
+  DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER,
 } from 'const'
+import { usePoolTokenPrice } from 'hooks/pool'
 import {
   useIsDepositTradingPanelType,
   useReceiveTokenInput,
@@ -19,6 +21,9 @@ import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'
 
+import { useAssetPrice } from '../use-asset-price'
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
+
 export const useDepositQuote = ({
   address,
   chainId,
@@ -28,6 +33,17 @@ export const useDepositQuote = ({
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
   const isDeposit = useIsDepositTradingPanelType()
+  const isEasySwapperTrading = useIsEasySwapperTrading()
+  const vaultTokenPrice = usePoolTokenPrice({
+    address: receiveToken.address,
+    chainId,
+    disabled: isEasySwapperTrading,
+  })
+  const sendTokenPrice = useAssetPrice({
+    address: sendToken.address,
+    chainId,
+    disabled: isEasySwapperTrading,
+  })
 
   const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
   const poolDepositAssetAddress = usePoolDepositAssetAddress({
@@ -41,7 +57,7 @@ export const useDepositQuote = ({
   const hasSendInputValue = !!(
     debouncedSendTokenValue && +debouncedSendTokenValue > 0
   )
-  const sendAmount = new BigNumber(debouncedSendTokenValue || 0)
+  const sendAmount = new BigNumber(debouncedSendTokenValue || '0')
     .shiftedBy(sendToken.decimals)
     .toFixed(0)
 
@@ -62,14 +78,20 @@ export const useDepositQuote = ({
       },
     ],
     enabled:
-      hasSendInputValue && !!sendToken.address && !!poolDepositAssetAddress,
+      hasSendInputValue &&
+      !!sendToken.address &&
+      !!poolDepositAssetAddress &&
+      isEasySwapperTrading,
     watch: true,
   })
   const depositQuote = data?.[0]?.result
   useContractReadsErrorLogging(data)
 
+  // Updates received amount for EasySwapper deposits
   useEffect(() => {
-    if (!isDeposit) return // Fixes useEffect call on trading tabs switch
+    if (!isDeposit || !isEasySwapperTrading) {
+      return
+    }
 
     const isLoading =
       isSendValueUpdating || (!depositQuote && hasSendInputValue)
@@ -88,6 +110,7 @@ export const useDepositQuote = ({
       updateReceiveToken({ value: isLoading ? '0' : formattedVal })
     }
   }, [
+    isEasySwapperTrading,
     isDeposit,
     receiveToken.decimals,
     hasSendInputValue,
@@ -96,6 +119,31 @@ export const useDepositQuote = ({
     poolDepositAssetAddress,
     isSendValueUpdating,
     updateReceiveToken,
+  ])
+
+  // Updates received amount for PoolLogic deposits
+  useEffect(() => {
+    if (!isDeposit || isEasySwapperTrading || !hasSendInputValue) {
+      return
+    }
+    updateReceiveToken({
+      value: new BigNumber(sendAmount)
+        .shiftedBy(-sendToken.decimals)
+        .multipliedBy(sendTokenPrice)
+        .dividedBy(vaultTokenPrice)
+        .multipliedBy(DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER)
+        .toFixed(receiveToken.decimals),
+    })
+  }, [
+    isDeposit,
+    isEasySwapperTrading,
+    sendAmount,
+    sendTokenPrice,
+    updateReceiveToken,
+    vaultTokenPrice,
+    sendToken.decimals,
+    receiveToken.decimals,
+    hasSendInputValue,
   ])
 
   useEffect(() => {

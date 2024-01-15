@@ -29,6 +29,7 @@
               "lodash.chunk",
               "lodash.uniqby",
               "lodash.isnumber",
+              "lodash.isequal",
               "lodash.debounce",
               "lodash.noop",
               "tsup",

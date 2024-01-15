@@ -1,8 +1,12 @@
 import { act } from '@testing-library/react'
 import BigNumber from 'bignumber.js'
 
+import { expect } from 'vitest'
+
 import { DhedgeEasySwapperAbi } from 'abi'
 import { AddressZero, optimism } from 'const'
+import * as poolHooks from 'hooks/pool'
+import { usePoolTokenPrice } from 'hooks/pool'
 import * as stateHooks from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useContractReads } from 'hooks/web3'
@@ -12,6 +16,8 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import type { Address, DynamicTradingToken } from 'types'
 
 import { useDepositQuote } from './use-deposit-quote'
+import { useAssetPrice } from '../use-asset-price'
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 vi.mock('hooks/state', () => ({
   useIsDepositTradingPanelType: vi.fn(),
@@ -19,6 +25,7 @@ vi.mock('hooks/state', () => ({
   useSendTokenInput: vi.fn(),
   useTradingPanelPoolFallbackData: vi.fn(),
   useTradingPanelSettings: vi.fn().mockImplementation(() => []),
+  useTradingPanelPoolConfig: vi.fn(),
 }))
 vi.mock('hooks/utils', () => ({
   useDebounce: vi.fn().mockImplementation((v) => v),
@@ -29,6 +36,15 @@ vi.mock('hooks/web3', () => ({
 }))
 vi.mock('hooks/trading/deposit', () => ({
   usePoolDepositAssetAddress: vi.fn(),
+}))
+vi.mock('hooks/pool', () => ({
+  usePoolTokenPrice: vi.fn(),
+}))
+vi.mock('../use-is-easy-swapper-trading', () => ({
+  useIsEasySwapperTrading: vi.fn(),
+}))
+vi.mock('../use-asset-price', () => ({
+  useAssetPrice: vi.fn(),
 }))
 
 describe('useDepositQuote', () => {
@@ -70,6 +86,7 @@ describe('useDepositQuote', () => {
           data: [{ result: BigInt(100000) }],
         }) as ReturnType<typeof useContractReads>,
     )
+    vi.mocked(useIsEasySwapperTrading).mockImplementation(() => true)
 
     const { rerender } = renderHook(() =>
       useDepositQuote({
@@ -315,5 +332,74 @@ describe('useDepositQuote', () => {
     expect(updateReceiveTokenMock).toHaveBeenCalledWith({ value: '0' })
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(1)
     expect(updateTradingSettingsMock).toHaveBeenCalledWith({ minSlippage: 0 })
+  })
+
+  it('should update receive token input for synthetix vault', () => {
+    const isDeposit = true
+    const sendToken: DynamicTradingToken = {
+      symbol: 'USDC',
+      address: '0x123',
+      decimals: 6,
+      value: '100',
+      isLoading: false,
+    }
+    const receiveToken: DynamicTradingToken = {
+      symbol: 'USDy',
+      address: '0x111',
+      decimals: 3,
+      value: '50',
+      isLoading: false,
+    }
+    const updateReceiveTokenMock = vi.fn()
+    vi.mocked(stateHooks.useSendTokenInput).mockImplementation(() => [
+      sendToken,
+      vi.fn(),
+    ])
+    vi.mocked(stateHooks.useReceiveTokenInput).mockImplementation(() => [
+      receiveToken,
+      updateReceiveTokenMock,
+    ])
+    vi.mocked(stateHooks.useIsDepositTradingPanelType).mockImplementation(
+      () => isDeposit,
+    )
+    vi.mocked(usePoolDepositAssetAddress).mockImplementation(
+      () => sendToken.address,
+    )
+    vi.mocked(useContractReads).mockImplementation(
+      () =>
+        ({
+          data: [{ result: BigInt(100000) }],
+        }) as ReturnType<typeof useContractReads>,
+    )
+    vi.mocked(useIsEasySwapperTrading).mockImplementation(() => false)
+    vi.mocked(poolHooks.usePoolTokenPrice).mockImplementation(() => '100')
+    vi.mocked(useAssetPrice).mockImplementation(() => '100')
+
+    renderHook(() =>
+      useDepositQuote({
+        address: receiveToken.address,
+        chainId: optimism.id,
+        depositParams: { customTokens: [] },
+      }),
+    )
+    expect(usePoolTokenPrice).toHaveBeenCalledTimes(1)
+    expect(usePoolTokenPrice).toHaveBeenCalledWith({
+      address: receiveToken.address,
+      chainId: optimism.id,
+      disabled: false,
+    })
+    expect(useAssetPrice).toHaveBeenCalledTimes(1)
+    expect(useAssetPrice).toHaveBeenCalledWith({
+      address: sendToken.address,
+      chainId: optimism.id,
+      disabled: false,
+    })
+    expect(useContractReads).toHaveBeenCalledWith(
+      expect.objectContaining({ enabled: false }),
+    )
+    expect(updateReceiveTokenMock).toHaveBeenCalledTimes(1)
+    expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(1, {
+      value: '99.900',
+    })
   })
 })

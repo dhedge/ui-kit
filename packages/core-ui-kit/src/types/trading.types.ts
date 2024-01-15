@@ -3,6 +3,7 @@ import type { BigNumber } from 'bignumber.js'
 import type {
   BuyingWithEasyswapperArgs,
   BuyingWithNativeAssetArgs,
+  BuyingWithPoolLogicArgs,
   DefaultSellingParams,
 } from 'models'
 import type { Address, ChainId } from 'types/web3.types'
@@ -32,3 +33,4 @@ export type TxArgs =
   | BuyingWithEasyswapperArgs
   | BuyingWithNativeAssetArgs
   | DefaultSellingParams
+  | BuyingWithPoolLogicArgs

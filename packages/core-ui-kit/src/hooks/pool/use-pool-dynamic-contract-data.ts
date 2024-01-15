@@ -2,13 +2,14 @@ import { formatDuration, intervalToDuration } from 'date-fns'
 
 import { PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
+import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
 import {
   useAccount,
   useContractReads,
   useContractReadsErrorLogging,
 } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
-import { isZeroAddress } from 'utils'
+import { isSynthetixV3Vault, isZeroAddress } from 'utils'
 
 interface FundSummary {
   creationTime: bigint
@@ -54,6 +55,16 @@ export const usePoolDynamicContractData = ({
   chainId,
 }: PoolDynamicContractDataParams) => {
   const { account } = useAccount()
+  const isSynthetixVault = isSynthetixV3Vault(address)
+  const managerLogicAddress = useManagerLogicAddress({
+    address,
+    chainId,
+  })
+  const totalFundValueMutable = useTotalFundValueMutable({
+    vaultManagerLogicAddress: managerLogicAddress,
+    chainId,
+    disabled: !isSynthetixVault,
+  })
 
   const { data, isFetched } = useContractReads({
     contracts: [
@@ -75,7 +86,7 @@ export const usePoolDynamicContractData = ({
   })
   useContractReadsErrorLogging(data)
   const exitCooldown = data?.[0]?.result
-  const summary = data?.[1]?.result
+  const summary = getDataFromSummary(data?.[1]?.result)
 
   const cooldown = exitCooldown ? Number(exitCooldown) * 1000 : 0
   const cooldownEndsInTime = formatDuration(
@@ -85,7 +96,10 @@ export const usePoolDynamicContractData = ({
   return {
     cooldownActive: cooldown > 0,
     cooldownEndsInTime,
-    ...getDataFromSummary(summary),
+    ...summary,
+    totalValue: isSynthetixVault
+      ? totalFundValueMutable ?? summary.totalValue
+      : summary.totalValue,
     isFetched,
   }
 }

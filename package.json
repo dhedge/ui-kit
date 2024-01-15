@@ -11,6 +11,7 @@
   "dependencies": {
     "lodash.chunk": "^4.2.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.isequal": "^4.5.0",
     "lodash.isnumber": "^3.0.3",
     "lodash.noop": "^3.0.1",
     "lodash.uniqby": "^4.7.0"
@@ -32,6 +33,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/lodash.chunk": "^4.2.7",
     "@types/lodash.debounce": "^4.0.7",
+    "@types/lodash.isequal": "^4.5.8",
     "@types/lodash.isnumber": "^3.0.7",
     "@types/lodash.noop": "^3.0.7",
     "@types/lodash.uniqby": "^4.7.7",
@@ -65,7 +67,7 @@
     "vite": "~4.5.0",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "~0.34.6",
-    "wagmi": "^1.4.7"
+    "wagmi": "^1.4.12"
   },
   "nx": {
     "includedScripts": []

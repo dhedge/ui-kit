@@ -1,4 +1,4 @@
-import { arbitrum, optimism, polygon } from 'wagmi/chains'
+import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 
 import {
   AaveLendingPoolAbi,
@@ -8,23 +8,26 @@ import {
   PoolLogicAbi,
   PoolManagerLogicAbi,
   RewardDistributionAbi,
+  SynthetixV3AssetGuard,
   erc20ABI,
 } from 'abi'
 import type { Address, ChainId } from 'types/web3.types'
 
 import {
   AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,
+  AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
   AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
   AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
   EASY_SWAPPER_ADDRESS_ARBITRUM,
   EASY_SWAPPER_ADDRESS_OPTIMISM,
   EASY_SWAPPER_ADDRESS_POLYGON,
   FACTORY_ADDRESS_ARBITRUM,
+  FACTORY_ADDRESS_BASE,
   FACTORY_ADDRESS_OPTIMISM,
   FACTORY_ADDRESS_POLYGON,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
   STAKING_V2_ADDRESS_OPTIMISM,
-} from './contract'
+} from './contracts'
 
 export type ContractId =
   | 'factory'
@@ -36,6 +39,7 @@ export type ContractId =
   | 'poolManagerLogic'
   | 'erc20'
   | 'poolLogic'
+  | 'synthetixV3AssetGuard'
 
 type ContractsAddressesMap = Readonly<
   Record<ChainId, { [id in ContractId]?: Address }>
@@ -58,6 +62,10 @@ export const contractsAddressesMap: ContractsAddressesMap = {
   [arbitrum.id]: {
     factory: FACTORY_ADDRESS_ARBITRUM,
     easySwapper: EASY_SWAPPER_ADDRESS_ARBITRUM,
+    aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
+  },
+  [base.id]: {
+    factory: FACTORY_ADDRESS_BASE,
   },
 }
 
@@ -72,4 +80,5 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   poolManagerLogic: PoolManagerLogicAbi,
   erc20: erc20ABI,
   poolLogic: PoolLogicAbi,
+  synthetixV3AssetGuard: SynthetixV3AssetGuard,
 }
