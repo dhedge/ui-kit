@@ -27,7 +27,6 @@ import {
   FACTORY_ADDRESS_POLYGON,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
   STAKING_V2_ADDRESS_OPTIMISM,
-  SYNTHETIX_V3_ASSET_GUARD_OPTIMISM,
 } from './contracts'
 
 export type ContractId =
@@ -59,7 +58,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     rewardDistribution: REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
     stakingV2: STAKING_V2_ADDRESS_OPTIMISM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
-    synthetixV3AssetGuard: SYNTHETIX_V3_ASSET_GUARD_OPTIMISM,
   },
   [arbitrum.id]: {
     factory: FACTORY_ADDRESS_ARBITRUM,
