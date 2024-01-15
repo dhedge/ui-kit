@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "pnpx nx build core-ui-kit",
+    "build:trading-widget": "pnpx nx build trading-widget",
     "lint": "pnpx nx lint core-ui-kit",
     "test": "pnpx nx test core-ui-kit",
     "storybook": "pnpx nx run trading-widget:storybook"
