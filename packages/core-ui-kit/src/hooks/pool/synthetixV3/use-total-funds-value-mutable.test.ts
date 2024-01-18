@@ -12,9 +12,10 @@ describe('useTotalFundValueMutable', () => {
   it('should call useTotalFundValueMutable with the correct parameters', () => {
     const managerLogicAddress = '0x012'
     const expectedResult = BigInt(100)
-    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(
-      () => expectedResult,
-    )
+    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(() => ({
+      data: expectedResult,
+      error: false,
+    }))
 
     const { result } = renderHook(() =>
       useTotalFundValueMutable({

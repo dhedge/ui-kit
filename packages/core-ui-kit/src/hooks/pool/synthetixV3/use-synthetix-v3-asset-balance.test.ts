@@ -1,3 +1,5 @@
+import { expect } from 'vitest'
+
 import { PoolFactoryAbi } from 'abi'
 import { DHEDGE_SYNTHETIX_V3_ASSETS_MAP, optimism } from 'const'
 import * as web3Hooks from 'hooks/web3'
@@ -17,15 +19,23 @@ describe('useSynthetixV3AssetBalance', () => {
     const vaultAddress = '0x01'
     const synthetixAssetGuard = '0x02'
     const expectedResult = BigInt(10)
-    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(
-      () => expectedResult,
-    )
-    vi.mocked(web3Hooks.useContractRead).mockImplementationOnce(
-      () =>
-        ({
-          data: synthetixAssetGuard,
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
-    )
+    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(() => ({
+      data: expectedResult,
+      error: false,
+    }))
+    vi.mocked(web3Hooks.useContractRead)
+      .mockImplementationOnce(
+        () =>
+          ({
+            data: synthetixAssetGuard,
+          }) as ReturnType<typeof web3Hooks.useContractRead>,
+      )
+      .mockImplementationOnce(
+        () =>
+          ({
+            data: undefined,
+          }) as ReturnType<typeof web3Hooks.useContractRead>,
+      )
 
     const { result } = renderHook(() =>
       useSynthetixV3AssetBalance({
@@ -34,7 +44,7 @@ describe('useSynthetixV3AssetBalance', () => {
         disabled: false,
       }),
     )
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(2)
     expect(web3Hooks.useContractRead).toHaveBeenCalledWith({
       address: getContractAddressById('factory', optimism.id),
       chainId: optimism.id,
@@ -44,6 +54,9 @@ describe('useSynthetixV3AssetBalance', () => {
       enabled: true,
       staleTime: Infinity,
     })
+    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
+      expect.objectContaining({ enabled: false, functionName: 'getBalance' }),
+    )
     expect(web3Hooks.useStaticCall).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useStaticCall).toHaveBeenCalledWith({
       chainId: optimism.id,

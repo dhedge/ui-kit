@@ -19,4 +19,4 @@ export const useTotalFundValueMutable = ({
     functionName: 'totalFundValueMutable',
     args: [],
     disabled,
-  })?.toString() ?? ''
+  })?.data?.toString() ?? ''

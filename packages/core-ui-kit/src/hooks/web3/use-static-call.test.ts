@@ -80,13 +80,15 @@ describe('useStaticCall', () => {
         args,
       })
     })
-    expect(result.current).toBe(expectedResult)
+    expect(result.current.data).toBe(expectedResult)
+    expect(result.current.error).toBe(false)
 
     rerender()
     await waitFor(() => {
       expect(mockCallStaticFn).toHaveBeenCalledTimes(1)
     })
-    expect(result.current).toBe(expectedResult)
+    expect(result.current.data).toBe(expectedResult)
+    expect(result.current.error).toBe(false)
   })
 
   it('should return undefined if disabled is true', async () => {
@@ -122,7 +124,8 @@ describe('useStaticCall', () => {
     )
     await waitFor(() => {
       expect(mockCallStaticFn).not.toHaveBeenCalled()
-      expect(result.current).toBeUndefined()
+      expect(result.current.data).toBeUndefined()
+      expect(result.current.error).toBe(false)
     })
   })
 })
