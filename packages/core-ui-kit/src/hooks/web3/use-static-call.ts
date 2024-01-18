@@ -25,6 +25,11 @@ type UseStaticCallVariables = Pick<
   dynamicContractAddress?: Address
 }
 
+interface StaticCallResponse<T> {
+  data: T | undefined
+  error: boolean
+}
+
 export const useStaticCall = <T>({
   dynamicContractAddress,
   contractId,
@@ -32,8 +37,11 @@ export const useStaticCall = <T>({
   chainId,
   disabled,
   functionName,
-}: UseStaticCallVariables): T | undefined => {
-  const [result, setResult] = useState<T>()
+}: UseStaticCallVariables): StaticCallResponse<T> => {
+  const [result, setResult] = useState<StaticCallResponse<T>>({
+    data: undefined,
+    error: false,
+  })
   const publicClient = usePublicClient({ chainId })
   const { supportedChainId } = useNetwork()
   const contractAddress =
@@ -62,10 +70,10 @@ export const useStaticCall = <T>({
           functionName,
           args,
         })
-        setResult(result as T)
+        setResult({ data: result as T, error: false })
       } catch (error) {
         console.error(error)
-        setResult(undefined)
+        setResult({ data: undefined, error: true })
       }
     }
     makeStaticCall()
