@@ -37,7 +37,6 @@ jobs:
           CI: true
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm build
-      - run: npm login --registry=https://registry.npmjs.org/ --scope=@dhedge --always-auth --auth.token=${{ secrets.NPM_TOKEN }}
       - run: pnpx nx publish core-ui-kit
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
