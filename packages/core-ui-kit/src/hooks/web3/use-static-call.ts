@@ -63,7 +63,8 @@ export const useStaticCall = <T>({
           args,
         })
         setResult(result as T)
-      } catch {
+      } catch (error) {
+        console.error(error)
         setResult(undefined)
       }
     }

@@ -1,13 +1,13 @@
 import type { FC, ReactNode } from 'react'
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
-import { arbitrum, optimism, polygon } from 'wagmi/chains'
+import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 import { DEFAULT_POLLING_INTERVAL } from 'const'
 
 const { chains, publicClient } = configureChains(
-  [optimism, polygon, arbitrum],
+  [optimism, polygon, arbitrum, base],
   [alchemyProvider({ apiKey: 'FUOJ0LrUAEKMhyyVAeUAr3_rV7cvGIWQ' })],
   { pollingInterval: DEFAULT_POLLING_INTERVAL },
 )
