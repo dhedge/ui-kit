@@ -38,7 +38,8 @@
               "dedent",
               "@testing-library/jest-dom",
               "@testing-library/dom",
-              "@testing-library/react"
+              "@testing-library/react",
+              "erc7412"
             ]
           }
         ]

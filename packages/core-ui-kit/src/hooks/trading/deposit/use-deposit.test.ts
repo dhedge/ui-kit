@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { AddressZero, BRIDGED_USDC_OPTIMISM, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
 
-import { useTradingSettleHandler } from 'hooks/trading'
+import { useTradingParams, useTradingSettleHandler } from 'hooks/trading'
 import { useDepositSlippage } from 'hooks/trading/deposit'
 import { useContractFunction } from 'hooks/web3'
 import { renderHook } from 'test-utils'
@@ -22,6 +22,7 @@ vi.mock('hooks/state', () => ({
 }))
 vi.mock('hooks/trading', () => ({
   useTradingSettleHandler: vi.fn(),
+  useTradingParams: vi.fn(),
 }))
 vi.mock('hooks/trading/deposit', () => ({
   useDepositSlippage: vi.fn(),
@@ -105,8 +106,9 @@ describe('useDeposit', () => {
           vi.fn,
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
+    vi.mocked(useTradingParams).mockImplementation(() => tradingParams)
 
-    const { result } = renderHook(() => useDeposit(tradingParams))
+    const { result } = renderHook(() => useDeposit())
 
     expect(useDepositSlippage).toHaveBeenCalledTimes(1)
     expect(useDepositSlippage).toHaveBeenCalledWith(
@@ -179,8 +181,9 @@ describe('useDeposit', () => {
           vi.fn,
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
+    vi.mocked(useTradingParams).mockImplementation(() => tradingParams)
 
-    const { result } = renderHook(() => useDeposit(tradingParams))
+    const { result } = renderHook(() => useDeposit())
 
     expect(useDepositSlippage).toHaveBeenCalledTimes(1)
     expect(useDepositSlippage).toHaveBeenCalledWith(
