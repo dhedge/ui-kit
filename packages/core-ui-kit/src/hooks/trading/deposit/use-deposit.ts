@@ -9,7 +9,7 @@ import {
   useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import { useTradingSettleHandler } from 'hooks/trading'
+import { useTradingParams, useTradingSettleHandler } from 'hooks/trading'
 import { useDepositSlippage } from 'hooks/trading/deposit'
 import { useContractFunction } from 'hooks/web3'
 
@@ -22,7 +22,6 @@ import type { ContractActionFunc } from 'types/web3.types'
 import { getOrderedTxArgs, isNativeToken, logTransactionArguments } from 'utils'
 
 import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
-import { useTradingParams } from '../use-trading-params'
 
 const action = 'deposit'
 
