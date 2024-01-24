@@ -5,7 +5,14 @@ import type { ContractId } from 'const'
 import { AddressZero, contractsAbisMap, contractsAddressesMap } from 'const'
 import type { Address, ChainId } from 'types/web3.types'
 
-export { formatUnits, formatEther, encodeFunctionData } from 'viem'
+export {
+  formatUnits,
+  formatEther,
+  encodeFunctionData,
+  decodeErrorResult,
+  hexToString,
+  trim,
+} from 'viem'
 export { getContract } from 'wagmi/actions'
 
 export const getContractAddressById = (

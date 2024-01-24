@@ -18,21 +18,15 @@ import {
   BuyingWithNativeAssetArgs,
   BuyingWithPoolLogicArgs,
 } from 'models'
-import type { TradingParams } from 'types/trading.types'
 import type { ContractActionFunc } from 'types/web3.types'
 import { getOrderedTxArgs, isNativeToken, logTransactionArguments } from 'utils'
 
 import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
+import { useTradingParams } from '../use-trading-params'
 
 const action = 'deposit'
 
-export const useDeposit = ({
-  poolDepositAddress,
-  receiveAssetAddress,
-  sendAssetAddress,
-  receiveAssetInputValue,
-  fromTokenAmount,
-}: TradingParams): ContractActionFunc => {
+export const useDeposit = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const [depositMethod] = useTradingPanelDepositMethod()
   const [sendToken] = useSendTokenInput()
@@ -40,6 +34,13 @@ export const useDeposit = ({
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const [{ slippage }] = useTradingPanelSettings()
   const isEasySwapperDeposit = useIsEasySwapperTrading()
+  const {
+    poolDepositAddress,
+    receiveAssetAddress,
+    sendAssetAddress,
+    receiveAssetInputValue,
+    fromTokenAmount,
+  } = useTradingParams()
 
   useDepositSlippage(receiveAssetInputValue)
 

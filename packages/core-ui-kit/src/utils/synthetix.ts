@@ -1,9 +1,26 @@
+import { PythAdapter } from 'erc7412/dist/src/adapters/pyth'
+
 import {
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
+  PYTH_API_LINK,
+  SYNTHETIX_V3_ACCOUNT_ID_MAP,
+  SYNTHETIX_V3_COLLATERAL_TYPE_ID_MAP,
+  SYNTHETIX_V3_POOL_ID_MAP,
 } from 'const'
 
-import { isEqualAddress } from './web3'
+import type { usePublicClient } from 'hooks/web3'
+
+import type { Address, TransactionRequest } from 'types'
+
+import { Eip7412 } from './synthetix-v3/eip-7412'
+import { TrustedMulticallForwarderBatcher } from './synthetix-v3/multicall-forwarder-batcher'
+import {
+  encodeFunctionData,
+  getContractAbiById,
+  getContractAddressById,
+  isEqualAddress,
+} from './web3'
 
 export const isSynthetixV3Vault = (address: string) =>
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES.some((vault) =>
@@ -14,3 +31,67 @@ export const isSynthetixV3Asset = (address: string) =>
   Object.values(DHEDGE_SYNTHETIX_V3_ASSETS_MAP).some((asset) =>
     isEqualAddress(asset, address),
   )
+
+// eip-7412: https://eips.ethereum.org/EIPS/eip-7412
+// usecannon example, https://github.com/usecannon/cannon/blob/main/packages/website/src/helpers/ethereum.ts
+
+// some of the code is modified from: https://github.com/Synthetixio/erc7412/pull/10
+
+// this is to check and update the oracle data if necessary,
+// to ensure all actions executed as expected.
+//
+// the usage of erc7412 is different from the original proposal,
+// because any tx from dhedge vault is (trader_EOA_account => dhedge_contract_guard => synthetixV3) instead of (EOA => synthetixV3)
+// so we use the write-func, getPositionDebt, to probe and build up the prepended txs as a single multicall and execute it if there is any
+//
+// desc: https://mirror.xyz/noahlitvin.eth/_R6jCY5JHlPl2q8VvXblCDzQAqptXdz5AhRxfvsVYLc
+export const getOracleUpdateTransaction = async ({
+  publicClient,
+  account,
+  chainId,
+}: {
+  publicClient: ReturnType<typeof usePublicClient>
+  account?: Address
+  chainId: number
+}): Promise<TransactionRequest | null> => {
+  if (!account) {
+    return null
+  }
+
+  const trustedMulticallForwarderBatcher =
+    new TrustedMulticallForwarderBatcher()
+  const eip7412 = new Eip7412(
+    [new PythAdapter(PYTH_API_LINK)],
+    trustedMulticallForwarderBatcher,
+  )
+
+  // use getPositionDebt as the probing transaction
+  const txData = encodeFunctionData({
+    abi: getContractAbiById('synthetixV3Core'),
+    functionName: 'getPositionDebt',
+    args: [
+      SYNTHETIX_V3_ACCOUNT_ID_MAP[chainId],
+      SYNTHETIX_V3_POOL_ID_MAP[chainId],
+      SYNTHETIX_V3_COLLATERAL_TYPE_ID_MAP[chainId],
+    ],
+  })
+
+  let transactions: TransactionRequest[] = []
+  try {
+    transactions = await eip7412.buildTransactions(publicClient, {
+      from: account,
+      to: getContractAddressById('synthetixV3Core', chainId),
+      data: txData as `0x${string}`,
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  if (transactions.length <= 1) {
+    return null
+  }
+
+  // only execute the prepended txns, so remove the last one
+  const prependedCalls = transactions.slice(0, transactions.length - 1)
+  return trustedMulticallForwarderBatcher.batch(prependedCalls)
+}
