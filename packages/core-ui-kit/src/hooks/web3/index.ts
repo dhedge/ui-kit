@@ -5,6 +5,7 @@ export {
   usePublicClient,
   useWaitForTransaction,
   useWalletClient,
+  useSendTransaction,
 } from 'wagmi'
 export { useAccount } from './use-account'
 export { useNetwork } from './use-network'

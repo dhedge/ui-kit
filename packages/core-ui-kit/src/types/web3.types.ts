@@ -1,8 +1,19 @@
-import type { Address as WagmiAddress, Chain as WagmiChain } from 'wagmi'
-
-export type Address = WagmiAddress
-export type Chain = WagmiChain
+import type { TransactionRequest as ViemTransactionRequest } from 'viem'
+import type { Address, Chain } from 'wagmi'
+export type {
+  Hex,
+  PublicClient,
+  WalletClient,
+  Client,
+  WaitForTransactionReceiptReturnType,
+  CallExecutionError,
+} from 'viem'
+export type { Address, Chain }
 export type ChainId = Chain['id']
+export type TransactionRequest = Pick<
+  ViemTransactionRequest,
+  'to' | 'data' | 'value' | 'from'
+>
 
 export type ContractActionFunc = () => Promise<void | unknown> // TODO: check
 

@@ -1,6 +1,5 @@
-import type { WaitForTransactionReceiptReturnType } from 'viem'
-
 import type { EstimationError } from 'models'
+
 import type { PoolConfig, PoolFallbackData } from 'types/config.types'
 import type {
   DepositMethodName,
@@ -18,6 +17,7 @@ import type {
   ChainId,
   SimulateTransactionParams,
   SimulateTransactionResponse,
+  WaitForTransactionReceiptReturnType,
 } from 'types/web3.types'
 
 export interface TradingPanelState {
