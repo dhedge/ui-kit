@@ -19,6 +19,7 @@ vi.mock('utils', () => ({
   getConventionalTokenPriceDecimals: vi.fn(),
   getPoolFraction: vi.fn(),
   shiftBy: vi.fn(),
+  isSynthetixV3Asset: vi.fn(),
 }))
 
 vi.mock('./use-pool-dynamic-contract-data', () => ({
@@ -51,7 +52,7 @@ describe('formatPoolComposition', () => {
     expect(
       formatPoolComposition({
         composition: [poolComposition],
-        assetAmount: 'assetAmount',
+        vaultTokensAmount: 'assetAmount',
         totalSupply: 'totalSupply',
       }),
     ).toEqual([
@@ -65,9 +66,9 @@ describe('formatPoolComposition', () => {
 
   it('should filter out zero amount assets', async () => {
     const poolComposition: PoolComposition = {
-      tokenName: 'tokenName',
-      rate: 'rate',
-      amount: 'amount',
+      tokenName: 'USDC',
+      rate: '999',
+      amount: '100',
       isDeposit: true,
       tokenAddress: TEST_ADDRESS,
       precision: DEFAULT_PRECISION,
@@ -76,8 +77,8 @@ describe('formatPoolComposition', () => {
       },
     }
     const zeroAmountPoolComposition: PoolComposition = {
-      tokenName: 'tokenName',
-      rate: 'rate',
+      tokenName: 'DAI',
+      rate: '998',
       amount: '0',
       isDeposit: true,
       tokenAddress: TEST_ADDRESS,
@@ -95,7 +96,7 @@ describe('formatPoolComposition', () => {
     expect(
       formatPoolComposition({
         composition: [poolComposition, zeroAmountPoolComposition],
-        assetAmount: 'assetAmount',
+        vaultTokensAmount: 'assetAmount',
         totalSupply: 'totalSupply',
       }),
     ).toEqual([
@@ -127,7 +128,7 @@ describe('usePoolCompositionWithFraction', () => {
         iconSymbols: ['iconSymbol'],
       },
     }
-    const assetAmount = '2'
+    const vaultTokensAmount = '2'
     const totalSupply = undefined
 
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
@@ -145,7 +146,7 @@ describe('usePoolCompositionWithFraction', () => {
     const { result } = renderHook(() =>
       usePoolCompositionWithFraction({
         address: TEST_ADDRESS,
-        assetAmount,
+        vaultTokensAmount,
         chainId: optimism.id,
       }),
     )
@@ -165,7 +166,7 @@ describe('usePoolCompositionWithFraction', () => {
         iconSymbols: ['iconSymbol'],
       },
     }
-    const assetAmount = '2'
+    const vaultTokensAmount = '2'
     const totalSupply = '10'
     const fraction = 1
     const fractionUsd = '2'
@@ -187,7 +188,7 @@ describe('usePoolCompositionWithFraction', () => {
     const { result } = renderHook(() =>
       usePoolCompositionWithFraction({
         address: TEST_ADDRESS,
-        assetAmount,
+        vaultTokensAmount,
         chainId: optimism.id,
       }),
     )
@@ -195,7 +196,7 @@ describe('usePoolCompositionWithFraction', () => {
     expect(result.current).toEqual(
       formatPoolComposition({
         composition: [poolComposition],
-        assetAmount: shiftBy(new BigNumber(assetAmount || 0)),
+        vaultTokensAmount: shiftBy(new BigNumber(vaultTokensAmount || 0)),
         totalSupply: totalSupply.toString(),
       }),
     )
