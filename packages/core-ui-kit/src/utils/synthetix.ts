@@ -39,11 +39,7 @@ export const isSynthetixV3Asset = (address: string) =>
 
 // this is to check and update the oracle data if necessary,
 // to ensure all actions executed as expected.
-//
-// the usage of erc7412 is different from the original proposal,
-// because any tx from dhedge vault is (trader_EOA_account => dhedge_contract_guard => synthetixV3) instead of (EOA => synthetixV3)
-// so we use the write-func, getPositionDebt, to probe and build up the prepended txs as a single multicall and execute it if there is any
-//
+
 // desc: https://mirror.xyz/noahlitvin.eth/_R6jCY5JHlPl2q8VvXblCDzQAqptXdz5AhRxfvsVYLc
 export const getOracleUpdateTransaction = async ({
   publicClient,
