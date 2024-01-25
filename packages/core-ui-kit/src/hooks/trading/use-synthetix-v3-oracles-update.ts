@@ -65,13 +65,21 @@ export const useSynthetixV3OraclesUpdate = ({
           publicClient,
           account,
           chainId: poolConfig.chainId,
+          vaultAddress: poolConfig.address,
         })
         setTxData(txData)
       } catch {
         setTxData(null)
       }
     })()
-  }, [account, publicClient, blockNumber, disabled, poolConfig.chainId])
+  }, [
+    account,
+    publicClient,
+    blockNumber,
+    disabled,
+    poolConfig.chainId,
+    poolConfig.address,
+  ])
 
   const updateOracles = useCallback(async () => {
     if (!txData) return

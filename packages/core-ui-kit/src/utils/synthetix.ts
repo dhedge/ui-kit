@@ -4,9 +4,7 @@ import {
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
   PYTH_API_LINK,
-  SYNTHETIX_V3_ACCOUNT_ID_MAP,
-  SYNTHETIX_V3_COLLATERAL_TYPE_ID_MAP,
-  SYNTHETIX_V3_POOL_ID_MAP,
+  SYNTHETIX_V3_POSITION_DEBT_ARGUMENTS,
 } from 'const'
 
 import type { usePublicClient } from 'hooks/web3'
@@ -45,10 +43,12 @@ export const getOracleUpdateTransaction = async ({
   publicClient,
   account,
   chainId,
+  vaultAddress,
 }: {
   publicClient: ReturnType<typeof usePublicClient>
   account?: Address
   chainId: number
+  vaultAddress: string
 }): Promise<TransactionRequest | null> => {
   if (!account) {
     return null
@@ -65,11 +65,8 @@ export const getOracleUpdateTransaction = async ({
   const txData = encodeFunctionData({
     abi: getContractAbiById('synthetixV3Core'),
     functionName: 'getPositionDebt',
-    args: [
-      SYNTHETIX_V3_ACCOUNT_ID_MAP[chainId],
-      SYNTHETIX_V3_POOL_ID_MAP[chainId],
-      SYNTHETIX_V3_COLLATERAL_TYPE_ID_MAP[chainId],
-    ],
+    args:
+      SYNTHETIX_V3_POSITION_DEBT_ARGUMENTS[vaultAddress.toLowerCase()] ?? [],
   })
 
   let transactions: TransactionRequest[] = []

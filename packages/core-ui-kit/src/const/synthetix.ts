@@ -12,13 +12,10 @@ export const DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES: Address[] = [
   '0xe404fa05a4298dc657ea826ddaeec8bd630e414a', // Synthetix USDC Yield Base
 ]
 
-export const SYNTHETIX_V3_ACCOUNT_ID_MAP: Record<number, string> = {
-  [base.id]: '170141183460469231731687303715884105734',
-}
-export const SYNTHETIX_V3_POOL_ID_MAP: Record<number, string> = {
-  [base.id]: '1',
-}
-
-export const SYNTHETIX_V3_COLLATERAL_TYPE_ID_MAP: Record<number, string> = {
-  [base.id]: '0xC74eA762cF06c9151cE074E6a569a5945b6302E7',
+export const SYNTHETIX_V3_POSITION_DEBT_ARGUMENTS: Record<string, string[]> = {
+  '0xe404fa05a4298dc657ea826ddaeec8bd630e414a': [
+    '170141183460469231731687303715884105734',
+    '1',
+    '0xC74eA762cF06c9151cE074E6a569a5945b6302E7',
+  ],
 }
