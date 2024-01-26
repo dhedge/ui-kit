@@ -6,4 +6,4 @@ export const IERC2771ContextAbi = [
     outputs: [{ name: '', type: 'bool', internalType: 'bool' }],
     stateMutability: 'view',
   },
-]
+] as const

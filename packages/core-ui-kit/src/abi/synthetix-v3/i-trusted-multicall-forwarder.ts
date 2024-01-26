@@ -32,4 +32,4 @@ export const ITrustedMulticallForwarderAbi = [
     stateMutability: 'payable',
     type: 'function',
   },
-]
+] as const
