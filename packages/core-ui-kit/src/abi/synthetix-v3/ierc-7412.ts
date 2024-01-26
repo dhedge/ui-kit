@@ -36,4 +36,4 @@ export const IERC7412Abi = [
       { name: 'oracleQuery', type: 'bytes', internalType: 'bytes' },
     ],
   },
-]
+] as const

@@ -47,4 +47,4 @@ export const SynthetixV3AssetGuard = [
     stateMutability: 'view',
     type: 'function',
   },
-]
+] as const

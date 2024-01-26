@@ -52,4 +52,4 @@ export const SynthetixV3CoreAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-]
+] as const
