@@ -80,7 +80,7 @@ export const getOracleUpdateTransaction = async ({
     console.error(err)
   }
 
-  if (transactions.length <= 1) {
+  if (transactions.length <= 1 || !transactions.length) {
     return null
   }
 
