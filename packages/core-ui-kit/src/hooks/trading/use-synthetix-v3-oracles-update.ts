@@ -100,7 +100,7 @@ export const useSynthetixV3OraclesUpdate = ({
   const { sendTransaction } = useSendUpdateTransaction({ chainId })
 
   useEffect(() => {
-    if (disabled) {
+    if (disabled || !isSynthetixVault) {
       return
     }
 
@@ -119,7 +119,15 @@ export const useSynthetixV3OraclesUpdate = ({
         setTxData(null)
       }
     })()
-  }, [account, publicClient, blockNumber, disabled, chainId, vaultAddress])
+  }, [
+    account,
+    publicClient,
+    blockNumber,
+    disabled,
+    chainId,
+    vaultAddress,
+    isSynthetixVault,
+  ])
 
   const updateOracles = useCallback(async () => {
     if (!txData) return
