@@ -8,8 +8,6 @@ import {
 import { usePoolDepositTokens } from 'hooks/trading/deposit'
 import type { TradingPanelType } from 'types/trading-panel.types'
 
-import { isSynthetixV3Vault } from 'utils'
-
 export const useOnTradingTypeChange = () => {
   const poolConfig = useTradingPanelPoolConfig()
   const [initialDepositToken] = usePoolDepositTokens()
@@ -42,9 +40,7 @@ export const useOnTradingTypeChange = () => {
     })
     // Set "All assets" as default withdraw option in Synthetix V3 vaults
     updateReceiveToken({
-      ...(isSynthetixV3Vault(poolConfig.address)
-        ? MULTI_ASSET_TOKEN
-        : customWithdrawToken),
+      ...(customWithdrawToken ?? MULTI_ASSET_TOKEN),
       value: '',
       isLoading: false,
     })
