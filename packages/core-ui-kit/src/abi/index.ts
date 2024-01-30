@@ -1,4 +1,4 @@
-export { erc20ABI } from './erc20'
+export { erc20Abi } from './erc20'
 export { AaveLendingPoolAbi } from './aave-lending-pool'
 export { DhedgeEasySwapperAbi } from './dhedge-easy-swapper'
 export { DHedgeStakingV2Abi } from './dhedge-staking-v2'

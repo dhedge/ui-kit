@@ -1,7 +1,14 @@
+import {
+  dehydrate,
+  QueryClient,
+  QueryClientProvider,
+  HydrationBoundary,
+} from '@tanstack/react-query'
 import type { Queries, queries } from '@testing-library/dom'
 import type { RenderHookOptions, RenderOptions } from '@testing-library/react'
 import { render, renderHook } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
+import { WagmiProvider } from 'providers/wagmi-provider'
 
 import { TradingPanelProvider } from 'providers'
 import type { TradingPanelContextConfig } from 'types'
@@ -12,22 +19,34 @@ interface TestProvidersProps extends Partial<TradingPanelContextConfig> {
   children: ReactNode
 }
 
+const queryClient = new QueryClient()
+
 export const TestProviders = ({
   children,
   actions,
   initialState,
 }: TestProvidersProps) => (
-  <TradingPanelProvider
-    initialState={{
-      ...initialState,
-      poolConfigMap: initialState?.poolConfigMap ?? POOL_CONFIG_MAP_MOCK,
-    }}
-    actions={actions ?? CALLBACK_CONFIG_MOCK}
-    isDev
-  >
-    {children}
-  </TradingPanelProvider>
+  <WagmiProvider>
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <TradingPanelProvider
+          initialState={{
+            ...initialState,
+            poolConfigMap: initialState?.poolConfigMap ?? POOL_CONFIG_MAP_MOCK,
+          }}
+          actions={actions ?? CALLBACK_CONFIG_MOCK}
+          isDev
+        >
+          {children}
+        </TradingPanelProvider>
+      </HydrationBoundary>
+    </QueryClientProvider>
+  </WagmiProvider>
 )
+
+afterEach(() => {
+  queryClient.clear()
+})
 
 const customRender = (ui: ReactElement, options?: RenderOptions) =>
   render(ui, { wrapper: TestProviders, ...options })

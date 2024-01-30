@@ -2,13 +2,13 @@ import chunk from 'lodash.chunk'
 
 import { useMemo } from 'react'
 
-import { PoolManagerLogicAbi, erc20ABI } from 'abi'
+import { PoolManagerLogicAbi, erc20Abi } from 'abi'
 import { BRIDGED_TOKENS_SYMBOLS, DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress, useSynthetixV3AssetBalance } from 'hooks/pool'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import {
-  useContractRead,
-  useContractReads,
+  useReadContract,
+  useReadContracts,
   useContractReadsErrorLogging,
 } from 'hooks/web3'
 import type { PoolComposition } from 'types/pool.types'
@@ -44,12 +44,14 @@ export const useContractPoolComposition = ({
     [poolFallbackData.poolCompositions],
   )
 
-  const { data, isFetched: isFundCompositionFetched } = useContractRead({
+  const { data, isFetched: isFundCompositionFetched } = useReadContract({
     address: managerLogicAddress,
     abi: PoolManagerLogicAbi,
     functionName: 'getFundComposition',
     chainId,
-    enabled: !!managerLogicAddress && !!chainId,
+    query: {
+      enabled: !!managerLogicAddress && !!chainId,
+    },
   })
   const fundAssets = data?.[0] as PoolCompositionAsset[] | undefined
   const assetsBalances = data?.[1] as bigint[] | undefined
@@ -71,24 +73,26 @@ export const useContractPoolComposition = ({
     [fundAssets],
   )
 
-  const { data: tokenData } = useContractReads({
+  const { data: tokenData } = useReadContracts({
     contracts: assetsAddresses.flatMap((address) => [
       {
         address,
-        abi: erc20ABI,
+        abi: erc20Abi,
         functionName: 'symbol',
         chainId,
       },
       {
         address,
-        abi: erc20ABI,
+        abi: erc20Abi,
         functionName: 'decimals',
         chainId,
       },
     ]),
-    enabled:
-      isFundCompositionFetched && assetsAddresses?.length > 0 && !!chainId,
-    staleTime: Infinity,
+    query: {
+      enabled:
+        isFundCompositionFetched && assetsAddresses?.length > 0 && !!chainId,
+      staleTime: Infinity,
+    },
   })
   useContractReadsErrorLogging(tokenData)
 

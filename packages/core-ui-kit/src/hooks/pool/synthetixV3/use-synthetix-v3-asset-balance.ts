@@ -1,6 +1,6 @@
 import { PoolFactoryAbi } from 'abi'
 import { AddressZero, DHEDGE_SYNTHETIX_V3_ASSETS_MAP, optimism } from 'const'
-import { useContractRead, useStaticCall } from 'hooks/web3'
+import { useReadContract, useStaticCall } from 'hooks/web3'
 import type { Address, ChainId } from 'types'
 
 import {
@@ -23,14 +23,16 @@ export const useSynthetixV3AssetBalance = ({
   const synthetixV3AssetAddress = chainId
     ? DHEDGE_SYNTHETIX_V3_ASSETS_MAP[chainId] ?? AddressZero
     : AddressZero
-  const { data: synthetixV3AssetGuardAddress } = useContractRead({
+  const { data: synthetixV3AssetGuardAddress } = useReadContract({
     address: getContractAddressById('factory', chainId ?? optimism.id),
     chainId,
     abi: PoolFactoryAbi,
     functionName: 'getAssetGuard',
     args: [synthetixV3AssetAddress],
-    staleTime: Infinity,
-    enabled: !disabled,
+    query: {
+      staleTime: Infinity,
+      enabled: !disabled,
+    },
   })
 
   const { data: mutableBalance, error: mutableBalanceError } =
@@ -46,17 +48,19 @@ export const useSynthetixV3AssetBalance = ({
       args: [vaultAddress, synthetixV3AssetAddress],
     })
 
-  const { data: balance } = useContractRead({
+  const { data: balance } = useReadContract({
     address: synthetixV3AssetGuardAddress ?? AddressZero,
     chainId,
     functionName: 'getBalance',
     args: [vaultAddress, synthetixV3AssetAddress],
     abi: getContractAbiById('synthetixV3AssetGuard'),
-    enabled:
-      !disabled &&
-      !!synthetixV3AssetGuardAddress &&
-      !isEqualAddress(synthetixV3AssetGuardAddress, AddressZero) &&
-      mutableBalanceError,
+    query: {
+      enabled:
+        !disabled &&
+        !!synthetixV3AssetGuardAddress &&
+        !isEqualAddress(synthetixV3AssetGuardAddress, AddressZero) &&
+        mutableBalanceError,
+    },
   })
 
   return mutableBalance?.toString() ?? balance?.toString() ?? '0'

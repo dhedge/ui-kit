@@ -5,7 +5,7 @@ import { AddressZero } from 'const'
 import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
 import {
   useAccount,
-  useContractReads,
+  useReadContracts,
   useContractReadsErrorLogging,
 } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
@@ -66,7 +66,7 @@ export const usePoolDynamicContractData = ({
     disabled: !isSynthetixVault,
   })
 
-  const { data, isFetched } = useContractReads({
+  const { data, isFetched } = useReadContracts({
     contracts: [
       {
         address,
@@ -82,7 +82,9 @@ export const usePoolDynamicContractData = ({
         chainId,
       },
     ],
-    enabled: !isZeroAddress(address),
+    query: {
+      enabled: !isZeroAddress(address),
+    },
   })
   useContractReadsErrorLogging(data)
   const exitCooldown = data?.[0]?.result

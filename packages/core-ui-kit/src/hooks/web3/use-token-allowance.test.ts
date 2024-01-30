@@ -1,4 +1,4 @@
-import { erc20ABI } from 'abi'
+import { erc20Abi } from 'abi'
 import { optimism } from 'const'
 import { renderHook } from 'test-utils'
 
@@ -8,7 +8,7 @@ import { useTokenAllowance } from './use-token-allowance'
 
 const mocks = vi.hoisted(() => {
   return {
-    useContractRead: vi.fn(),
+    useReadContract: vi.fn(),
   }
 })
 
@@ -17,7 +17,7 @@ vi.mock('wagmi', async () => {
 
   return {
     ...actual,
-    useContractRead: mocks.useContractRead,
+    useReadContract: mocks.useReadContract,
   }
 })
 
@@ -33,9 +33,9 @@ describe('useTokenAllowance', () => {
       ),
     )
 
-    expect(mocks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(mocks.useContractRead).toHaveBeenCalledWith(
-      expect.objectContaining({ functionName: 'allowance', abi: erc20ABI }),
+    expect(mocks.useReadContract).toHaveBeenCalledTimes(1)
+    expect(mocks.useReadContract).toHaveBeenCalledWith(
+      expect.objectContaining({ functionName: 'allowance', abi: erc20Abi }),
     )
   })
 })

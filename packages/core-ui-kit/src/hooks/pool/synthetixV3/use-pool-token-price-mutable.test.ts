@@ -10,8 +10,8 @@ import { usePoolTokenPriceMutable } from './use-pool-token-price-mutable'
 import { useTotalFundValueMutable } from './use-total-funds-value-mutable'
 
 vi.mock('hooks/web3', () => ({
-  useContractReads: vi.fn(),
-  useContractRead: vi.fn(),
+  useReadContracts: vi.fn(),
+  useReadContract: vi.fn(),
 }))
 vi.mock('./use-total-funds-value-mutable', () => ({
   useTotalFundValueMutable: vi.fn(),
@@ -23,17 +23,17 @@ describe('usePoolTokenPriceMutable', () => {
     const totalSupply = BigInt(100)
     const managerFee = BigInt(10)
     const chainId = 10
-    vi.mocked(web3Hooks.useContractReads).mockImplementationOnce(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementationOnce(
       () =>
         ({
           data: [{ result: vaultManagerLogicAddress }, { result: totalSupply }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
-    vi.mocked(web3Hooks.useContractRead).mockImplementationOnce(
+    vi.mocked(web3Hooks.useReadContract).mockImplementationOnce(
       () =>
         ({
           data: managerFee,
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
+        }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
     vi.mocked(useTotalFundValueMutable).mockImplementationOnce(() => '110')
 
@@ -45,9 +45,11 @@ describe('usePoolTokenPriceMutable', () => {
       }),
     )
 
-    expect(web3Hooks.useContractReads).toHaveBeenCalledWith(
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledWith(
       expect.objectContaining({
-        enabled: true,
+        query: expect.objectContaining({
+          enabled: true,
+        }),
         contracts: [
           expect.objectContaining({
             abi: PoolLogicAbi,
@@ -62,14 +64,16 @@ describe('usePoolTokenPriceMutable', () => {
         ],
       }),
     )
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
       expect.objectContaining({
         address: TEST_ADDRESS,
         abi: PoolLogicAbi,
         functionName: 'calculateAvailableManagerFee',
         chainId,
-        enabled: true,
         args: [BigInt('110')],
+        query: expect.objectContaining({
+          enabled: true,
+        }),
       }),
     )
     expect(useTotalFundValueMutable).toHaveBeenCalledWith({

@@ -13,7 +13,7 @@ import {
 } from './use-pool-manager-logic-data'
 
 vi.mock('hooks/web3', () => ({
-  useContractReads: vi.fn(),
+  useReadContracts: vi.fn(),
   useContractReadsErrorLogging: vi.fn(),
 }))
 
@@ -52,17 +52,17 @@ describe('usePoolManagerLogicData', () => {
     const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
     const minDepositUSD = BigInt(0)
 
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     renderHook(() => usePoolManagerLogicData(poolAddress, chainId))
 
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledWith(
       expect.objectContaining({
         contracts: expect.arrayContaining([
           expect.objectContaining({
@@ -84,11 +84,11 @@ describe('usePoolManagerLogicData', () => {
     const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
     const minDepositUSD = BigInt(0)
 
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     renderHook(() => usePoolManagerLogicData(poolAddress, chainId))
@@ -106,11 +106,11 @@ describe('usePoolManagerLogicData', () => {
     const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
     const minDepositUSD = BigInt(0)
 
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() =>

@@ -1,5 +1,5 @@
-import { erc20ABI } from 'abi'
-import { useContractRead } from 'hooks/web3'
+import { erc20Abi } from 'abi'
+import { useReadContract, useInvalidateOnBlock } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 
 export const useTokenAllowance = (
@@ -8,14 +8,20 @@ export const useTokenAllowance = (
   spenderAddress: Address,
   chainId: ChainId,
   skip: boolean,
-): ReturnType<typeof useContractRead> =>
-  useContractRead({
+): ReturnType<typeof useReadContract> => {
+  const query = useReadContract({
     address: tokenAddress,
-    abi: erc20ABI,
+    abi: erc20Abi,
     functionName: 'allowance',
     args: [ownerAddress, spenderAddress],
     chainId,
-    enabled: !skip,
-    watch: true,
-    staleTime: 15_000,
+    query: {
+      enabled: !skip,
+      staleTime: 15_000,
+    },
   })
+
+  useInvalidateOnBlock({ queryKey: query.queryKey })
+
+  return query
+}

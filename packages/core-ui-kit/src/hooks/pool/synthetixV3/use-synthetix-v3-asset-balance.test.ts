@@ -11,7 +11,7 @@ import { useSynthetixV3AssetBalance } from './use-synthetix-v3-asset-balance'
 
 vi.mock('hooks/web3', () => ({
   useStaticCall: vi.fn(),
-  useContractRead: vi.fn(),
+  useReadContract: vi.fn(),
 }))
 
 describe('useSynthetixV3AssetBalance', () => {
@@ -23,18 +23,18 @@ describe('useSynthetixV3AssetBalance', () => {
       data: expectedResult,
       error: false,
     }))
-    vi.mocked(web3Hooks.useContractRead)
+    vi.mocked(web3Hooks.useReadContract)
       .mockImplementationOnce(
         () =>
           ({
             data: synthetixAssetGuard,
-          }) as ReturnType<typeof web3Hooks.useContractRead>,
+          }) as ReturnType<typeof web3Hooks.useReadContract>,
       )
       .mockImplementationOnce(
         () =>
           ({
             data: undefined,
-          }) as ReturnType<typeof web3Hooks.useContractRead>,
+          }) as ReturnType<typeof web3Hooks.useReadContract>,
       )
 
     const { result } = renderHook(() =>
@@ -44,18 +44,25 @@ describe('useSynthetixV3AssetBalance', () => {
         disabled: false,
       }),
     )
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(2)
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith({
+    expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(2)
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith({
       address: getContractAddressById('factory', optimism.id),
       chainId: optimism.id,
       abi: PoolFactoryAbi,
       functionName: 'getAssetGuard',
       args: [DHEDGE_SYNTHETIX_V3_ASSETS_MAP[optimism.id]],
-      enabled: true,
-      staleTime: Infinity,
+      query: expect.objectContaining({
+        enabled: true,
+        staleTime: Infinity,
+      }),
     })
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
-      expect.objectContaining({ enabled: false, functionName: 'getBalance' }),
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
+      expect.objectContaining({
+        query: expect.objectContaining({
+          enabled: false,
+        }),
+        functionName: 'getBalance',
+      }),
     )
     expect(web3Hooks.useStaticCall).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useStaticCall).toHaveBeenCalledWith({

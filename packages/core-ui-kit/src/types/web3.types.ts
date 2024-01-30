@@ -1,5 +1,10 @@
-import type { TransactionRequest as ViemTransactionRequest } from 'viem'
-import type { Address, Chain } from 'wagmi'
+import type {
+  Address,
+  Chain,
+  TransactionRequest as ViemTransactionRequest,
+} from 'viem'
+
+export type { UseWriteContractParameters } from 'wagmi'
 export type {
   Hex,
   PublicClient,

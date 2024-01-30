@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal'
 import { useEffect, useRef, useState } from 'react'
 import { usePublicClient } from 'wagmi'
-import type { UseContractReadConfig } from 'wagmi'
+import type { UseReadContractParameters } from 'wagmi'
 
 import { AddressZero } from 'const'
 
@@ -16,7 +16,7 @@ import {
 } from 'utils'
 
 type UseStaticCallVariables = Pick<
-  UseContractReadConfig,
+  UseReadContractParameters,
   'chainId' | 'functionName'
 > & {
   contractId: ContractId
@@ -64,13 +64,13 @@ export const useStaticCall = <T>({
     const makeStaticCall = async () => {
       try {
         ref.current = args
-        const { result } = await publicClient.simulateContract({
+        const simulation = await publicClient?.simulateContract({
           address: contractAddress,
           abi: getContractAbiById(contractId),
           functionName,
           args,
         })
-        setResult({ data: result as T, error: false })
+        setResult({ data: simulation?.result as T, error: false })
       } catch (error) {
         console.error(error)
         setResult({ data: undefined, error: true })

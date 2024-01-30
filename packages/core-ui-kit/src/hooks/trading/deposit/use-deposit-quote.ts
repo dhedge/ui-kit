@@ -17,7 +17,11 @@ import {
 } from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useDebounce } from 'hooks/utils'
-import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import {
+  useReadContracts,
+  useContractReadsErrorLogging,
+  useInvalidateOnBlock,
+} from 'hooks/web3'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'
 
@@ -61,7 +65,7 @@ export const useDepositQuote = ({
     .shiftedBy(sendToken.decimals)
     .toFixed(0)
 
-  const { data } = useContractReads({
+  const { data, queryKey } = useReadContracts({
     contracts: [
       {
         address: getContractAddressById('easySwapper', chainId),
@@ -77,13 +81,17 @@ export const useDepositQuote = ({
         chainId,
       },
     ],
-    enabled:
-      hasSendInputValue &&
-      !!sendToken.address &&
-      !!poolDepositAssetAddress &&
-      isEasySwapperTrading,
-    watch: true,
+    query: {
+      enabled:
+        hasSendInputValue &&
+        !!sendToken.address &&
+        !!poolDepositAssetAddress &&
+        isEasySwapperTrading,
+    },
   })
+
+  useInvalidateOnBlock({ queryKey })
+
   const depositQuote = data?.[0]?.result
   useContractReadsErrorLogging(data)
 

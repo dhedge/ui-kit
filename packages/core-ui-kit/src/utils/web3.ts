@@ -12,8 +12,8 @@ export {
   decodeErrorResult,
   hexToString,
   trim,
+  getContract,
 } from 'viem'
-export { getContract } from 'wagmi/actions'
 
 export const getContractAddressById = (
   contractId: ContractId,

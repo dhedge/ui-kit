@@ -6,8 +6,8 @@ import {
   useTradingPanelModal,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import type { SettledCallback } from 'hooks/web3'
 import type { PendingTransaction } from 'types/trading-panel.types'
+import type { UseWriteContractParameters } from 'types/web3.types'
 import { getExplorerLink } from 'utils'
 
 export const useTradingSettleHandler = (
@@ -18,8 +18,10 @@ export const useTradingSettleHandler = (
   const [, updatePendingTransactions] = useTradingPanelTransactions()
   const [, updateSendToken] = useSendTokenInput()
 
-  return useCallback<SettledCallback>(
-    (data, error, variables) => {
+  return useCallback<
+    Required<Required<UseWriteContractParameters>['mutation']>['onSettled']
+  >(
+    (txHash, error, variables) => {
       if (error) {
         if (action === 'approve') {
           setApprovingStatus(undefined)
@@ -38,9 +40,8 @@ export const useTradingSettleHandler = (
         return
       }
 
-      const txHash = data?.hash
       if (txHash) {
-        console.debug(`${action} transaction started`, data)
+        console.debug(`${action} transaction started`, txHash)
         updatePendingTransactions({ type: 'update', txHash })
 
         const link = getExplorerLink(txHash, 'transaction', variables.chainId)

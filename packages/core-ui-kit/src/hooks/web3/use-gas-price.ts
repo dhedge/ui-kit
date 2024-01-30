@@ -1,4 +1,10 @@
-import { useFeeData } from 'wagmi'
+import { useEstimateFeesPerGas } from 'wagmi'
 
-export const useGasPrice: typeof useFeeData = (args) =>
-  useFeeData({ staleTime: 30_000, ...args })
+export const useGasPrice: typeof useEstimateFeesPerGas = (args) =>
+  useEstimateFeesPerGas({
+    ...args,
+    query: {
+      ...args?.query,
+      staleTime: 30_000,
+    },
+  })

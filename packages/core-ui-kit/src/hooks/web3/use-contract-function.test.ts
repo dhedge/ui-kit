@@ -74,11 +74,11 @@ describe('useContractFunction::estimate', () => {
           account: TEST_ADDRESS,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+    vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
           write: vi.fn(),
-        }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+        }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
     vi.spyOn(web3Hooks, 'useNetwork').mockImplementation(
       () =>
@@ -330,11 +330,11 @@ describe('useContractFunction::send', () => {
           },
         }) as unknown as ReturnType<typeof getContract>,
     )
-    vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+    vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
           write: writeMock,
-        }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+        }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
     const { result } = renderHook(() =>
@@ -373,11 +373,11 @@ describe('useContractFunction::send', () => {
           },
         }) as unknown as ReturnType<typeof getContract>,
     )
-    vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+    vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
           write: writeMock,
-        }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+        }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
     const { result } = renderHook(() =>
@@ -408,11 +408,11 @@ describe('useContractFunction::send', () => {
           },
         }) as unknown as ReturnType<typeof getContract>,
     )
-    vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+    vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
           write: writeMock,
-        }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+        }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
     const { result } = renderHook(() =>
@@ -455,11 +455,11 @@ describe('useContractFunction::send', () => {
   //         },
   //       }) as unknown as ReturnType<typeof getContract>,
   //   )
-  //   vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+  //   vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
   //     () =>
   //       ({
   //         write: writeMock,
-  //       }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+  //       }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
   //   )
   //   vi.spyOn(stateHooks, 'useOnSimulateTransaction').mockImplementation(
   //     () => simulateMock,
@@ -534,11 +534,11 @@ describe('useContractFunction::send', () => {
   //           },
   //         }) as unknown as ReturnType<typeof getContract>,
   //     )
-  //     vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+  //     vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
   //       () =>
   //         ({
   //           write: writeMock,
-  //         }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+  //         }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
   //     )
   //     vi.spyOn(stateHooks, 'useOnSimulateTransaction').mockImplementation(
   //       () => simulateMock,
@@ -575,11 +575,11 @@ describe('useContractFunction::send', () => {
           },
         }) as unknown as ReturnType<typeof getContract>,
     )
-    vi.spyOn(web3Hooks, 'useContractWrite').mockImplementation(
+    vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
           write: writeMock,
-        }) as unknown as ReturnType<typeof web3Hooks.useContractWrite>,
+        }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
     const { result } = renderHook(() =>

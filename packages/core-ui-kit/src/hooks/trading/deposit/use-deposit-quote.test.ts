@@ -9,7 +9,7 @@ import * as poolHooks from 'hooks/pool'
 import { usePoolTokenPrice } from 'hooks/pool'
 import * as stateHooks from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
-import { useContractReads } from 'hooks/web3'
+import { useReadContracts } from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -31,8 +31,9 @@ vi.mock('hooks/utils', () => ({
   useDebounce: vi.fn().mockImplementation((v) => v),
 }))
 vi.mock('hooks/web3', () => ({
-  useContractReads: vi.fn(),
+  useReadContracts: vi.fn(),
   useContractReadsErrorLogging: vi.fn(),
+  useInvalidateOnBlock: vi.fn(),
 }))
 vi.mock('hooks/trading/deposit', () => ({
   usePoolDepositAssetAddress: vi.fn(),
@@ -80,11 +81,11 @@ describe('useDepositQuote', () => {
     vi.mocked(usePoolDepositAssetAddress).mockImplementation(
       () => sendToken.address,
     )
-    vi.mocked(useContractReads).mockImplementation(
+    vi.mocked(useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
     vi.mocked(useIsEasySwapperTrading).mockImplementation(() => true)
 
@@ -102,10 +103,8 @@ describe('useDepositQuote', () => {
       productPoolAddress: TEST_ADDRESS,
       chainId: optimism.id,
     })
-    expect(useContractReads).toHaveBeenCalledTimes(1)
-    expect(useContractReads).toHaveBeenCalledWith({
-      watch: true,
-      enabled: true,
+    expect(useReadContracts).toHaveBeenCalledTimes(1)
+    expect(useReadContracts).toHaveBeenCalledWith({
       contracts: [
         expect.objectContaining({
           abi: DhedgeEasySwapperAbi,
@@ -124,6 +123,9 @@ describe('useDepositQuote', () => {
           ],
         }),
       ],
+      query: expect.objectContaining({
+        enabled: true,
+      }),
     })
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(2)
     expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(1, {
@@ -132,11 +134,11 @@ describe('useDepositQuote', () => {
     expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(2, {
       value: '99.970',
     })
-    vi.mocked(useContractReads).mockImplementationOnce(
+    vi.mocked(useReadContracts).mockImplementationOnce(
       () =>
         ({
           data: [{ result: BigInt(500000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
     act(() => rerender())
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(4)
@@ -177,11 +179,11 @@ describe('useDepositQuote', () => {
     vi.mocked(usePoolDepositAssetAddress).mockImplementation(
       () => AddressZero, // sendToken.address !== poolDepositAssetAddress
     )
-    vi.mocked(useContractReads).mockImplementationOnce(
+    vi.mocked(useReadContracts).mockImplementationOnce(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
 
     renderHook(() =>
@@ -194,9 +196,7 @@ describe('useDepositQuote', () => {
         },
       }),
     )
-    expect(useContractReads).toHaveBeenCalledWith({
-      watch: true,
-      enabled: true,
+    expect(useReadContracts).toHaveBeenCalledWith({
       contracts: [
         expect.objectContaining({
           args: [
@@ -212,6 +212,9 @@ describe('useDepositQuote', () => {
           ],
         }),
       ],
+      query: expect.objectContaining({
+        enabled: true,
+      }),
     })
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(2)
     expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(1, {
@@ -254,11 +257,11 @@ describe('useDepositQuote', () => {
     vi.mocked(usePoolDepositAssetAddress).mockImplementation(
       () => receiveToken.address as Address,
     )
-    vi.mocked(useContractReads).mockImplementationOnce(
+    vi.mocked(useReadContracts).mockImplementationOnce(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
 
     renderHook(() =>
@@ -313,11 +316,11 @@ describe('useDepositQuote', () => {
     vi.mocked(usePoolDepositAssetAddress).mockImplementation(
       () => receiveToken.address as Address,
     )
-    vi.mocked(useContractReads).mockImplementationOnce(
+    vi.mocked(useReadContracts).mockImplementationOnce(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
 
     renderHook(() =>
@@ -365,11 +368,11 @@ describe('useDepositQuote', () => {
     vi.mocked(usePoolDepositAssetAddress).mockImplementation(
       () => sendToken.address,
     )
-    vi.mocked(useContractReads).mockImplementation(
+    vi.mocked(useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof useContractReads>,
+        }) as ReturnType<typeof useReadContracts>,
     )
     vi.mocked(useIsEasySwapperTrading).mockImplementation(() => false)
     vi.mocked(poolHooks.usePoolTokenPrice).mockImplementation(() => '100')
@@ -394,8 +397,12 @@ describe('useDepositQuote', () => {
       chainId: optimism.id,
       disabled: false,
     })
-    expect(useContractReads).toHaveBeenCalledWith(
-      expect.objectContaining({ enabled: false }),
+    expect(useReadContracts).toHaveBeenCalledWith(
+      expect.objectContaining({
+        query: expect.objectContaining({
+          enabled: false,
+        }),
+      }),
     )
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(1)
     expect(updateReceiveTokenMock).toHaveBeenNthCalledWith(1, {

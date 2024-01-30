@@ -9,13 +9,14 @@ import type { Address } from 'types'
 
 import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
 import { usePoolTokenPrice } from './use-pool-token-price'
+import { expect } from 'vitest'
 
 vi.mock('hooks/state', () => ({
   useTradingPanelPoolFallbackData: vi.fn(),
 }))
 
 vi.mock('hooks/web3', () => ({
-  useContractRead: vi.fn(),
+  useReadContract: vi.fn(),
   useContractReadErrorLogging: vi.fn(),
 }))
 vi.mock('./synthetixV3/use-pool-token-price-mutable', () => ({
@@ -29,9 +30,9 @@ describe('usePoolTokenPrice', () => {
     const tokenPrice = BigInt(1)
     const poolData = { tokenPrice: '1' }
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -47,14 +48,16 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
+    expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
       expect.objectContaining({
         address,
         abi: PoolLogicAbi,
         functionName: 'tokenPrice',
         chainId,
-        enabled: true,
+        query: expect.objectContaining({
+          enabled: true,
+        }),
       }),
     )
   })
@@ -66,9 +69,9 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: '1' }
 
     vi.mocked(usePoolTokenPriceMutable).mockImplementation(() => tokenPrice)
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
-        ({ data: undefined }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: undefined }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -86,10 +89,12 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
+    expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
       expect.objectContaining({
-        enabled: false,
+        query: expect.objectContaining({
+          enabled: false,
+        }),
       }),
     )
     expect(usePoolTokenPriceMutable).toHaveBeenCalledWith({
@@ -107,9 +112,9 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: '2' }
     const formatterMock = vi.fn()
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -136,9 +141,9 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: BigInt(1) }
     const formatterMock = vi.fn()
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>

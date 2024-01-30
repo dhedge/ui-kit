@@ -27,6 +27,7 @@
     "@swc-node/register": "~1.6.8",
     "@swc/core": "~1.3.99",
     "@tanstack/query-core": "^4.36.1",
+    "@tanstack/react-query": "^5.17.19",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.1.2",
@@ -64,11 +65,11 @@
     "ts-custom-error": "^3.3.1",
     "tsup": "^7.3.0",
     "typescript": "~5.2.2",
-    "viem": "^1.19.9",
+    "viem": "^2.5.0",
     "vite": "~4.5.0",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "~0.34.6",
-    "wagmi": "^1.4.12"
+    "wagmi": "^2.5.4"
   },
   "nx": {
     "includedScripts": []

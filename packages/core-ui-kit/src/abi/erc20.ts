@@ -1,1 +1,1 @@
-export { erc20ABI } from 'wagmi'
+export { erc20Abi } from 'viem'

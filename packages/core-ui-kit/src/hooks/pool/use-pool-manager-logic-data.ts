@@ -1,7 +1,7 @@
 import { PoolManagerLogicAbi } from 'abi'
 import { DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress } from 'hooks/pool'
-import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import { useReadContracts, useContractReadsErrorLogging } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatUnits, isZeroAddress } from 'utils'
 
@@ -29,7 +29,7 @@ export const usePoolManagerLogicData = (
     chainId,
   })
 
-  const { data } = useContractReads({
+  const { data } = useReadContracts({
     contracts: [
       {
         address: managerLogicAddress,
@@ -44,8 +44,10 @@ export const usePoolManagerLogicData = (
         chainId,
       },
     ],
-    enabled: !isZeroAddress(poolAddress),
-    staleTime: Infinity,
+    query: {
+      enabled: !isZeroAddress(poolAddress),
+      staleTime: Infinity,
+    },
   })
   useContractReadsErrorLogging(data)
 
