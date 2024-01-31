@@ -44,8 +44,8 @@ export const useDepositQuote = ({
     chainId,
     disabled: isEasySwapperTrading,
   })
-
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const debounceTime = isEasySwapperTrading ? 500 : 0
+  const debouncedSendTokenValue = useDebounce(sendToken.value, debounceTime)
   const poolDepositAssetAddress = usePoolDepositAssetAddress({
     investAssetAddress: sendToken.address,
     symbol: sendToken.symbol,
