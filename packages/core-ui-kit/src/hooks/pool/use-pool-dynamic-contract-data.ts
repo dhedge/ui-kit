@@ -5,8 +5,8 @@ import { AddressZero } from 'const'
 import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
 import {
   useAccount,
-  useReadContracts,
   useContractReadsErrorLogging,
+  useReadContracts,
 } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { isSynthetixV3Vault, isZeroAddress } from 'utils'

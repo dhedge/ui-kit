@@ -9,10 +9,9 @@ import {
 
 import type { usePublicClient } from 'hooks/web3'
 
-import type { Address, TransactionRequest } from 'types'
+import type { Address, OracleAdapter, TransactionRequest } from 'types'
 
 import { Eip7412 } from './synthetix-v3/eip-7412'
-import { OracleAdapter } from 'types'
 import { TrustedMulticallForwarderBatcher } from './synthetix-v3/multicall-forwarder-batcher'
 import {
   encodeFunctionData,

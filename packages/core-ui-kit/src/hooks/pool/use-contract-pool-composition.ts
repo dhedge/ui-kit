@@ -7,9 +7,9 @@ import { BRIDGED_TOKENS_SYMBOLS, DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress, useSynthetixV3AssetBalance } from 'hooks/pool'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import {
+  useContractReadsErrorLogging,
   useReadContract,
   useReadContracts,
-  useContractReadsErrorLogging,
 } from 'hooks/web3'
 import type { PoolComposition } from 'types/pool.types'
 import type { Address, PoolContractCallParams } from 'types/web3.types'

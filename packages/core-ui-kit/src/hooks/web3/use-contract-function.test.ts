@@ -1,3 +1,5 @@
+import { expect } from 'vitest'
+
 import {
   GAS_ESTIMATION_ERROR,
   GAS_LIMIT_BUFFER_COEFF,
@@ -8,7 +10,6 @@ import * as stateHooks from 'hooks/state'
 import * as web3Hooks from 'hooks/web3'
 import { act, renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
-import type { getContract } from 'utils'
 
 import {
   checkArgsForTxOverrides,
@@ -21,7 +22,6 @@ const mocks = vi.hoisted(() => {
       getContractAbiById: vi.fn(),
       getContractAddressById: vi.fn(),
       getErrorMessage: vi.fn(),
-      getContract: vi.fn(),
     },
   }
 })
@@ -34,7 +34,6 @@ vi.mock('utils', async () => {
     getContractAbiById: mocks.utils.getContractAbiById,
     getContractAddressById: mocks.utils.getContractAddressById,
     getErrorMessage: mocks.utils.getErrorMessage,
-    getContract: mocks.utils.getContract,
   }
 })
 
@@ -101,48 +100,43 @@ describe('useContractFunction::estimate', () => {
   it('should call [functionName] method on contract.estimateGas', async () => {
     const functionName = 'functionName'
     const args = ['arg1', 'arg2']
-    const functionNameMock = vi.fn()
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementationOnce(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: functionNameMock,
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
         contractId: 'easySwapper',
+        dynamicContractAddress: '0x',
       }),
     )
 
     await act(async () => result.current.estimate(...args))
 
-    expect(functionNameMock).toHaveBeenCalledTimes(1)
-    expect(functionNameMock).toHaveBeenCalledWith(args, {
-      account: TEST_ADDRESS,
-      value: undefined,
-      gas: undefined,
-    })
+    expect(estimateFnMock).toHaveBeenCalledTimes(1)
+    expect(estimateFnMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        functionName,
+        address: '0x',
+        args,
+        account: TEST_ADDRESS,
+      }),
+    )
   })
 
   it('should call [functionName] method with custom value and gas overrides', async () => {
     const functionName = 'functionName'
     const overrides = { value: 'value', gas: 'gas' }
     const args = ['arg1', 'arg2', overrides]
-    const functionNameMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: functionNameMock,
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    const estimateFnMock = vi.fn()
+
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
@@ -156,28 +150,25 @@ describe('useContractFunction::estimate', () => {
     const { argumentsWithoutOverrides, transactionOverrides } =
       checkArgsForTxOverrides(args)
 
-    expect(functionNameMock).toHaveBeenCalledTimes(1)
-    expect(functionNameMock).toHaveBeenCalledWith(argumentsWithoutOverrides, {
-      account: TEST_ADDRESS,
-      value: transactionOverrides.value,
-      gas: transactionOverrides.gas,
-    })
+    expect(estimateFnMock).toHaveBeenCalledTimes(1)
+    expect(estimateFnMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        args: argumentsWithoutOverrides,
+        account: TEST_ADDRESS,
+        value: transactionOverrides.value,
+        gas: transactionOverrides.gas,
+      }),
+    )
   })
 
   it('should return zero value and default gas estimation error for nullish estimation', async () => {
     const functionName = 'functionName'
     const args = ['arg1', 'arg2']
-    const estimation = null
-    const functionNameMock = vi.fn(() => estimation)
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: functionNameMock,
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock.mockReturnValueOnce(BigInt(0)),
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
@@ -192,22 +183,25 @@ describe('useContractFunction::estimate', () => {
       value: 0n,
       error: GAS_ESTIMATION_ERROR,
     })
+
+    estimateFnMock.mockReturnValueOnce(undefined)
+    const newResult = await act(async () => result.current.estimate(...args))
+
+    expect(newResult).toEqual({
+      value: 0n,
+      error: GAS_ESTIMATION_ERROR,
+    })
   })
 
   it('should return bufferedGasLimit value', async () => {
     const functionName = 'functionName'
     const args = ['arg1', 'arg2']
     const estimation = BigInt(1)
-    const functionNameMock = vi.fn(() => estimation)
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: functionNameMock,
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock.mockReturnValueOnce(estimation),
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
@@ -228,16 +222,11 @@ describe('useContractFunction::estimate', () => {
     const functionName = 'functionName'
     const args = ['arg1', 'arg2']
     const estimation = BigInt((MAX_GAS_LIMIT_MAP[optimism.id] ?? 0) + 1)
-    const functionNameMock = vi.fn(() => estimation)
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: functionNameMock,
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock.mockReturnValueOnce(estimation),
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
@@ -257,18 +246,11 @@ describe('useContractFunction::estimate', () => {
   it('should return zero value and error message', async () => {
     const functionName = 'functionName'
     const args = ['arg1', 'arg2']
-    const errorMessage = 'errorMessage'
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: () => {
-              throw { error: { data: { message: errorMessage } } }
-            },
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock.mockReturnValueOnce(undefined),
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
 
     const { result } = renderHook(() =>
       useContractFunction({
@@ -281,7 +263,7 @@ describe('useContractFunction::estimate', () => {
 
     expect(res).toEqual({
       value: 0n,
-      error: errorMessage,
+      error: GAS_ESTIMATION_ERROR,
     })
   })
 })
@@ -317,23 +299,16 @@ describe('useContractFunction::send', () => {
   it('should call contract write method directly for gas override', async () => {
     const args = ['arg1', 'arg2', { value: 'value', gas: 'gas' }]
     const writeMock = vi.fn()
-    const estimateGasMock = vi.fn()
+    const estimateFnMock = vi.fn()
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: estimateGasMock,
-          },
-          populateTransaction: {
-            [functionName]: vi.fn(),
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
+
     vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
-          write: writeMock,
+          writeContract: writeMock,
         }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
@@ -349,34 +324,30 @@ describe('useContractFunction::send', () => {
     const { argumentsWithoutOverrides, transactionOverrides } =
       checkArgsForTxOverrides(args)
 
-    expect(estimateGasMock).toHaveBeenCalledTimes(0)
+    expect(estimateFnMock).toHaveBeenCalledTimes(0)
     expect(writeMock).toHaveBeenCalledTimes(1)
-    expect(writeMock).toHaveBeenCalledWith({
-      args: argumentsWithoutOverrides,
-      ...transactionOverrides,
-    })
+    expect(writeMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        args: argumentsWithoutOverrides,
+        ...transactionOverrides,
+        functionName,
+        chainId: optimism.id,
+      }),
+    )
   })
 
   it('should call estimate before write', async () => {
     const args = ['arg1', 'arg2']
     const writeMock = vi.fn()
-    const estimateGasMock = vi.fn(() => BigInt(1))
+    const estimateFnMock = vi.fn(() => BigInt(1))
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: estimateGasMock,
-          },
-          populateTransaction: {
-            [functionName]: vi.fn(),
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
     vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
-          write: writeMock,
+          writeContract: writeMock,
         }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
@@ -389,29 +360,21 @@ describe('useContractFunction::send', () => {
 
     await act(async () => result.current.send(...args))
 
-    expect(estimateGasMock).toHaveBeenCalledTimes(1)
+    expect(estimateFnMock).toHaveBeenCalledTimes(1)
   })
 
   it('should throw EstimationError', async () => {
     const args = ['arg1', 'arg2']
     const writeMock = vi.fn()
-    const estimateGasMock = vi.fn(() => undefined)
+    const estimateFnMock = vi.fn(() => undefined)
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: estimateGasMock,
-          },
-          populateTransaction: {
-            [functionName]: vi.fn(),
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
     vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
-          write: writeMock,
+          writeContract: writeMock,
         }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
@@ -562,23 +525,15 @@ describe('useContractFunction::send', () => {
     const args = ['arg1', 'arg2']
     const estimation = BigInt(1)
     const writeMock = vi.fn()
-    const estimateGasMock = vi.fn(() => estimation)
+    const estimateFnMock = vi.fn(() => estimation)
 
-    mocks.utils.getContract.mockImplementation(
-      () =>
-        ({
-          estimateGas: {
-            [functionName]: estimateGasMock,
-          },
-          populateTransaction: {
-            [functionName]: vi.fn(),
-          },
-        }) as unknown as ReturnType<typeof getContract>,
-    )
+    vi.spyOn(web3Hooks, 'usePublicClient').mockReturnValueOnce({
+      estimateContractGas: estimateFnMock,
+    } as unknown as ReturnType<typeof web3Hooks.usePublicClient>)
     vi.spyOn(web3Hooks, 'useWriteContract').mockImplementation(
       () =>
         ({
-          write: writeMock,
+          writeContract: writeMock,
         }) as unknown as ReturnType<typeof web3Hooks.useWriteContract>,
     )
 
@@ -594,12 +549,14 @@ describe('useContractFunction::send', () => {
     const { argumentsWithoutOverrides, transactionOverrides } =
       checkArgsForTxOverrides(args)
 
-    expect(estimateGasMock).toHaveBeenCalledTimes(1)
+    expect(estimateFnMock).toHaveBeenCalledTimes(1)
     expect(writeMock).toHaveBeenCalledTimes(1)
-    expect(writeMock).toHaveBeenCalledWith({
-      args: argumentsWithoutOverrides,
-      ...transactionOverrides,
-      gas: BigInt(Math.round(Number(estimation) * GAS_LIMIT_BUFFER_COEFF)),
-    })
+    expect(writeMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        args: argumentsWithoutOverrides,
+        ...transactionOverrides,
+        gas: BigInt(Math.round(Number(estimation) * GAS_LIMIT_BUFFER_COEFF)),
+      }),
+    )
   })
 })

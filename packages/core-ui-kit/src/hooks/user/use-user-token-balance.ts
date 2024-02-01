@@ -1,6 +1,6 @@
+import { erc20Abi } from 'abi'
 import { AddressZero, DEFAULT_PRECISION } from 'const'
 import { useTradingPanelPoolConfig } from 'hooks/state'
-import { erc20Abi } from 'abi'
 import {
   useAccount,
   useBalance,

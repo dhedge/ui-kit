@@ -9,7 +9,6 @@ import type { Address } from 'types'
 
 import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
 import { usePoolTokenPrice } from './use-pool-token-price'
-import { expect } from 'vitest'
 
 vi.mock('hooks/state', () => ({
   useTradingPanelPoolFallbackData: vi.fn(),

@@ -1,6 +1,6 @@
 import { PoolLogicAbi } from 'abi'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
-import { useReadContract, useContractReadErrorLogging } from 'hooks/web3'
+import { useContractReadErrorLogging, useReadContract } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatEther, isSynthetixV3Vault, isZeroAddress } from 'utils'
 

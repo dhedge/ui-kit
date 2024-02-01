@@ -1,7 +1,7 @@
 import { PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
-import { useReadContract, useContractReadErrorLogging } from 'hooks/web3'
+import { useContractReadErrorLogging, useReadContract } from 'hooks/web3'
 import type { Address, PoolContractCallParams } from 'types/web3.types'
 import { isZeroAddress } from 'utils'
 

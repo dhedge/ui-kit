@@ -1,6 +1,6 @@
 import { PoolFactoryAbi } from 'abi'
 import { AddressZero } from 'const'
-import { useReadContracts, useContractReadsErrorLogging } from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { Address, ChainId } from 'types'
 import { getContractAddressById } from 'utils'
 

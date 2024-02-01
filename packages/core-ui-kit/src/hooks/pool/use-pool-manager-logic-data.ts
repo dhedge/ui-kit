@@ -1,7 +1,7 @@
 import { PoolManagerLogicAbi } from 'abi'
 import { DEFAULT_PRECISION } from 'const'
 import { useManagerLogicAddress } from 'hooks/pool'
-import { useReadContracts, useContractReadsErrorLogging } from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatUnits, isZeroAddress } from 'utils'
 

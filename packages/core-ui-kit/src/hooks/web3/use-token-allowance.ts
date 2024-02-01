@@ -1,5 +1,5 @@
 import { erc20Abi } from 'abi'
-import { useReadContract, useInvalidateOnBlock } from 'hooks/web3'
+import { useInvalidateOnBlock, useReadContract } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 
 export const useTokenAllowance = (

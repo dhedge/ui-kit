@@ -2,8 +2,8 @@ import { PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
 import {
   useAccount,
-  useReadContract,
   useContractReadErrorLogging,
+  useReadContract,
 } from 'hooks/web3'
 import type { PoolContractCallParams } from 'types/web3.types'
 import { isZeroAddress } from 'utils'

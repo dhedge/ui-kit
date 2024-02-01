@@ -12,7 +12,7 @@ import { getExplorerLink } from 'utils'
 
 export const useTradingSettleHandler = (
   action: PendingTransaction['action'],
-) => {
+): Required<Required<UseWriteContractParameters>['mutation']>['onSettled'] => {
   const [, setApprovingStatus] = useTradingPanelApprovingStatus()
   const [, updateTradingModal] = useTradingPanelModal()
   const [, updatePendingTransactions] = useTradingPanelTransactions()

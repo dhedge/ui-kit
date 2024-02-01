@@ -1,9 +1,9 @@
 import { PoolFactoryAbi } from 'abi'
 import {
-  useReadContracts,
   useContractReadsErrorLogging,
-  useNetwork,
   useInvalidateOnBlock,
+  useNetwork,
+  useReadContracts,
 } from 'hooks/web3'
 import type { ChainId, PoolContractCallParams } from 'types/web3.types'
 import { getContractAddressById, isZeroAddress } from 'utils'

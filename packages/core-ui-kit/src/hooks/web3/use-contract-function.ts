@@ -90,18 +90,13 @@ export const useContractFunction = ({
           address: contractAddress,
           abi: contractAbi,
           functionName,
-          args: [
-            ...argumentsWithoutOverrides,
-            {
-              account: account ?? AddressZero,
-              value: transactionOverrides.value,
-              gas: transactionOverrides.gas,
-            },
-          ],
+          args: argumentsWithoutOverrides,
           account: account ?? AddressZero,
+          gas: transactionOverrides.gas,
+          value: transactionOverrides.value,
         })
 
-        if (!estimation || !chainId) {
+        if (!estimation || !chainId || estimation === BigInt(0)) {
           return { error: GAS_ESTIMATION_ERROR, value: BigInt(0) }
         }
         // increased gas limit to avoid tx failure

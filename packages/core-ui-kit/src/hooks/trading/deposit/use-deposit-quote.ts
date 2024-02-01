@@ -18,9 +18,9 @@ import {
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useDebounce } from 'hooks/utils'
 import {
-  useReadContracts,
   useContractReadsErrorLogging,
   useInvalidateOnBlock,
+  useReadContracts,
 } from 'hooks/web3'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'

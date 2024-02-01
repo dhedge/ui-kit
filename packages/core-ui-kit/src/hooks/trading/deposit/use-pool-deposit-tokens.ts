@@ -9,8 +9,8 @@ import { useTradingPanelPoolConfig } from 'hooks/state'
 import { useIsPoolManagerAccount } from 'hooks/user'
 import {
   useAccount,
-  useReadContracts,
   useContractReadsErrorLogging,
+  useReadContracts,
 } from 'hooks/web3'
 import type { TradingToken } from 'types/trading-panel.types'
 import type { Address } from 'types/web3.types'

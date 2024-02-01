@@ -12,7 +12,6 @@ export {
   decodeErrorResult,
   hexToString,
   trim,
-  getContract,
 } from 'viem'
 
 export const getContractAddressById = (

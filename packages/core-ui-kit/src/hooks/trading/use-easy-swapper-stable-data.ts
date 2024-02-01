@@ -1,5 +1,5 @@
 import { DhedgeEasySwapperAbi } from 'abi'
-import { useReadContracts, useContractReadsErrorLogging } from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { getContractAddressById, isSynthetixV3Vault } from 'utils'
 

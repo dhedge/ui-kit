@@ -1,6 +1,8 @@
-import { useBlockNumber, UseReadContractsReturnType } from 'wagmi'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import type { UseReadContractsReturnType } from 'wagmi'
+import { useBlockNumber } from 'wagmi'
+
 import { DEFAULT_POLLING_INTERVAL } from 'const'
 
 export interface InvalidateOnBlockConfig {

@@ -1,4 +1,4 @@
-import { useSwitchChain, useConfig, useAccount } from 'wagmi'
+import { useAccount, useConfig, useSwitchChain } from 'wagmi'
 
 import { DEFAULT_CHAIN_ID } from 'const'
 import type { ChainId } from 'types/web3.types'

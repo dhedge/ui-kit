@@ -6,7 +6,6 @@ import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 
 import { useManagerLogicAddress } from './use-manager-logic-address'
-import { expect } from 'vitest'
 
 vi.mock('hooks/web3', () => ({
   useReadContract: vi.fn(),
