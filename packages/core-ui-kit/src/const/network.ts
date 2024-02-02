@@ -45,4 +45,11 @@ export const MAX_GAS_LIMIT_MAP: Record<ChainId, number> = {
   [base.id]: 29900000,
 }
 
+export const ALCHEMY_RPC_URL_MAP: Record<number, string> = {
+  [optimism.id]: `https://opt-mainnet.g.alchemy.com/v2/`,
+  [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/`,
+  [arbitrum.id]: `https://arb-mainnet.g.alchemy.com/v2/`,
+  [base.id]: `https://base-mainnet.g.alchemy.com/v2/`,
+} as const
+
 export { polygon, optimism, arbitrum, base }

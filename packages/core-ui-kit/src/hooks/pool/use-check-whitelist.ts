@@ -2,8 +2,8 @@ import { PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
 import {
   useAccount,
-  useContractRead,
   useContractReadErrorLogging,
+  useReadContract,
 } from 'hooks/web3'
 import type { PoolContractCallParams } from 'types/web3.types'
 import { isZeroAddress } from 'utils'
@@ -18,14 +18,16 @@ export const useCheckWhitelist = ({
     data: isMemberAllowed,
     error,
     status,
-  } = useContractRead({
+  } = useReadContract({
     address: address,
     abi: PoolLogicAbi,
     functionName: 'isMemberAllowed',
     args: [account ?? AddressZero],
     chainId,
-    enabled: !isZeroAddress(address) && !!account && !!chainId,
-    staleTime: Infinity,
+    query: {
+      enabled: !isZeroAddress(address) && !!account && !!chainId,
+      staleTime: Infinity,
+    },
   })
   useContractReadErrorLogging({ error, status })
 

@@ -1,5 +1,5 @@
 import { DhedgeEasySwapperAbi } from 'abi'
-import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { getContractAddressById, isSynthetixV3Vault } from 'utils'
 
@@ -15,7 +15,7 @@ export const useEasySwapperStableData = ({
   skip,
 }: EasySwapperStableData) => {
   const isSynthetixVault = isSynthetixV3Vault(poolAddress)
-  const { data } = useContractReads({
+  const { data } = useReadContracts({
     contracts: [
       {
         address: getContractAddressById('easySwapper', chainId),
@@ -37,8 +37,10 @@ export const useEasySwapperStableData = ({
         chainId,
       },
     ],
-    enabled: !skip && !isSynthetixVault,
-    staleTime: Infinity,
+    query: {
+      enabled: !skip && !isSynthetixVault,
+      staleTime: Infinity,
+    },
   })
   useContractReadsErrorLogging(data)
   const isEasySwapperAllowedPool = !!data?.[0]?.result

@@ -8,7 +8,7 @@ import { useCheckWhitelist } from './use-check-whitelist'
 
 vi.mock('hooks/web3', () => ({
   useAccount: vi.fn(),
-  useContractRead: vi.fn(),
+  useReadContract: vi.fn(),
   useContractReadErrorLogging: vi.fn(),
 }))
 
@@ -22,19 +22,19 @@ describe('useCheckWhitelist', () => {
           account: TEST_ADDRESS,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
         ({
           data: [isMemberAllowed],
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
+        }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
       expect.objectContaining({
         functionName: 'isMemberAllowed',
         abi: PoolLogicAbi,
@@ -53,19 +53,19 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
         ({
           data: [isMemberAllowed],
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
+        }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
       expect.objectContaining({
         args: [AddressZero],
       }),

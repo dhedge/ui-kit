@@ -9,7 +9,7 @@ import {
 
 import type { usePublicClient } from 'hooks/web3'
 
-import type { Address, TransactionRequest } from 'types'
+import type { Address, OracleAdapter, TransactionRequest } from 'types'
 
 import { Eip7412 } from './synthetix-v3/eip-7412'
 import { TrustedMulticallForwarderBatcher } from './synthetix-v3/multicall-forwarder-batcher'
@@ -45,7 +45,7 @@ export const getOracleUpdateTransaction = async ({
   chainId,
   vaultAddress,
 }: {
-  publicClient: ReturnType<typeof usePublicClient>
+  publicClient: NonNullable<ReturnType<typeof usePublicClient>>
   account?: Address
   chainId: number
   vaultAddress: string
@@ -57,7 +57,9 @@ export const getOracleUpdateTransaction = async ({
   const trustedMulticallForwarderBatcher =
     new TrustedMulticallForwarderBatcher()
   const eip7412 = new Eip7412(
-    [new PythAdapter(PYTH_API_LINK)],
+    // Check compatibility
+    // Remove casting after viem update https://github.com/Synthetixio/erc7412/blob/main/package.json#L30
+    [new PythAdapter(PYTH_API_LINK) as OracleAdapter],
     trustedMulticallForwarderBatcher,
   )
 

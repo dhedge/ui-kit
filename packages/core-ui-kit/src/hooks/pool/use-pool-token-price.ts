@@ -1,6 +1,6 @@
 import { PoolLogicAbi } from 'abi'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
-import { useContractRead, useContractReadErrorLogging } from 'hooks/web3'
+import { useContractReadErrorLogging, useReadContract } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatEther, isSynthetixV3Vault, isZeroAddress } from 'utils'
 
@@ -25,13 +25,15 @@ export const usePoolTokenPrice = ({
     data: tokenPrice,
     error,
     status,
-  } = useContractRead({
+  } = useReadContract({
     address,
     abi: PoolLogicAbi,
     functionName: 'tokenPrice',
     chainId,
-    enabled:
-      !!address && !isZeroAddress(address) && !isSynthetixVault && !disabled,
+    query: {
+      enabled:
+        !!address && !isZeroAddress(address) && !isSynthetixVault && !disabled,
+    },
   })
   useContractReadErrorLogging({ error, status })
 

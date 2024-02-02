@@ -18,7 +18,7 @@ import {
 
 vi.mock('hooks/web3', () => ({
   useAccount: vi.fn(),
-  useContractReads: vi.fn(),
+  useReadContracts: vi.fn(),
   useContractReadsErrorLogging: vi.fn(),
 }))
 vi.mock('hooks/pool', () => ({
@@ -78,12 +78,12 @@ describe('usePoolDynamicContractData', () => {
       () =>
         ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: exitCooldown }, { result: summary }],
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     renderHook(() =>
@@ -93,8 +93,8 @@ describe('usePoolDynamicContractData', () => {
       }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledWith(
       expect.objectContaining({
         contracts: expect.arrayContaining([
           expect.objectContaining({
@@ -133,12 +133,12 @@ describe('usePoolDynamicContractData', () => {
       () =>
         ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: exitCooldown }, { result: summary }],
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() =>
@@ -181,12 +181,12 @@ describe('usePoolDynamicContractData', () => {
       () =>
         ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: exitCooldown }, { result: summary }],
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() =>
@@ -230,12 +230,12 @@ describe('usePoolDynamicContractData', () => {
       () =>
         ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: exitCooldown }, { result: summary }],
           isFetched,
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() =>
@@ -289,12 +289,12 @@ describe('usePoolDynamicContractData', () => {
       () =>
         ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: exitCooldown }, { result: summary }],
           isFetched,
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
     vi.mocked(poolHooks.useManagerLogicAddress).mockImplementationOnce(
       () => managerLogicAddress,

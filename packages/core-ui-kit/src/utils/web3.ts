@@ -13,7 +13,6 @@ export {
   hexToString,
   trim,
 } from 'viem'
-export { getContract } from 'wagmi/actions'
 
 export const getContractAddressById = (
   contractId: ContractId,

@@ -20,6 +20,7 @@ describe('useAccount', () => {
       address: TEST_ADDRESS,
       status: 'connected',
       connector: { name: 'connector' },
+      isConnected: true,
     }
 
     vi.mocked(w.useAccount).mockImplementationOnce(
@@ -33,6 +34,7 @@ describe('useAccount', () => {
       status: account.status,
       connector: account.connector,
       providerName: account.connector.name,
+      isConnected: true,
     })
   })
 

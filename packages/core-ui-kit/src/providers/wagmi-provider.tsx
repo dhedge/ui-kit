@@ -1,24 +1,35 @@
-import type { FC, ReactNode } from 'react'
-import { WagmiConfig, configureChains, createConfig } from 'wagmi'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import type { FC, PropsWithChildren } from 'react'
+import { createClient } from 'viem'
+import { WagmiProvider as Provider, createConfig, http } from 'wagmi'
 import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { injected } from 'wagmi/connectors'
 
-import { DEFAULT_POLLING_INTERVAL } from 'const'
+import { ALCHEMY_RPC_URL_MAP, DEFAULT_POLLING_INTERVAL } from 'const'
 
-const { chains, publicClient } = configureChains(
-  [optimism, polygon, arbitrum, base],
-  [alchemyProvider({ apiKey: 'FUOJ0LrUAEKMhyyVAeUAr3_rV7cvGIWQ' })],
-  { pollingInterval: DEFAULT_POLLING_INTERVAL },
-)
+const API_KEY = 'FUOJ0LrUAEKMhyyVAeUAr3_rV7cvGIWQ'
 
-const web3Client = createConfig({
-  autoConnect: true,
-  connectors: [new InjectedConnector({ chains })],
-  publicClient,
-  persister: null,
+const config = createConfig({
+  chains: [optimism, polygon, arbitrum, base],
+  connectors: [injected({ shimDisconnect: true, target: 'metaMask' })],
+  multiInjectedProviderDiscovery: false,
+  client({ chain }) {
+    return createClient({
+      chain,
+      transport: http(`${ALCHEMY_RPC_URL_MAP[chain.id]}${API_KEY}`, {
+        batch: true,
+      }),
+      pollingInterval: DEFAULT_POLLING_INTERVAL,
+    })
+  },
+  ssr: true,
+  // storage: null,
 })
 
-export const WagmiProvider: FC<{ children: ReactNode }> = ({ children }) => (
-  <WagmiConfig config={web3Client}>{children}</WagmiConfig>
+const queryClient = new QueryClient()
+
+export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => (
+  <Provider config={config}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </Provider>
 )

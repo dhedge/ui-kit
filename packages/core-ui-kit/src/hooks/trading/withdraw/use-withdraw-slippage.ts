@@ -34,7 +34,9 @@ export const useWithdrawSlippage = ({
 
   const isApproved = approvingStatus === 'success'
   const insufficientBalance = useIsInsufficientBalance()
-  const { data: blockNumber } = useBlockNumber({ staleTime: 12_000 })
+  const { data: blockNumber } = useBlockNumber({
+    watch: { enabled: true, pollingInterval: 12_000 },
+  })
 
   const debouncedEstimateSell = useRef(noop)
   useEffect(() => {

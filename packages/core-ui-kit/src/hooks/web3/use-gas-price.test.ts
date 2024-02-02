@@ -4,7 +4,7 @@ import { useGasPrice } from './use-gas-price'
 
 const mocks = vi.hoisted(() => {
   return {
-    useFeeData: vi.fn(),
+    useEstimateFeesPerGas: vi.fn(),
   }
 })
 
@@ -13,7 +13,7 @@ vi.mock('wagmi', async () => {
 
   return {
     ...actual,
-    useFeeData: mocks.useFeeData,
+    useEstimateFeesPerGas: mocks.useEstimateFeesPerGas,
   }
 })
 
@@ -21,6 +21,6 @@ describe('useGasPrice', () => {
   it('should call fee data hook', () => {
     renderHook(() => useGasPrice())
 
-    expect(mocks.useFeeData).toHaveBeenCalledTimes(1)
+    expect(mocks.useEstimateFeesPerGas).toHaveBeenCalledTimes(1)
   })
 })

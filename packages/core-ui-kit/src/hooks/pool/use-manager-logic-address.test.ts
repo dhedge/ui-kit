@@ -8,7 +8,7 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import { useManagerLogicAddress } from './use-manager-logic-address'
 
 vi.mock('hooks/web3', () => ({
-  useContractRead: vi.fn(),
+  useReadContract: vi.fn(),
   useContractReadErrorLogging: vi.fn(),
 }))
 
@@ -27,21 +27,24 @@ describe('useManagerLogicAddress', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
         ({
           data: poolManagerLogic,
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
+        }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
 
     const { result } = renderHook(() =>
       useManagerLogicAddress({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
       expect.objectContaining({
-        enabled: false,
+        query: {
+          staleTime: Infinity,
+          enabled: false,
+        },
       }),
     )
     expect(result.current).toBe(fallbackData.managerLogicAddress)
@@ -57,23 +60,25 @@ describe('useManagerLogicAddress', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(web3Hooks.useReadContract).mockImplementation(
       () =>
         ({
           data: poolManagerLogic,
-        }) as ReturnType<typeof web3Hooks.useContractRead>,
+        }) as ReturnType<typeof web3Hooks.useReadContract>,
     )
 
     const { result } = renderHook(() =>
       useManagerLogicAddress({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractRead)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
       expect.objectContaining({
         functionName: 'poolManagerLogic',
         abi: PoolLogicAbi,
-        staleTime: Infinity,
+        query: expect.objectContaining({
+          staleTime: Infinity,
+        }),
       }),
     )
     expect(result.current).toBe(poolManagerLogic)
