@@ -1,28 +1,22 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { FC, PropsWithChildren } from 'react'
+import { createClient } from 'viem'
 import { WagmiProvider as Provider, createConfig, http } from 'wagmi'
 import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
-import { createClient } from 'viem'
 
-import { DEFAULT_POLLING_INTERVAL } from 'const'
+import { ALCHEMY_RPC_URL_MAP, DEFAULT_POLLING_INTERVAL } from 'const'
 
 const API_KEY = 'FUOJ0LrUAEKMhyyVAeUAr3_rV7cvGIWQ'
 
-const RPC_URL_MAP = {
-  [optimism.id]: `https://opt-mainnet.g.alchemy.com/v2/`,
-  [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/`,
-  [arbitrum.id]: `https://arb-mainnet.g.alchemy.com/v2/`,
-  [base.id]: `https://base-mainnet.g.alchemy.com/v2/`,
-} as const
-
 const config = createConfig({
   chains: [optimism, polygon, arbitrum, base],
-  connectors: [injected()],
+  connectors: [injected({ shimDisconnect: true, target: 'metaMask' })],
   multiInjectedProviderDiscovery: false,
   client({ chain }) {
     return createClient({
       chain,
-      transport: http(`${RPC_URL_MAP}${API_KEY}`, {
+      transport: http(`${ALCHEMY_RPC_URL_MAP[chain.id]}${API_KEY}`, {
         batch: true,
       }),
       pollingInterval: DEFAULT_POLLING_INTERVAL,
@@ -32,6 +26,10 @@ const config = createConfig({
   // storage: null,
 })
 
+const queryClient = new QueryClient()
+
 export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => (
-  <Provider config={config}>{children}</Provider>
+  <Provider config={config}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </Provider>
 )

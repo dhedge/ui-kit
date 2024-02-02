@@ -116,6 +116,7 @@ export const useContractFunction = ({
           error:
             error.error?.data?.message ??
             error.data?.message ??
+            error?.shortMessage ??
             GAS_ESTIMATION_ERROR,
           value: BigInt(0),
         }
