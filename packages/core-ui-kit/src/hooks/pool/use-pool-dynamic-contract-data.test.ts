@@ -2,10 +2,9 @@ import { formatDuration, intervalToDuration } from 'date-fns'
 
 import { expect } from 'vitest'
 
-import { PoolLogicAbi } from 'abi'
 import { DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
 import * as poolHooks from 'hooks/pool'
-import * as web3Hooks from 'hooks/web3'
+import * as poolMulticallHooks from 'hooks/pool/multicall'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 
@@ -16,10 +15,8 @@ import {
   usePoolDynamicContractData,
 } from './use-pool-dynamic-contract-data'
 
-vi.mock('hooks/web3', () => ({
-  useAccount: vi.fn(),
-  useReadContracts: vi.fn(),
-  useContractReadsErrorLogging: vi.fn(),
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 vi.mock('hooks/pool', () => ({
   useManagerLogicAddress: vi.fn(),
@@ -74,16 +71,15 @@ describe('usePoolDynamicContractData', () => {
     const exitCooldown = BigInt(1)
     const chainId = optimism.id
 
-    vi.mocked(web3Hooks.useAccount).mockImplementation(
-      () =>
-        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
-    )
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: [{ result: exitCooldown }, { result: summary }],
+          data: {
+            getExitRemainingCooldown: exitCooldown,
+            getFundSummary: summary,
+          },
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     renderHook(() =>
@@ -93,21 +89,13 @@ describe('usePoolDynamicContractData', () => {
       }),
     )
 
-    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledWith(
-      expect.objectContaining({
-        contracts: expect.arrayContaining([
-          expect.objectContaining({
-            abi: PoolLogicAbi,
-            functionName: 'getExitRemainingCooldown',
-          }),
-          expect.objectContaining({
-            abi: PoolLogicAbi,
-            functionName: 'getFundSummary',
-          }),
-        ]),
-      }),
+    expect(vi.mocked(poolMulticallHooks.usePoolDynamic)).toHaveBeenCalledTimes(
+      1,
     )
+    expect(vi.mocked(poolMulticallHooks.usePoolDynamic)).toHaveBeenCalledWith({
+      address: TEST_ADDRESS,
+      chainId,
+    })
   })
 
   it('should resolve positive cooldown data', () => {
@@ -129,16 +117,15 @@ describe('usePoolDynamicContractData', () => {
     const exitCooldown = BigInt(1)
     const chainId = optimism.id
 
-    vi.mocked(web3Hooks.useAccount).mockImplementation(
-      () =>
-        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
-    )
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: [{ result: exitCooldown }, { result: summary }],
+          data: {
+            getExitRemainingCooldown: exitCooldown,
+            getFundSummary: summary,
+          },
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     const { result } = renderHook(() =>
@@ -177,16 +164,15 @@ describe('usePoolDynamicContractData', () => {
     const exitCooldown = undefined
     const chainId = optimism.id
 
-    vi.mocked(web3Hooks.useAccount).mockImplementation(
-      () =>
-        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
-    )
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: [{ result: exitCooldown }, { result: summary }],
+          data: {
+            getExitRemainingCooldown: exitCooldown,
+            getFundSummary: summary,
+          },
           isFetched: true,
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     const { result } = renderHook(() =>
@@ -226,16 +212,15 @@ describe('usePoolDynamicContractData', () => {
     const chainId = optimism.id
     const isFetched = true
 
-    vi.mocked(web3Hooks.useAccount).mockImplementation(
-      () =>
-        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
-    )
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: [{ result: exitCooldown }, { result: summary }],
+          data: {
+            getExitRemainingCooldown: exitCooldown,
+            getFundSummary: summary,
+          },
           isFetched,
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     const { result } = renderHook(() =>
@@ -285,16 +270,15 @@ describe('usePoolDynamicContractData', () => {
     const managerLogicAddress = '0x123' as Address
     const customTotalFundValue = '1111111'
 
-    vi.mocked(web3Hooks.useAccount).mockImplementation(
-      () =>
-        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
-    )
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: [{ result: exitCooldown }, { result: summary }],
+          data: {
+            getExitRemainingCooldown: exitCooldown,
+            getFundSummary: summary,
+          },
           isFetched,
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(poolHooks.useManagerLogicAddress).mockImplementationOnce(
       () => managerLogicAddress,

@@ -1,7 +1,5 @@
-import { PoolManagerLogicAbi } from 'abi'
 import { DEFAULT_PRECISION, optimism } from 'const'
-import * as poolHooks from 'hooks/pool'
-import * as web3Hooks from 'hooks/web3'
+import * as poolMulticallHooks from 'hooks/pool/multicall'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 
@@ -12,13 +10,8 @@ import {
   usePoolManagerLogicData,
 } from './use-pool-manager-logic-data'
 
-vi.mock('hooks/web3', () => ({
-  useReadContracts: vi.fn(),
-  useContractReadsErrorLogging: vi.fn(),
-}))
-
-vi.mock('./use-manager-logic-address', () => ({
-  useManagerLogicAddress: vi.fn(),
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolManagerStatic: vi.fn(),
 }))
 
 describe('normalizeFeeIncreaseInfo', () => {
@@ -46,71 +39,44 @@ describe('normalizeFeeIncreaseInfo', () => {
 })
 
 describe('usePoolManagerLogicData', () => {
-  it('should call getFeeIncreaseInfo and minDepositUSD methods on PoolManagerLogicAbi', () => {
+  it('should call usePoolManagerStatic with poolAddress and chainId', () => {
     const poolAddress = TEST_ADDRESS
     const chainId = optimism.id
     const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
     const minDepositUSD = BigInt(0)
 
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
         ({
-          data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+          data: { getFeeIncreaseInfo: feeInfo, minDepositUSD },
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerStatic
+        >,
     )
 
     renderHook(() => usePoolManagerLogicData(poolAddress, chainId))
 
-    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledWith(
-      expect.objectContaining({
-        contracts: expect.arrayContaining([
-          expect.objectContaining({
-            abi: PoolManagerLogicAbi,
-            functionName: 'getFeeIncreaseInfo',
-          }),
-          expect.objectContaining({
-            abi: PoolManagerLogicAbi,
-            functionName: 'minDepositUSD',
-          }),
-        ]),
-      }),
-    )
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledTimes(1)
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledWith({ address: poolAddress, chainId })
   })
 
-  it('should call useManagerLogicAddress with params', () => {
+  it('should return normalized fee data', () => {
     const poolAddress = TEST_ADDRESS
     const chainId = optimism.id
     const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
     const minDepositUSD = BigInt(0)
 
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
         ({
-          data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
-    )
-
-    renderHook(() => usePoolManagerLogicData(poolAddress, chainId))
-
-    expect(vi.mocked(poolHooks.useManagerLogicAddress)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(poolHooks.useManagerLogicAddress)).toHaveBeenCalledWith({
-      address: poolAddress,
-      chainId,
-    })
-  })
-
-  it('should return  normalized fee data', () => {
-    const poolAddress = TEST_ADDRESS
-    const chainId = optimism.id
-    const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
-    const minDepositUSD = BigInt(0)
-
-    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
-      () =>
-        ({
-          data: [{ result: feeInfo }, { result: minDepositUSD }],
-        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+          data: { getFeeIncreaseInfo: feeInfo, minDepositUSD },
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerStatic
+        >,
     )
 
     const { result } = renderHook(() =>

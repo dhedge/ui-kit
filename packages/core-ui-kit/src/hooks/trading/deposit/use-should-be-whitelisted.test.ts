@@ -43,7 +43,7 @@ describe('useShouldBeWhitelisted', () => {
     expect(poolHooks.useCheckWhitelist).toHaveBeenCalledTimes(1)
     expect(poolHooks.useCheckWhitelist).toHaveBeenCalledWith({
       address: TEST_ADDRESS,
-      chainId: undefined,
+      chainId: optimism.id,
     })
 
     expect(result.current).toEqual({

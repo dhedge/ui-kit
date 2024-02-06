@@ -52,11 +52,6 @@ export const useStaticCallQuery = <T>({
           args: params.args,
         })
 
-        console.log({
-          params,
-          simulation,
-        })
-
         return simulation?.result
       }
     },
