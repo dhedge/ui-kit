@@ -54,7 +54,7 @@ export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {
   const result = useReadContracts({
     contracts: getContracts({ address, chainId, account }),
     query: {
-      enabled: address && !isZeroAddress(address),
+      enabled: !!address && !isZeroAddress(address),
       staleTime: Infinity,
       select: selector,
     },

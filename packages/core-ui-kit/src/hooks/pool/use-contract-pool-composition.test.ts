@@ -1,6 +1,6 @@
 import { expect } from 'vitest'
 
-import { PoolManagerLogicAbi, erc20Abi } from 'abi'
+import { erc20Abi } from 'abi'
 import {
   DEFAULT_PRECISION,
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
@@ -8,6 +8,7 @@ import {
   optimism,
 } from 'const'
 import * as poolHooks from 'hooks/pool'
+import * as poolMulticallHooks from 'hooks/pool/multicall'
 import * as stateHooks from 'hooks/state'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
@@ -31,8 +32,12 @@ vi.mock('hooks/pool', () => ({
   useManagerLogicAddress: vi.fn(),
 }))
 
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolManagerDynamic: vi.fn(),
+}))
+
 describe('useContractPoolComposition', () => {
-  it('should call getFundComposition method on PoolManagerLogicAbi', () => {
+  it('should call usePoolManagerDynamic', () => {
     const address = TEST_ADDRESS
     const chainId = optimism.id
     const fallbackPoolComposition: PoolComposition = {
@@ -62,15 +67,14 @@ describe('useContractPoolComposition', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(poolHooks.useManagerLogicAddress).mockImplementation(
-      () => managerLogicAddress,
-    )
-    vi.mocked(web3Hooks.useReadContract).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementationOnce(
       () =>
         ({
-          data: contractFundComposition,
+          data: { getFundComposition: contractFundComposition },
           isFetched: true,
-        }) as unknown as ReturnType<typeof web3Hooks.useReadContract>,
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementationOnce(
       () =>
@@ -81,21 +85,15 @@ describe('useContractPoolComposition', () => {
 
     renderHook(() => useContractPoolComposition({ address, chainId }))
 
-    expect(poolHooks.useManagerLogicAddress).toHaveBeenCalledWith({
-      address,
-      chainId,
-    })
     expect(poolHooks.useSynthetixV3AssetBalance).toHaveBeenCalledWith({
       vaultAddress: address,
       chainId,
       disabled: true,
     })
-    expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
+    expect(poolMulticallHooks.usePoolManagerDynamic).toHaveBeenCalledTimes(1)
+    expect(poolMulticallHooks.usePoolManagerDynamic).toHaveBeenCalledWith(
       expect.objectContaining({
         address: managerLogicAddress,
-        abi: PoolManagerLogicAbi,
-        functionName: 'getFundComposition',
         chainId,
       }),
     )
@@ -123,7 +121,6 @@ describe('useContractPoolComposition', () => {
     ]
     const symbol = 'symbol'
     const decimals = DEFAULT_PRECISION
-    const managerLogicAddress = TEST_ADDRESS
 
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -131,15 +128,14 @@ describe('useContractPoolComposition', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(poolHooks.useManagerLogicAddress).mockImplementation(
-      () => managerLogicAddress,
-    )
-    vi.mocked(web3Hooks.useReadContract).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementationOnce(
       () =>
         ({
-          data: contractFundComposition,
+          data: { getFundComposition: contractFundComposition },
           isFetched: true,
-        }) as unknown as ReturnType<typeof web3Hooks.useReadContract>,
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementationOnce(
       () =>
@@ -193,7 +189,6 @@ describe('useContractPoolComposition', () => {
     ]
     const symbol = 'symbol'
     const decimals = DEFAULT_PRECISION
-    const managerLogicAddress = TEST_ADDRESS
 
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -201,15 +196,14 @@ describe('useContractPoolComposition', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(poolHooks.useManagerLogicAddress).mockImplementation(
-      () => managerLogicAddress,
-    )
-    vi.mocked(web3Hooks.useReadContract).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementationOnce(
       () =>
         ({
-          data: contractFundComposition,
+          data: { getFundComposition: contractFundComposition },
           isFetched: true,
-        }) as unknown as ReturnType<typeof web3Hooks.useReadContract>,
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
@@ -250,7 +244,6 @@ describe('useContractPoolComposition', () => {
     ]
     const symbol = 'symbol'
     const decimals = DEFAULT_PRECISION
-    const managerLogicAddress = TEST_ADDRESS
 
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -258,18 +251,17 @@ describe('useContractPoolComposition', () => {
           typeof stateHooks.useTradingPanelPoolFallbackData
         >,
     )
-    vi.mocked(poolHooks.useManagerLogicAddress).mockImplementation(
-      () => managerLogicAddress,
-    )
     vi.mocked(poolHooks.useSynthetixV3AssetBalance).mockImplementation(
       () => '3',
     )
-    vi.mocked(web3Hooks.useReadContract).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementationOnce(
       () =>
         ({
-          data: contractFundComposition,
+          data: { getFundComposition: contractFundComposition },
           isFetched: true,
-        }) as unknown as ReturnType<typeof web3Hooks.useReadContract>,
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>

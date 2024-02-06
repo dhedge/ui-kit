@@ -7,7 +7,7 @@ import { optimism } from 'const'
 import { useNetwork } from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
-import { useStaticCall } from './use-static-call'
+import { useStaticCallQuery } from './use-static-call-query'
 import { getContractAbiById } from '../../utils'
 
 const mocks = vi.hoisted(() => {
@@ -47,7 +47,7 @@ vi.mock('hooks/web3', () => ({
   })),
 }))
 
-describe('useStaticCall', () => {
+describe('useStaticCallQuery', () => {
   it('should return the result when all conditions are met', async () => {
     const mockCallStaticFn = vi.fn()
     const dynamicContractAddress = '0x123'
@@ -60,7 +60,7 @@ describe('useStaticCall', () => {
     }))
 
     const { result, rerender } = renderHook(() =>
-      useStaticCall({
+      useStaticCallQuery({
         disabled: false,
         contractId: 'synthetixV3AssetGuard',
         dynamicContractAddress,
@@ -80,15 +80,18 @@ describe('useStaticCall', () => {
         args,
       })
     })
+
+    await waitFor(() => !result.current.isFetching)
+
     expect(result.current.data).toBe(expectedResult)
-    expect(result.current.error).toBe(false)
+    expect(result.current.error).toBe(null)
 
     rerender()
     await waitFor(() => {
       expect(mockCallStaticFn).toHaveBeenCalledTimes(1)
     })
     expect(result.current.data).toBe(expectedResult)
-    expect(result.current.error).toBe(false)
+    expect(result.current.error).toBe(null)
   })
 
   it('should return undefined if disabled is true', async () => {
@@ -106,7 +109,7 @@ describe('useStaticCall', () => {
     mocks.utils.getContractAbiById.mockImplementationOnce(() => testAbi)
 
     const { result } = renderHook(() =>
-      useStaticCall({
+      useStaticCallQuery({
         disabled: true,
         contractId: 'synthetixV3AssetGuard',
         args: [],
@@ -125,7 +128,7 @@ describe('useStaticCall', () => {
     await waitFor(() => {
       expect(mockCallStaticFn).not.toHaveBeenCalled()
       expect(result.current.data).toBeUndefined()
-      expect(result.current.error).toBe(false)
+      expect(result.current.error).toBe(null)
     })
   })
 })

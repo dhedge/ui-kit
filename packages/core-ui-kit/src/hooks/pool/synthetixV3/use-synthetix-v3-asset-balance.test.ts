@@ -10,19 +10,22 @@ import { getContractAddressById } from 'utils'
 import { useSynthetixV3AssetBalance } from './use-synthetix-v3-asset-balance'
 
 vi.mock('hooks/web3', () => ({
-  useStaticCall: vi.fn(),
+  useStaticCallQuery: vi.fn(),
   useReadContract: vi.fn(),
 }))
 
 describe('useSynthetixV3AssetBalance', () => {
-  it('should call useStaticCall with the correct parameters', () => {
+  it('should call useStaticCallQuery with the correct parameters', () => {
     const vaultAddress = '0x01'
     const synthetixAssetGuard = '0x02'
     const expectedResult = BigInt(10)
-    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(() => ({
-      data: expectedResult,
-      error: false,
-    }))
+    vi.mocked(web3Hooks.useStaticCallQuery).mockImplementationOnce(
+      () =>
+        ({
+          data: expectedResult,
+          error: null,
+        }) as ReturnType<typeof web3Hooks.useStaticCallQuery>,
+    )
     vi.mocked(web3Hooks.useReadContract)
       .mockImplementationOnce(
         () =>
@@ -64,8 +67,8 @@ describe('useSynthetixV3AssetBalance', () => {
         functionName: 'getBalance',
       }),
     )
-    expect(web3Hooks.useStaticCall).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useStaticCall).toHaveBeenCalledWith({
+    expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledWith({
       chainId: optimism.id,
       contractId: 'synthetixV3AssetGuard',
       dynamicContractAddress: synthetixAssetGuard,
