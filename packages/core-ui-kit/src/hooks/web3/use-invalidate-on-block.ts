@@ -27,5 +27,7 @@ export const useInvalidateOnBlock = ({
     if (watch) {
       queryClient.invalidateQueries({ queryKey })
     }
-  }, [watch, blockNumber, queryClient, queryKey])
+    // https://wagmi.sh/react/guides/tanstack-query#example-watching-a-users-balance
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch, blockNumber])
 }

@@ -26,7 +26,16 @@ const config = createConfig({
   // storage: null,
 })
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      retry: false,
+      refetchOnWindowFocus: false,
+      gcTime: DEFAULT_POLLING_INTERVAL,
+    },
+  },
+})
 
 export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => (
   <Provider config={config}>
