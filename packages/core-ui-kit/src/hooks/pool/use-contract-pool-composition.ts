@@ -75,14 +75,19 @@ export const useContractPoolComposition = ({
     ]),
     query: {
       enabled:
-        isFundCompositionFetched && assetsAddresses?.length > 0 && !!chainId,
+        isFundCompositionFetched &&
+        assetsAddresses?.length > 0 &&
+        !!chainId &&
+        !assetsAddresses.every(
+          (address) => fallbackAssetMap?.[address.toLowerCase()],
+        ),
       staleTime: Infinity,
     },
   })
   useContractReadsErrorLogging(tokenData)
 
   return useMemo(() => {
-    if (!fundAssets?.length || !tokenData?.length) {
+    if (!fundAssets?.length) {
       return []
     }
 
