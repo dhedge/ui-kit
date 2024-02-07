@@ -5,17 +5,20 @@ import { renderHook } from 'test-utils'
 import { useTotalFundValueMutable } from './use-total-funds-value-mutable'
 
 vi.mock('hooks/web3', () => ({
-  useStaticCall: vi.fn(),
+  useStaticCallQuery: vi.fn(),
 }))
 
 describe('useTotalFundValueMutable', () => {
   it('should call useTotalFundValueMutable with the correct parameters', () => {
     const managerLogicAddress = '0x012'
     const expectedResult = BigInt(100)
-    vi.mocked(web3Hooks.useStaticCall).mockImplementationOnce(() => ({
-      data: expectedResult,
-      error: false,
-    }))
+    vi.mocked(web3Hooks.useStaticCallQuery).mockImplementationOnce(
+      () =>
+        ({
+          data: expectedResult,
+          error: null,
+        }) as ReturnType<typeof web3Hooks.useStaticCallQuery>,
+    )
 
     const { result } = renderHook(() =>
       useTotalFundValueMutable({
@@ -24,8 +27,8 @@ describe('useTotalFundValueMutable', () => {
       }),
     )
 
-    expect(web3Hooks.useStaticCall).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useStaticCall).toHaveBeenCalledWith({
+    expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledWith({
       dynamicContractAddress: managerLogicAddress,
       contractId: 'poolManagerLogic',
       chainId: optimism.id,

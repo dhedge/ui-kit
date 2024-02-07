@@ -2,15 +2,12 @@ import chunk from 'lodash.chunk'
 
 import { useMemo } from 'react'
 
-import { PoolManagerLogicAbi, erc20Abi } from 'abi'
+import { erc20Abi } from 'abi'
 import { BRIDGED_TOKENS_SYMBOLS, DEFAULT_PRECISION } from 'const'
-import { useManagerLogicAddress, useSynthetixV3AssetBalance } from 'hooks/pool'
+import { useSynthetixV3AssetBalance } from 'hooks/pool'
+import { usePoolManagerDynamic } from 'hooks/pool/multicall'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
-import {
-  useContractReadsErrorLogging,
-  useReadContract,
-  useReadContracts,
-} from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { PoolComposition } from 'types/pool.types'
 import type { Address, PoolContractCallParams } from 'types/web3.types'
 import { isSynthetixV3Asset, isSynthetixV3Vault, shortenAddress } from 'utils'
@@ -19,17 +16,11 @@ interface FallbackAssetsMap {
   [address: string]: Pick<PoolComposition, 'tokenName' | 'precision' | 'asset'>
 }
 
-interface PoolCompositionAsset {
-  asset: Address
-  isDeposit: boolean
-}
-
 export const useContractPoolComposition = ({
   address,
   chainId,
 }: PoolContractCallParams): PoolComposition[] => {
   const [poolFallbackData] = useTradingPanelPoolFallbackData()
-  const managerLogicAddress = useManagerLogicAddress({ address, chainId })
   const isSynthetixVault = isSynthetixV3Vault(address)
 
   const fallbackAssetMap = useMemo(
@@ -44,18 +35,12 @@ export const useContractPoolComposition = ({
     [poolFallbackData.poolCompositions],
   )
 
-  const { data, isFetched: isFundCompositionFetched } = useReadContract({
-    address: managerLogicAddress,
-    abi: PoolManagerLogicAbi,
-    functionName: 'getFundComposition',
-    chainId,
-    query: {
-      enabled: !!managerLogicAddress && !!chainId,
-    },
-  })
-  const fundAssets = data?.[0] as PoolCompositionAsset[] | undefined
-  const assetsBalances = data?.[1] as bigint[] | undefined
-  const assetsRates = data?.[2] as bigint[] | undefined
+  const {
+    data: {
+      getFundComposition: [fundAssets, assetsBalances, assetsRates] = [],
+    } = {},
+    isFetched: isFundCompositionFetched,
+  } = usePoolManagerDynamic({ address, chainId })
 
   // Synthetix V3 asset balance should be fetched separately
   // https://github.com/dhedge/dhedge-v2/blob/master/contracts/guards/assetGuards/synthetixV3/SynthetixV3AssetGuard.sol#L66
@@ -90,14 +75,19 @@ export const useContractPoolComposition = ({
     ]),
     query: {
       enabled:
-        isFundCompositionFetched && assetsAddresses?.length > 0 && !!chainId,
+        isFundCompositionFetched &&
+        assetsAddresses?.length > 0 &&
+        !!chainId &&
+        !assetsAddresses.every(
+          (address) => fallbackAssetMap?.[address.toLowerCase()],
+        ),
       staleTime: Infinity,
     },
   })
   useContractReadsErrorLogging(tokenData)
 
   return useMemo(() => {
-    if (!fundAssets?.length || !tokenData?.length) {
+    if (!fundAssets?.length) {
       return []
     }
 

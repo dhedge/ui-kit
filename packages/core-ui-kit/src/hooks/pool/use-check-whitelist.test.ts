@@ -1,5 +1,5 @@
-import { PoolLogicAbi } from 'abi'
-import { AddressZero, optimism } from 'const'
+import { optimism } from 'const'
+import * as poolMulticallHooks from 'hooks/pool/multicall'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -8,12 +8,14 @@ import { useCheckWhitelist } from './use-check-whitelist'
 
 vi.mock('hooks/web3', () => ({
   useAccount: vi.fn(),
-  useReadContract: vi.fn(),
-  useContractReadErrorLogging: vi.fn(),
+}))
+
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolStatic: vi.fn(),
 }))
 
 describe('useCheckWhitelist', () => {
-  it('should call isMemberAllowed method on PoolLogicAbi', async () => {
+  it('should return isMemberAllowed from PoolStatic data', async () => {
     const isMemberAllowed = true
 
     vi.mocked(web3Hooks.useAccount).mockImplementation(
@@ -22,24 +24,22 @@ describe('useCheckWhitelist', () => {
           account: TEST_ADDRESS,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useReadContract).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolStatic).mockImplementation(
       () =>
         ({
-          data: [isMemberAllowed],
-        }) as ReturnType<typeof web3Hooks.useReadContract>,
+          data: { isMemberAllowed },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolStatic>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
-      expect.objectContaining({
-        functionName: 'isMemberAllowed',
-        abi: PoolLogicAbi,
-      }),
-    )
+    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledWith({
+      address: TEST_ADDRESS,
+      chainId: optimism.id,
+    })
     expect(result.current).toBe(isMemberAllowed)
   })
 
@@ -53,23 +53,22 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(web3Hooks.useReadContract).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolStatic).mockImplementation(
       () =>
         ({
-          data: [isMemberAllowed],
-        }) as ReturnType<typeof web3Hooks.useReadContract>,
+          data: { isMemberAllowed },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolStatic>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useReadContract)).toHaveBeenCalledWith(
-      expect.objectContaining({
-        args: [AddressZero],
-      }),
-    )
+    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledWith({
+      address: TEST_ADDRESS,
+      chainId: optimism.id,
+    })
     expect(result.current).toBe(false)
   })
 })

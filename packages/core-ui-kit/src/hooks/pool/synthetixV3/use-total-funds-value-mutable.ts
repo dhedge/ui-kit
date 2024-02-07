@@ -1,9 +1,9 @@
-import { useStaticCall } from 'hooks/web3'
+import { useStaticCallQuery } from 'hooks/web3'
 import type { Address, ChainId } from 'types'
 
 interface UseTotalFundsValueMutable {
   vaultManagerLogicAddress: Address | undefined
-  chainId?: ChainId
+  chainId: ChainId
   disabled?: boolean
 }
 
@@ -12,7 +12,7 @@ export const useTotalFundValueMutable = ({
   chainId,
   disabled,
 }: UseTotalFundsValueMutable) =>
-  useStaticCall<bigint>({
+  useStaticCallQuery<bigint>({
     dynamicContractAddress: vaultManagerLogicAddress,
     contractId: 'poolManagerLogic',
     chainId,

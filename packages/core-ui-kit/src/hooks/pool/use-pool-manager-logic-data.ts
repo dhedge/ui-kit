@@ -1,9 +1,7 @@
-import { PoolManagerLogicAbi } from 'abi'
 import { DEFAULT_PRECISION } from 'const'
-import { useManagerLogicAddress } from 'hooks/pool'
-import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
+import { usePoolManagerStatic } from 'hooks/pool/multicall'
 import type { Address, ChainId } from 'types/web3.types'
-import { formatUnits, isZeroAddress } from 'utils'
+import { formatUnits } from 'utils'
 
 export const normalizeFeeIncreaseInfo = (
   feeIncreaseInfo?: readonly bigint[] | undefined,
@@ -24,35 +22,8 @@ export const usePoolManagerLogicData = (
   poolAddress: Address,
   chainId: ChainId,
 ) => {
-  const managerLogicAddress = useManagerLogicAddress({
-    address: poolAddress,
-    chainId,
-  })
-
-  const { data } = useReadContracts({
-    contracts: [
-      {
-        address: managerLogicAddress,
-        abi: PoolManagerLogicAbi,
-        functionName: 'getFeeIncreaseInfo',
-        chainId,
-      },
-      {
-        address: managerLogicAddress,
-        abi: PoolManagerLogicAbi,
-        functionName: 'minDepositUSD',
-        chainId,
-      },
-    ],
-    query: {
-      enabled: !isZeroAddress(poolAddress),
-      staleTime: Infinity,
-    },
-  })
-  useContractReadsErrorLogging(data)
-
-  const feeInfo = data?.[0]?.result as bigint[] | undefined
-  const minDepositUSD = data?.[1]?.result as bigint | undefined
+  const { data: { getFeeIncreaseInfo: feeInfo, minDepositUSD } = {} } =
+    usePoolManagerStatic({ address: poolAddress, chainId })
 
   return {
     ...normalizeFeeIncreaseInfo(feeInfo),
