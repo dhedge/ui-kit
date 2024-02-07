@@ -2,8 +2,8 @@ import { act } from '@testing-library/react'
 
 import { optimism } from 'const'
 import * as poolHooks from 'hooks/pool'
+import { usePoolStatic } from 'hooks/pool/multicall'
 import * as stateHooks from 'hooks/state'
-import { useEasySwapperStableData } from 'hooks/trading'
 import { useIsPoolManagerAccount } from 'hooks/user'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -15,8 +15,8 @@ vi.mock('hooks/state', () => ({
   useTradingPanelPoolConfig: vi.fn(),
 }))
 
-vi.mock('hooks/trading', () => ({
-  useEasySwapperStableData: vi.fn(),
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolStatic: vi.fn(),
 }))
 
 vi.mock('hooks/user', () => ({
@@ -57,11 +57,11 @@ describe('useDepositMethodHandler', () => {
     vi.mocked(useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(useEasySwapperStableData).mockImplementation(
+    vi.mocked(usePoolStatic).mockImplementationOnce(
       () =>
         ({
-          isEasySwapperAllowedPool,
-        }) as ReturnType<typeof useEasySwapperStableData>,
+          data: { easySwapperAllowedPools: isEasySwapperAllowedPool },
+        }) as ReturnType<typeof usePoolStatic>,
     )
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
@@ -95,11 +95,11 @@ describe('useDepositMethodHandler', () => {
     vi.mocked(useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(useEasySwapperStableData).mockImplementation(
+    vi.mocked(usePoolStatic).mockImplementationOnce(
       () =>
         ({
-          isEasySwapperAllowedPool,
-        }) as ReturnType<typeof useEasySwapperStableData>,
+          data: { easySwapperAllowedPools: isEasySwapperAllowedPool },
+        }) as ReturnType<typeof usePoolStatic>,
     )
 
     const { result } = renderHook(() => useDepositMethodHandler())
@@ -118,11 +118,11 @@ describe('useDepositMethodHandler', () => {
     vi.mocked(useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(useEasySwapperStableData).mockImplementation(
+    vi.mocked(usePoolStatic).mockImplementationOnce(
       () =>
         ({
-          isEasySwapperAllowedPool,
-        }) as ReturnType<typeof useEasySwapperStableData>,
+          data: { easySwapperAllowedPools: isEasySwapperAllowedPool },
+        }) as ReturnType<typeof usePoolStatic>,
     )
 
     const { result } = renderHook(() => useDepositMethodHandler())
@@ -146,11 +146,11 @@ describe('useDepositMethodHandler', () => {
     vi.mocked(useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(useEasySwapperStableData).mockImplementation(
+    vi.mocked(usePoolStatic).mockImplementationOnce(
       () =>
         ({
-          isEasySwapperAllowedPool,
-        }) as ReturnType<typeof useEasySwapperStableData>,
+          data: { easySwapperAllowedPools: isEasySwapperAllowedPool },
+        }) as ReturnType<typeof usePoolStatic>,
     )
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
@@ -180,11 +180,11 @@ describe('useDepositMethodHandler', () => {
     vi.mocked(useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(useEasySwapperStableData).mockImplementation(
+    vi.mocked(usePoolStatic).mockImplementationOnce(
       () =>
         ({
-          isEasySwapperAllowedPool,
-        }) as ReturnType<typeof useEasySwapperStableData>,
+          data: { easySwapperAllowedPools: isEasySwapperAllowedPool },
+        }) as ReturnType<typeof usePoolStatic>,
     )
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
