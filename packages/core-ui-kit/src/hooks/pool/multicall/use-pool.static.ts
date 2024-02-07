@@ -1,4 +1,4 @@
-import { PoolFactoryAbi, PoolLogicAbi } from 'abi'
+import { DhedgeEasySwapperAbi, PoolFactoryAbi, PoolLogicAbi } from 'abi'
 import { AddressZero } from 'const'
 import {
   useAccount,
@@ -38,6 +38,25 @@ const getContracts = ({
       functionName: 'poolManagerLogic',
       chainId,
     },
+    {
+      address: getContractAddressById('easySwapper', chainId),
+      abi: DhedgeEasySwapperAbi,
+      functionName: 'allowedPools',
+      args: [address],
+      chainId,
+    },
+    {
+      address: getContractAddressById('easySwapper', chainId),
+      abi: DhedgeEasySwapperAbi,
+      functionName: 'feeNumerator',
+      chainId,
+    },
+    {
+      address: getContractAddressById('easySwapper', chainId),
+      abi: DhedgeEasySwapperAbi,
+      functionName: 'feeDenominator',
+      chainId,
+    },
   ] as const
 
 type Data = MulticallReturnType<ReturnType<typeof getContracts>>
@@ -46,6 +65,9 @@ const selector = (data: Data) => ({
   isPool: data[0].result,
   isMemberAllowed: data[1].result,
   poolManagerLogic: data[2].result,
+  easySwapperAllowedPools: data[3].result,
+  easySwapperFeeNumerator: data[4].result,
+  easySwapperFeeDenominator: data[5].result,
 })
 
 export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {

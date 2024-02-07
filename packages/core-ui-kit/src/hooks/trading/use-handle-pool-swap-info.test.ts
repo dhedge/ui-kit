@@ -1,6 +1,6 @@
 import { optimism } from 'const'
+import { usePoolStatic } from 'hooks/pool/multicall'
 import * as stateHooks from 'hooks/state'
-import * as tradingHooks from 'hooks/trading'
 import * as userHooks from 'hooks/user'
 import { renderHook } from 'test-utils'
 
@@ -16,8 +16,8 @@ vi.mock('hooks/state', () => ({
   useTradingPanelPoolConfig: vi.fn(),
 }))
 
-vi.mock('./use-easy-swapper-stable-data', () => ({
-  useEasySwapperStableData: vi.fn(),
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolStatic: vi.fn(),
 }))
 
 vi.mock('hooks/user', () => ({
@@ -37,11 +37,16 @@ describe('useHandlePoolSwapInfo', () => {
       address,
       chainId: optimism.id,
     } as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>)
-    vi.mocked(tradingHooks.useEasySwapperStableData).mockReturnValue({
-      isEasySwapperAllowedPool: isPoolSwapAllowed,
-      feeNumerator: BigInt(1),
-      feeDenominator: BigInt(2),
-    })
+    vi.mocked(usePoolStatic).mockImplementationOnce(
+      () =>
+        ({
+          data: {
+            easySwapperAllowedPools: isPoolSwapAllowed,
+            easySwapperFeeDenominator: BigInt(2),
+            easySwapperFeeNumerator: BigInt(1),
+          },
+        }) as ReturnType<typeof usePoolStatic>,
+    )
     vi.mocked(userHooks.useIsPoolManagerAccount).mockReturnValue(
       isPoolManagerAccount,
     )
@@ -72,11 +77,16 @@ describe('useHandlePoolSwapInfo', () => {
       address,
       chainId: optimism.id,
     } as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>)
-    vi.mocked(tradingHooks.useEasySwapperStableData).mockReturnValue({
-      isEasySwapperAllowedPool: isPoolSwapAllowed,
-      feeNumerator: BigInt(1),
-      feeDenominator: BigInt(2),
-    })
+    vi.mocked(usePoolStatic).mockImplementationOnce(
+      () =>
+        ({
+          data: {
+            easySwapperAllowedPools: isPoolSwapAllowed,
+            easySwapperFeeDenominator: BigInt(2),
+            easySwapperFeeNumerator: BigInt(1),
+          },
+        }) as ReturnType<typeof usePoolStatic>,
+    )
     vi.mocked(userHooks.useIsPoolManagerAccount).mockReturnValue(
       isPoolManagerAccount,
     )
@@ -106,11 +116,16 @@ describe('useHandlePoolSwapInfo', () => {
       address,
       chainId: optimism.id,
     } as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>)
-    vi.mocked(tradingHooks.useEasySwapperStableData).mockReturnValue({
-      isEasySwapperAllowedPool: isPoolSwapAllowed,
-      feeNumerator,
-      feeDenominator,
-    })
+    vi.mocked(usePoolStatic).mockImplementationOnce(
+      () =>
+        ({
+          data: {
+            easySwapperAllowedPools: isPoolSwapAllowed,
+            easySwapperFeeDenominator: feeDenominator,
+            easySwapperFeeNumerator: feeNumerator,
+          },
+        }) as ReturnType<typeof usePoolStatic>,
+    )
     vi.mocked(userHooks.useIsPoolManagerAccount).mockReturnValue(
       isPoolManagerAccount,
     )
@@ -149,11 +164,16 @@ describe('useHandlePoolSwapInfo', () => {
       address,
       chainId: optimism.id,
     } as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>)
-    vi.mocked(tradingHooks.useEasySwapperStableData).mockReturnValue({
-      isEasySwapperAllowedPool: isPoolSwapAllowed,
-      feeNumerator,
-      feeDenominator,
-    })
+    vi.mocked(usePoolStatic).mockImplementationOnce(
+      () =>
+        ({
+          data: {
+            easySwapperAllowedPools: isPoolSwapAllowed,
+            easySwapperFeeDenominator: feeDenominator,
+            easySwapperFeeNumerator: feeNumerator,
+          },
+        }) as ReturnType<typeof usePoolStatic>,
+    )
     vi.mocked(userHooks.useIsPoolManagerAccount).mockReturnValue(
       isPoolManagerAccount,
     )

@@ -1,5 +1,4 @@
 export { useTradingResultHandling } from './use-trading-result-handling'
-export { useEasySwapperStableData } from './use-easy-swapper-stable-data'
 export { useHandlePoolSwapInfo } from './use-handle-pool-swap-info'
 export { useTradingSettleHandler } from './use-trading-settle-handler'
 export { useTradingPriceDiff } from './use-trading-price-diff'
