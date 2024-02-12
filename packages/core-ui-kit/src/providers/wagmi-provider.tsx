@@ -16,9 +16,7 @@ const config = createConfig({
   client({ chain }) {
     return createClient({
       chain,
-      transport: http(`${ALCHEMY_RPC_URL_MAP[chain.id]}${API_KEY}`, {
-        batch: true,
-      }),
+      transport: http(`${ALCHEMY_RPC_URL_MAP[chain.id]}${API_KEY}`),
       pollingInterval: DEFAULT_POLLING_INTERVAL,
     })
   },

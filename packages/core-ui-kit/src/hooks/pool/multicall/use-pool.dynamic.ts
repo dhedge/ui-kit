@@ -3,7 +3,6 @@ import { AddressZero } from 'const'
 import {
   useAccount,
   useContractReadErrorLogging,
-  useInvalidateOnBlock,
   useReadContracts,
 } from 'hooks/web3'
 import type {
@@ -69,8 +68,6 @@ export const usePoolDynamic = ({
       select: selector,
     },
   })
-
-  useInvalidateOnBlock({ queryKey: result.queryKey })
 
   useContractReadErrorLogging({ error: result.error, status: result.status })
 

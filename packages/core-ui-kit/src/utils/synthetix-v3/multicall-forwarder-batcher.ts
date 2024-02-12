@@ -60,7 +60,7 @@ export class TrustedMulticallForwarderBatcher implements Batcher {
           transactions.map((txn) => ({
             target: txn.to ?? AddressZero,
             callData: txn.data ?? '0x',
-            value: txn.value ?? '0',
+            value: txn.value ?? BigInt(0),
             requireSuccess: true,
           })),
         ],
