@@ -29,7 +29,7 @@ export const useWithdrawSlippage = ({
   const { cooldownActive } = usePoolDynamicContractData({ address, chainId })
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
-  const [, updateSettings] = useTradingPanelSettings()
+  const [{ slippage }, updateSettings] = useTradingPanelSettings()
   const [{ approvingStatus }] = useTradingPanelMeta()
 
   const isApproved = approvingStatus === 'success'
@@ -70,7 +70,8 @@ export const useWithdrawSlippage = ({
       updateSettings({ minSlippage: 0 })
       return
     }
-    if (sendToken.value && !insufficientBalance) {
+    // Temporary disable slippage estimation when manual slippage is set
+    if (sendToken.value && !insufficientBalance && slippage === 'auto') {
       debouncedEstimateSell.current()
     } else {
       updateSettings({ minSlippage: undefined })
@@ -82,5 +83,6 @@ export const useWithdrawSlippage = ({
     sendToken.value,
     blockNumber, // added block number to auto update slippage
     receiveToken.symbol, // added receiveTokenSymbol to update slippage on receive token change
+    slippage,
   ])
 }
