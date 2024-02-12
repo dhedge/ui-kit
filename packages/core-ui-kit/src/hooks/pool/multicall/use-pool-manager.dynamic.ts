@@ -1,11 +1,7 @@
 import { PoolManagerLogicAbi } from 'abi'
 import { AddressZero } from 'const'
 import { useManagerLogicAddress } from 'hooks/pool/use-manager-logic-address'
-import {
-  useContractReadErrorLogging,
-  useInvalidateOnBlock,
-  useReadContracts,
-} from 'hooks/web3'
+import { useContractReadErrorLogging, useReadContracts } from 'hooks/web3'
 import type { MulticallReturnType, PoolContractCallParams } from 'types'
 import { isZeroAddress } from 'utils'
 
@@ -41,8 +37,6 @@ export const usePoolManagerDynamic = ({
       select: selector,
     },
   })
-
-  useInvalidateOnBlock({ queryKey: result.queryKey })
 
   useContractReadErrorLogging({ error: result.error, status: result.status })
 
