@@ -4,6 +4,8 @@ import { act, renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
 
+import type { UseWriteContractParameters } from 'types/web3.types'
+
 import { useTradingSettleHandler } from './use-trading-settle-handler'
 
 vi.mock('hooks/state', () => ({
@@ -43,8 +45,16 @@ describe('useTradingSettleHandler', () => {
 
     const { result } = renderHook(() => useTradingSettleHandler(action))
 
+    const params = [TEST_ADDRESS, error, { chainId: optimism.id }, undefined]
+
     act(() =>
-      result.current({ hash: TEST_ADDRESS }, error, { chainId: optimism.id }),
+      result.current(
+        ...(params as Parameters<
+          Required<
+            Required<UseWriteContractParameters>['mutation']
+          >['onSettled']
+        >),
+      ),
     )
 
     expect(setApprovingStatusMock).toHaveBeenCalledTimes(1)
@@ -91,8 +101,16 @@ describe('useTradingSettleHandler', () => {
 
     const { result } = renderHook(() => useTradingSettleHandler(action))
 
+    const params = [TEST_ADDRESS, error, { chainId: optimism.id }, undefined]
+
     act(() =>
-      result.current({ hash: TEST_ADDRESS }, error, { chainId: optimism.id }),
+      result.current(
+        ...(params as Parameters<
+          Required<
+            Required<UseWriteContractParameters>['mutation']
+          >['onSettled']
+        >),
+      ),
     )
 
     expect(setApprovingStatusMock).not.toHaveBeenCalledTimes(1)
@@ -111,7 +129,6 @@ describe('useTradingSettleHandler', () => {
 
   it('should handle deposit action data with txHash', async () => {
     const action = 'deposit'
-    const data = { hash: TEST_ADDRESS }
     const error = null
     const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
@@ -140,12 +157,22 @@ describe('useTradingSettleHandler', () => {
 
     const { result } = renderHook(() => useTradingSettleHandler(action))
 
-    act(() => result.current(data, error, { chainId: optimism.id }))
+    const params = [TEST_ADDRESS, error, { chainId: optimism.id }, undefined]
+
+    act(() =>
+      result.current(
+        ...(params as Parameters<
+          Required<
+            Required<UseWriteContractParameters>['mutation']
+          >['onSettled']
+        >),
+      ),
+    )
 
     expect(updatePendingTransactionsMock).toHaveBeenCalledTimes(1)
     expect(updatePendingTransactionsMock).toHaveBeenCalledWith({
       type: 'update',
-      txHash: data.hash,
+      txHash: TEST_ADDRESS,
     })
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(
@@ -160,7 +187,6 @@ describe('useTradingSettleHandler', () => {
 
   it('should handle approve action data with txHash', async () => {
     const action = 'approve'
-    const data = { hash: TEST_ADDRESS }
     const error = null
     const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
@@ -189,12 +215,22 @@ describe('useTradingSettleHandler', () => {
 
     const { result } = renderHook(() => useTradingSettleHandler(action))
 
-    act(() => result.current(data, error, { chainId: optimism.id }))
+    const params = [TEST_ADDRESS, error, { chainId: optimism.id }, undefined]
+
+    act(() =>
+      result.current(
+        ...(params as Parameters<
+          Required<
+            Required<UseWriteContractParameters>['mutation']
+          >['onSettled']
+        >),
+      ),
+    )
 
     expect(updatePendingTransactionsMock).toHaveBeenCalledTimes(1)
     expect(updatePendingTransactionsMock).toHaveBeenCalledWith({
       type: 'update',
-      txHash: data.hash,
+      txHash: TEST_ADDRESS,
     })
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(

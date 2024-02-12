@@ -1,5 +1,13 @@
-import type { TransactionRequest as ViemTransactionRequest } from 'viem'
-import type { Address, Chain } from 'wagmi'
+import type {
+  Address,
+  Chain,
+  TransactionRequest as ViemTransactionRequest,
+} from 'viem'
+
+export type {
+  UseWriteContractParameters,
+  UseReadContractsParameters,
+} from 'wagmi'
 export type {
   Hex,
   PublicClient,
@@ -7,6 +15,7 @@ export type {
   Client,
   WaitForTransactionReceiptReturnType,
   CallExecutionError,
+  MulticallReturnType,
 } from 'viem'
 export type { Address, Chain }
 export type ChainId = Chain['id']
@@ -48,5 +57,9 @@ export interface SimulateTransactionResponse {
 
 export interface PoolContractCallParams {
   address: Address
-  chainId?: ChainId
+  chainId: ChainId
+}
+
+export interface PoolContractAccountCallParams extends PoolContractCallParams {
+  account: Address
 }

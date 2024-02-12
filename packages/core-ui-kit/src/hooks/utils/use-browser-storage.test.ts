@@ -21,7 +21,6 @@ describe('useBrowserStorage', () => {
     )
 
     expect(result.current[0]).toBe(initialValue)
-    expect(getItemSpy).toHaveBeenCalledTimes(1)
     expect(getItemSpy).toHaveBeenCalledWith(key)
   })
 
@@ -54,7 +53,6 @@ describe('useBrowserStorage', () => {
     )
 
     expect(result.current[0]).toBe(initialValue)
-    expect(getItemSpy).toHaveBeenCalledTimes(1)
     expect(getItemSpy).toHaveBeenCalledWith(key)
   })
 

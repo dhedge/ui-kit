@@ -1,4 +1,4 @@
-import { erc20ABI } from 'abi'
+import { erc20Abi } from 'abi'
 import {
   AddressZero,
   CHAIN_NATIVE_TOKENS,
@@ -20,7 +20,7 @@ vi.mock('hooks/pool', () => ({ usePoolComposition: vi.fn() }))
 vi.mock('hooks/user', () => ({ useIsPoolManagerAccount: vi.fn() }))
 vi.mock('hooks/web3', () => ({
   useAccount: vi.fn(),
-  useContractReads: vi.fn(),
+  useReadContracts: vi.fn(),
   useContractReadsErrorLogging: vi.fn(),
 }))
 
@@ -38,11 +38,11 @@ describe('usePoolDepositTokens', () => {
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [])
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() => usePoolDepositTokens())
@@ -52,9 +52,11 @@ describe('usePoolDepositTokens', () => {
     })
     expect(poolHooks.usePoolComposition).toHaveBeenCalledTimes(1)
     expect(userHooks.useIsPoolManagerAccount).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractReads).toHaveBeenCalledWith(
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledWith(
       expect.objectContaining({
-        enabled: false,
+        query: expect.objectContaining({
+          enabled: false,
+        }),
       }),
     )
     expect(result.current).toEqual([])
@@ -92,11 +94,11 @@ describe('usePoolDepositTokens', () => {
     vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: BigInt(rawDepositTokenBalance) }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() => usePoolDepositTokens())
@@ -147,36 +149,38 @@ describe('usePoolDepositTokens', () => {
     vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [
             { result: defaultDepositTokenBalance },
             { result: customDepositTokenBalance },
           ],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() => usePoolDepositTokens())
 
-    expect(web3Hooks.useContractReads).toHaveBeenCalledWith({
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledWith({
       contracts: [
         expect.objectContaining({
           address: defaultDepositToken.tokenAddress.toLowerCase(),
-          abi: erc20ABI,
+          abi: erc20Abi,
           functionName: 'balanceOf',
           args: [TEST_ADDRESS],
           chainId,
         }),
         expect.objectContaining({
           address: customDepositToken.address.toLowerCase(),
-          abi: erc20ABI,
+          abi: erc20Abi,
           functionName: 'balanceOf',
           args: [TEST_ADDRESS],
           chainId,
         }),
       ],
-      enabled: true,
+      query: expect.objectContaining({
+        enabled: true,
+      }),
     })
     expect(result.current).toEqual([
       {
@@ -236,27 +240,29 @@ describe('usePoolDepositTokens', () => {
     vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: BigInt(100000) }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() => usePoolDepositTokens())
 
-    expect(web3Hooks.useContractReads).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractReads).toHaveBeenCalledWith({
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledWith({
       contracts: [
         expect.objectContaining({
           address: customDepositToken.address,
-          abi: erc20ABI,
+          abi: erc20Abi,
           functionName: 'balanceOf',
           args: [TEST_ADDRESS],
           chainId,
         }),
       ],
-      enabled: true,
+      query: expect.objectContaining({
+        enabled: true,
+      }),
     })
     expect(result.current).toEqual([
       {
@@ -315,14 +321,14 @@ describe('usePoolDepositTokens', () => {
     vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
       () => isPoolManagerAccount,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [
             { result: defaultDepositTokenBalance },
             { result: customDepositTokenBalance },
           ],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() => usePoolDepositTokens())

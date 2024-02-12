@@ -1,15 +1,9 @@
 import { formatDuration, intervalToDuration } from 'date-fns'
 
-import { PoolLogicAbi } from 'abi'
-import { AddressZero } from 'const'
 import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
-import {
-  useAccount,
-  useContractReads,
-  useContractReadsErrorLogging,
-} from 'hooks/web3'
+import { usePoolDynamic } from 'hooks/pool/multicall'
 import type { Address, ChainId } from 'types/web3.types'
-import { isSynthetixV3Vault, isZeroAddress } from 'utils'
+import { isSynthetixV3Vault } from 'utils'
 
 interface FundSummary {
   creationTime: bigint
@@ -54,7 +48,6 @@ export const usePoolDynamicContractData = ({
   address,
   chainId,
 }: PoolDynamicContractDataParams) => {
-  const { account } = useAccount()
   const isSynthetixVault = isSynthetixV3Vault(address)
   const managerLogicAddress = useManagerLogicAddress({
     address,
@@ -66,27 +59,15 @@ export const usePoolDynamicContractData = ({
     disabled: !isSynthetixVault,
   })
 
-  const { data, isFetched } = useContractReads({
-    contracts: [
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'getExitRemainingCooldown',
-        chainId,
-        args: [account ?? AddressZero],
-      },
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'getFundSummary',
-        chainId,
-      },
-    ],
-    enabled: !isZeroAddress(address),
-  })
-  useContractReadsErrorLogging(data)
-  const exitCooldown = data?.[0]?.result
-  const summary = getDataFromSummary(data?.[1]?.result)
+  const {
+    data: {
+      getExitRemainingCooldown: exitCooldown,
+      getFundSummary: fundSummary,
+    } = {},
+    isFetched,
+  } = usePoolDynamic({ address, chainId })
+
+  const summary = getDataFromSummary(fundSummary)
 
   const cooldown = exitCooldown ? Number(exitCooldown) * 1000 : 0
   const cooldownEndsInTime = formatDuration(

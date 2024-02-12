@@ -10,7 +10,7 @@ import {
   RewardDistributionAbi,
   SynthetixV3AssetGuard,
   SynthetixV3CoreAbi,
-  erc20ABI,
+  erc20Abi,
 } from 'abi'
 import type { Address, ChainId } from 'types/web3.types'
 
@@ -82,7 +82,7 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   rewardDistribution: RewardDistributionAbi,
   stakingV2: DHedgeStakingV2Abi,
   poolManagerLogic: PoolManagerLogicAbi,
-  erc20: erc20ABI,
+  erc20: erc20Abi,
   poolLogic: PoolLogicAbi,
   synthetixV3AssetGuard: SynthetixV3AssetGuard,
   synthetixV3Core: SynthetixV3CoreAbi,

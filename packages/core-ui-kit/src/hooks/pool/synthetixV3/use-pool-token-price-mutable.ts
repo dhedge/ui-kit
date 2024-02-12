@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { PoolLogicAbi } from 'abi'
 import { AddressZero, DEFAULT_PRECISION } from 'const'
-import { useContractRead, useContractReads } from 'hooks/web3'
+import { useReadContract, useReadContracts } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 import { isZeroAddress } from 'utils'
 
@@ -19,7 +19,7 @@ export const usePoolTokenPriceMutable = ({
   chainId,
   disabled,
 }: PoolTokenPriceParams): bigint | undefined => {
-  const { data: [poolManagerLogic, totalSupply] = [] } = useContractReads({
+  const { data: [poolManagerLogic, totalSupply] = [] } = useReadContracts({
     contracts: [
       {
         address,
@@ -34,7 +34,9 @@ export const usePoolTokenPriceMutable = ({
         chainId,
       },
     ],
-    enabled: !!address && !isZeroAddress(address) && !disabled,
+    query: {
+      enabled: !!address && !isZeroAddress(address) && !disabled,
+    },
   })
 
   const totalFundValueMutable = useTotalFundValueMutable({
@@ -42,13 +44,15 @@ export const usePoolTokenPriceMutable = ({
     chainId,
     disabled,
   })
-  const { data: managerFee } = useContractRead({
+  const { data: managerFee } = useReadContract({
     address,
     abi: PoolLogicAbi,
     functionName: 'calculateAvailableManagerFee',
     chainId,
     args: [totalFundValueMutable ? BigInt(totalFundValueMutable) : BigInt(0)],
-    enabled: !!totalFundValueMutable,
+    query: {
+      enabled: !!totalFundValueMutable,
+    },
   })
 
   const totalSupplyWithManagerFee = totalSupply?.result

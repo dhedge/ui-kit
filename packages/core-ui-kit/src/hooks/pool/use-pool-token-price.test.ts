@@ -1,7 +1,6 @@
-import { PoolLogicAbi } from 'abi'
 import { DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
+import * as poolMulticallHooks from 'hooks/pool/multicall'
 import * as stateHooks from 'hooks/state'
-import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 
@@ -14,24 +13,25 @@ vi.mock('hooks/state', () => ({
   useTradingPanelPoolFallbackData: vi.fn(),
 }))
 
-vi.mock('hooks/web3', () => ({
-  useContractRead: vi.fn(),
-  useContractReadErrorLogging: vi.fn(),
+vi.mock('hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 vi.mock('./synthetixV3/use-pool-token-price-mutable', () => ({
   usePoolTokenPriceMutable: vi.fn(),
 }))
 
 describe('usePoolTokenPrice', () => {
-  it('should call tokenPrice method on PoolLogicAbi with proper address and chainId for non synthetix vault', () => {
+  it('should call usePoolDynamic with proper address and chainId for non synthetix vault', () => {
     const address = TEST_ADDRESS
     const chainId = optimism.id
     const tokenPrice = BigInt(1)
     const poolData = { tokenPrice: '1' }
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: { tokenPrice } }) as ReturnType<
+          typeof poolMulticallHooks.usePoolDynamic
+        >,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -47,16 +47,11 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
-      expect.objectContaining({
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'tokenPrice',
-        chainId,
-        enabled: true,
-      }),
-    )
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
+      address,
+      chainId,
+    })
   })
 
   it('should call usePoolTokenPriceMutable hook for synthetix v3 vault', () => {
@@ -64,11 +59,14 @@ describe('usePoolTokenPrice', () => {
     const chainId = optimism.id
     const tokenPrice = BigInt(123)
     const poolData = { tokenPrice: '1' }
+    const formatter = (price: bigint) => price.toString()
 
     vi.mocked(usePoolTokenPriceMutable).mockImplementation(() => tokenPrice)
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
-        ({ data: undefined }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: { tokenPrice: undefined } }) as ReturnType<
+          typeof poolMulticallHooks.usePoolDynamic
+        >,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -81,23 +79,22 @@ describe('usePoolTokenPrice', () => {
       usePoolTokenPrice({
         address,
         chainId,
-        formatter: (price) => price.toString(),
+        formatter,
         disabled: false,
       }),
     )
 
-    expect(web3Hooks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useContractRead).toHaveBeenCalledWith(
-      expect.objectContaining({
-        enabled: false,
-      }),
-    )
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
+      address,
+      chainId,
+    })
     expect(usePoolTokenPriceMutable).toHaveBeenCalledWith({
       address,
       chainId,
       disabled: false,
     })
-    expect(result.current).toEqual('123')
+    expect(result.current).toEqual(formatter(tokenPrice))
   })
 
   it('should format contract token price', () => {
@@ -107,9 +104,11 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: '2' }
     const formatterMock = vi.fn()
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: { tokenPrice } }) as ReturnType<
+          typeof poolMulticallHooks.usePoolDynamic
+        >,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>
@@ -136,9 +135,11 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: BigInt(1) }
     const formatterMock = vi.fn()
 
-    vi.mocked(web3Hooks.useContractRead).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
-        ({ data: tokenPrice }) as ReturnType<typeof web3Hooks.useContractRead>,
+        ({ data: { tokenPrice } }) as ReturnType<
+          typeof poolMulticallHooks.usePoolDynamic
+        >,
     )
     vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
       () =>

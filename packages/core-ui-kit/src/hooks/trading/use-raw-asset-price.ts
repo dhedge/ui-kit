@@ -1,8 +1,9 @@
 import { PoolFactoryAbi } from 'abi'
 import {
-  useContractReads,
   useContractReadsErrorLogging,
+  useInvalidateOnBlock,
   useNetwork,
+  useReadContracts,
 } from 'hooks/web3'
 import type { ChainId, PoolContractCallParams } from 'types/web3.types'
 import { getContractAddressById, isZeroAddress } from 'utils'
@@ -20,7 +21,7 @@ export const useRawAssetPrice = ({
 }: AssetPriceParams): bigint | undefined => {
   const { supportedChainId } = useNetwork()
 
-  const { data } = useContractReads({
+  const { data, queryKey } = useReadContracts({
     contracts: [
       {
         address: getContractAddressById('factory', chainId ?? supportedChainId),
@@ -30,9 +31,13 @@ export const useRawAssetPrice = ({
         chainId,
       },
     ],
-    enabled: !isZeroAddress(address) && !disabled,
-    watch,
+    query: {
+      enabled: !isZeroAddress(address) && !disabled,
+    },
   })
+
+  useInvalidateOnBlock({ watch, queryKey })
+
   useContractReadsErrorLogging(data)
 
   return data?.[0]?.result
