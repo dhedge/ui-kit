@@ -9,7 +9,7 @@ import { AddressZero } from './web3'
 
 export const DEFAULT_PRECISION = 18
 
-export const DEFAULT_POLLING_INTERVAL = 18_000
+export const DEFAULT_POLLING_INTERVAL = 23_000
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
@@ -41,8 +41,6 @@ export const DEFAULT_WITHDRAW_SLIPPAGE_SCALE = [
   0.3,
   0.5,
   1,
-  1.5,
-  2,
   DEFAULT_WITHDRAW_SLIPPAGE,
 ]
 export const DEFAULT_DEPOSIT_SLIPPAGE_SCALE = [DEFAULT_DEPOSIT_SLIPPAGE]
