@@ -40,3 +40,6 @@ export const getPoolFraction = (
     .toNumber()
 
 export const isBigInt = (value: unknown) => !!value && typeof value === 'bigint'
+
+export const isNumeric = (value: string): boolean =>
+  !isNaN(parseFloat(value)) && !isNaN(value as never)

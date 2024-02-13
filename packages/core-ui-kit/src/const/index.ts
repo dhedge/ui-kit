@@ -1,4 +1,5 @@
 export * from './network'
+export * from './currency'
 export * from './default-data'
 export * from './logger'
 export * from './web3'

@@ -55,3 +55,5 @@ export interface TokenSelectorPayload {
   isOpen: boolean
   entity: SwapEntity
 }
+
+export type ApyCurrency = 'USD' | 'ETH'

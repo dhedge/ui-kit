@@ -1,4 +1,10 @@
-import { getPercent, normalizeNumber } from 'utils/number'
+import BigNumber from 'bignumber.js'
+
+import { CURRENCY_SYMBOL_MAP } from 'const'
+
+import type { ApyCurrency } from 'types'
+
+import { getPercent, isNumeric, normalizeNumber } from './number'
 
 export const formatPercentage = (value: number, maximumFractionDigits = 0) =>
   `${value.toLocaleString('en-US', { maximumFractionDigits })}%`
@@ -31,4 +37,29 @@ export const formatNumeratorToPercentage = (
 ): string => {
   const percent = getPercent(+numerator, denominator)
   return formatPercentage(percent, maximumFractionDigits)
+}
+
+export const removeInsignificantTrailingZeros = (value: string): string =>
+  isNumeric(value) ? new BigNumber(value).toFixed() : ''
+
+export const formatNumberToLimitedDecimals = (
+  value: number | string,
+  decimals: number,
+): string =>
+  removeInsignificantTrailingZeros(new BigNumber(value).toFixed(decimals))
+
+export const formatByCurrency = ({
+  currency,
+  value,
+}: {
+  currency: ApyCurrency
+  value: number
+}) => {
+  if (currency === 'USD') {
+    return formatToUsd({ value })
+  }
+
+  return `${formatNumberToLimitedDecimals(value, 4)} ${
+    CURRENCY_SYMBOL_MAP[currency]
+  }`
 }
