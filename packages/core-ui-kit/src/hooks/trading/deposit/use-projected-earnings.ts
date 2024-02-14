@@ -8,7 +8,7 @@ import {
 import { useAssetPrice } from 'hooks/trading'
 
 import type { ApyCurrency } from 'types'
-import { formatByCurrency } from 'utils'
+import { formatByCurrency, isZeroAddress } from 'utils'
 
 interface UseProjectedEarningsResult {
   dailyEarnings: string | null
@@ -28,17 +28,15 @@ const calculateProjectedEarnings = ({
   apy: number
   apyCurrencyPrice: number
   currency: ApyCurrency
-}): UseProjectedEarningsResult => {
+}): Omit<UseProjectedEarningsResult, 'showEarnings'> => {
   if (totalDepositedInUsd === 0) {
     return {
-      showEarnings: true,
       yearlyEarnings: '-',
       dailyEarnings: '-',
     }
   }
   const yearlyEarnings = (totalDepositedInUsd * apy) / 100 / apyCurrencyPrice
   return {
-    showEarnings: true,
     yearlyEarnings: formatByCurrency({ value: yearlyEarnings, currency }),
     dailyEarnings: formatByCurrency({ value: yearlyEarnings / 365, currency }),
   }
@@ -58,7 +56,11 @@ export const useProjectedEarnings = (): UseProjectedEarningsResult => {
   const ethPrice = useAssetPrice({
     address: WETH_BY_CHAIN_ID[chainId]?.address ?? AddressZero,
     chainId,
-    disabled: !isEthApyCurrency,
+    disabled:
+      !poolFallbackData.apy ||
+      !isEthApyCurrency ||
+      isZeroAddress(WETH_BY_CHAIN_ID[chainId]?.address ?? AddressZero) ||
+      !isDepositType,
   })
   const apyCurrencyPrice = isEthApyCurrency ? +ethPrice : USD_PRICE
 
@@ -66,10 +68,13 @@ export const useProjectedEarnings = (): UseProjectedEarningsResult => {
     return { dailyEarnings: null, yearlyEarnings: null, showEarnings: false }
   }
 
-  return calculateProjectedEarnings({
-    totalDepositedInUsd: +sendToken.value * +sendTokenPrice,
-    apy: poolFallbackData.apy.value,
-    apyCurrencyPrice,
-    currency: poolFallbackData.apy.currency,
-  })
+  return {
+    showEarnings: true,
+    ...calculateProjectedEarnings({
+      totalDepositedInUsd: +sendToken.value * +sendTokenPrice,
+      apy: poolFallbackData.apy.value,
+      apyCurrencyPrice,
+      currency: poolFallbackData.apy.currency,
+    }),
+  }
 }

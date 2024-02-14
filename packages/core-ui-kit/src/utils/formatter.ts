@@ -59,7 +59,8 @@ export const formatByCurrency = ({
     return formatToUsd({ value })
   }
 
-  return `${formatNumberToLimitedDecimals(value, 4)} ${
-    CURRENCY_SYMBOL_MAP[currency]
-  }`
+  return `${CURRENCY_SYMBOL_MAP[currency]} ${formatNumberToLimitedDecimals(
+    value,
+    4,
+  )}`
 }
