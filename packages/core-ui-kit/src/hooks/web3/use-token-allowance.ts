@@ -1,4 +1,5 @@
 import { erc20Abi } from 'abi'
+import { SHORTEN_POLLING_INTERVAL } from 'const'
 import { useInvalidateOnBlock, useReadContract } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 
@@ -17,7 +18,7 @@ export const useTokenAllowance = (
     chainId,
     query: {
       enabled: !skip,
-      staleTime: 15_000,
+      staleTime: SHORTEN_POLLING_INTERVAL,
     },
   })
 

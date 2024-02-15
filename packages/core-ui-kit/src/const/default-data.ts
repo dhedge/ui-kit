@@ -10,6 +10,7 @@ import { AddressZero } from './web3'
 export const DEFAULT_PRECISION = 18
 
 export const DEFAULT_POLLING_INTERVAL = 23_000
+export const SHORTEN_POLLING_INTERVAL = 15_000
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
