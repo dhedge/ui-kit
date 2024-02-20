@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { DEFAULT_PRECISION, optimism } from 'const'
 import * as stateHooks from 'hooks/state'
+import { useTradingParams } from 'hooks/trading'
 import * as tradingWithdrawHooks from 'hooks/trading/withdraw'
 import * as web3Hooks from 'hooks/web3'
 import { DefaultSellingParams } from 'models'
@@ -23,6 +24,7 @@ vi.mock('hooks/state', () => ({
 
 vi.mock('hooks/trading', () => ({
   useTradingSettleHandler: vi.fn(),
+  useTradingParams: vi.fn(),
 }))
 
 vi.mock('hooks/web3', () => ({
@@ -91,15 +93,14 @@ describe('useWithdraw', () => {
       send: sendMock,
       estimate: estimateMock,
     })
+    vi.mocked(useTradingParams).mockImplementation(() => ({
+      receiveAssetAddress,
+      sendAssetAddress,
+      receiveAssetInputValue,
+      fromTokenAmount,
+    }))
 
-    const { result } = renderHook(() =>
-      useWithdraw({
-        receiveAssetAddress,
-        sendAssetAddress,
-        receiveAssetInputValue,
-        fromTokenAmount,
-      }),
-    )
+    const { result } = renderHook(() => useWithdraw())
 
     await act(() => result.current())
 
@@ -177,15 +178,14 @@ describe('useWithdraw', () => {
       send: sendMock,
       estimate: estimateMock,
     })
+    vi.mocked(useTradingParams).mockImplementation(() => ({
+      receiveAssetAddress,
+      sendAssetAddress,
+      receiveAssetInputValue,
+      fromTokenAmount,
+    }))
 
-    const { result } = renderHook(() =>
-      useWithdraw({
-        receiveAssetAddress,
-        sendAssetAddress,
-        receiveAssetInputValue,
-        fromTokenAmount,
-      }),
-    )
+    const { result } = renderHook(() => useWithdraw())
 
     await act(() => result.current())
 
@@ -273,14 +273,7 @@ describe('useWithdraw', () => {
       estimate: estimateMock,
     })
 
-    const { result } = renderHook(() =>
-      useWithdraw({
-        receiveAssetAddress,
-        sendAssetAddress,
-        receiveAssetInputValue,
-        fromTokenAmount,
-      }),
-    )
+    const { result } = renderHook(() => useWithdraw())
 
     await act(() => result.current())
 

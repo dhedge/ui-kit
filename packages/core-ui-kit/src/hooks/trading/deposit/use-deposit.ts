@@ -9,36 +9,44 @@ import {
   useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import { useTradingSettleHandler } from 'hooks/trading'
+import { useTradingParams, useTradingSettleHandler } from 'hooks/trading'
 import { useDepositSlippage } from 'hooks/trading/deposit'
 import { useContractFunction } from 'hooks/web3'
 
-import { BuyingWithEasyswapperArgs, BuyingWithNativeAssetArgs } from 'models'
-import type { TradingParams } from 'types/trading.types'
+import {
+  BuyingWithEasyswapperArgs,
+  BuyingWithNativeAssetArgs,
+  BuyingWithPoolLogicArgs,
+} from 'models'
 import type { ContractActionFunc } from 'types/web3.types'
 import { getOrderedTxArgs, isNativeToken, logTransactionArguments } from 'utils'
 
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
+
 const action = 'deposit'
 
-export const useDeposit = ({
-  poolDepositAddress,
-  receiveAssetAddress,
-  sendAssetAddress,
-  receiveAssetInputValue,
-  fromTokenAmount,
-}: TradingParams): ContractActionFunc => {
+export const useDeposit = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const [depositMethod] = useTradingPanelDepositMethod()
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const [{ slippage }] = useTradingPanelSettings()
+  const isEasySwapperDeposit = useIsEasySwapperTrading()
+  const {
+    poolDepositAddress,
+    receiveAssetAddress,
+    sendAssetAddress,
+    receiveAssetInputValue,
+    fromTokenAmount,
+  } = useTradingParams()
 
   useDepositSlippage(receiveAssetInputValue)
 
-  const isDepositNative = poolConfig.chainId
-    ? isNativeToken(sendToken.symbol, poolConfig.chainId)
-    : false
+  const isDepositNative =
+    poolConfig.chainId && isEasySwapperDeposit
+      ? isNativeToken(sendToken.symbol, poolConfig.chainId)
+      : false
   const functionName = isDepositNative
     ? depositMethod === 'deposit'
       ? 'depositNative'
@@ -55,6 +63,13 @@ export const useDeposit = ({
       receiveAssetInputValue,
     }
 
+    if (!isEasySwapperDeposit) {
+      return new BuyingWithPoolLogicArgs({
+        ...depositArgs,
+        fromTokenAddress: sendAssetAddress,
+      })
+    }
+
     if (isDepositNative) {
       return new BuyingWithNativeAssetArgs(depositArgs)
     }
@@ -66,6 +81,7 @@ export const useDeposit = ({
   }, [
     fromTokenAmount,
     isDepositNative,
+    isEasySwapperDeposit,
     poolDepositAddress,
     receiveAssetAddress,
     receiveAssetInputValue,
@@ -73,7 +89,10 @@ export const useDeposit = ({
     sendToken.decimals,
   ])
   const { send } = useContractFunction({
-    contractId: 'easySwapper',
+    contractId: isEasySwapperDeposit ? 'easySwapper' : 'poolLogic',
+    dynamicContractAddress: isEasySwapperDeposit
+      ? undefined
+      : receiveToken.address,
     functionName,
     onSettled,
   })

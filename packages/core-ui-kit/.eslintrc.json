@@ -29,6 +29,7 @@
               "lodash.chunk",
               "lodash.uniqby",
               "lodash.isnumber",
+              "lodash.isequal",
               "lodash.debounce",
               "lodash.noop",
               "tsup",
@@ -37,7 +38,8 @@
               "dedent",
               "@testing-library/jest-dom",
               "@testing-library/dom",
-              "@testing-library/react"
+              "@testing-library/react",
+              "erc7412"
             ]
           }
         ]

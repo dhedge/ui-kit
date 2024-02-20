@@ -1,39 +1,35 @@
-import {
-  useNetwork as useWagmiNetwork,
-  useSwitchNetwork as useWagmiSwitchNetwork,
-} from 'wagmi'
+import { useAccount, useConfig, useSwitchChain } from 'wagmi'
 
 import { DEFAULT_CHAIN_ID } from 'const'
-import type { Chain, ChainId } from 'types/web3.types'
+import type { ChainId } from 'types/web3.types'
 
 const isSupportedChainId = (
   data: unknown,
-  configuredChains: Chain[],
+  configuredChains: ReturnType<typeof useConfig>['chains'],
 ): data is ChainId => configuredChains.some(({ id }) => id === data)
 
 interface UseNetworkData {
-  chain: ReturnType<typeof useWagmiNetwork>['chain']
-  chains: ReturnType<typeof useWagmiNetwork>['chains']
-  switchNetwork: ReturnType<typeof useWagmiSwitchNetwork>['switchNetwork']
-  switchNetworkAsync: ReturnType<
-    typeof useWagmiSwitchNetwork
-  >['switchNetworkAsync']
+  chain: ReturnType<typeof useAccount>['chain']
+  chains: ReturnType<typeof useConfig>['chains']
+  switchNetwork: ReturnType<typeof useSwitchChain>['switchChain']
+  switchNetworkAsync: ReturnType<typeof useSwitchChain>['switchChainAsync']
   isSupported: boolean
   chainId: ChainId | undefined
   supportedChainId: ChainId
 }
 
 export const useNetwork = (): UseNetworkData => {
-  const { chain, chains } = useWagmiNetwork()
-  const { switchNetwork, switchNetworkAsync } = useWagmiSwitchNetwork()
+  const { chain } = useAccount()
+  const { chains } = useConfig()
+  const { switchChain, switchChainAsync } = useSwitchChain()
   const chainId = chain?.id
   const isSupported = isSupportedChainId(chainId, chains)
 
   return {
     chain,
     isSupported,
-    switchNetwork,
-    switchNetworkAsync,
+    switchNetwork: switchChain,
+    switchNetworkAsync: switchChainAsync,
     chainId: isSupported ? chainId : undefined,
     supportedChainId: isSupportedChainId(chainId, chains)
       ? chainId

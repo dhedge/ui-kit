@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import {
   useOnTransactionError,
   useOnTransactionSuccess,
@@ -5,7 +7,7 @@ import {
   useTradingPanelModal,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import { useWaitForTransaction } from 'hooks/web3'
+import { useWaitForTransactionReceipt } from 'hooks/web3'
 import type { Address } from 'types/web3.types'
 import { getExplorerLink } from 'utils'
 
@@ -23,23 +25,38 @@ export const useTradingResultHandling = () => {
   const isTokenApproveTransaction = action === 'approve'
   const chainId = pendingTransaction?.chainId
 
-  useWaitForTransaction({
+  const { data, error } = useWaitForTransactionReceipt({
     hash: txHash,
     chainId,
-    onSuccess(data) {
+  })
+
+  useEffect(() => {
+    if (data) {
       if (isTokenApproveTransaction) {
         updateTradingMeta({ approvingStatus: 'success' })
       }
 
-      const txHash = data?.transactionHash as Address
+      const txHash = data.transactionHash as Address
       if (txHash) {
         const link = getExplorerLink(txHash, 'transaction', chainId)
         updateTradingModal({ link, status: 'Success', action })
         updatePendingTransactions({ type: 'remove', status: 'success', txHash })
         onTransactionSuccess?.(data, action, link)
       }
-    },
-    onError(error) {
+    }
+  }, [
+    data,
+    isTokenApproveTransaction,
+    chainId,
+    action,
+    onTransactionSuccess,
+    updatePendingTransactions,
+    updateTradingModal,
+    updateTradingMeta,
+  ])
+
+  useEffect(() => {
+    if (error) {
       if (isTokenApproveTransaction) {
         updateTradingMeta({ approvingStatus: undefined })
       }
@@ -55,6 +72,16 @@ export const useTradingResultHandling = () => {
       updatePendingTransactions({ type: 'remove', status: 'fail' })
 
       onTransactionError?.(error, action, chainId, txHash)
-    },
-  })
+    }
+  }, [
+    error,
+    isTokenApproveTransaction,
+    action,
+    chainId,
+    txHash,
+    updateTradingMeta,
+    updateTradingModal,
+    updatePendingTransactions,
+    onTransactionError,
+  ])
 }

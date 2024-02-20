@@ -12,30 +12,60 @@ import {
   formatToUsd,
   getConventionalTokenPriceDecimals,
   getPoolFraction,
+  isSynthetixV3Asset,
   shiftBy,
 } from 'utils'
 
 interface PoolCompositionParams {
   composition: PoolComposition[]
-  assetAmount: string
+  vaultTokensAmount: string
   totalSupply: string
 }
 
 type PoolCompositionWithFractionParams = PoolContractCallParams & {
-  assetAmount: string
+  vaultTokensAmount: string
   chainId: ChainId
 }
 
 export const formatPoolComposition = ({
   composition,
-  assetAmount,
+  vaultTokensAmount,
   totalSupply,
 }: PoolCompositionParams): PoolCompositionWithFraction[] =>
   composition
+    .map((token) => {
+      const isSynthetixAsset = isSynthetixV3Asset(token.tokenAddress)
+      return {
+        ...token,
+        tokenName: isSynthetixAsset ? 'USDC' : token.tokenName,
+        asset: isSynthetixAsset ? { iconSymbols: ['USDC'] } : token.asset,
+      }
+    })
+    .reduce<PoolComposition[]>((acc, asset) => {
+      const existingToken = acc.find(
+        ({ tokenName }) => tokenName === asset.tokenName,
+      )
+
+      if (existingToken) {
+        const existingAmount = new BigNumber(existingToken.amount).shiftedBy(
+          -existingToken.precision,
+        )
+        const assetAmount = new BigNumber(asset.amount).shiftedBy(
+          -asset.precision,
+        )
+        existingToken.amount = existingAmount
+          .plus(assetAmount)
+          .shiftedBy(existingToken.precision)
+          .toFixed(0)
+
+        return acc
+      }
+      return [...acc, asset]
+    }, [])
     .map((asset) => {
       const fraction = getPoolFraction(
         asset.amount,
-        assetAmount,
+        vaultTokensAmount,
         totalSupply,
         asset.precision,
       )
@@ -44,7 +74,7 @@ export const formatPoolComposition = ({
           .multipliedBy(asset.amount)
           .shiftedBy(-asset.precision)
           .toFixed(),
-        assetAmount,
+        vaultTokensAmount,
         totalSupply,
       )
       return {
@@ -57,7 +87,7 @@ export const formatPoolComposition = ({
 
 export const usePoolCompositionWithFraction = ({
   address,
-  assetAmount,
+  vaultTokensAmount,
   chainId,
 }: PoolCompositionWithFractionParams) => {
   const poolComposition = usePoolComposition({ address, chainId })
@@ -69,8 +99,8 @@ export const usePoolCompositionWithFraction = ({
     }
     return formatPoolComposition({
       composition: poolComposition,
-      assetAmount: shiftBy(new BigNumber(assetAmount || 0)),
+      vaultTokensAmount: shiftBy(new BigNumber(vaultTokensAmount || 0)),
       totalSupply: totalSupply.toString(),
     })
-  }, [assetAmount, poolComposition, totalSupply])
+  }, [vaultTokensAmount, poolComposition, totalSupply])
 }

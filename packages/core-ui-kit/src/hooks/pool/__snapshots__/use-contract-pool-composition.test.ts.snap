@@ -17,3 +17,32 @@ exports[`useContractPoolComposition > should return extended fund composition da
   },
 ]
 `;
+
+exports[`useContractPoolComposition > should return extended fund composition data with synthetix v3 asset balance 1`] = `
+[
+  {
+    "amount": "1",
+    "asset": {
+      "iconSymbols": [
+        "fallback_iconSymbol",
+      ],
+    },
+    "isDeposit": true,
+    "precision": 18,
+    "rate": "1",
+    "tokenAddress": "0xtest",
+    "tokenName": "symbol",
+  },
+  {
+    "amount": "3",
+    "asset": {
+      "iconSymbols": [],
+    },
+    "isDeposit": false,
+    "precision": 18,
+    "rate": "2",
+    "tokenAddress": "0xffffffaeff0b96ea8e4f94b2253f31abdd875847",
+    "tokenName": "0xffff...5847",
+  },
+]
+`;

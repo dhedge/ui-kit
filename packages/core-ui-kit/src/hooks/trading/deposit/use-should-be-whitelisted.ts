@@ -8,7 +8,7 @@ export const useShouldBeWhitelisted = () => {
   const shouldBeWhitelisted = isPrivate || deprecated
   const isAccountWhitelisted = useCheckWhitelist({
     address,
-    chainId: shouldBeWhitelisted ? chainId : undefined,
+    chainId,
   })
 
   return { shouldBeWhitelisted, isAccountWhitelisted }

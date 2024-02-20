@@ -1,34 +1,35 @@
-import { PoolLogicAbi } from 'abi'
+import { usePoolDynamic } from 'hooks/pool/multicall'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
-import { useContractRead, useContractReadErrorLogging } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
-import { formatEther, isZeroAddress } from 'utils'
+import { formatEther, isSynthetixV3Vault } from 'utils'
+
+import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
 
 interface PoolTokenPriceParams {
   address: Address
   chainId: ChainId
   formatter?: (tokenPrice: bigint) => string
+  disabled?: boolean
 }
 
 export const usePoolTokenPrice = ({
   address,
   chainId,
   formatter = formatEther,
+  disabled,
 }: PoolTokenPriceParams): string => {
   const [poolData] = useTradingPanelPoolFallbackData()
+  const isSynthetixVault = isSynthetixV3Vault(address)
 
-  const {
-    data: tokenPrice,
-    error,
-    status,
-  } = useContractRead({
+  const { data: { tokenPrice } = {} } = usePoolDynamic({ address, chainId })
+
+  const mutableTokenPrice = usePoolTokenPriceMutable({
     address,
-    abi: PoolLogicAbi,
-    functionName: 'tokenPrice',
     chainId,
-    enabled: !!address && !isZeroAddress(address),
+    disabled: !isSynthetixVault || disabled,
   })
-  useContractReadErrorLogging({ error, status })
 
-  return formatter(tokenPrice ?? BigInt(poolData?.tokenPrice ?? '0'))
+  const contractTokenPrice = isSynthetixVault ? mutableTokenPrice : tokenPrice
+
+  return formatter(contractTokenPrice ?? BigInt(poolData?.tokenPrice ?? '0'))
 }

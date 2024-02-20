@@ -15,13 +15,22 @@ export const useHandlePoolDepositData = () => {
   const [type] = useTradingPanelType()
 
   useEffect(() => {
-    if (type === 'deposit') {
+    if (type === 'deposit' && initialDepositToken?.symbol) {
       updateSendToken({
-        ...initialDepositToken,
+        address: initialDepositToken?.address,
+        symbol: initialDepositToken.symbol,
+        decimals: initialDepositToken?.decimals,
         value: '',
-        isLoading: !initialDepositToken,
+        isLoading: !initialDepositToken.symbol,
       })
     }
     // add poolConfig.address to deps array in order to update send token on pool address change
-  }, [initialDepositToken, updateSendToken, poolConfig.address, type])
+  }, [
+    updateSendToken,
+    poolConfig.address,
+    type,
+    initialDepositToken?.symbol,
+    initialDepositToken?.address,
+    initialDepositToken?.decimals,
+  ])
 }

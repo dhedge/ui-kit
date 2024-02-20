@@ -10,20 +10,30 @@ vi.mock('wagmi', async () => {
 
   return {
     ...actual,
-    useNetwork: vi.fn(),
-    useSwitchNetwork: () => ({
-      switchNetwork: 'switchNetwork',
-      switchNetworkAsync: 'switchNetworkAsync',
+    useAccount: vi.fn(),
+    useConfig: vi.fn(),
+    useSwitchChain: () => ({
+      switchChain: 'switchNetwork',
+      switchChainAsync: 'switchNetworkAsync',
     }),
   }
 })
 
 describe('useNetwork', () => {
   it('should return network data', () => {
-    vi.mocked(w.useNetwork).mockImplementationOnce(() => ({
-      chain: optimism,
-      chains: [optimism],
-    }))
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: optimism,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
 
     const { result } = renderHook(() => useNetwork())
 
@@ -39,10 +49,19 @@ describe('useNetwork', () => {
   })
 
   it('should resolve unsupported chain', () => {
-    vi.mocked(w.useNetwork).mockImplementationOnce(() => ({
-      chain: polygon,
-      chains: [optimism],
-    }))
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: polygon,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
 
     const { result } = renderHook(() => useNetwork())
 
@@ -50,10 +69,19 @@ describe('useNetwork', () => {
   })
 
   it('should resolve supported chain', () => {
-    vi.mocked(w.useNetwork).mockImplementationOnce(() => ({
-      chain: optimism,
-      chains: [optimism],
-    }))
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: optimism,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
 
     const { result } = renderHook(() => useNetwork())
 
@@ -61,10 +89,19 @@ describe('useNetwork', () => {
   })
 
   it('should fallback to default chain id on supportedChainId', () => {
-    vi.mocked(w.useNetwork).mockImplementationOnce(() => ({
-      chain: polygon,
-      chains: [optimism],
-    }))
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: polygon,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
 
     const { result } = renderHook(() => useNetwork())
 
@@ -72,10 +109,19 @@ describe('useNetwork', () => {
   })
 
   it('should return undefined for unsupported chain on chainId', () => {
-    vi.mocked(w.useNetwork).mockImplementationOnce(() => ({
-      chain: polygon,
-      chains: [optimism],
-    }))
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: polygon,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
 
     const { result } = renderHook(() => useNetwork())
 

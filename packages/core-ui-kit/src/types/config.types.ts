@@ -1,5 +1,6 @@
 import type { PoolComposition } from 'types/pool.types'
 import type {
+  ApyCurrency,
   DepositMethodName,
   TradingToken,
   WithdrawTradingToken,
@@ -20,6 +21,7 @@ export interface PoolConfig {
     customTokens: WithdrawTradingToken[]
   }
   deprecated?: boolean
+  usePoolLogicDeposit?: boolean
 }
 
 export interface PoolFallbackData {
@@ -27,4 +29,8 @@ export interface PoolFallbackData {
   managerLogicAddress?: Address
   poolCompositions?: PoolComposition[]
   tokenPrice?: string
+  apy?: {
+    value: number
+    currency: ApyCurrency
+  }
 }

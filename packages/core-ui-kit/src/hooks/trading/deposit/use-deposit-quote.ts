@@ -6,7 +6,9 @@ import { DhedgeEasySwapperAbi } from 'abi'
 import {
   DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
   DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
+  DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER,
 } from 'const'
+import { usePoolTokenPrice } from 'hooks/pool'
 import {
   useIsDepositTradingPanelType,
   useReceiveTokenInput,
@@ -15,9 +17,16 @@ import {
 } from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useDebounce } from 'hooks/utils'
-import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import {
+  useContractReadsErrorLogging,
+  useInvalidateOnBlock,
+  useReadContracts,
+} from 'hooks/web3'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'
+
+import { useAssetPrice } from '../use-asset-price'
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 export const useDepositQuote = ({
   address,
@@ -28,8 +37,19 @@ export const useDepositQuote = ({
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
   const isDeposit = useIsDepositTradingPanelType()
-
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const isEasySwapperTrading = useIsEasySwapperTrading()
+  const vaultTokenPrice = usePoolTokenPrice({
+    address: receiveToken.address,
+    chainId,
+    disabled: isEasySwapperTrading,
+  })
+  const sendTokenPrice = useAssetPrice({
+    address: sendToken.address,
+    chainId,
+    disabled: isEasySwapperTrading,
+  })
+  const debounceTime = isEasySwapperTrading ? 500 : 0
+  const debouncedSendTokenValue = useDebounce(sendToken.value, debounceTime)
   const poolDepositAssetAddress = usePoolDepositAssetAddress({
     investAssetAddress: sendToken.address,
     symbol: sendToken.symbol,
@@ -41,11 +61,11 @@ export const useDepositQuote = ({
   const hasSendInputValue = !!(
     debouncedSendTokenValue && +debouncedSendTokenValue > 0
   )
-  const sendAmount = new BigNumber(debouncedSendTokenValue || 0)
+  const sendAmount = new BigNumber(debouncedSendTokenValue || '0')
     .shiftedBy(sendToken.decimals)
     .toFixed(0)
 
-  const { data } = useContractReads({
+  const { data, queryKey } = useReadContracts({
     contracts: [
       {
         address: getContractAddressById('easySwapper', chainId),
@@ -61,15 +81,25 @@ export const useDepositQuote = ({
         chainId,
       },
     ],
-    enabled:
-      hasSendInputValue && !!sendToken.address && !!poolDepositAssetAddress,
-    watch: true,
+    query: {
+      enabled:
+        hasSendInputValue &&
+        !!sendToken.address &&
+        !!poolDepositAssetAddress &&
+        isEasySwapperTrading,
+    },
   })
+
+  useInvalidateOnBlock({ queryKey })
+
   const depositQuote = data?.[0]?.result
   useContractReadsErrorLogging(data)
 
+  // Updates received amount for EasySwapper deposits
   useEffect(() => {
-    if (!isDeposit) return // Fixes useEffect call on trading tabs switch
+    if (!isDeposit || !isEasySwapperTrading) {
+      return
+    }
 
     const isLoading =
       isSendValueUpdating || (!depositQuote && hasSendInputValue)
@@ -88,6 +118,7 @@ export const useDepositQuote = ({
       updateReceiveToken({ value: isLoading ? '0' : formattedVal })
     }
   }, [
+    isEasySwapperTrading,
     isDeposit,
     receiveToken.decimals,
     hasSendInputValue,
@@ -96,6 +127,31 @@ export const useDepositQuote = ({
     poolDepositAssetAddress,
     isSendValueUpdating,
     updateReceiveToken,
+  ])
+
+  // Updates received amount for PoolLogic deposits
+  useEffect(() => {
+    if (!isDeposit || isEasySwapperTrading || !hasSendInputValue) {
+      return
+    }
+    updateReceiveToken({
+      value: new BigNumber(sendAmount)
+        .shiftedBy(-sendToken.decimals)
+        .multipliedBy(sendTokenPrice)
+        .dividedBy(vaultTokenPrice)
+        .multipliedBy(DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER)
+        .toFixed(receiveToken.decimals),
+    })
+  }, [
+    isDeposit,
+    isEasySwapperTrading,
+    sendAmount,
+    sendTokenPrice,
+    updateReceiveToken,
+    vaultTokenPrice,
+    sendToken.decimals,
+    receiveToken.decimals,
+    hasSendInputValue,
   ])
 
   useEffect(() => {

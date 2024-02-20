@@ -13,36 +13,30 @@ import {
 import { useOnSimulateTransaction } from 'hooks/state'
 import {
   useAccount,
-  useContractWrite,
   useNetwork,
+  usePublicClient,
   useWalletClient,
+  useWriteContract,
 } from 'hooks/web3'
 import { EstimationError } from 'models'
 import type {
   Address,
-  ChainId,
   EstimateCall,
   SimulateTransactionResponse,
+  UseWriteContractParameters,
 } from 'types/web3.types'
 import {
   encodeFunctionData,
-  getContract,
   getContractAbiById,
   getContractAddressById,
   getErrorMessage,
 } from 'utils'
 
-export type SettledCallback = (
-  data: { hash?: Address } | undefined,
-  error: Error | null,
-  variables: { chainId?: ChainId },
-) => void
-
 interface ContractFunctionOptions {
   contractId: ContractId
   functionName: string
   dynamicContractAddress?: Address
-  onSettled?: SettledCallback
+  onSettled?: Required<UseWriteContractParameters>['mutation']['onSettled']
 }
 
 const sendStub = async () => undefined
@@ -71,25 +65,20 @@ export const useContractFunction = ({
 }: ContractFunctionOptions) => {
   const { account } = useAccount()
   const { chainId, supportedChainId } = useNetwork()
-  const walletClient = useWalletClient()
+
+  const walletClient = useWalletClient({ chainId })
+  const publicClient = usePublicClient({ chainId })
   const contractAbi = getContractAbiById(contractId)
   const contractAddress =
     dynamicContractAddress ??
     getContractAddressById(contractId, chainId ?? supportedChainId)
-  const contract = getContract({
-    address: contractAddress,
-    abi: contractAbi,
-    chainId,
-    walletClient,
-  })
+
   const simulateTransaction = useOnSimulateTransaction()
 
-  const { write } = useContractWrite({
-    address: contractAddress,
-    abi: contractAbi,
-    functionName,
-    chainId,
-    onSettled,
+  const { writeContract } = useWriteContract({
+    mutation: {
+      onSettled,
+    },
   })
 
   const estimate = useCallback<EstimateCall>(
@@ -97,16 +86,17 @@ export const useContractFunction = ({
       try {
         const { argumentsWithoutOverrides, transactionOverrides } =
           checkArgsForTxOverrides(args)
-        const estimation = await contract?.estimateGas[functionName]?.(
-          argumentsWithoutOverrides,
-          {
-            account: account ?? AddressZero,
-            value: transactionOverrides.value,
-            gas: transactionOverrides.gas,
-          },
-        )
+        const estimation = await publicClient?.estimateContractGas({
+          address: contractAddress,
+          abi: contractAbi,
+          functionName,
+          args: argumentsWithoutOverrides,
+          account: account ?? AddressZero,
+          gas: transactionOverrides.gas,
+          value: transactionOverrides.value,
+        })
 
-        if (!estimation || !chainId) {
+        if (!estimation || !chainId || estimation === BigInt(0)) {
           return { error: GAS_ESTIMATION_ERROR, value: BigInt(0) }
         }
         // increased gas limit to avoid tx failure
@@ -126,12 +116,20 @@ export const useContractFunction = ({
           error:
             error.error?.data?.message ??
             error.data?.message ??
+            error?.shortMessage ??
             GAS_ESTIMATION_ERROR,
           value: BigInt(0),
         }
       }
     },
-    [account, chainId, contract?.estimateGas, functionName],
+    [
+      account,
+      chainId,
+      publicClient,
+      functionName,
+      contractAddress,
+      contractAbi,
+    ],
   )
 
   const simulate = useCallback(
@@ -140,8 +138,8 @@ export const useContractFunction = ({
         if (!simulateTransaction) {
           return { data: null, error: DEFAULT_SIMULATION_ERROR }
         }
-        if (!contract) {
-          return { data: null, error: 'Contract is not defined' }
+        if (!publicClient) {
+          return { data: null, error: 'Client is not defined' }
         }
 
         const { argumentsWithoutOverrides, transactionOverrides } =
@@ -174,7 +172,7 @@ export const useContractFunction = ({
     [
       account,
       chainId,
-      contract,
+      publicClient,
       contractAbi,
       contractAddress,
       functionName,
@@ -189,7 +187,11 @@ export const useContractFunction = ({
         checkArgsForTxOverrides(args)
 
       if (transactionOverrides.gas) {
-        return write({
+        return writeContract({
+          address: contractAddress,
+          abi: contractAbi,
+          functionName,
+          chainId,
           args: argumentsWithoutOverrides,
           ...transactionOverrides,
         })
@@ -225,6 +227,7 @@ export const useContractFunction = ({
               abi: contractAbi,
               functionName,
               account,
+              chainId,
               args: argumentsWithoutOverrides,
               ...transactionOverrides,
               gas: BigInt(MAX_GAS_LIMIT_MAP[chainId ?? supportedChainId] ?? 0),
@@ -233,7 +236,11 @@ export const useContractFunction = ({
       }
 
       console.debug(`[core-ui-kit]: gas limit to use: ${gas}`)
-      return write({
+      return writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName,
+        chainId,
         args: argumentsWithoutOverrides,
         ...transactionOverrides,
         gas,
@@ -241,7 +248,7 @@ export const useContractFunction = ({
     },
     [
       estimate,
-      write,
+      writeContract,
       simulate,
       account,
       functionName,
@@ -254,7 +261,7 @@ export const useContractFunction = ({
   )
 
   return {
-    send: chainId && contract ? customSend : sendStub,
+    send: chainId && publicClient ? customSend : sendStub,
     estimate,
   }
 }

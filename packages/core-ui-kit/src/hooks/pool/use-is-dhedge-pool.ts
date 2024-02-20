@@ -1,8 +1,6 @@
-import { PoolFactoryAbi } from 'abi'
 import { AddressZero } from 'const'
-import { useContractReads, useContractReadsErrorLogging } from 'hooks/web3'
+import { usePoolStatic } from 'hooks/pool/multicall'
 import type { Address, ChainId } from 'types'
-import { getContractAddressById } from 'utils'
 
 export const useIsDhedgePool = ({
   address = AddressZero,
@@ -11,20 +9,7 @@ export const useIsDhedgePool = ({
   address?: Address
   chainId: ChainId
 }) => {
-  const { data } = useContractReads({
-    contracts: [
-      {
-        address: getContractAddressById('factory', chainId),
-        abi: PoolFactoryAbi,
-        functionName: 'isPool',
-        chainId,
-        args: [address],
-      },
-    ],
-    enabled: address !== AddressZero && !!chainId,
-    staleTime: Infinity,
-  })
-  useContractReadsErrorLogging(data)
+  const { data: { isPool } = {} } = usePoolStatic({ address, chainId })
 
-  return !!data?.[0]?.result
+  return !!isPool
 }

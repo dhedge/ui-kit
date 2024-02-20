@@ -2,19 +2,21 @@ import uniqBy from 'lodash.uniqby'
 
 import { useMemo } from 'react'
 
-import { erc20ABI } from 'abi'
+import { erc20Abi } from 'abi'
 import { AddressZero, CHAIN_NATIVE_TOKENS, DEFAULT_PRECISION } from 'const'
 import { usePoolComposition } from 'hooks/pool'
 import { useTradingPanelPoolConfig } from 'hooks/state'
 import { useIsPoolManagerAccount } from 'hooks/user'
 import {
   useAccount,
-  useContractReads,
   useContractReadsErrorLogging,
+  useReadContracts,
 } from 'hooks/web3'
 import type { TradingToken } from 'types/trading-panel.types'
 import type { Address } from 'types/web3.types'
 import { normalizeNumber } from 'utils'
+
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 interface ProductDepositToken extends TradingToken {
   balance?: number
@@ -25,6 +27,7 @@ export const usePoolDepositTokens = (): TradingToken[] => {
   const { account } = useAccount()
   const poolComposition = usePoolComposition({ address, chainId })
   const isPoolManagerAccount = useIsPoolManagerAccount()
+  const isEasySwapperTrading = useIsEasySwapperTrading()
 
   const depositTokens = useMemo(
     () =>
@@ -50,15 +53,17 @@ export const usePoolDepositTokens = (): TradingToken[] => {
   const hasDepositTokens = !!depositTokens.length
   const canLoadTokenBalances = !!account && hasDepositTokens
 
-  const { data: balances } = useContractReads({
+  const { data: balances } = useReadContracts({
     contracts: depositTokens.map(({ address }) => ({
       address,
-      abi: erc20ABI,
+      abi: erc20Abi,
       functionName: 'balanceOf',
       args: [account ?? AddressZero],
       chainId,
     })),
-    enabled: canLoadTokenBalances,
+    query: {
+      enabled: canLoadTokenBalances,
+    },
   })
   useContractReadsErrorLogging(balances)
 
@@ -101,7 +106,8 @@ export const usePoolDepositTokens = (): TradingToken[] => {
       ...productDepositTokens.filter(
         ({ symbol }) => symbol !== depositParams.defaultDepositTokenSymbol,
       ),
-      ...(isPoolManagerAccount
+      // remove native deposits for dHEDGE managers and in SynthetixV3 vaults
+      ...(isPoolManagerAccount || !isEasySwapperTrading
         ? []
         : [
             {
@@ -120,5 +126,6 @@ export const usePoolDepositTokens = (): TradingToken[] => {
     balances,
     chainId,
     depositParams.defaultDepositTokenSymbol,
+    isEasySwapperTrading,
   ])
 }

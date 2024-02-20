@@ -8,9 +8,10 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import { useRawAssetPrice } from './use-raw-asset-price'
 
 vi.mock('hooks/web3', () => ({
-  useContractReads: vi.fn(),
+  useReadContracts: vi.fn(),
   useNetwork: vi.fn(),
   useContractReadsErrorLogging: vi.fn(),
+  useInvalidateOnBlock: vi.fn(),
 }))
 
 describe('useRawAssetPrice', () => {
@@ -25,11 +26,11 @@ describe('useRawAssetPrice', () => {
           typeof web3Hooks.useNetwork
         >,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: assetPrice }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     renderHook(() =>
@@ -39,8 +40,8 @@ describe('useRawAssetPrice', () => {
       }),
     )
 
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(web3Hooks.useContractReads)).toHaveBeenCalledWith(
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(web3Hooks.useReadContracts)).toHaveBeenCalledWith(
       expect.objectContaining({
         contracts: expect.arrayContaining([
           expect.objectContaining({
@@ -65,11 +66,11 @@ describe('useRawAssetPrice', () => {
           typeof web3Hooks.useNetwork
         >,
     )
-    vi.mocked(web3Hooks.useContractReads).mockImplementation(
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
       () =>
         ({
           data: [{ result: assetPrice }],
-        }) as ReturnType<typeof web3Hooks.useContractReads>,
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
     )
 
     const { result } = renderHook(() =>

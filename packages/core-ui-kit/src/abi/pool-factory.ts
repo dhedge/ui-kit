@@ -37,4 +37,42 @@ export const PoolFactoryAbi = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'extContract',
+        type: 'address',
+      },
+    ],
+    name: 'getAssetGuard',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'guard',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'extContract',
+        type: 'address',
+      },
+    ],
+    name: 'getContractGuard',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'guard',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ] as const

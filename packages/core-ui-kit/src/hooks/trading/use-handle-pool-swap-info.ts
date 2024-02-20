@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 
+import { usePoolStatic } from 'hooks/pool/multicall'
 import {
   useTradingPanelDepositMethod,
   useTradingPanelEntryFee,
   useTradingPanelPoolConfig,
 } from 'hooks/state'
-import { useEasySwapperStableData } from 'hooks/trading'
 import { useIsPoolManagerAccount } from 'hooks/user'
 import { getPercent, isBigInt } from 'utils'
 
@@ -13,10 +13,15 @@ export const useHandlePoolSwapInfo = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
 
   const {
-    isEasySwapperAllowedPool: isPoolSwapAllowed,
-    feeNumerator,
-    feeDenominator,
-  } = useEasySwapperStableData({ poolAddress: address, chainId })
+    data: {
+      easySwapperFeeDenominator,
+      easySwapperFeeNumerator,
+      easySwapperAllowedPools: isPoolSwapAllowed = false,
+    } = {},
+  } = usePoolStatic({
+    address,
+    chainId,
+  })
   const isPoolManagerAccount = useIsPoolManagerAccount()
 
   const [depositMethod, setDepositMethod] = useTradingPanelDepositMethod()
@@ -30,22 +35,22 @@ export const useHandlePoolSwapInfo = () => {
 
   useEffect(() => {
     if (
-      isBigInt(feeNumerator) &&
-      isBigInt(feeDenominator) &&
+      isBigInt(easySwapperFeeNumerator) &&
+      isBigInt(easySwapperFeeDenominator) &&
       isPoolSwapAllowed &&
       depositMethod === 'depositWithCustomCooldown'
     ) {
       updateEntryFee({
         depositWithCustomCooldown: getPercent(
-          Number(feeNumerator),
-          Number(feeDenominator),
+          Number(easySwapperFeeNumerator),
+          Number(easySwapperFeeDenominator),
         ),
       })
     }
   }, [
     updateEntryFee,
-    feeNumerator,
-    feeDenominator,
+    easySwapperFeeNumerator,
+    easySwapperFeeDenominator,
     depositMethod,
     isPoolSwapAllowed,
   ])

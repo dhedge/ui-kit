@@ -40,4 +40,4 @@ invariant(
 process.chdir(outputPath);
 
 // Execute "npm publish" to publish
-execSync(`pnpm publish --access public`);
+execSync(`npm publish --access public`);

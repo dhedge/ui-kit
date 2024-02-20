@@ -1,4 +1,4 @@
-import { DEFAULT_PRECISION } from 'const'
+import { DEFAULT_PRECISION, MULTI_ASSET_TOKEN } from 'const'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -31,14 +31,19 @@ export const useOnTradingTypeChange = () => {
   }
 
   const onWithdrawSwitch = () => {
-    const [initialWithdrawToken] = poolConfig.withdrawParams.customTokens
+    const [customWithdrawToken] = poolConfig.withdrawParams.customTokens
     updateSendToken({
       address: poolConfig.address,
       symbol: poolConfig.symbol,
       decimals: DEFAULT_PRECISION,
       value: '',
     })
-    updateReceiveToken({ ...initialWithdrawToken, value: '', isLoading: false })
+    // Set "All assets" as default withdraw option in Synthetix V3 vaults
+    updateReceiveToken({
+      ...(customWithdrawToken ?? MULTI_ASSET_TOKEN),
+      value: '',
+      isLoading: false,
+    })
   }
 
   return (type: TradingPanelType) => {

@@ -1,28 +1,25 @@
-import { erc20ABI } from 'abi'
+import { erc20Abi } from 'abi'
 import { optimism } from 'const'
+import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
 import { TEST_ADDRESS } from 'tests/mocks'
 
 import { useTokenAllowance } from './use-token-allowance'
 
-const mocks = vi.hoisted(() => {
+vi.mock('hooks/web3', async () => {
   return {
-    useContractRead: vi.fn(),
-  }
-})
-
-vi.mock('wagmi', async () => {
-  const actual = await vi.importActual<Record<string, unknown>>('wagmi')
-
-  return {
-    ...actual,
-    useContractRead: mocks.useContractRead,
+    useReadContract: vi.fn(),
+    useInvalidateOnBlock: vi.fn(),
   }
 })
 
 describe('useTokenAllowance', () => {
   it('should call allowance method on erc20 abi', () => {
+    vi.mocked(web3Hooks.useReadContract).mockReturnValueOnce({
+      queryKey: ['query'],
+    } as unknown as ReturnType<typeof web3Hooks.useReadContract>)
+
     renderHook(() =>
       useTokenAllowance(
         TEST_ADDRESS,
@@ -33,9 +30,13 @@ describe('useTokenAllowance', () => {
       ),
     )
 
-    expect(mocks.useContractRead).toHaveBeenCalledTimes(1)
-    expect(mocks.useContractRead).toHaveBeenCalledWith(
-      expect.objectContaining({ functionName: 'allowance', abi: erc20ABI }),
+    expect(web3Hooks.useInvalidateOnBlock).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useInvalidateOnBlock).toHaveBeenCalledWith({
+      queryKey: ['query'],
+    })
+    expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
+      expect.objectContaining({ functionName: 'allowance', abi: erc20Abi }),
     )
   })
 })

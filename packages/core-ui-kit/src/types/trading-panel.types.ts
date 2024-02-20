@@ -39,7 +39,11 @@ export type UpdateTransactionsArguments =
   | RemoveTransaction
 
 export type TradingPanelType = 'deposit' | 'withdraw'
-export type TransactionAction = 'deposit' | 'withdraw' | 'approve'
+export type TransactionAction =
+  | 'deposit'
+  | 'withdraw'
+  | 'approve'
+  | 'oraclesUpdate'
 
 export type DepositMethodName = 'deposit' | 'depositWithCustomCooldown'
 
@@ -51,3 +55,5 @@ export interface TokenSelectorPayload {
   isOpen: boolean
   entity: SwapEntity
 }
+
+export type ApyCurrency = 'USD' | 'ETH'

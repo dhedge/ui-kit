@@ -12,11 +12,10 @@ import {
   useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import { useTradingSettleHandler } from 'hooks/trading'
+import { useTradingParams, useTradingSettleHandler } from 'hooks/trading'
 import { useContractFunction } from 'hooks/web3'
 import { DefaultSellingParams } from 'models'
 
-import type { TradingParams } from 'types/trading.types'
 import type { ContractActionFunc, SendEstimationResult } from 'types/web3.types'
 import { getOrderedTxArgs, logTransactionArguments } from 'utils'
 
@@ -25,17 +24,18 @@ import { useWithdrawSlippage } from './use-withdraw-slippage'
 
 const action = 'withdraw'
 
-export const useWithdraw = ({
-  receiveAssetAddress,
-  sendAssetAddress,
-  receiveAssetInputValue,
-  fromTokenAmount,
-}: TradingParams): ContractActionFunc => {
+export const useWithdraw = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
   const [{ minSlippage, slippage: tradingSlippage }] = useTradingPanelSettings()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
+  const {
+    receiveAssetAddress,
+    sendAssetAddress,
+    receiveAssetInputValue,
+    fromTokenAmount,
+  } = useTradingParams()
 
   const onSettled = useTradingSettleHandler(action)
 

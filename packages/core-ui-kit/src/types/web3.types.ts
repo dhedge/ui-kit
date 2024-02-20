@@ -1,8 +1,28 @@
-import type { Address as WagmiAddress, Chain as WagmiChain } from 'wagmi'
+import type {
+  Address,
+  Chain,
+  TransactionRequest as ViemTransactionRequest,
+} from 'viem'
 
-export type Address = WagmiAddress
-export type Chain = WagmiChain
+export type {
+  UseWriteContractParameters,
+  UseReadContractsParameters,
+} from 'wagmi'
+export type {
+  Hex,
+  PublicClient,
+  WalletClient,
+  Client,
+  WaitForTransactionReceiptReturnType,
+  CallExecutionError,
+  MulticallReturnType,
+} from 'viem'
+export type { Address, Chain }
 export type ChainId = Chain['id']
+export type TransactionRequest = Pick<
+  ViemTransactionRequest,
+  'to' | 'data' | 'value' | 'from'
+>
 
 export type ContractActionFunc = () => Promise<void | unknown> // TODO: check
 
@@ -37,5 +57,9 @@ export interface SimulateTransactionResponse {
 
 export interface PoolContractCallParams {
   address: Address
-  chainId?: ChainId
+  chainId: ChainId
+}
+
+export interface PoolContractAccountCallParams extends PoolContractCallParams {
+  account: Address
 }

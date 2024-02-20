@@ -17,11 +17,14 @@ vi.mock('hooks/state', () => ({
 }))
 
 vi.mock('hooks/web3', () => ({
-  useWaitForTransaction: vi.fn(),
+  useWaitForTransactionReceipt: vi.fn(() => ({
+    data: {},
+    error: null,
+  })),
 }))
 
 describe('useTradingResultHandling', () => {
-  it('should call useWaitForTransaction with pending tx hash', () => {
+  it('should call useWaitForTransactionReceipt with pending tx hash', () => {
     const pendingTx: PendingTransaction = {
       action: 'deposit',
       symbol: 'symbol',
@@ -41,8 +44,8 @@ describe('useTradingResultHandling', () => {
 
     renderHook(() => useTradingResultHandling())
 
-    expect(web3Hooks.useWaitForTransaction).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useWaitForTransaction).toHaveBeenCalledWith(
+    expect(web3Hooks.useWaitForTransactionReceipt).toHaveBeenCalledTimes(1)
+    expect(web3Hooks.useWaitForTransactionReceipt).toHaveBeenCalledWith(
       expect.objectContaining({
         hash: pendingTx.txHash,
         chainId: pendingTx.chainId,

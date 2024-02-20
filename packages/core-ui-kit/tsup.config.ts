@@ -29,5 +29,14 @@ export default defineConfig(
     sourcemap: true,
     external: [...Object.keys(peerDependencies)],
     platform: 'browser',
+    // https://stackoverflow.com/questions/68423950/when-using-esbuild-with-external-react-i-get-dynamic-require-of-react-is-not-s?rq=1
+    banner: {
+      js: `import * as requireViem from 'viem';
+
+       function require(m) {
+         if (m === 'viem') return requireViem;
+         throw new Error(\`Unknown module \${m}\`);
+       }`,
+    },
   }),
 )

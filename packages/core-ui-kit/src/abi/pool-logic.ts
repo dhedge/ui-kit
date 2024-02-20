@@ -1041,4 +1041,23 @@ export const PoolLogicAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'fundValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'calculateAvailableManagerFee',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'fee',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ] as const

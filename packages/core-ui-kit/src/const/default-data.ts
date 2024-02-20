@@ -9,7 +9,7 @@ import { AddressZero } from './web3'
 
 export const DEFAULT_PRECISION = 18
 
-export const DEFAULT_POLLING_INTERVAL = 25_000
+export const DEFAULT_POLLING_INTERVAL = 23_000
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
@@ -42,7 +42,6 @@ export const DEFAULT_WITHDRAW_SLIPPAGE_SCALE = [
   0.5,
   1,
   1.5,
-  2,
   DEFAULT_WITHDRAW_SLIPPAGE,
 ]
 export const DEFAULT_DEPOSIT_SLIPPAGE_SCALE = [DEFAULT_DEPOSIT_SLIPPAGE]
@@ -55,6 +54,7 @@ export const GAS_LIMIT_BUFFER_COEFF = 1.25
 
 export const DEPOSIT_QUOTE_MULTIPLIER_DEFAULT = 0.9997
 export const DEPOSIT_QUOTE_MULTIPLIER_CUSTOM = 0.999
+export const DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER = 0.999
 
 export const MANAGER_FEE_DENOMINATOR = 10000 // GetMaximumFee
 

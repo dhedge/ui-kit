@@ -1,14 +1,9 @@
 import { formatDuration, intervalToDuration } from 'date-fns'
 
-import { PoolLogicAbi } from 'abi'
-import { AddressZero } from 'const'
-import {
-  useAccount,
-  useContractReads,
-  useContractReadsErrorLogging,
-} from 'hooks/web3'
+import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
+import { usePoolDynamic } from 'hooks/pool/multicall'
 import type { Address, ChainId } from 'types/web3.types'
-import { isZeroAddress } from 'utils'
+import { isSynthetixV3Vault } from 'utils'
 
 interface FundSummary {
   creationTime: bigint
@@ -53,29 +48,26 @@ export const usePoolDynamicContractData = ({
   address,
   chainId,
 }: PoolDynamicContractDataParams) => {
-  const { account } = useAccount()
-
-  const { data, isFetched } = useContractReads({
-    contracts: [
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'getExitRemainingCooldown',
-        chainId,
-        args: [account ?? AddressZero],
-      },
-      {
-        address,
-        abi: PoolLogicAbi,
-        functionName: 'getFundSummary',
-        chainId,
-      },
-    ],
-    enabled: !isZeroAddress(address),
+  const isSynthetixVault = isSynthetixV3Vault(address)
+  const managerLogicAddress = useManagerLogicAddress({
+    address,
+    chainId,
   })
-  useContractReadsErrorLogging(data)
-  const exitCooldown = data?.[0]?.result
-  const summary = data?.[1]?.result
+  const totalFundValueMutable = useTotalFundValueMutable({
+    vaultManagerLogicAddress: managerLogicAddress,
+    chainId,
+    disabled: !isSynthetixVault,
+  })
+
+  const {
+    data: {
+      getExitRemainingCooldown: exitCooldown,
+      getFundSummary: fundSummary,
+    } = {},
+    isFetched,
+  } = usePoolDynamic({ address, chainId })
+
+  const summary = getDataFromSummary(fundSummary)
 
   const cooldown = exitCooldown ? Number(exitCooldown) * 1000 : 0
   const cooldownEndsInTime = formatDuration(
@@ -85,7 +77,10 @@ export const usePoolDynamicContractData = ({
   return {
     cooldownActive: cooldown > 0,
     cooldownEndsInTime,
-    ...getDataFromSummary(summary),
+    ...summary,
+    totalValue: isSynthetixVault
+      ? totalFundValueMutable ?? summary.totalValue
+      : summary.totalValue,
     isFetched,
   }
 }
