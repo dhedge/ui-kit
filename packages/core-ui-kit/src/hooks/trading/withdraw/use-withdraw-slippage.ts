@@ -3,6 +3,7 @@ import debounce from 'lodash.debounce'
 import noop from 'lodash.noop'
 import { useEffect, useRef } from 'react'
 
+import { SHORTEN_POLLING_INTERVAL } from 'const'
 import { usePoolDynamicContractData } from 'hooks/pool'
 import {
   useReceiveTokenInput,
@@ -35,7 +36,8 @@ export const useWithdrawSlippage = ({
   const isApproved = approvingStatus === 'success'
   const insufficientBalance = useIsInsufficientBalance()
   const { data: blockNumber } = useBlockNumber({
-    watch: { enabled: true, pollingInterval: 12_000 },
+    watch: { enabled: true, pollingInterval: SHORTEN_POLLING_INTERVAL },
+    query: { staleTime: SHORTEN_POLLING_INTERVAL },
   })
 
   const debouncedEstimateSell = useRef(noop)

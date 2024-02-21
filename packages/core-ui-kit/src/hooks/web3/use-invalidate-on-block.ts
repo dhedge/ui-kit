@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import type { UseReadContractsReturnType } from 'wagmi'
 import { useBlockNumber } from 'wagmi'
 
-import { DEFAULT_POLLING_INTERVAL } from 'const'
+import { DEFAULT_POLLING_INTERVAL, SHORTEN_POLLING_INTERVAL } from 'const'
 
 export interface InvalidateOnBlockConfig {
   queryKey: UseReadContractsReturnType['queryKey']
@@ -21,11 +21,12 @@ export const useInvalidateOnBlock = ({
       enabled: watch,
       pollingInterval: DEFAULT_POLLING_INTERVAL,
     },
+    query: { staleTime: SHORTEN_POLLING_INTERVAL },
   })
 
   useEffect(() => {
     if (watch) {
-      queryClient.invalidateQueries({ queryKey })
+      queryClient.refetchQueries({ queryKey, stale: true })
     }
     // https://wagmi.sh/react/guides/tanstack-query#example-watching-a-users-balance
     // eslint-disable-next-line react-hooks/exhaustive-deps

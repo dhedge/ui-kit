@@ -31,6 +31,7 @@ const queryClient = new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       gcTime: DEFAULT_POLLING_INTERVAL,
+      staleTime: DEFAULT_POLLING_INTERVAL,
     },
   },
 })
