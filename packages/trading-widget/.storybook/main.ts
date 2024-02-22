@@ -13,6 +13,10 @@ const config: StorybookConfig = {
       },
     },
   },
+  // TODO: check if it is needed for storybook launch
+  // typescript: {
+  //   reactDocgen: false,
+  // },
   async viteFinal(config) {
     return mergeConfig(config, {
       plugins: [viteTsConfigPaths()],
