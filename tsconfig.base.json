@@ -1,18 +1,18 @@
 {
-	"compileOnSave": false,
-	"compilerOptions": {
+  "compileOnSave": false,
+  "compilerOptions": {
     "allowJs": true,
-		"sourceMap": true,
+    "sourceMap": true,
     "jsx": "react-jsx",
-		"declaration": false,
-		"moduleResolution": "node",
-		"experimentalDecorators": true,
-		"importHelpers": true,
-		"target": "es2021",
-		"module": "esnext",
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2021",
+    "module": "esnext",
     "lib": ["es2021", "dom"],
-		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "noEmit": true,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
@@ -21,11 +21,11 @@
     "strict": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
-		"baseUrl": ".",
-		"paths": {
-			"@dhedge/core-ui-kit": ["packages/core-ui-kit/src/index.ts"],
+    "baseUrl": ".",
+    "paths": {
+      "@dhedge/core-ui-kit": ["packages/core-ui-kit/src/index.ts"],
       "@dhedge/trading-widget": ["packages/trading-widget/src/index.ts"]
-		}
-	},
-	"exclude": ["node_modules", "tmp"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

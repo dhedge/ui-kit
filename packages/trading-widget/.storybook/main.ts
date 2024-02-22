@@ -1,4 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite'
+import { mergeConfig } from 'vite'
+import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
@@ -10,6 +12,11 @@ const config: StorybookConfig = {
         viteConfigPath: 'packages/trading-widget/vite.config.ts',
       },
     },
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      plugins: [viteTsConfigPaths()],
+    })
   },
 }
 

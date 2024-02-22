@@ -7,7 +7,7 @@ const meta: Meta<typeof TradingWidget> = {
   component: TradingWidgetComponent,
   decorators: [
     (Story) => (
-      <div className="dtw-bg-themeDark-800 dtw-text-white dtw-rounded-xl dtw-p-4">
+      <div className="dtw-bg-themeDark-800 dtw-text-white dtw-rounded-xl dtw-pt-3">
         <Story />
       </div>
     ),

@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react'
 import { Popover } from '@headlessui/react'
+
 import { CogIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 
 interface SettingsPopoverProps {
   className?: string

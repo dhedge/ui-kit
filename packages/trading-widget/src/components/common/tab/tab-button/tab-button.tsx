@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react'
-import type { FC } from 'react'
 import classNames from 'classnames'
+import type { FC } from 'react'
 
 interface TabProps {
   tradingType: string
@@ -15,7 +15,7 @@ export const TabButton: FC<TabProps> = ({ tradingType }) => (
   <Tab
     className={({ selected }) =>
       classNames(
-        'dtw-relative dtw-w-full dtw-text-[length:var(--panel-tab-font-size,var(--panel-font-size-sm))] dtw-px-[var(--panel-tab-px)] dtw-py-[var(--panel-tab-py)] dtw-font-[var(--panel-tab-font-weight,var(--panel-font-weight-bold))] dtw-leading-[var(--panel-tab-line-height, var(--panel-line-height))] dtw-outline-0',
+        'dtw-relative dtw-text-[length:var(--panel-tab-font-size,var(--panel-font-size-sm))] dtw-px-[var(--panel-tab-px)] dtw-py-[var(--panel-tab-py)] dtw-font-[var(--panel-tab-font-weight,var(--panel-font-weight-bold))] dtw-leading-[var(--panel-tab-line-height, var(--panel-line-height))] dtw-outline-0',
         {
           'dtw-text-[color:var(--panel-tab-select-content-color,var(--panel-content-color))]':
             selected,

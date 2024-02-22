@@ -1,6 +1,6 @@
 import '../src/styles/index.css'
 
-import { Preview } from '@storybook/react'
+import type { Preview } from '@storybook/react'
 
 import { Providers } from '../src/providers'
 

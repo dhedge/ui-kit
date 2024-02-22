@@ -1,6 +1,6 @@
 const { createGlobPatternsForDependencies } = require('@nx/react/tailwind')
 const { join } = require('path')
-const { COLORS } = require('./theme/colors')
+const { COLORS } = require(join(__dirname, 'src', 'theme', 'colors.js'))
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -22,6 +22,12 @@ module.exports = {
         themeBlue: COLORS.BLUE,
         themeAmber: COLORS.AMBER,
         network: COLORS.NETWORK,
+      },
+      borderColor: {
+        'arrow-top': `${COLORS.GRAY['700']} transparent transparent transparent`,
+        'arrow-right': `transparent ${COLORS.GRAY['700']} transparent transparent`,
+        'arrow-bottom': `transparent transparent ${COLORS.GRAY['700']} transparent`,
+        'arrow-left': `transparent transparent transparent ${COLORS.GRAY['700']}`,
       },
     },
   },
