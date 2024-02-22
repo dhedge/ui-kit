@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { TabPanel } from 'components/common'
+import { Layout } from 'components/common'
 import { useComponentContext } from 'providers/component-provider'
 import { useConfigContext } from 'providers/config-provider'
 
@@ -11,7 +11,7 @@ export const DepositTabPanel: FC = () => {
   const { GeoBlockAlert } = useComponentContext()
 
   return (
-    <TabPanel>
+    <Layout.Panel>
       <DepositMeta>
         {isGeoBlocked && GeoBlockAlert ? (
           <GeoBlockAlert />
@@ -19,6 +19,6 @@ export const DepositTabPanel: FC = () => {
           <>Deposit Action Buttons</>
         )}
       </DepositMeta>
-    </TabPanel>
+    </Layout.Panel>
   )
 }

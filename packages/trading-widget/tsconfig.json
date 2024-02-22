@@ -25,6 +25,7 @@
       "@dhedge/core-ui-kit": ["../../core-ui-kit"],
       "@dhedge/core-ui-kit/abi": ["../../core-ui-kit/abi"],
       "@dhedge/core-ui-kit/const": ["../../core-ui-kit/const"],
+      "@dhedge/core-ui-kit/types": ["../../core-ui-kit/types"],
       "@dhedge/core-ui-kit/hooks/component": [
         "../../core-ui-kit/hooks/component"
       ],

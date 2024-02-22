@@ -1,6 +1,6 @@
 import type { FC, PropsWithChildren } from 'react'
 
-import { Meta } from 'components/common'
+import { Layout } from 'components/common/layout'
 
 import { useComponentContext } from 'providers/component-provider'
 
@@ -10,10 +10,10 @@ export const DepositMeta: FC<PropsWithChildren> = ({ children }) => {
   const { DepositMetaInfo } = useComponentContext()
 
   return (
-    <Meta>
+    <Layout.Meta>
       <DepositTransactionOverviewDisclosure />
       {DepositMetaInfo && <DepositMetaInfo />}
       {children}
-    </Meta>
+    </Layout.Meta>
   )
 }

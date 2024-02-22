@@ -1,13 +1,13 @@
 import type { FC } from 'react'
 
-import { TabPanel } from 'components/common'
+import { Layout } from 'components/common'
 
 import { WithdrawMeta } from '../../meta/meta'
 
 export const WithdrawTabPanel: FC = () => {
   return (
-    <TabPanel>
+    <Layout.Panel>
       <WithdrawMeta>Withdraw Action Buttons</WithdrawMeta>
-    </TabPanel>
+    </Layout.Panel>
   )
 }

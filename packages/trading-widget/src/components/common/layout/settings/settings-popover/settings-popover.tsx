@@ -17,7 +17,7 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
   children,
 }) => {
   return (
-    <Popover className={className}>
+    <Popover className={classNames('dtw-flex dtw-items-center', className)}>
       <Popover.Button onClick={onClick}>
         <CogIcon
           className={classNames(

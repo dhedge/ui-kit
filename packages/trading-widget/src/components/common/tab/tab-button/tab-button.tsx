@@ -1,12 +1,13 @@
+import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
 import { Tab } from '@headlessui/react'
 import classNames from 'classnames'
 import type { FC } from 'react'
 
 interface TabProps {
-  tradingType: string
+  tradingType: TradingPanelType
 }
 
-const TRADING_TYPE_MAP: Record<string, string> = {
+const TRADING_TYPE_MAP: Record<TradingPanelType, string> = {
   deposit: 'Buy',
   withdraw: 'Sell',
 }
