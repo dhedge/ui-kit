@@ -1,0 +1,13 @@
+{
+  "name": "test-trading-widget",
+  "version": "0.0.1",
+  "dependencies": {
+    "@dhedge/core-ui-kit": "*"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
+  "peerDependencies": {
+    "react": ">=18.2.0"
+  }
+}
