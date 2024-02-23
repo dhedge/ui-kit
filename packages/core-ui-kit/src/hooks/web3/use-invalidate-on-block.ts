@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import type { UseReadContractsReturnType } from 'wagmi'
 import { useBlockNumber } from 'wagmi'
 
-import { DEFAULT_POLLING_INTERVAL, SHORTEN_POLLING_INTERVAL } from 'const'
+import { SHORTEN_POLLING_INTERVAL } from 'const'
 
 export interface InvalidateOnBlockConfig {
   queryKey: UseReadContractsReturnType['queryKey']
@@ -17,11 +17,9 @@ export const useInvalidateOnBlock = ({
   const queryClient = useQueryClient()
 
   const { data: blockNumber } = useBlockNumber({
-    watch: {
-      enabled: watch,
-      pollingInterval: DEFAULT_POLLING_INTERVAL,
+    query: {
+      refetchInterval: SHORTEN_POLLING_INTERVAL,
     },
-    query: { staleTime: SHORTEN_POLLING_INTERVAL },
   })
 
   useEffect(() => {

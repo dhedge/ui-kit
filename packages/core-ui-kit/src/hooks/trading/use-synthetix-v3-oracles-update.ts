@@ -2,11 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { usePublicClient } from 'wagmi'
 
-import {
-  AddressZero,
-  DEFAULT_POLLING_INTERVAL,
-  SHORTEN_POLLING_INTERVAL,
-} from 'const'
+import { AddressZero, DEFAULT_POLLING_INTERVAL } from 'const'
 import { useTradingPanelModal, useTradingPanelPoolConfig } from 'hooks/state'
 import type { Address, TransactionRequest } from 'types'
 import {
@@ -97,8 +93,7 @@ export const useSynthetixV3OraclesUpdate = ({
   const publicClient = usePublicClient({ chainId })
   const [txData, setTxData] = useState<TransactionRequest | null>(null)
   const { data: blockNumber } = useBlockNumber({
-    query: { enabled: !disabled, staleTime: SHORTEN_POLLING_INTERVAL },
-    watch: { enabled: !disabled, pollingInterval: DEFAULT_POLLING_INTERVAL },
+    query: { enabled: !disabled, refetchInterval: DEFAULT_POLLING_INTERVAL },
   })
   const updateTradingModal = useTradingPanelModal()[1]
   const { sendTransaction } = useSendUpdateTransaction({ chainId })

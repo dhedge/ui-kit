@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { FC, PropsWithChildren } from 'react'
 import { createClient } from 'viem'
 import { WagmiProvider as Provider, createConfig, http } from 'wagmi'
@@ -38,6 +39,9 @@ const queryClient = new QueryClient({
 
 export const WagmiProvider: FC<PropsWithChildren> = ({ children }) => (
   <Provider config={config}>
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </Provider>
 )
