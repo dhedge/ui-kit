@@ -7,7 +7,10 @@ import {
   useTradingPanelModal,
   useTradingPanelTransactions,
 } from 'hooks/state'
-import { useWaitForTransactionReceipt } from 'hooks/web3'
+import {
+  useInvalidateTradingQueries,
+  useWaitForTransactionReceipt,
+} from 'hooks/web3'
 import type { Address } from 'types/web3.types'
 import { getExplorerLink } from 'utils'
 
@@ -24,10 +27,13 @@ export const useTradingResultHandling = () => {
   const action = pendingTransaction?.action
   const isTokenApproveTransaction = action === 'approve'
   const chainId = pendingTransaction?.chainId
+  const { invalidateTradingQueries, invalidateAllowanceQueries } =
+    useInvalidateTradingQueries()
 
   const { data, error } = useWaitForTransactionReceipt({
     hash: txHash,
     chainId,
+    pollingInterval: 15_000,
   })
 
   useEffect(() => {
@@ -43,6 +49,10 @@ export const useTradingResultHandling = () => {
         updatePendingTransactions({ type: 'remove', status: 'success', txHash })
         onTransactionSuccess?.(data, action, link)
       }
+
+      isTokenApproveTransaction
+        ? invalidateAllowanceQueries()
+        : invalidateTradingQueries()
     }
   }, [
     data,
@@ -53,6 +63,8 @@ export const useTradingResultHandling = () => {
     updatePendingTransactions,
     updateTradingModal,
     updateTradingMeta,
+    invalidateAllowanceQueries,
+    invalidateTradingQueries,
   ])
 
   useEffect(() => {
