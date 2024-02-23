@@ -1,5 +1,5 @@
 import { erc20Abi } from 'abi'
-import { optimism } from 'const'
+import { DEFAULT_POLLING_INTERVAL, optimism } from 'const'
 import * as web3Hooks from 'hooks/web3'
 import { renderHook } from 'test-utils'
 
@@ -30,13 +30,13 @@ describe('useTokenAllowance', () => {
       ),
     )
 
-    expect(web3Hooks.useInvalidateOnBlock).toHaveBeenCalledTimes(1)
-    expect(web3Hooks.useInvalidateOnBlock).toHaveBeenCalledWith({
-      queryKey: ['query'],
-    })
     expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useReadContract).toHaveBeenCalledWith(
-      expect.objectContaining({ functionName: 'allowance', abi: erc20Abi }),
+      expect.objectContaining({
+        functionName: 'allowance',
+        abi: erc20Abi,
+        query: { enabled: true, refetchInterval: DEFAULT_POLLING_INTERVAL },
+      }),
     )
   })
 })

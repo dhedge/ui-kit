@@ -21,6 +21,10 @@ vi.mock('hooks/web3', () => ({
     data: {},
     error: null,
   })),
+  useInvalidateTradingQueries: vi.fn(() => ({
+    invalidateAllowanceQueries: vi.fn(),
+    invalidateTradingQueries: vi.fn(),
+  })),
 }))
 
 describe('useTradingResultHandling', () => {

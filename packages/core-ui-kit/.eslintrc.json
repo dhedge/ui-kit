@@ -39,7 +39,8 @@
               "@testing-library/jest-dom",
               "@testing-library/dom",
               "@testing-library/react",
-              "erc7412"
+              "erc7412",
+              "@tanstack/react-query-devtools"
             ]
           }
         ]

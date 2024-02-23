@@ -20,23 +20,15 @@ const filterQueries = (
   contractCalls: string[],
 ): boolean => {
   if (queryKey[0] === 'readContract') {
-    if (
-      contractCalls.includes(
-        (queryKey as ContractReadQueryKey)?.[1]?.functionName ?? '',
-      )
-    ) {
-      return true
-    }
+    return contractCalls.includes(
+      (queryKey as ContractReadQueryKey)?.[1]?.functionName ?? '',
+    )
   }
   if (queryKey[0] === 'readContracts') {
     const contracts = (queryKey as ContractReadsQueryKey)[1]?.contracts
-    if (
-      contracts?.some(({ functionName }) =>
-        contractCalls.includes(functionName ?? ''),
-      )
-    ) {
-      return true
-    }
+    return !!contracts?.some(({ functionName }) =>
+      contractCalls.includes(functionName ?? ''),
+    )
   }
   return false
 }
