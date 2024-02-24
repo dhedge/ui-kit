@@ -10,7 +10,6 @@ import type {
   PoolContractAccountCallParams,
   PoolContractCallParams,
   UseReadContractsParameters,
-  ResolvedRegister,
 } from 'types'
 
 const getPoolContracts = ({
@@ -44,24 +43,17 @@ const getPoolContracts = ({
 const getContracts = (pools: PoolContractAccountCallParams[]) =>
   pools.flatMap(getPoolContracts)
 
-type Data = MulticallReturnType<ReturnType<typeof getContracts>, true>
-
 export const POOL_CHUNK_SIZE = getPoolContracts({
   account: AddressZero,
   chainId: DEFAULT_CHAIN_ID,
   address: AddressZero,
 }).length
 
-export const usePoolsDynamic = <selectData = Data>(
+export const usePoolsDynamic = (
   pools: PoolContractCallParams[],
   query?: Pick<
     NonNullable<
-      UseReadContractsParameters<
-        ReturnType<typeof getContracts>,
-        true,
-        ResolvedRegister['config'],
-        selectData
-      >['query']
+      UseReadContractsParameters<ReturnType<typeof getContracts>>['query']
     >,
     'select'
   >,

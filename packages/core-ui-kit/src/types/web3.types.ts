@@ -7,7 +7,6 @@ import type {
 export type {
   UseWriteContractParameters,
   UseReadContractsParameters,
-  ResolvedRegister,
 } from 'wagmi'
 export type {
   Hex,
