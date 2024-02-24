@@ -7,6 +7,7 @@ import {
   DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
   DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
   DEPOSIT_QUOTE_POOL_LOGIC_MULTIPLIER,
+  SHORTEN_POLLING_INTERVAL,
 } from 'const'
 import { usePoolTokenPrice } from 'hooks/pool'
 import {
@@ -17,11 +18,7 @@ import {
 } from 'hooks/state'
 import { usePoolDepositAssetAddress } from 'hooks/trading/deposit'
 import { useDebounce } from 'hooks/utils'
-import {
-  useContractReadsErrorLogging,
-  useInvalidateOnBlock,
-  useReadContracts,
-} from 'hooks/web3'
+import { useContractReadsErrorLogging, useReadContracts } from 'hooks/web3'
 import type { PoolConfig } from 'types/config.types'
 import { getContractAddressById } from 'utils'
 
@@ -65,7 +62,7 @@ export const useDepositQuote = ({
     .shiftedBy(sendToken.decimals)
     .toFixed(0)
 
-  const { data, queryKey } = useReadContracts({
+  const { data } = useReadContracts({
     contracts: [
       {
         address: getContractAddressById('easySwapper', chainId),
@@ -87,10 +84,9 @@ export const useDepositQuote = ({
         !!sendToken.address &&
         !!poolDepositAssetAddress &&
         isEasySwapperTrading,
+      refetchInterval: SHORTEN_POLLING_INTERVAL,
     },
   })
-
-  useInvalidateOnBlock({ queryKey })
 
   const depositQuote = data?.[0]?.result
   useContractReadsErrorLogging(data)

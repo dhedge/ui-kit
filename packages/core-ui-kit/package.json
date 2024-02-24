@@ -1,6 +1,6 @@
 {
   "name": "@dhedge/core-ui-kit",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Core UI Kit",
   "type": "module",
   "main": "dist/index.js",

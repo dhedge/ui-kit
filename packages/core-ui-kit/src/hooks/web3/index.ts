@@ -21,3 +21,4 @@ export { useContractReadsErrorLogging } from './use-contract-reads-error-logging
 export { useContractReadErrorLogging } from './use-contract-read-error-logging'
 export { useStaticCallQuery } from './use-static-call-query'
 export { useInvalidateOnBlock } from './use-invalidate-on-block'
+export { useInvalidateTradingQueries } from './use-invalidate-trading-queries'

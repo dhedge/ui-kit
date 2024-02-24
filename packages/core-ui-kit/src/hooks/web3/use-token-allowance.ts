@@ -1,6 +1,6 @@
 import { erc20Abi } from 'abi'
-import { SHORTEN_POLLING_INTERVAL } from 'const'
-import { useInvalidateOnBlock, useReadContract } from 'hooks/web3'
+import { DEFAULT_POLLING_INTERVAL } from 'const'
+import { useReadContract } from 'hooks/web3'
 import type { Address, ChainId } from 'types/web3.types'
 
 export const useTokenAllowance = (
@@ -10,7 +10,7 @@ export const useTokenAllowance = (
   chainId: ChainId,
   skip: boolean,
 ): ReturnType<typeof useReadContract> => {
-  const query = useReadContract({
+  return useReadContract({
     address: tokenAddress,
     abi: erc20Abi,
     functionName: 'allowance',
@@ -18,11 +18,7 @@ export const useTokenAllowance = (
     chainId,
     query: {
       enabled: !skip,
-      staleTime: SHORTEN_POLLING_INTERVAL,
+      refetchInterval: DEFAULT_POLLING_INTERVAL,
     },
   })
-
-  useInvalidateOnBlock({ queryKey: query.queryKey })
-
-  return query
 }
