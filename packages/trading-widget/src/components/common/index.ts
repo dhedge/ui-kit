@@ -6,3 +6,5 @@ export { TransactionOverviewDisclosure } from './meta/transaction-disclosure/tra
 export type { TransactionDisclosureItemProps } from './meta/transaction-disclosure/transaction-disclosure-item/transaction-disclosure-item'
 export { Spinner } from './spinner/spinner'
 export { Layout } from './layout'
+export { ActionButton } from './button/action-button/action-button'
+export { DisabledButtonWithPrompt } from './button/disabled-button-with-prompt/disabled-button-with-prompt'

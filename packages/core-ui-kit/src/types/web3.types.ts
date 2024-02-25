@@ -16,6 +16,7 @@ export type {
   WaitForTransactionReceiptReturnType,
   CallExecutionError,
   MulticallReturnType,
+  ContractFunctionReturnType,
 } from 'viem'
 export type { Address, Chain }
 export type ChainId = Chain['id']

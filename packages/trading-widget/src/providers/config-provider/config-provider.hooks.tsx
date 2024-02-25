@@ -11,3 +11,6 @@ export const useConfigContext = () => {
 
   return context
 }
+
+export const useConfigContextParams = () => useConfigContext().params
+export const useConfigContextActions = () => useConfigContext().actions

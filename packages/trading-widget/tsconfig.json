@@ -46,8 +46,10 @@
       "@dhedge/core-ui-kit/hooks/user": ["../../core-ui-kit/hooks/user"],
       "@dhedge/core-ui-kit/hooks/utils": ["../../core-ui-kit/hooks/utils"],
       "@dhedge/core-ui-kit/hooks/web3": ["../../core-ui-kit/hooks/web3"],
+      "@dhedge/core-ui-kit/hooks/pool": ["../../core-ui-kit/hooks/pool"],
       "@dhedge/core-ui-kit/models": ["../../core-ui-kit/models"],
-      "@dhedge/core-ui-kit/providers": ["../../core-ui-kit/providers"]
+      "@dhedge/core-ui-kit/providers": ["../../core-ui-kit/providers"],
+      "@dhedge/core-ui-kit/utils": ["../../core-ui-kit/utils"]
     }
   },
   "include": [

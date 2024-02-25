@@ -3,17 +3,32 @@ import { createContext } from 'react'
 
 export interface ConfigProviderProps {
   config?: {
-    isGeoBlocked?: boolean
+    params: {
+      isGeoBlocked?: boolean
+      depositQuoteDiffErrorThreshold?: number
+    }
+    actions: {
+      onConnect: () => void
+    }
   }
 }
 
-export const ConfigProviderContext = createContext<
-  Partial<ConfigProviderProps['config']>
->({})
+const defaultValue: ConfigProviderProps['config'] = {
+  params: {
+    isGeoBlocked: false,
+    depositQuoteDiffErrorThreshold: 3,
+  },
+  actions: {
+    onConnect: () => {},
+  },
+}
+
+export const ConfigProviderContext =
+  createContext<ConfigProviderProps['config']>(defaultValue)
 
 export const ConfigProvider: FC<PropsWithChildren<ConfigProviderProps>> = ({
   children,
-  config = {},
+  config = defaultValue,
 }) => {
   return (
     <ConfigProviderContext.Provider value={config}>

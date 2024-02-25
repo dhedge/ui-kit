@@ -1,1 +1,5 @@
-export { useConfigContext } from './config-provider.hooks'
+export {
+  useConfigContext,
+  useConfigContextParams,
+  useConfigContextActions,
+} from './config-provider.hooks'
