@@ -1,16 +1,17 @@
 import {
-  dehydrate,
+  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
-  HydrationBoundary,
+  dehydrate,
 } from '@tanstack/react-query'
 import type { Queries, queries } from '@testing-library/dom'
 import type { RenderHookOptions, RenderOptions } from '@testing-library/react'
 import { render, renderHook } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
-import { WagmiProvider } from 'providers/wagmi-provider'
 
 import { TradingPanelProvider } from 'providers'
+import { WagmiProvider } from 'providers/wagmi-provider'
+
 import type { TradingPanelContextConfig } from 'types'
 
 import { CALLBACK_CONFIG_MOCK, POOL_CONFIG_MAP_MOCK } from './mocks'

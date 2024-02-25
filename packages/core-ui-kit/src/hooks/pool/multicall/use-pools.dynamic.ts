@@ -1,16 +1,17 @@
+import chunk from 'lodash.chunk'
+
 import { PoolLogicAbi } from 'abi'
 import { AddressZero, DEFAULT_CHAIN_ID, DEFAULT_POLLING_INTERVAL } from 'const'
-import chunk from 'lodash.chunk'
 import {
   useAccount,
   useContractReadErrorLogging,
   useReadContracts,
 } from 'hooks/web3'
 import type {
+  Address,
+  ContractFunctionReturnType,
   PoolContractAccountCallParams,
   PoolContractCallParams,
-  ContractFunctionReturnType,
-  Address,
 } from 'types'
 
 const getPoolContracts = ({
