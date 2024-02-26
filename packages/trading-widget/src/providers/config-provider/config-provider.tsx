@@ -1,22 +1,53 @@
+import {
+  DEFAULT_DEPOSIT_SLIPPAGE,
+  DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+  DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+} from '@dhedge/core-ui-kit/const'
+import { formatDuration } from 'date-fns'
 import type { FC, PropsWithChildren } from 'react'
-import { createContext } from 'react'
+import { createContext, useMemo } from 'react'
+
+interface ConfigProviderParams {
+  isGeoBlocked: boolean
+  depositQuoteDiffWarningThreshold: number
+  depositQuoteDiffErrorThreshold: number
+  defaultDepositSlippage: number
+  defaultDepositSlippageScale: number[]
+  defaultWithdrawSlippageScale: number[]
+  customLockTime: string
+}
+
+interface ConfigProviderActions {
+  onConnect: () => void
+}
 
 export interface ConfigProviderProps {
   config?: {
-    params: {
-      isGeoBlocked?: boolean
-      depositQuoteDiffErrorThreshold?: number
-    }
-    actions: {
-      onConnect: () => void
-    }
+    params: Partial<ConfigProviderParams>
+    actions: Partial<ConfigProviderActions>
   }
 }
 
-const defaultValue: ConfigProviderProps['config'] = {
+type ConfigProviderState = {
+  params: ConfigProviderParams
+  actions: ConfigProviderActions
+}
+
+export const DEFAULT_CONFIG_PARAMS: Required<
+  Required<ConfigProviderProps>['config']['params']
+> = {
+  isGeoBlocked: false,
+  depositQuoteDiffWarningThreshold: 1,
+  depositQuoteDiffErrorThreshold: 3,
+  defaultDepositSlippage: DEFAULT_DEPOSIT_SLIPPAGE,
+  defaultDepositSlippageScale: DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+  defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+  customLockTime: formatDuration({ minutes: 15 }),
+}
+
+const defaultValue: ConfigProviderState = {
   params: {
-    isGeoBlocked: false,
-    depositQuoteDiffErrorThreshold: 3,
+    ...DEFAULT_CONFIG_PARAMS,
   },
   actions: {
     onConnect: () => {},
@@ -24,14 +55,28 @@ const defaultValue: ConfigProviderProps['config'] = {
 }
 
 export const ConfigProviderContext =
-  createContext<ConfigProviderProps['config']>(defaultValue)
+  createContext<ConfigProviderState>(defaultValue)
 
 export const ConfigProvider: FC<PropsWithChildren<ConfigProviderProps>> = ({
   children,
   config = defaultValue,
 }) => {
+  const value = useMemo(
+    () => ({
+      params: {
+        ...defaultValue.params,
+        ...config.params,
+      },
+      actions: {
+        ...defaultValue.actions,
+        ...config.actions,
+      },
+    }),
+    [],
+  )
+
   return (
-    <ConfigProviderContext.Provider value={config}>
+    <ConfigProviderContext.Provider value={value}>
       {children}
     </ConfigProviderContext.Provider>
   )

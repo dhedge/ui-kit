@@ -45,6 +45,8 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
       'dtw-duration-500',
       'dtw-ease-in-out',
       'disabled:dtw-opacity-50',
+      'dtw-py-2',
+      'dtw-px-5',
       {
         [HIGHLIGHTED_CLASSNAMES.join(' ')]: highlighted,
         [NON_HIGHLIGHTED_CLASSNAMES.join(' ')]: !highlighted,

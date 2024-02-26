@@ -5,11 +5,12 @@ import { ValidNetworkButton } from 'components/widget/widget-buttons'
 import { useComponentContext } from 'providers/component-provider'
 import { useConfigContextParams } from 'providers/config-provider'
 
+import { DepositTradeButton } from '../../button/trade-button/trade-button'
 import { ValidDepositButton } from '../../button/valid-deposit-button/valid-deposit-button'
 import { DepositMeta } from '../../meta/meta'
 
 export const DepositTabPanel: FC = () => {
-  const { isGeoBlocked = false } = useConfigContextParams()
+  const { isGeoBlocked } = useConfigContextParams()
   const { GeoBlockAlert } = useComponentContext()
 
   return (
@@ -19,7 +20,9 @@ export const DepositTabPanel: FC = () => {
           <GeoBlockAlert />
         ) : (
           <ValidNetworkButton>
-            <ValidDepositButton>Deposit Trade</ValidDepositButton>
+            <ValidDepositButton>
+              <DepositTradeButton />
+            </ValidDepositButton>
           </ValidNetworkButton>
         )}
       </DepositMeta>

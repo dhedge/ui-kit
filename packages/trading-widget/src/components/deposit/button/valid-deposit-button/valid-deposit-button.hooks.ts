@@ -27,7 +27,7 @@ export const useValidDepositButton = () => {
   const { shouldBeWhitelisted, isAccountWhitelisted } = useShouldBeWhitelisted()
   const poolTokenPrice = usePoolTokenPrice({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
-  const { userBalance, tokenPrice } = usePoolDynamicContractData({
+  const { userBalance } = usePoolDynamicContractData({
     address,
     chainId,
   })
@@ -43,7 +43,7 @@ export const useValidDepositButton = () => {
   ).multipliedBy(poolTokenPrice || '0')
 
   const poolBalanceInUsdNumber =
-    normalizeNumber(userBalance ?? 0) * normalizeNumber(tokenPrice ?? 0)
+    normalizeNumber(userBalance ?? 0) * normalizeNumber(poolTokenPrice ?? 0)
 
   const isLowerThanMinDeposit =
     poolBalanceInUsdNumber < minDepositUSD ||

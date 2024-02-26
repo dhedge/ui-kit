@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import { useConfigContextParams } from 'providers/config-provider'
 
 export const useHighSlippageCheck = () => {
-  const { depositQuoteDiffErrorThreshold = 3 } = useConfigContextParams()
+  const { depositQuoteDiffErrorThreshold } = useConfigContextParams()
   const [isHighSlippageConfirmed, setIsHighSlippageConfirmed] = useState(false)
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
   const slippageToBeUsed = slippage === 'auto' ? minSlippage ?? 0 : slippage
