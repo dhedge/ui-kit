@@ -48,11 +48,13 @@ export const useUserTokenBalance = ({
         address,
         abi: erc20Abi,
         functionName: 'balanceOf',
+        chainId: poolConfig.chainId,
         args: [account ?? AddressZero],
       },
       {
         address,
         abi: erc20Abi,
+        chainId: poolConfig.chainId,
         functionName: 'decimals',
       },
     ],

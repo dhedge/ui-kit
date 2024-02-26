@@ -1,5 +1,4 @@
 import { DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES, optimism } from 'const'
-import * as poolMulticallHooks from 'hooks/pool/multicall'
 import * as stateHooks from 'hooks/state'
 import { renderHook } from 'test-utils'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -7,14 +6,16 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import type { Address } from 'types'
 
 import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
+import { usePoolDynamicContractData } from './use-pool-dynamic-contract-data'
 import { usePoolTokenPrice } from './use-pool-token-price'
 
 vi.mock('hooks/state', () => ({
   useTradingPanelPoolFallbackData: vi.fn(),
+  useTradingPanelPoolConfigs: vi.fn(),
 }))
 
-vi.mock('hooks/pool/multicall', () => ({
-  usePoolDynamic: vi.fn(),
+vi.mock('./use-pool-dynamic-contract-data', () => ({
+  usePoolDynamicContractData: vi.fn(),
 }))
 vi.mock('./synthetixV3/use-pool-token-price-mutable', () => ({
   usePoolTokenPriceMutable: vi.fn(),
@@ -27,13 +28,15 @@ describe('usePoolTokenPrice', () => {
     const tokenPrice = BigInt(1)
     const poolData = { tokenPrice: '1' }
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ data: { tokenPrice } }) as ReturnType<
-          typeof poolMulticallHooks.usePoolDynamic
+        ({ data: { tokenPrice } }) as unknown as ReturnType<
+          typeof usePoolDynamicContractData
         >,
     )
-    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+    vi.mocked(
+      stateHooks.useTradingPanelPoolFallbackData,
+    ).mockImplementationOnce(
       () =>
         [poolData, vi.fn()] as unknown as ReturnType<
           typeof stateHooks.useTradingPanelPoolFallbackData
@@ -47,8 +50,8 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
-    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
+    expect(usePoolDynamicContractData).toHaveBeenCalledTimes(1)
+    expect(usePoolDynamicContractData).toHaveBeenCalledWith({
       address,
       chainId,
     })
@@ -57,18 +60,20 @@ describe('usePoolTokenPrice', () => {
   it('should call usePoolTokenPriceMutable hook for synthetix v3 vault', () => {
     const address = DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES[0] as Address
     const chainId = optimism.id
-    const tokenPrice = BigInt(123)
+    const tokenPrice = '123'
     const poolData = { tokenPrice: '1' }
     const formatter = (price: bigint) => price.toString()
 
-    vi.mocked(usePoolTokenPriceMutable).mockImplementation(() => tokenPrice)
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(usePoolTokenPriceMutable).mockImplementationOnce(() => tokenPrice)
+    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ data: { tokenPrice: undefined } }) as ReturnType<
-          typeof poolMulticallHooks.usePoolDynamic
+        ({ data: { tokenPrice: undefined } }) as unknown as ReturnType<
+          typeof usePoolDynamicContractData
         >,
     )
-    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+    vi.mocked(
+      stateHooks.useTradingPanelPoolFallbackData,
+    ).mockImplementationOnce(
       () =>
         [poolData, vi.fn()] as unknown as ReturnType<
           typeof stateHooks.useTradingPanelPoolFallbackData
@@ -84,8 +89,8 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
-    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
+    expect(usePoolDynamicContractData).toHaveBeenCalledTimes(1)
+    expect(usePoolDynamicContractData).toHaveBeenCalledWith({
       address,
       chainId,
     })
@@ -94,23 +99,25 @@ describe('usePoolTokenPrice', () => {
       chainId,
       disabled: false,
     })
-    expect(result.current).toEqual(formatter(tokenPrice))
+    expect(result.current).toEqual(formatter(BigInt(tokenPrice)))
   })
 
   it('should format contract token price', () => {
     const address = TEST_ADDRESS
     const chainId = optimism.id
-    const tokenPrice = BigInt(1)
+    const tokenPrice = '1'
     const poolData = { tokenPrice: '2' }
     const formatterMock = vi.fn()
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ data: { tokenPrice } }) as ReturnType<
-          typeof poolMulticallHooks.usePoolDynamic
-        >,
+        ({
+          tokenPrice,
+        }) as unknown as ReturnType<typeof usePoolDynamicContractData>,
     )
-    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+    vi.mocked(
+      stateHooks.useTradingPanelPoolFallbackData,
+    ).mockImplementationOnce(
       () =>
         [poolData, vi.fn()] as unknown as ReturnType<
           typeof stateHooks.useTradingPanelPoolFallbackData
@@ -125,7 +132,7 @@ describe('usePoolTokenPrice', () => {
       }),
     )
 
-    expect(formatterMock).toHaveBeenCalledWith(tokenPrice)
+    expect(formatterMock).toHaveBeenCalledWith(BigInt(tokenPrice))
   })
 
   it('should format fallback poolData.tokenPrice', () => {
@@ -135,13 +142,15 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: BigInt(1) }
     const formatterMock = vi.fn()
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ data: { tokenPrice } }) as ReturnType<
-          typeof poolMulticallHooks.usePoolDynamic
+        ({ data: { tokenPrice } }) as unknown as ReturnType<
+          typeof usePoolDynamicContractData
         >,
     )
-    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+    vi.mocked(
+      stateHooks.useTradingPanelPoolFallbackData,
+    ).mockImplementationOnce(
       () =>
         [poolData, vi.fn()] as unknown as ReturnType<
           typeof stateHooks.useTradingPanelPoolFallbackData

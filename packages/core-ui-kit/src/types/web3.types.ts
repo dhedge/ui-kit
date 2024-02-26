@@ -64,3 +64,14 @@ export interface PoolContractCallParams {
 export interface PoolContractAccountCallParams extends PoolContractCallParams {
   account: Address
 }
+
+export interface DynamicPoolContractData {
+  userBalance: string | undefined
+  tokenPrice: string | undefined
+  totalValue: string | undefined
+  totalSupply: string | undefined
+  isPrivateVault: boolean | undefined
+  performanceFee: string | undefined
+  streamingFee: string | undefined
+  entryFee: string | undefined
+}

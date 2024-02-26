@@ -1,9 +1,9 @@
-import { usePoolDynamic } from 'hooks/pool/multicall'
 import { useTradingPanelPoolFallbackData } from 'hooks/state'
 import type { Address, ChainId } from 'types/web3.types'
 import { formatEther, isSynthetixV3Vault } from 'utils'
 
 import { usePoolTokenPriceMutable } from './synthetixV3/use-pool-token-price-mutable'
+import { usePoolDynamicContractData } from './use-pool-dynamic-contract-data'
 
 interface PoolTokenPriceParams {
   address: Address
@@ -21,7 +21,7 @@ export const usePoolTokenPrice = ({
   const [poolData] = useTradingPanelPoolFallbackData()
   const isSynthetixVault = isSynthetixV3Vault(address)
 
-  const { data: { tokenPrice } = {} } = usePoolDynamic({ address, chainId })
+  const { tokenPrice } = usePoolDynamicContractData({ address, chainId })
 
   const mutableTokenPrice = usePoolTokenPriceMutable({
     address,
@@ -31,5 +31,5 @@ export const usePoolTokenPrice = ({
 
   const contractTokenPrice = isSynthetixVault ? mutableTokenPrice : tokenPrice
 
-  return formatter(contractTokenPrice ?? BigInt(poolData?.tokenPrice ?? '0'))
+  return formatter(BigInt(contractTokenPrice ?? poolData?.tokenPrice ?? '0'))
 }

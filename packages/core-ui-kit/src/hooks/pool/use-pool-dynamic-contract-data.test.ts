@@ -10,76 +10,34 @@ import { TEST_ADDRESS } from 'tests/mocks'
 
 import type { Address } from 'types'
 
-import {
-  getDataFromSummary,
-  usePoolDynamicContractData,
-} from './use-pool-dynamic-contract-data'
+import { usePoolDynamicContractData } from './use-pool-dynamic-contract-data'
 
 vi.mock('hooks/pool/multicall', () => ({
-  usePoolDynamic: vi.fn(),
+  usePoolsDynamic: vi.fn(),
+  usePoolManagerDynamic: vi.fn(),
 }))
 vi.mock('hooks/pool', () => ({
   useManagerLogicAddress: vi.fn(),
   useTotalFundValueMutable: vi.fn(),
 }))
 
-describe('getDataFromSummary', () => {
-  it('should parse summary data', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
-    expect(getDataFromSummary(summary)).toEqual({
-      isPrivate: summary.privatePool,
-      performanceFee: summary.performanceFeeNumerator.toString(),
-      streamingFee: summary.managerFeeNumerator.toString(),
-      totalSupply: summary.totalSupply.toString(),
-      totalValue: summary.totalFundValue.toString(),
-      entryFee: summary.entryFeeNumerator.toString(),
-    })
-  })
-})
-
 describe('usePoolDynamicContractData', () => {
-  it('should call getExitRemainingCooldown and getFundSummary methods on PoolLogicAbi', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
-    const exitCooldown = BigInt(1)
+  it('should call usePoolsDynamic and usePoolManagerDynamic', () => {
     const chainId = optimism.id
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
       () =>
         ({
-          data: {
-            getExitRemainingCooldown: exitCooldown,
-            getFundSummary: summary,
-          },
-          isFetched: true,
-        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
+          data: {},
+        }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
+    )
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
+      () =>
+        ({
+          data: {},
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
 
     renderHook(() =>
@@ -89,43 +47,46 @@ describe('usePoolDynamicContractData', () => {
       }),
     )
 
-    expect(vi.mocked(poolMulticallHooks.usePoolDynamic)).toHaveBeenCalledTimes(
+    expect(vi.mocked(poolMulticallHooks.usePoolsDynamic)).toHaveBeenCalledTimes(
       1,
     )
-    expect(vi.mocked(poolMulticallHooks.usePoolDynamic)).toHaveBeenCalledWith({
-      address: TEST_ADDRESS,
-      chainId,
-    })
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerDynamic),
+    ).toHaveBeenCalledTimes(1)
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerDynamic),
+    ).toHaveBeenCalledWith({ address: TEST_ADDRESS, chainId })
   })
 
   it('should resolve positive cooldown data', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
     const exitCooldown = BigInt(1)
     const chainId = optimism.id
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
       () =>
         ({
           data: {
-            getExitRemainingCooldown: exitCooldown,
-            getFundSummary: summary,
+            [TEST_ADDRESS]: {
+              userBalance: '1',
+              tokenPrice: '2',
+              totalValue: '3',
+              totalSupply: '4',
+              isPrivateVault: true,
+              performanceFee: '5',
+              streamingFee: '6',
+              entryFee: '7',
+            },
           },
-          isFetched: true,
-        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
+    )
+
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
+      () =>
+        ({
+          data: { getExitRemainingCooldown: exitCooldown },
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
 
     const { result } = renderHook(() =>
@@ -141,38 +102,36 @@ describe('usePoolDynamicContractData', () => {
         cooldownEndsInTime: formatDuration(
           intervalToDuration({ start: 0, end: Number(exitCooldown) * 1000 }),
         ),
+        userBalance: '1',
+        tokenPrice: '2',
+        totalValue: '3',
+        totalSupply: '4',
+        isPrivateVault: true,
+        performanceFee: '5',
+        streamingFee: '6',
+        entryFee: '7',
       }),
     )
   })
 
   it('should resolve zero cooldown data', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
     const exitCooldown = undefined
     const chainId = optimism.id
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
       () =>
         ({
-          data: {
-            getExitRemainingCooldown: exitCooldown,
-            getFundSummary: summary,
-          },
-          isFetched: true,
-        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
+          data: {},
+        }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
+    )
+
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
+      () =>
+        ({
+          data: { getExitRemainingCooldown: exitCooldown },
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
     )
 
     const { result } = renderHook(() =>
@@ -192,77 +151,7 @@ describe('usePoolDynamicContractData', () => {
     )
   })
 
-  it('should return parsed fund summary data for non synthetix v3 vault', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
-    const exitCooldown = undefined
-    const chainId = optimism.id
-    const isFetched = true
-
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
-      () =>
-        ({
-          data: {
-            getExitRemainingCooldown: exitCooldown,
-            getFundSummary: summary,
-          },
-          isFetched,
-        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
-    )
-
-    const { result } = renderHook(() =>
-      usePoolDynamicContractData({
-        address: TEST_ADDRESS,
-        chainId,
-      }),
-    )
-
-    expect(poolHooks.useManagerLogicAddress).toHaveBeenCalledWith({
-      address: TEST_ADDRESS,
-      chainId,
-    })
-
-    expect(poolHooks.useTotalFundValueMutable).toHaveBeenCalledWith(
-      expect.objectContaining({ disabled: true }),
-    )
-
-    expect(result.current).toEqual(
-      expect.objectContaining({
-        ...getDataFromSummary(summary),
-        isFetched,
-      }),
-    )
-  })
-
   it('should return parsed fund summary data for synthetix v3 vault', () => {
-    const summary = {
-      creationTime: BigInt(0),
-      exitFeeDenominator: BigInt(0),
-      exitFeeNumerator: BigInt(0),
-      manager: TEST_ADDRESS,
-      managerFeeDenominator: BigInt(0),
-      managerFeeNumerator: BigInt(0),
-      managerName: 'managerName',
-      name: 'name',
-      performanceFeeNumerator: BigInt(0),
-      privatePool: true,
-      totalFundValue: BigInt(0),
-      totalSupply: BigInt(0),
-      entryFeeNumerator: BigInt(0),
-    }
     const exitCooldown = undefined
     const chainId = optimism.id
     const isFetched = true
@@ -270,16 +159,34 @@ describe('usePoolDynamicContractData', () => {
     const managerLogicAddress = '0x123' as Address
     const customTotalFundValue = '1111111'
 
-    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
       () =>
         ({
           data: {
-            getExitRemainingCooldown: exitCooldown,
-            getFundSummary: summary,
+            [address]: {
+              userBalance: '1',
+              tokenPrice: '2',
+              totalValue: '3',
+              totalSupply: '4',
+              isPrivateVault: true,
+              performanceFee: '5',
+              streamingFee: '6',
+              entryFee: '7',
+            },
           },
-          isFetched,
-        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
     )
+
+    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
+      () =>
+        ({
+          data: { getExitRemainingCooldown: exitCooldown },
+          isFetched,
+        }) as unknown as ReturnType<
+          typeof poolMulticallHooks.usePoolManagerDynamic
+        >,
+    )
+
     vi.mocked(poolHooks.useManagerLogicAddress).mockImplementationOnce(
       () => managerLogicAddress,
     )
@@ -305,7 +212,6 @@ describe('usePoolDynamicContractData', () => {
 
     expect(result.current).toEqual(
       expect.objectContaining({
-        ...getDataFromSummary(summary),
         totalValue: customTotalFundValue,
         isFetched,
       }),

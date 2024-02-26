@@ -15,11 +15,11 @@ vi.mock('hooks/state', () => ({ useTradingPanelPoolConfig: vi.fn() }))
 
 describe('useShouldBeWhitelisted', () => {
   it('should not check whitelisting if vault is not private or deprecated', () => {
-    const isPrivate = false
+    const isPrivateVault = false
     const deprecated = false
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ isPrivate }) as ReturnType<
+        ({ isPrivateVault }) as ReturnType<
           typeof poolHooks.usePoolDynamicContractData
         >,
     )
@@ -53,12 +53,12 @@ describe('useShouldBeWhitelisted', () => {
   })
 
   it('should check whitelisting if vault is private', () => {
-    const isPrivate = true
+    const isPrivateVault = true
     const deprecated = false
     const chainId = optimism.id
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ isPrivate }) as ReturnType<
+        ({ isPrivateVault }) as ReturnType<
           typeof poolHooks.usePoolDynamicContractData
         >,
     )
@@ -87,12 +87,12 @@ describe('useShouldBeWhitelisted', () => {
   })
 
   it('should check whitelisting if vault is deprecated', () => {
-    const isPrivate = false
+    const isPrivateVault = false
     const deprecated = true
     const chainId = optimism.id
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ isPrivate }) as ReturnType<
+        ({ isPrivateVault }) as ReturnType<
           typeof poolHooks.usePoolDynamicContractData
         >,
     )
@@ -121,12 +121,12 @@ describe('useShouldBeWhitelisted', () => {
   })
 
   it('should check whitelisting if vault is deprecated and private', () => {
-    const isPrivate = true
+    const isPrivateVault = true
     const deprecated = true
     const chainId = optimism.id
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
       () =>
-        ({ isPrivate }) as ReturnType<
+        ({ isPrivateVault }) as ReturnType<
           typeof poolHooks.usePoolDynamicContractData
         >,
     )

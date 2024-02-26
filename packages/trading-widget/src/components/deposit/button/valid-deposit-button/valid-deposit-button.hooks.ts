@@ -1,13 +1,12 @@
 import {
+  usePoolDynamicContractData,
   usePoolManagerLogicData,
   usePoolTokenPrice,
-  usePoolsDynamic,
 } from '@dhedge/core-ui-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
-  useTradingPanelPoolConfigs,
 } from '@dhedge/core-ui-kit/hooks/state'
 import { useSynthetixV3OraclesUpdate } from '@dhedge/core-ui-kit/hooks/trading'
 import {
@@ -17,12 +16,10 @@ import {
 import { normalizeNumber } from '@dhedge/core-ui-kit/utils'
 
 import BigNumber from 'bignumber.js'
-import { useMemo } from 'react'
 
 import { useHighSlippageCheck } from 'hooks'
 
 export const useValidDepositButton = () => {
-  const configs = useTradingPanelPoolConfigs()
   const { address, chainId, deprecated, symbol } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
@@ -30,7 +27,10 @@ export const useValidDepositButton = () => {
   const { shouldBeWhitelisted, isAccountWhitelisted } = useShouldBeWhitelisted()
   const poolTokenPrice = usePoolTokenPrice({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
-  const { data: poolsMap } = usePoolsDynamic(configs)
+  const { userBalance, tokenPrice } = usePoolDynamicContractData({
+    address,
+    chainId,
+  })
   const { approve, canSpend } = useDepositAllowance()
   const { needToBeUpdated, updateOracles } = useSynthetixV3OraclesUpdate({
     disabled: !canSpend,
@@ -42,14 +42,8 @@ export const useValidDepositButton = () => {
     receiveToken.value || '0',
   ).multipliedBy(poolTokenPrice || '0')
 
-  const poolBalanceInUsdNumber = useMemo(() => {
-    const pool = poolsMap?.[address]
-
-    return (
-      normalizeNumber(pool?.userBalance ?? 0) *
-      normalizeNumber(pool?.tokenPrice ?? 0)
-    )
-  }, [poolsMap, address])
+  const poolBalanceInUsdNumber =
+    normalizeNumber(userBalance ?? 0) * normalizeNumber(tokenPrice ?? 0)
 
   const isLowerThanMinDeposit =
     poolBalanceInUsdNumber < minDepositUSD ||

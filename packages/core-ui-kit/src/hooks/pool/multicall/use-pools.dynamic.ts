@@ -1,7 +1,8 @@
 import chunk from 'lodash.chunk'
 
 import { PoolLogicAbi } from 'abi'
-import { AddressZero, DEFAULT_CHAIN_ID, DEFAULT_POLLING_INTERVAL } from 'const'
+import { AddressZero, DEFAULT_CHAIN_ID } from 'const'
+import { useTradingPanelPoolConfigs } from 'hooks/state'
 import {
   useAccount,
   useContractReadErrorLogging,
@@ -10,8 +11,8 @@ import {
 import type {
   Address,
   ContractFunctionReturnType,
+  DynamicPoolContractData,
   PoolContractAccountCallParams,
-  PoolContractCallParams,
 } from 'types'
 
 const getPoolContracts = ({
@@ -48,19 +49,7 @@ type GetFundSummary = ContractFunctionReturnType<
   'getFundSummary'
 >
 
-type PoolsMap = Record<
-  Address,
-  {
-    userBalance: string | undefined
-    tokenPrice: string | undefined
-    totalValue: string | undefined
-    totalSupply: string | undefined
-    isPrivateVault: boolean | undefined
-    performanceFee: string | undefined
-    streamingFee: string | undefined
-    entryFee: string | undefined
-  }
->
+type PoolsMap = Record<Address, DynamicPoolContractData>
 
 const getContracts = (pools: PoolContractAccountCallParams[]) =>
   pools.flatMap(getPoolContracts)
@@ -71,13 +60,13 @@ const POOL_CHUNK_SIZE = getPoolContracts({
   address: AddressZero,
 }).length
 
-export const usePoolsDynamic = (pools: PoolContractCallParams[]) => {
+export const usePoolsDynamic = () => {
   const { account = AddressZero } = useAccount()
+  const pools = useTradingPanelPoolConfigs()
 
   const result = useReadContracts({
     contracts: getContracts(pools.map((pool) => ({ ...pool, account }))),
     query: {
-      refetchInterval: DEFAULT_POLLING_INTERVAL,
       select: (data) =>
         chunk(data, POOL_CHUNK_SIZE).reduce<PoolsMap>(
           (acc, [balanceOf, tokenPrice, getFundSummary], index) => {

@@ -13,8 +13,8 @@ interface PoolFeesParams {
 
 export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
   const {
-    performanceFee,
-    streamingFee,
+    performanceFee = '0',
+    streamingFee = '0',
     entryFee: poolEntryFee,
   } = usePoolDynamicContractData({ address, chainId })
   const [easySwapperEntryFee] = useTradingPanelEntryFee()

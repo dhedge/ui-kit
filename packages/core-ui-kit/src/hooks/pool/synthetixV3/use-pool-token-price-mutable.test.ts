@@ -81,6 +81,6 @@ describe('usePoolTokenPriceMutable', () => {
       chainId,
       disabled: false,
     })
-    expect(result.current).toEqual(1000000000000000000n)
+    expect(result.current).toEqual('1000000000000000000')
   })
 })

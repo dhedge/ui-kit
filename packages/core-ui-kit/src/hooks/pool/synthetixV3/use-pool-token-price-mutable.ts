@@ -18,7 +18,7 @@ export const usePoolTokenPriceMutable = ({
   address,
   chainId,
   disabled,
-}: PoolTokenPriceParams): bigint | undefined => {
+}: PoolTokenPriceParams): string | undefined => {
   const { data: [poolManagerLogic, totalSupply] = [] } = useReadContracts({
     contracts: [
       {
@@ -62,11 +62,9 @@ export const usePoolTokenPriceMutable = ({
     : null
 
   return totalFundValueMutable && totalSupplyWithManagerFee
-    ? BigInt(
-        new BigNumber(totalFundValueMutable)
-          .dividedBy(totalSupplyWithManagerFee.toFixed())
-          .shiftedBy(DEFAULT_PRECISION)
-          .toFixed(0),
-      )
+    ? new BigNumber(totalFundValueMutable)
+        .dividedBy(totalSupplyWithManagerFee.toFixed())
+        .shiftedBy(DEFAULT_PRECISION)
+        .toFixed(0)
     : undefined
 }

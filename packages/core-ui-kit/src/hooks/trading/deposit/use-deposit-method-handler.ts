@@ -23,7 +23,7 @@ export const useDepositMethodHandler = (): [
       address,
       chainId,
     })
-  const { entryFee } = usePoolDynamicContractData({
+  const { entryFee = '0' } = usePoolDynamicContractData({
     address,
     chainId,
   })
