@@ -4,9 +4,13 @@ import type { FC, PropsWithChildren } from 'react'
 import { ActionButton, DisabledButtonWithPrompt } from 'components/common'
 import { ApproveButton } from 'components/widget/widget-buttons'
 
+import { useTradingTypeName } from 'hooks'
+
 import { useValidDepositButton } from './valid-deposit-button.hooks'
 
 export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
+  const name = useTradingTypeName('deposit')
+
   const {
     requiresMinDeposit,
     minDepositUSD,
@@ -40,7 +44,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
             : 'This vault is currently private'
         }
       >
-        Buy
+        {name}
       </DisabledButtonWithPrompt>
     )
   }

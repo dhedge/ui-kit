@@ -14,6 +14,7 @@ interface ConfigProviderParams {
   defaultDepositSlippage: number
   defaultDepositSlippageScale: number[]
   defaultWithdrawSlippageScale: number[]
+  defaultLockTime: string
   customLockTime: string
 }
 
@@ -42,6 +43,7 @@ export const DEFAULT_CONFIG_PARAMS: Required<
   defaultDepositSlippage: DEFAULT_DEPOSIT_SLIPPAGE,
   defaultDepositSlippageScale: DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+  defaultLockTime: formatDuration({ hours: 24 }),
   customLockTime: formatDuration({ minutes: 15 }),
 }
 

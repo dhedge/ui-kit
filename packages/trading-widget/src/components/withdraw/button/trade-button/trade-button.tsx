@@ -6,6 +6,7 @@ import { ActionButton } from 'components/common'
 
 export const WithdrawTradeButton: FC = () => {
   const withdraw = useWithdraw()
+  // TODO consider transforming label into param for mapping
   const { disabled, label, handleTrade } = useHandleTrade(withdraw)
 
   return (

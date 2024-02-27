@@ -3,9 +3,12 @@ import type { FC, PropsWithChildren } from 'react'
 import { ActionButton, DisabledButtonWithPrompt } from 'components/common'
 import { ApproveButton } from 'components/widget/widget-buttons'
 
+import { useTradingTypeName } from 'hooks'
+
 import { useValidWithdrawButton } from './valid-withdraw-button.hooks'
 
 export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
+  const name = useTradingTypeName('withdraw')
   const {
     requiresWithdrawalWindow,
     requiresEndOfCooldown,
@@ -26,7 +29,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
       <DisabledButtonWithPrompt
         promptText={`You can sell your ${sendTokenSymbol} tokens during withdrawal window period starting from ${withdrawalWindowStartTime}`}
       >
-        Sell
+        {name}
       </DisabledButtonWithPrompt>
     )
   }
@@ -36,7 +39,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
       <DisabledButtonWithPrompt
         promptText={`You can sell your ${sendTokenSymbol} tokens in ${cooldownEndsInTime}`}
       >
-        Sell
+        {name}
       </DisabledButtonWithPrompt>
     )
   }

@@ -1,9 +1,8 @@
+import { useExchangeRate } from '@dhedge/core-ui-kit/hooks/trading'
 import classNames from 'classnames'
-
 import type { FC } from 'react'
 
-import { Spinner } from 'components/common'
-
+import { Spinner } from 'components/common/spinner/spinner'
 import { THEME_TYPE } from 'types'
 
 interface ExchangeRateProps {
@@ -11,8 +10,7 @@ interface ExchangeRateProps {
 }
 
 export const ExchangeRate: FC<ExchangeRateProps> = ({ className }) => {
-  const value = 'exchange rate'
-  const isLoading = false
+  const { value, isLoading } = useExchangeRate()
 
   return (
     <div

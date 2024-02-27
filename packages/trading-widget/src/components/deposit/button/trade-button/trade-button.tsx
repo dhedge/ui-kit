@@ -6,6 +6,7 @@ import { ActionButton } from 'components/common'
 
 export const DepositTradeButton: FC = () => {
   const deposit = useDeposit()
+  // TODO consider transforming label into param for mapping
   const { disabled, label, handleTrade } = useHandleTrade(deposit)
 
   return (
