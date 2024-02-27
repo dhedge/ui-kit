@@ -1,43 +1,9 @@
 import { formatDuration, intervalToDuration } from 'date-fns'
 
 import { useManagerLogicAddress, useTotalFundValueMutable } from 'hooks/pool'
-import { usePoolDynamic } from 'hooks/pool/multicall'
+import { usePoolManagerDynamic, usePoolsDynamic } from 'hooks/pool/multicall'
 import type { Address, ChainId } from 'types/web3.types'
 import { isSynthetixV3Vault } from 'utils'
-
-interface FundSummary {
-  creationTime: bigint
-  exitFeeDenominator: bigint
-  exitFeeNumerator: bigint
-  manager: Address
-  managerFeeDenominator: bigint
-  managerFeeNumerator: bigint
-  managerName: string
-  name: string
-  performanceFeeNumerator: bigint
-  privatePool: boolean
-  totalFundValue: bigint
-  totalSupply: bigint
-  entryFeeNumerator: bigint
-}
-
-export const getDataFromSummary = (summary?: FundSummary) => {
-  const totalSupply = summary?.totalSupply?.toString() ?? ''
-  const totalValue = summary?.totalFundValue?.toString() ?? ''
-  const isPrivate = summary?.privatePool
-  const performanceFee = summary?.performanceFeeNumerator?.toString() ?? ''
-  const streamingFee = summary?.managerFeeNumerator?.toString() ?? ''
-  const entryFee = summary?.entryFeeNumerator?.toString() ?? ''
-
-  return {
-    isPrivate,
-    performanceFee,
-    streamingFee,
-    totalSupply,
-    totalValue,
-    entryFee,
-  }
-}
 
 interface PoolDynamicContractDataParams {
   address: Address
@@ -49,6 +15,12 @@ export const usePoolDynamicContractData = ({
   chainId,
 }: PoolDynamicContractDataParams) => {
   const isSynthetixVault = isSynthetixV3Vault(address)
+  const { data: { getExitRemainingCooldown: exitCooldown } = {}, isFetched } =
+    usePoolManagerDynamic({ address, chainId })
+  const { data: poolsMap } = usePoolsDynamic()
+  const dynamicPoolData = poolsMap?.[address]
+
+  // logic related to Synthetix V3 vault
   const managerLogicAddress = useManagerLogicAddress({
     address,
     chainId,
@@ -59,16 +31,6 @@ export const usePoolDynamicContractData = ({
     disabled: !isSynthetixVault,
   })
 
-  const {
-    data: {
-      getExitRemainingCooldown: exitCooldown,
-      getFundSummary: fundSummary,
-    } = {},
-    isFetched,
-  } = usePoolDynamic({ address, chainId })
-
-  const summary = getDataFromSummary(fundSummary)
-
   const cooldown = exitCooldown ? Number(exitCooldown) * 1000 : 0
   const cooldownEndsInTime = formatDuration(
     intervalToDuration({ start: 0, end: cooldown }),
@@ -77,10 +39,10 @@ export const usePoolDynamicContractData = ({
   return {
     cooldownActive: cooldown > 0,
     cooldownEndsInTime,
-    ...summary,
+    ...dynamicPoolData,
     totalValue: isSynthetixVault
-      ? totalFundValueMutable ?? summary.totalValue
-      : summary.totalValue,
+      ? totalFundValueMutable ?? dynamicPoolData?.totalValue
+      : dynamicPoolData?.totalValue,
     isFetched,
   }
 }

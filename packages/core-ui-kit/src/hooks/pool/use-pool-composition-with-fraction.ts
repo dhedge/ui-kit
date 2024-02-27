@@ -100,7 +100,7 @@ export const usePoolCompositionWithFraction = ({
     return formatPoolComposition({
       composition: poolComposition,
       vaultTokensAmount: shiftBy(new BigNumber(vaultTokensAmount || 0)),
-      totalSupply: totalSupply.toString(),
+      totalSupply,
     })
   }, [vaultTokensAmount, poolComposition, totalSupply])
 }
