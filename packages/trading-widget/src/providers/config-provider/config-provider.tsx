@@ -16,6 +16,8 @@ interface ConfigProviderParams {
   defaultWithdrawSlippageScale: number[]
   defaultLockTime: string
   customLockTime: string
+  stablePrecision: number
+  defaultPrecision: number
 }
 
 interface ConfigProviderActions {
@@ -45,6 +47,8 @@ export const DEFAULT_CONFIG_PARAMS: Required<
   defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
   defaultLockTime: formatDuration({ hours: 24 }),
   customLockTime: formatDuration({ minutes: 15 }),
+  stablePrecision: 3,
+  defaultPrecision: 6,
 }
 
 const defaultValue: ConfigProviderState = {

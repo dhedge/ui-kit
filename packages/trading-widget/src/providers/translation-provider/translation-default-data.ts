@@ -31,6 +31,14 @@ export type TranslationMap = {
   lengthenLockup: string
   deposit: string
   withdraw: string
+  yourBalance: string
+  max: string
+  allAssets: string
+  all: string
+  payWith: string
+  buyEstimated: string
+  sell: string
+  receiveEstimated: string
   [key: string]: string
 }
 
@@ -77,4 +85,12 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   lengthenLockup: 'Lengthen lockup to remove entry fee',
   deposit: 'Buy',
   withdraw: 'Sell',
+  yourBalance: 'Your Balance',
+  max: 'Max',
+  allAssets: 'All Assets',
+  all: 'All',
+  payWith: 'Pay with',
+  buyEstimated: 'Buy (estimated)',
+  sell: 'Sell',
+  receiveEstimated: 'Receive (estimated)',
 }
