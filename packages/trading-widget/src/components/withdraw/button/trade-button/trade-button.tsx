@@ -10,7 +10,7 @@ export const WithdrawTradeButton: FC = () => {
   const { disabled, label, handleTrade } = useHandleTrade(withdraw)
 
   return (
-    <ActionButton onClick={handleTrade} disabled={disabled} highlighted>
+    <ActionButton onClick={handleTrade} disabled={disabled}>
       {label}
     </ActionButton>
   )

@@ -10,7 +10,7 @@ export const DepositTradeButton: FC = () => {
   const { disabled, label, handleTrade } = useHandleTrade(deposit)
 
   return (
-    <ActionButton onClick={handleTrade} disabled={disabled} highlighted>
+    <ActionButton onClick={handleTrade} disabled={disabled}>
       {label}
     </ActionButton>
   )

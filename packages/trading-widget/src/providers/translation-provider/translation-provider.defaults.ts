@@ -1,46 +1,4 @@
-export type TranslationMap = {
-  slippageWarning: string
-  minSlippageWarning: string
-  highSlippageWarning: string
-  recommendedMinSlippage: string
-  projectedDailyEarningsTooltip: string
-  dailyEarnings: string
-  projectedYearlyEarningsTooltip: string
-  yearlyEarnings: string
-  fullReceiveDetails: string
-  tradeDetails: string
-  maxSlippage: string
-  minReceiveAmount: string
-  minReceived: string
-  estimatedMultiAssetFractions: string
-  infinite: string
-  tokenAllowance: string
-  entryFee: string
-  entryFeeExplanation: string
-  easySwapperEntryFee: string
-  amountToBeApproved: string
-  minDepositUsd: string
-  minDeposit: string
-  tokensLockTime: string
-  slippageTolerance: string
-  bypassEntryFee: string
-  entryFeeSwitchWarning: string
-  tokenAmountToApprove: string
-  auto: string
-  autoSlippageDescription: string
-  lengthenLockup: string
-  deposit: string
-  withdraw: string
-  yourBalance: string
-  max: string
-  allAssets: string
-  all: string
-  payWith: string
-  buyEstimated: string
-  sell: string
-  receiveEstimated: string
-  [key: string]: string
-}
+import type { TranslationMap } from './translation-provider.types'
 
 export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   slippageWarning:
@@ -93,4 +51,18 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   buyEstimated: 'Buy (estimated)',
   sell: 'Sell',
   receiveEstimated: 'Receive (estimated)',
+  confirmInWallet: 'Please confirm in wallet',
+  pending: 'Pending...',
+  approve: 'Approve',
+  connectWallet: 'Connect Wallet',
+  minimumPurchase: 'Minimum purchase is ${value}',
+  poolIsInactive:
+    '{poolSymbol} token is no longer active. Please withdraw from them.',
+  poolIsPrivate: 'This vault is currently private',
+  updateOracles: 'Update Oracles',
+  confirmMaxSlippage: 'Confirm {slippagePercentage}% max slippage',
+  withdrawalWindowDisabled:
+    'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
+  withdrawCooldown:
+    'You can sell your {tokenSymbol} tokens in {cooldownEndTime}',
 }

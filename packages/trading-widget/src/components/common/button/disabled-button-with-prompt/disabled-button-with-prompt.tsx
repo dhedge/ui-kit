@@ -22,7 +22,7 @@ export const DisabledButtonWithPrompt: FC<
         <div className="dtw-py-1 dtw-text-center dtw-text-xs">{promptText}</div>
       </div>
       <InfoTooltip text={promptText}>
-        <ActionButton disabled highlighted>
+        <ActionButton disabled>
           <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-2">
             <LockClosedIcon className="dtw-h-5" />
             <span>{children}</span>

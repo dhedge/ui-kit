@@ -6,9 +6,12 @@ import { ApproveButton } from 'components/widget/widget-buttons'
 
 import { useTradingTypeName } from 'hooks'
 
+import { useTranslationContext } from 'providers/translation-provider'
+
 import { useValidDepositButton } from './valid-deposit-button.hooks'
 
 export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
+  const t = useTranslationContext()
   const name = useTradingTypeName('deposit')
 
   const {
@@ -29,9 +32,12 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresMinDeposit) {
     return (
-      <ActionButton disabled highlighted>{`Minimum purchase is $${commify(
-        minDepositUSD.toString() ?? '',
-      )}`}</ActionButton>
+      <ActionButton disabled>
+        {t.minimumPurchase.replace(
+          '{value}',
+          commify(minDepositUSD.toString() ?? ''),
+        )}
+      </ActionButton>
     )
   }
 
@@ -40,8 +46,8 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
       <DisabledButtonWithPrompt
         promptText={
           deprecated
-            ? `${poolSymbol} token is no longer active. Please withdraw from them.`
-            : 'This vault is currently private'
+            ? t.poolIsInactive.replace('{poolSymbol}', poolSymbol)
+            : t.poolIsPrivate
         }
       >
         {name}
@@ -55,16 +61,17 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresUpdate) {
     return (
-      <ActionButton onClick={updateOracles} highlighted>
-        Update Oracles
-      </ActionButton>
+      <ActionButton onClick={updateOracles}>{t.updateOracles}</ActionButton>
     )
   }
 
   if (requiresHighSlippageConfirm) {
     return (
-      <ActionButton onClick={confirmHighSlippage} highlighted>
-        {`Confirm ${Math.abs(slippageToBeUsed)}% max slippage`}
+      <ActionButton onClick={confirmHighSlippage}>
+        {t.confirmMaxSlippage.replace(
+          '{slippagePercentage}',
+          `${Math.abs(slippageToBeUsed)}`,
+        )}
       </ActionButton>
     )
   }

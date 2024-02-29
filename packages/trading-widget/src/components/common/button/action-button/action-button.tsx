@@ -31,7 +31,7 @@ const HIGHLIGHTED_CLASSNAMES = [
 export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
   children,
   onClick,
-  highlighted = false,
+  highlighted = true,
   disabled = false,
   className,
   type,
@@ -47,6 +47,7 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
       'disabled:dtw-opacity-50',
       'dtw-py-2',
       'dtw-px-5',
+      'dtw-w-full',
       {
         [HIGHLIGHTED_CLASSNAMES.join(' ')]: highlighted,
         [NON_HIGHLIGHTED_CLASSNAMES.join(' ')]: !highlighted,

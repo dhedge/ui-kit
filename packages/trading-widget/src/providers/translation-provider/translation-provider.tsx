@@ -1,12 +1,8 @@
 import type { FC, PropsWithChildren } from 'react'
 import { createContext, useMemo } from 'react'
 
-import type { TranslationMap } from './translation-default-data'
-import { DEFAULT_TRANSLATION_DATA } from './translation-default-data'
-
-export interface TranslationProviderProps {
-  config?: Partial<TranslationMap>
-}
+import { DEFAULT_TRANSLATION_DATA } from './translation-provider.defaults'
+import type { TranslationProviderProps } from './translation-provider.types'
 
 export const TranslationProviderContext = createContext<
   Required<TranslationProviderProps['config']>

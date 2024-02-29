@@ -15,3 +15,4 @@ export { MaxBalanceButton } from './button/max-balance-button/max-balance-button
 export { Skeleton } from './skeleton/skeleton'
 export { TokenIcon } from './icon/token-icon/token-icon'
 export { TokenBadge } from './badge/token-badge/token-badge'
+export { PendingOverlay } from './overlay/pending-overlay/pending-overlay'

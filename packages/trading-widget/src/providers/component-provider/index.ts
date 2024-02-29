@@ -1,2 +1,3 @@
 export { useComponentContext } from './component-provider.hooks'
-export type { ImageProps } from './component-provider'
+export { ComponentProvider } from './component-provider'
+export * from './component-provider.types'
