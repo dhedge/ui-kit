@@ -8,12 +8,12 @@ export const SYNTHETIX_V3_PERIOD = {
 export type SynthetixV3PeriodType =
   (typeof SYNTHETIX_V3_PERIOD)[keyof typeof SYNTHETIX_V3_PERIOD]
 
-interface DayParams {
+export interface DayParams {
   dayOfWeek: number
   hour: number
 }
 
-interface WeekPeriod {
+export interface WeekPeriod {
   start: DayParams
   end: DayParams
 }
