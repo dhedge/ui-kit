@@ -37,11 +37,11 @@ export const useValidDepositButton = () => {
     receiveToken.value || '0',
   ).multipliedBy(poolTokenPrice || '0')
 
-  const isLowerThanMinDeposit =
-    (poolBalance && poolBalance.balanceInUsdNumber < minDepositUSD) ||
-    depositValueInUsd.lt(minDepositUSD)
   const requiresMinDeposit =
-    receiveToken.value === '0' ? false : isLowerThanMinDeposit
+    (poolBalance && poolBalance.balanceInUsdNumber > minDepositUSD) ||
+    receiveToken.value === '0'
+      ? false
+      : depositValueInUsd.lt(minDepositUSD)
 
   return {
     requiresMinDeposit,
