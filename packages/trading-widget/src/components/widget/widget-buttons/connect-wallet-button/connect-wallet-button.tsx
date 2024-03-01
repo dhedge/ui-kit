@@ -14,7 +14,7 @@ export const ConnectWalletButton: FC = () => {
   return (
     <ActionButton
       onClick={onConnect}
-      className="dtw-whitespace-nowrap dtw-text-sm tw-tw-w-full"
+      className="dtw-whitespace-nowrap dtw-text-sm"
     >
       <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-2">
         <span>{t.connectWallet}</span>

@@ -58,7 +58,6 @@ export const useUserStakedPools = ():
     })),
     query: {
       enabled: !!stakeIds?.length,
-      staleTime: 60_000,
     },
   })
   useContractReadsErrorLogging(data)
