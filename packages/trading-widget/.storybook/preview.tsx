@@ -13,8 +13,6 @@ import type {
 } from '@dhedge/core-ui-kit/types'
 import type { Preview } from '@storybook/react'
 
-import { Providers } from '../src/providers'
-
 const USDY_OPTIMISM: PoolConfig = {
   chainId: optimism.id,
   symbol: 'USDy',
@@ -93,9 +91,7 @@ const preview: Preview = {
         initialState={DEMO_INITIAL_STATE}
         actions={DEMO_ACTIONS}
       >
-        <Providers>
-          <Story />
-        </Providers>
+        <Story />
       </TradingPanelProvider>
     ),
   ],

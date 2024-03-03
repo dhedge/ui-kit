@@ -1,2 +1,1 @@
-export { Widget } from './components'
-export { Providers } from './providers'
+export { TradingWidget } from './components'
