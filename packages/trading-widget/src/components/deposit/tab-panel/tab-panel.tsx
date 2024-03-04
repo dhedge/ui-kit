@@ -12,14 +12,14 @@ import { ValidDepositButton } from '../button/valid-deposit-button/valid-deposit
 import { DepositInputGroup } from '../input-group/input-group'
 import { DepositMeta } from '../meta/meta'
 
-export const DepositTabPanel: FC = () => {
+export const DepositTab: FC = () => {
   useDepositTabPanel()
 
   const { isGeoBlocked } = useConfigContextParams()
   const { GeoBlockAlert, ExtraActionButton } = useComponentContext()
 
   return (
-    <Layout.Panel>
+    <>
       <Layout.Balance>
         <DepositBalance />
       </Layout.Balance>
@@ -40,6 +40,12 @@ export const DepositTabPanel: FC = () => {
           </>
         )}
       </DepositMeta>
-    </Layout.Panel>
+    </>
   )
 }
+
+export const DepositTabPanel: FC = () => (
+  <Layout.Panel>
+    <DepositTab />
+  </Layout.Panel>
+)

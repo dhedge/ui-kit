@@ -11,10 +11,10 @@ import { ValidWithdrawButton } from '../button/valid-withdraw-button/valid-withd
 import { WithdrawInputGroup } from '../input-group/input-group'
 import { WithdrawMeta } from '../meta/meta'
 
-export const WithdrawTabPanel: FC = () => {
+const WithdrawTab: FC = () => {
   useWithdrawTabPanel()
   return (
-    <Layout.Panel>
+    <>
       <Layout.Balance>
         <WithdrawBalance />
       </Layout.Balance>
@@ -28,6 +28,12 @@ export const WithdrawTabPanel: FC = () => {
           </ValidWithdrawButton>
         </ValidNetworkButton>
       </WithdrawMeta>
-    </Layout.Panel>
+    </>
   )
 }
+
+export const WithdrawTabPanel: FC = () => (
+  <Layout.Panel>
+    <WithdrawTab />
+  </Layout.Panel>
+)
