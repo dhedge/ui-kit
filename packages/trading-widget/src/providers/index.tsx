@@ -1,13 +1,13 @@
 import type { FC, PropsWithChildren } from 'react'
 
-import type { ComponentProviderProps } from './component-provider/component-provider'
-import { ComponentProvider } from './component-provider/component-provider'
-import type { ConfigProviderProps } from './config-provider/config-provider'
-import { ConfigProvider } from './config-provider/config-provider'
-import type { ThemeProviderProps } from './theme-provider/theme-provider'
-import { ThemeProvider } from './theme-provider/theme-provider'
-import type { TranslationProviderProps } from './translation-provider/translation-provider'
-import { TranslationProvider } from './translation-provider/translation-provider'
+import type { ComponentProviderProps } from './component-provider'
+import { ComponentProvider } from './component-provider'
+import type { ConfigProviderProps } from './config-provider'
+import { ConfigProvider } from './config-provider'
+import type { ThemeProviderProps } from './theme-provider'
+import { ThemeProvider } from './theme-provider'
+import type { TranslationProviderProps } from './translation-provider'
+import { TranslationProvider } from './translation-provider'
 
 export interface ProvidersProps {
   theme?: ThemeProviderProps['config']

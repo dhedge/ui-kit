@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 
 import type { TransactionDisclosureItemProps } from 'components/common'
 import { Spinner, TransactionOverviewDisclosure } from 'components/common'
+import { ExchangeRate } from 'components/widget/widget-meta'
 import { useTranslationContext } from 'providers/translation-provider'
 
 import { THEME_TYPE } from 'types'
@@ -116,6 +117,7 @@ export const DepositTransactionOverviewDisclosure = () => {
       staticItems={staticItems}
       collapseItems={collapseItems}
       themeType={themeType}
+      buttonItemChildren={<ExchangeRate />}
     >
       <p className="dtw-py-1">
         {t.tokensLockTime.replace('{lockTime}', lockTime)}

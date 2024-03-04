@@ -10,9 +10,9 @@ import type { ThemeType } from 'types'
 
 import type { TransactionDisclosureItemProps } from './transaction-disclosure-item/transaction-disclosure-item'
 import { TransactionDisclosureItem } from './transaction-disclosure-item/transaction-disclosure-item'
-import { ExchangeRate } from '../exchange-rate/exchange-rate'
 
 interface TransactionOverviewDisclosureProps {
+  buttonItemChildren?: TransactionDisclosureItemProps['children']
   staticItems?: TransactionDisclosureItemProps[]
   collapseItems?: TransactionDisclosureItemProps[]
   themeType?: ThemeType
@@ -25,6 +25,7 @@ export const TransactionOverviewDisclosure: FC<
   staticItems,
   collapseItems,
   themeType = THEME_TYPE.DEFAULT,
+  buttonItemChildren,
 }) => {
   const t = useTranslationContext()
 
@@ -43,7 +44,7 @@ export const TransactionOverviewDisclosure: FC<
                 value=""
                 type={themeType}
               >
-                <ExchangeRate />
+                {buttonItemChildren}
                 <ChevronDownIcon
                   className={classNames(
                     'dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))] dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]',

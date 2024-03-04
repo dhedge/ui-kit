@@ -7,11 +7,11 @@ import { SwitchNetworkButton } from '../switch-network-button/switch-network-but
 export const ValidNetworkButton: FC<PropsWithChildren> = ({ children }) => {
   const { isDisconnected, isWrongNetwork } = useValidNetworkButton()
 
-  if (!isDisconnected) {
+  if (isDisconnected) {
     return <ConnectWalletButton />
   }
 
-  if (!isWrongNetwork) {
+  if (isWrongNetwork) {
     return <SwitchNetworkButton />
   }
 

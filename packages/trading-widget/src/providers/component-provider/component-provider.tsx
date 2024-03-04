@@ -1,13 +1,7 @@
-import type { ComponentType, FC, PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 import { createContext } from 'react'
 
-export interface ComponentProviderProps {
-  config?: {
-    GeoBlockAlert?: ComponentType
-    DepositMetaInfo?: ComponentType
-    WithdrawMetaInfo?: ComponentType
-  }
-}
+import type { ComponentProviderProps } from './component-provider.types'
 
 export const ComponentProviderContext = createContext<
   Partial<ComponentProviderProps['config']>

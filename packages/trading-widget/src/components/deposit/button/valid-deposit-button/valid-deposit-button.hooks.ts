@@ -1,5 +1,4 @@
 import {
-  usePoolDynamicContractData,
   usePoolManagerLogicData,
   usePoolTokenPrice,
 } from '@dhedge/core-ui-kit/hooks/pool'
@@ -13,11 +12,10 @@ import {
   useDepositAllowance,
   useShouldBeWhitelisted,
 } from '@dhedge/core-ui-kit/hooks/trading/deposit'
-import { normalizeNumber } from '@dhedge/core-ui-kit/utils'
 
 import BigNumber from 'bignumber.js'
 
-import { useHighSlippageCheck } from 'hooks'
+import { useHighSlippageCheck, useUserVaultBalance } from 'hooks'
 
 export const useValidDepositButton = () => {
   const { address, chainId, deprecated, symbol } = useTradingPanelPoolConfig()
@@ -27,10 +25,7 @@ export const useValidDepositButton = () => {
   const { shouldBeWhitelisted, isAccountWhitelisted } = useShouldBeWhitelisted()
   const poolTokenPrice = usePoolTokenPrice({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
-  const { userBalance } = usePoolDynamicContractData({
-    address,
-    chainId,
-  })
+  const poolBalance = useUserVaultBalance(address)
   const { approve, canSpend } = useDepositAllowance()
   const { needToBeUpdated, updateOracles } = useSynthetixV3OraclesUpdate({
     disabled: !canSpend,
@@ -42,16 +37,14 @@ export const useValidDepositButton = () => {
     receiveToken.value || '0',
   ).multipliedBy(poolTokenPrice || '0')
 
-  const poolBalanceInUsdNumber =
-    normalizeNumber(userBalance ?? 0) * normalizeNumber(poolTokenPrice ?? 0)
-
-  const isLowerThanMinDeposit =
-    poolBalanceInUsdNumber < minDepositUSD ||
-    depositValueInUsd.lt(minDepositUSD)
+  const requiresMinDeposit =
+    (poolBalance && poolBalance.balanceInUsdNumber > minDepositUSD) ||
+    receiveToken.value === '0'
+      ? false
+      : depositValueInUsd.lt(minDepositUSD)
 
   return {
-    requiresMinDeposit:
-      receiveToken.value === '0' ? false : isLowerThanMinDeposit,
+    requiresMinDeposit,
     requiresWhitelist: shouldBeWhitelisted && !isAccountWhitelisted,
     requiresApprove: !canSpend,
     requiresUpdate: needToBeUpdated && !!sendToken.value,

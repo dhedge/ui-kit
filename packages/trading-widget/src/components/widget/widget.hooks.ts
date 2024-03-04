@@ -1,11 +1,15 @@
+import {
+  useGeneralTradingPanelHandlers,
+  useOnTradingTypeChange,
+} from '@dhedge/core-ui-kit/hooks/component'
+import {
+  useTradingPanelPoolConfig,
+  useTradingPanelType,
+} from '@dhedge/core-ui-kit/hooks/state'
 import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 import { TABS } from 'constants/tab'
-
-export interface WidgetProps {
-  initialType?: TradingPanelType
-}
 
 const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, TradingPanelType>>(
   (acc, type, index) => {
@@ -15,17 +19,26 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, TradingPanelType>>(
   {},
 )
 
-export const useWidget = ({ initialType = TABS[0] }: WidgetProps) => {
-  const [type, setTradingType] = useState<TradingPanelType>(initialType)
+export const useWidget = () => {
+  const [type] = useTradingPanelType()
+  const poolConfig = useTradingPanelPoolConfig()
+
+  useGeneralTradingPanelHandlers()
+
+  const onTradingTypeChange = useOnTradingTypeChange()
 
   const onTabChange = (index: number) => {
-    const tab = TRADING_TAB_INDEX_MAP[index]
+    const newType = TRADING_TAB_INDEX_MAP[index]
 
-    if (tab) {
-      setTradingType(tab)
+    if (newType) {
+      onTradingTypeChange(newType)
     }
   }
 
+  useEffect(() => {
+    onTradingTypeChange('deposit') // Reset to "Deposit" tab on product change to set correct input tokens
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [poolConfig.address])
   return {
     type,
     onTabChange,

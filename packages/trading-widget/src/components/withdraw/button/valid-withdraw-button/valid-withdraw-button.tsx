@@ -3,9 +3,15 @@ import type { FC, PropsWithChildren } from 'react'
 import { ActionButton, DisabledButtonWithPrompt } from 'components/common'
 import { ApproveButton } from 'components/widget/widget-buttons'
 
+import { useTradingTypeName } from 'hooks'
+
+import { useTranslationContext } from 'providers/translation-provider'
+
 import { useValidWithdrawButton } from './valid-withdraw-button.hooks'
 
 export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
+  const t = useTranslationContext()
+  const name = useTradingTypeName('withdraw')
   const {
     requiresWithdrawalWindow,
     requiresEndOfCooldown,
@@ -24,9 +30,11 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
   if (requiresWithdrawalWindow) {
     return (
       <DisabledButtonWithPrompt
-        promptText={`You can sell your ${sendTokenSymbol} tokens during withdrawal window period starting from ${withdrawalWindowStartTime}`}
+        promptText={t.withdrawalWindowDisabled
+          .replace('{tokenSymbol}', sendTokenSymbol)
+          .replace('{startTime}', withdrawalWindowStartTime)}
       >
-        Sell
+        {name}
       </DisabledButtonWithPrompt>
     )
   }
@@ -34,9 +42,11 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
   if (requiresEndOfCooldown) {
     return (
       <DisabledButtonWithPrompt
-        promptText={`You can sell your ${sendTokenSymbol} tokens in ${cooldownEndsInTime}`}
+        promptText={t.withdrawCooldown
+          .replace('{tokenSymbol}', sendTokenSymbol)
+          .replace('{cooldownEndTime}', cooldownEndsInTime)}
       >
-        Sell
+        {name}
       </DisabledButtonWithPrompt>
     )
   }
@@ -47,17 +57,18 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresHighSlippageConfirm) {
     return (
-      <ActionButton onClick={confirmHighSlippage} highlighted>
-        {`Confirm ${Math.abs(slippageToBeUsed)}% max slippage`}
+      <ActionButton onClick={confirmHighSlippage}>
+        {t.confirmMaxSlippage.replace(
+          '{slippagePercentage}',
+          `${Math.abs(slippageToBeUsed)}`,
+        )}
       </ActionButton>
     )
   }
 
   if (requiresUpdate) {
     return (
-      <ActionButton onClick={updateOracles} highlighted>
-        Update Oracles
-      </ActionButton>
+      <ActionButton onClick={updateOracles}>{t.updateOracles}</ActionButton>
     )
   }
 

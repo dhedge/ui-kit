@@ -13,7 +13,7 @@ export const ApproveButton: FC<ApproveButtonProps> = ({
   const { disabled, isLoading } = useApproveButton()
 
   return (
-    <ActionButton disabled={disabled} onClick={onApprove} highlighted>
+    <ActionButton disabled={disabled} onClick={onApprove}>
       <div className="dtw-flex dtw-items-center dtw-justify-center">
         <span>Approve {symbol}</span>
         {isLoading && (
