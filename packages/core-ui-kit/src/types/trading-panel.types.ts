@@ -57,3 +57,9 @@ export interface TokenSelectorPayload {
 }
 
 export type ApyCurrency = 'USD' | 'ETH'
+
+export interface UseProjectedEarningsResult {
+  dailyEarnings: string | null
+  yearlyEarnings: string | null
+  showEarnings: boolean
+}

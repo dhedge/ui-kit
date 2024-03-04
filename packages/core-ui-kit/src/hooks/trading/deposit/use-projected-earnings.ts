@@ -7,14 +7,8 @@ import {
 } from 'hooks/state'
 import { useAssetPrice } from 'hooks/trading'
 
-import type { ApyCurrency } from 'types'
+import type { ApyCurrency, UseProjectedEarningsResult } from 'types'
 import { formatByCurrency, isZeroAddress } from 'utils'
-
-interface UseProjectedEarningsResult {
-  dailyEarnings: string | null
-  yearlyEarnings: string | null
-  showEarnings: boolean
-}
 
 const USD_PRICE = 1
 
