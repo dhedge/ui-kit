@@ -50,6 +50,13 @@ export type TranslationMap = {
   confirmMaxSlippage: string
   withdrawalWindowDisabled: string
   withdrawCooldown: string
+  termOfUseDepositTitle: string
+  termOfUseDepositAssetSlippage: string
+  termOfUseDepositBugs: string
+  termOfUseDepositDowntime: string
+  termOfUseDepositAuditRisk: string
+  termOfUseDepositAccept: string
+  back: string
   [key: string]: string
 }
 

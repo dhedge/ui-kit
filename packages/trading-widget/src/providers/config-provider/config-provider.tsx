@@ -16,6 +16,7 @@ const defaultValue: ConfigProviderState = {
   },
   actions: {
     onConnect: () => {},
+    onAcceptTermsOfUse: () => {},
   },
 }
 

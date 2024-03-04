@@ -26,6 +26,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   stablePrecision: 3,
   defaultPrecision: 6,
   stakingChainId: optimism.id,
+  termsOfUseAccepted: true,
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {
@@ -36,7 +37,14 @@ export const useConfigProviderDefaultActions = (): ConfigProviderActions => {
     [connect],
   )
 
+  const onAcceptTermsOfUse = useCallback(() => {
+    console.log(
+      'terms of use were accepted. Assume `termsOfUseAccepted` config value switch to true',
+    )
+  }, [])
+
   return {
     onConnect,
+    onAcceptTermsOfUse,
   }
 }

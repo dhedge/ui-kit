@@ -17,5 +17,6 @@ export interface ComponentProviderProps {
     ExtraActionButton?: ComponentType
     Image?: ComponentType<ImageProps>
     LogoSpinner?: ComponentType<SVGProps<SVGElement>>
+    DepositTermsOfUse?: ComponentType
   }
 }

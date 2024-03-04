@@ -65,4 +65,14 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
     'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
   withdrawCooldown:
     'You can sell your {tokenSymbol} tokens in {cooldownEndTime}',
+  termOfUseDepositTitle: 'Please know the following before depositing',
+  termOfUseDepositAssetSlippage:
+    'When exiting, investors receive single asset or the underlying vault assets. Withdraw slippage can be customized in withdraw settings',
+  termOfUseDepositBugs: 'There may be interface bugs on the platform',
+  termOfUseDepositDowntime:
+    'There may be interface downtime (planned and unplanned)',
+  termOfUseDepositAuditRisk:
+    'Smart contracts are audited but a risk is still present',
+  termOfUseDepositAccept: 'Accept & Deposit',
+  back: 'Back',
 }

@@ -27,7 +27,7 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
         />
       </Popover.Button>
 
-      <Popover.Panel className="dtw-absolute dtw-right-2 dtw-z-10 dtw-w-full dtw-max-w-xs">
+      <Popover.Panel className="dtw-absolute dtw-z-10 dtw-w-full dtw-max-w-xs dtw-top-12 dtw-right-3.5">
         <div className="dtw-rounded-[var(--panel-radius)] dtw-bg-[var(--panel-popup-bg,var(--panel-secondary-color))] dtw-p-4 dtw-ring-1 dtw-ring-[var(--panel-popup-border-color,var(--panel-secondary-content-color))] dtw-flex dtw-flex-col dtw-gap-1.5">
           {children}
         </div>
