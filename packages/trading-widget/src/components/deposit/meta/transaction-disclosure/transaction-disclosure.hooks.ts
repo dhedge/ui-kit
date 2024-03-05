@@ -55,7 +55,7 @@ export const useDepositTransactionDisclosure = () => {
 
   const getMinReceiveText = () => {
     if (isAutoSlippage) {
-      return `${new BigNumber(receiveToken.value ?? 0).toFixed(
+      return `${new BigNumber(receiveToken.value || 0).toFixed(
         4,
       )} ${receiveToken.symbol.toUpperCase()}`
     }

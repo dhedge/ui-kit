@@ -1,16 +1,14 @@
-import { useHandleTrade } from '@dhedge/core-ui-kit/hooks/trading'
-import { useDeposit } from '@dhedge/core-ui-kit/hooks/trading/deposit'
 import type { FC } from 'react'
 
 import { ActionButton } from 'components/common'
 
+import { useDepositTradeButton } from './trade-button.hooks'
+
 export const DepositTradeButton: FC = () => {
-  const deposit = useDeposit()
-  // TODO consider transforming label into param for mapping
-  const { disabled, label, handleTrade } = useHandleTrade(deposit)
+  const { handleClick, label, disabled } = useDepositTradeButton()
 
   return (
-    <ActionButton onClick={handleTrade} disabled={disabled}>
+    <ActionButton onClick={handleClick} disabled={disabled}>
       {label}
     </ActionButton>
   )

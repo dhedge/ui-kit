@@ -12,10 +12,12 @@ export interface ConfigProviderParams {
   stablePrecision: number
   defaultPrecision: number
   stakingChainId: ChainId
+  termsOfUseAccepted: boolean
 }
 
 export interface ConfigProviderActions {
   onConnect: () => void
+  onAcceptTermsOfUse: () => void
 }
 
 export interface ConfigProviderProps {

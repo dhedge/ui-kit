@@ -4,6 +4,7 @@ import type { ComponentProviderProps } from './component-provider'
 import { ComponentProvider } from './component-provider'
 import type { ConfigProviderProps } from './config-provider'
 import { ConfigProvider } from './config-provider'
+import { OverlayProvider } from './overlay-provider'
 import type { ThemeProviderProps } from './theme-provider'
 import { ThemeProvider } from './theme-provider'
 import type { TranslationProviderProps } from './translation-provider'
@@ -26,7 +27,9 @@ export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
   <TranslationProvider config={translation}>
     <ThemeProvider config={theme}>
       <ConfigProvider config={config}>
-        <ComponentProvider config={components}>{children}</ComponentProvider>
+        <ComponentProvider config={components}>
+          <OverlayProvider>{children}</OverlayProvider>
+        </ComponentProvider>
       </ConfigProvider>
     </ThemeProvider>
   </TranslationProvider>
