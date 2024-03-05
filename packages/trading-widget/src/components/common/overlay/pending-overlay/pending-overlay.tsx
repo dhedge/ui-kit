@@ -12,7 +12,7 @@ export const PendingOverlay: FC<PendingOverlayProps> = ({ title, text }) => {
   const { LogoSpinner = Spinner } = useComponentContext()
 
   return (
-    <Layout.Overlay>
+    <Layout.Overlay transparent>
       <div className="dtw-flex dtw-flex-col dtw-items-center dtw-rounded-xl dtw-px-5 dtw-py-5">
         {title && (
           <span className="dtw-mb-8 dtw-font-medium dtw-text-themeGray-600">

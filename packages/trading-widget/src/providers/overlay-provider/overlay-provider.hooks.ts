@@ -1,6 +1,9 @@
 import type { Dispatch } from 'react'
 import { createContext, useContext, useReducer } from 'react'
 
+import type { OverlayProps } from 'types'
+import { OVERLAY } from 'types'
+
 import type {
   OverlayProviderAction,
   OverlayProviderState,
@@ -26,14 +29,18 @@ const reducer = (
   }
 }
 
-export const useOverlayProvider = () =>
-  useReducer(reducer, {
-    TERMS_OF_USE: { isOpen: false },
-  })
+const defaultState: OverlayProviderState = Object.values(OVERLAY).reduce(
+  (acc, name) => ({
+    ...acc,
+    [name]: { isOpen: false },
+  }),
+  {} as OverlayProviderState,
+)
 
-export const OverlayProviderStateContext = createContext<OverlayProviderState>({
-  TERMS_OF_USE: { isOpen: false },
-})
+export const useOverlayProvider = () => useReducer(reducer, defaultState)
+
+export const OverlayProviderStateContext =
+  createContext<OverlayProviderState>(defaultState)
 
 export const OverlayProviderDispatchContext = createContext<
   Dispatch<OverlayProviderAction>
@@ -57,4 +64,25 @@ export const useOverlayDispatchContext = () => {
   }
 
   return context
+}
+
+export const useOverlayHandlers = ({ type }: OverlayProps) => {
+  const state = useOverlayStateContext()
+  const dispatch = useOverlayDispatchContext()
+
+  const handleClose = () => {
+    dispatch({ type: 'MERGE_OVERLAY', payload: { type, isOpen: false } })
+  }
+
+  const { onConfirm } = state[type]
+
+  const handleConfirm = () => {
+    onConfirm?.()
+    handleClose()
+  }
+
+  return {
+    handleReject: handleClose,
+    handleConfirm,
+  }
 }

@@ -7,6 +7,7 @@ import { TABS } from 'constants/tab'
 import { OVERLAY } from 'types'
 
 import {
+  HighSlippageOverlay,
   OverlaySwitch,
   PendingApprovalOverlay,
   TermsOfUseOverlay,
@@ -33,6 +34,7 @@ export const Widget: FC = () => {
       </Tab.Group>
       <OverlaySwitch>
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
+        <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />
       </OverlaySwitch>
       <PendingApprovalOverlay />
     </div>
