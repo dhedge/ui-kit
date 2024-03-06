@@ -2,14 +2,12 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
 import { ActionButton, Layout } from 'components/common'
-import { useComponentContext } from 'providers/component-provider'
 import { useOverlayHandlers } from 'providers/overlay-provider'
 import { useTranslationContext } from 'providers/translation-provider'
 import type { OverlayProps } from 'types'
 
-export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
+export const HighSlippageOverlay: FC<OverlayProps> = ({ type }) => {
   const t = useTranslationContext()
-  const { DepositTermsOfUse } = useComponentContext()
 
   const { handleReject, handleConfirm } = useOverlayHandlers({ type })
 
@@ -17,27 +15,21 @@ export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
     <Layout.Overlay className="dtw-justify-between dtw-gap-y-1">
       <div className="dtw-flex dtw-gap-1 dtw-items-center dtw-text-warning">
         <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
-        <p>{t.termsOfUse}</p>
+        <p>{t.highSlippage}</p>
       </div>
-      <div>
-        <p className="dtw-self-start dtw-text-sm dtw-mb-1">
-          {t.termOfUseDepositListTitle}:
-        </p>
-        <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-themeGray">
-          <li>{t.termOfUseDepositAssetSlippage}</li>
-          <li>{t.termOfUseDepositBugs}</li>
-          <li>{t.termOfUseDepositDowntime}</li>
-          <li>{t.termOfUseDepositAuditRisk}</li>
-          {DepositTermsOfUse && <DepositTermsOfUse />}
-        </ul>
-      </div>
+      <p className="dtw-text-sm">{t.responsibleHighSlippage}</p>
+      <p className="dtw-text-sm dtw-self-start">{t.highSlippageListTitle}:</p>
+      <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-themeGray dtw-max-h-28 dtw-overflow-y-scroll">
+        <li>{t.termOfUseDepositAssetSlippage}</li>
+        <li>{t.termOfUseDepositBugs}</li>
+        <li>{t.termOfUseDepositDowntime}</li>
+        <li>{t.termOfUseDepositAuditRisk}</li>
+      </ul>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
         <ActionButton highlighted={false} onClick={handleReject}>
           {t.back}
         </ActionButton>
-        <ActionButton onClick={handleConfirm}>
-          {t.termOfUseDepositAccept}
-        </ActionButton>
+        <ActionButton onClick={handleConfirm}>{t.confirm}</ActionButton>
       </div>
     </Layout.Overlay>
   )

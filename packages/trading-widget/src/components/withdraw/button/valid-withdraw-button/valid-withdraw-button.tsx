@@ -24,7 +24,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
     withdrawalWindowStartTime,
     approve,
     updateOracles,
-    confirmHighSlippage,
+    handleHighSlippageClick,
   } = useValidWithdrawButton()
 
   if (requiresWithdrawalWindow) {
@@ -57,7 +57,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresHighSlippageConfirm) {
     return (
-      <ActionButton onClick={confirmHighSlippage}>
+      <ActionButton onClick={handleHighSlippageClick}>
         {t.confirmMaxSlippage.replace(
           '{slippagePercentage}',
           `${Math.abs(slippageToBeUsed)}`,

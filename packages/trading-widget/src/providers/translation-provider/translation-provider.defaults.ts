@@ -65,7 +65,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
     'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
   withdrawCooldown:
     'You can sell your {tokenSymbol} tokens in {cooldownEndTime}',
-  termOfUseDepositTitle: 'Please know the following before depositing',
+  termsOfUse: 'Terms Of Use',
+  termOfUseDepositListTitle: 'Please know the following before depositing',
   termOfUseDepositAssetSlippage:
     'When exiting, investors receive single asset or the underlying vault assets. Withdraw slippage can be customized in withdraw settings',
   termOfUseDepositBugs: 'There may be interface bugs on the platform',
@@ -75,4 +76,13 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
     'Smart contracts are audited but a risk is still present',
   termOfUseDepositAccept: 'Accept & Deposit',
   back: 'Back',
+  highSlippage: 'High Slippage Alert',
+  responsibleHighSlippage:
+    'By proceeding with this trade, you acknowledge and accept the possibility of experiencing high slippage, resulting in a potential difference between the expected and executed price.',
+  highSlippageListTitle: 'Please consider the following before confirming',
+  highSlippageQuoteDiff:
+    'Be aware that the final amount of assets you receive may be different from the initially quoted value.',
+  highSlippageRisk:
+    'Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade.',
+  confirm: 'Confirm',
 }
