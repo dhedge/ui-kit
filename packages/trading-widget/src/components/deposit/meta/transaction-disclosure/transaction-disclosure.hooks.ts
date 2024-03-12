@@ -10,7 +10,7 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from '@dhedge/core-ui-kit/hooks/state'
-import { useProjectedEarnings } from '@dhedge/core-ui-kit/hooks/trading/deposit'
+import { useDepositProjectedEarnings } from '@dhedge/core-ui-kit/hooks/trading'
 import { formatToUsd } from '@dhedge/core-ui-kit/utils'
 import BigNumber from 'bignumber.js'
 
@@ -32,7 +32,7 @@ export const useDepositTransactionDisclosure = () => {
 
   const { entryFee, hasPoolEntryFee } = usePoolFees({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
-  const projectedEarnings = useProjectedEarnings()
+  const projectedEarnings = useDepositProjectedEarnings()
   const lockTime = useTradingPanelLockTime()
 
   const minDeposit = minDepositUSD
