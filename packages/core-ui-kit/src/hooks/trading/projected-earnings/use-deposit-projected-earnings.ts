@@ -1,12 +1,13 @@
-import { useProjectedEarningsCore } from './use-projected-earnings-core'
-import type { UseProjectedEarningsResult } from '../../../types'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
   useTradingPanelPoolFallbackData,
   useTradingPanelType,
-} from '../../state'
-import { useAssetPrice } from '../index'
+} from 'hooks/state'
+import { useAssetPrice } from 'hooks/trading'
+import type { UseProjectedEarningsResult } from 'types'
+
+import { useProjectedEarningsCore } from './use-projected-earnings-core'
 
 export const useDepositProjectedEarnings = (): UseProjectedEarningsResult => {
   const isDepositType = useTradingPanelType()[0] === 'deposit'

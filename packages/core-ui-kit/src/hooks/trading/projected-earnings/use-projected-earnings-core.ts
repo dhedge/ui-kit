@@ -1,11 +1,7 @@
-import { AddressZero, WETH_BY_CHAIN_ID } from '../../../const'
-import type {
-  ApyCurrency,
-  ChainId,
-  UseProjectedEarningsResult,
-} from '../../../types'
-import { formatByCurrency, isZeroAddress } from '../../../utils'
-import { useAssetPrice } from '../use-asset-price'
+import { AddressZero, WETH_BY_CHAIN_ID } from 'const'
+import { useAssetPrice } from 'hooks/trading'
+import type { ApyCurrency, ChainId, UseProjectedEarningsResult } from 'types'
+import { formatByCurrency, isZeroAddress } from 'utils'
 
 interface ProjectedEarningsVariables {
   currency: ApyCurrency | undefined
