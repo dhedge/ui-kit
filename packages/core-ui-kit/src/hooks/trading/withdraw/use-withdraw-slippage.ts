@@ -53,7 +53,7 @@ export const useWithdrawSlippage = ({
         })
         updateSettings({ isMaxSlippageLoading: false })
       },
-      1000,
+      500,
       { leading: false, trailing: true },
     )
   }, [
@@ -73,7 +73,12 @@ export const useWithdrawSlippage = ({
     }
     // Temporary disable slippage estimation when manual slippage is set
     if (sendToken.value && !insufficientBalance && slippage === 'auto') {
-      debouncedEstimateSell.current()
+      // TODO: added timeout to wait until debouncedEstimateSell will be updated. Temporary solution, can be improved
+      const id = setTimeout(() => {
+        debouncedEstimateSell.current()
+      }, 1000)
+
+      return () => clearTimeout(id)
     } else {
       updateSettings({ minSlippage: undefined })
     }
