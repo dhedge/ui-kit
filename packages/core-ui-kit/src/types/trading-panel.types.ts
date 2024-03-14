@@ -60,6 +60,7 @@ export type ApyCurrency = 'USD' | 'ETH'
 
 export interface UseProjectedEarningsResult {
   dailyEarnings: string | null
+  monthlyEarnings: string | null
   yearlyEarnings: string | null
   showEarnings: boolean
 }
