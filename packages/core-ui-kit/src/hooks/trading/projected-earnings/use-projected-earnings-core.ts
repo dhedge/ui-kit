@@ -28,12 +28,14 @@ const calculateProjectedEarnings = ({
     return {
       yearlyEarnings: '-',
       dailyEarnings: '-',
+      monthlyEarnings: '-',
     }
   }
   const yearlyEarnings = (depositValueInUsd * apy) / 100 / apyCurrencyPrice
   return {
     yearlyEarnings: formatByCurrency({ value: yearlyEarnings, currency }),
     dailyEarnings: formatByCurrency({ value: yearlyEarnings / 365, currency }),
+    monthlyEarnings: formatByCurrency({ value: yearlyEarnings / 12, currency }),
   }
 }
 
