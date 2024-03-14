@@ -28,7 +28,12 @@ export const useDepositProjectedEarnings = (): UseProjectedEarningsResult => {
   })
 
   if (!isDepositType) {
-    return { dailyEarnings: null, yearlyEarnings: null, showEarnings: false }
+    return {
+      dailyEarnings: null,
+      yearlyEarnings: null,
+      monthlyEarnings: null,
+      showEarnings: false,
+    }
   }
 
   return {
