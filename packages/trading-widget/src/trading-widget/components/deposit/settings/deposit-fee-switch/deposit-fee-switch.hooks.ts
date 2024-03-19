@@ -1,6 +1,6 @@
-import { TRADING_PANEL_LOG_EVENT } from '@dhedge/core-ui-kit/const'
-import { useTradingPanelLogger } from '@dhedge/core-ui-kit/hooks/state'
-import { useDepositMethodHandler } from '@dhedge/core-ui-kit/hooks/trading/deposit'
+import { TRADING_PANEL_LOG_EVENT } from 'core-kit/const'
+import { useTradingPanelLogger } from 'core-kit/hooks/state'
+import { useDepositMethodHandler } from 'core-kit/hooks/trading/deposit'
 
 export const useDepositFeeSwitch = () => {
   const [depositMethod, setDepositMethod, hasOptions] =

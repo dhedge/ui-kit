@@ -1,7 +1,7 @@
 import {
   useTradingPanelApprovingStatus,
   useTradingPanelTransactions,
-} from '@dhedge/core-ui-kit/hooks/state'
+} from 'core-kit/hooks/state'
 
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 

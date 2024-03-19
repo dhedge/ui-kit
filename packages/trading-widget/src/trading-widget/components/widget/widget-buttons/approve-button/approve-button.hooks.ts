@@ -1,5 +1,5 @@
-import { useTradingPanelApprovingStatus } from '@dhedge/core-ui-kit/hooks/state'
-import { useIsTradingEnabled } from '@dhedge/core-ui-kit/hooks/trading'
+import { useTradingPanelApprovingStatus } from 'core-kit/hooks/state'
+import { useIsTradingEnabled } from 'core-kit/hooks/trading'
 
 export interface ApproveButtonProps {
   symbol: string

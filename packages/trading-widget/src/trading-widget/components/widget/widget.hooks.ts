@@ -1,13 +1,14 @@
+import { useEffect } from 'react'
+
 import {
   useGeneralTradingPanelHandlers,
   useOnTradingTypeChange,
-} from '@dhedge/core-ui-kit/hooks/component'
+} from 'core-kit/hooks/component'
 import {
   useTradingPanelPoolConfig,
   useTradingPanelType,
-} from '@dhedge/core-ui-kit/hooks/state'
-import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
-import { useEffect } from 'react'
+} from 'core-kit/hooks/state'
+import type { TradingPanelType } from 'core-kit/types'
 
 import { TABS } from 'trading-widget/constants/tab'
 

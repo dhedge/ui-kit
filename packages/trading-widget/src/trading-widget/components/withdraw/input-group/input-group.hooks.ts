@@ -1,12 +1,12 @@
-import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
-} from '@dhedge/core-ui-kit/hooks/state'
-import { useAssetPrice } from '@dhedge/core-ui-kit/hooks/trading'
-import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user'
+} from 'core-kit/hooks/state'
+import { useAssetPrice } from 'core-kit/hooks/trading'
+import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
   const { address, chainId } = useTradingPanelPoolConfig()

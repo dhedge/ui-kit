@@ -27,7 +27,14 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredFiles": ["{projectRoot}/vite.config.{js,ts,mjs,mts}"]
+            "ignoredFiles": ["{projectRoot}/vite.config.{js,ts,mjs,mts}"],
+            "ignoredDependencies": [
+              "@testing-library/jest-dom",
+              "@testing-library/dom",
+              "@testing-library/react",
+              "@tanstack/react-query-devtools",
+              "@nx/react"
+            ]
           }
         ]
       }

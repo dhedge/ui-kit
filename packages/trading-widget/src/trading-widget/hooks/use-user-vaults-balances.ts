@@ -1,8 +1,10 @@
-import { usePoolsDynamic } from '@dhedge/core-ui-kit/hooks/pool'
-import { useAccount } from '@dhedge/core-ui-kit/hooks/web3'
-import { isEqualAddress } from '@dhedge/core-ui-kit/utils'
 import BigNumber from 'bignumber.js'
+
 import { useMemo } from 'react'
+
+import { usePoolsDynamic } from 'core-kit/hooks/pool'
+import { useAccount } from 'core-kit/hooks/web3'
+import { isEqualAddress } from 'core-kit/utils'
 
 import type { UserPoolBalances } from 'trading-widget/types'
 

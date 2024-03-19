@@ -1,10 +1,11 @@
-import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool'
+import BigNumber from 'bignumber.js'
+
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
-} from '@dhedge/core-ui-kit/hooks/state'
-import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user'
-import BigNumber from 'bignumber.js'
+} from 'core-kit/hooks/state'
+import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 

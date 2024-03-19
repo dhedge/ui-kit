@@ -1,5 +1,5 @@
-import { useTradingPanelPoolConfig } from '@dhedge/core-ui-kit/hooks/state'
-import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
+import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import type { TradingPanelType } from 'core-kit/types'
 
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 

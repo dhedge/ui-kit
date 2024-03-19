@@ -1,4 +1,4 @@
-import { useExchangeRate } from '@dhedge/core-ui-kit/hooks/trading'
+import { useExchangeRate } from 'core-kit/hooks/trading'
 import classNames from 'classnames'
 import type { FC } from 'react'
 

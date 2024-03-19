@@ -1,9 +1,7 @@
-import {
-  formatToUsd,
-  getConventionalTokenPriceDecimals,
-} from '@dhedge/core-ui-kit/utils'
 import type { ChangeEvent } from 'react'
 import { useMemo, useRef } from 'react'
+
+import { formatToUsd, getConventionalTokenPriceDecimals } from 'core-kit/utils'
 
 import type { ThemeType } from 'trading-widget/types'
 import { THEME_TYPE } from 'trading-widget/types'

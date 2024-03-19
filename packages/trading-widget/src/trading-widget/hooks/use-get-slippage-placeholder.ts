@@ -1,5 +1,6 @@
-import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
 import isNumber from 'lodash.isnumber'
+
+import type { TradingPanelType } from 'core-kit/types'
 
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 

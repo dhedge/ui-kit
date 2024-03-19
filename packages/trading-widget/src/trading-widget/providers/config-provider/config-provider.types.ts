@@ -1,4 +1,4 @@
-import type { ChainId } from '@dhedge/core-ui-kit/types'
+import type { ChainId } from 'core-kit/types'
 
 export interface ConfigProviderParams {
   isGeoBlocked: boolean

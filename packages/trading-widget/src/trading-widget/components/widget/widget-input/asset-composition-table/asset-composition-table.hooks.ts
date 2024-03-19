@@ -1,8 +1,8 @@
-import { usePoolCompositionWithFraction } from '@dhedge/core-ui-kit/hooks/pool'
+import { usePoolCompositionWithFraction } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
-} from '@dhedge/core-ui-kit/hooks/state'
+} from 'core-kit/hooks/state'
 
 import type { TokenIconSize } from 'trading-widget/types'
 

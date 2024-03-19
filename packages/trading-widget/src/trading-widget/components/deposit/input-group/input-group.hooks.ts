@@ -1,17 +1,14 @@
-import { TRADING_PANEL_LOG_EVENT } from '@dhedge/core-ui-kit/const'
-import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool'
+import { TRADING_PANEL_LOG_EVENT } from 'core-kit/const'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelLogger,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
-} from '@dhedge/core-ui-kit/hooks/state'
-import {
-  useAssetPrice,
-  useTradingPriceDiff,
-} from '@dhedge/core-ui-kit/hooks/trading'
-import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user'
+} from 'core-kit/hooks/state'
+import { useAssetPrice, useTradingPriceDiff } from 'core-kit/hooks/trading'
+import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
   const [data, updater] = useSendTokenInput()

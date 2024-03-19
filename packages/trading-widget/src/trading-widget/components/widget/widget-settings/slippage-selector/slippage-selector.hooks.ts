@@ -1,9 +1,10 @@
+import type { ChangeEvent } from 'react'
+import { useState } from 'react'
+
 import {
   useTradingPanelSettings,
   useTradingPanelType,
-} from '@dhedge/core-ui-kit/hooks/state'
-import type { ChangeEvent } from 'react'
-import { useState } from 'react'
+} from 'core-kit/hooks/state'
 
 export const useSlippageSelector = () => {
   const [tradingType] = useTradingPanelType()

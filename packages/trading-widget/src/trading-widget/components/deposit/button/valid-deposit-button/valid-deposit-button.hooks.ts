@@ -1,19 +1,16 @@
-import {
-  usePoolManagerLogicData,
-  usePoolTokenPrice,
-} from '@dhedge/core-ui-kit/hooks/pool'
+import BigNumber from 'bignumber.js'
+
+import { usePoolManagerLogicData, usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
-} from '@dhedge/core-ui-kit/hooks/state'
-import { useSynthetixV3OraclesUpdate } from '@dhedge/core-ui-kit/hooks/trading'
+} from 'core-kit/hooks/state'
+import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
 import {
   useDepositAllowance,
   useShouldBeWhitelisted,
-} from '@dhedge/core-ui-kit/hooks/trading/deposit'
-
-import BigNumber from 'bignumber.js'
+} from 'core-kit/hooks/trading/deposit'
 
 import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
 

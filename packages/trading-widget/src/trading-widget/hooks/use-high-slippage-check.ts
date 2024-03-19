@@ -1,6 +1,7 @@
-import { useTradingPanelSettings } from '@dhedge/core-ui-kit/hooks/state'
-import { useIsInsufficientBalance } from '@dhedge/core-ui-kit/hooks/user'
 import { useCallback, useState } from 'react'
+
+import { useTradingPanelSettings } from 'core-kit/hooks/state'
+import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 

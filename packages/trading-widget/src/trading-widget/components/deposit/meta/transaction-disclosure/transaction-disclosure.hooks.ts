@@ -1,7 +1,6 @@
-import {
-  usePoolFees,
-  usePoolManagerLogicData,
-} from '@dhedge/core-ui-kit/hooks/pool'
+import BigNumber from 'bignumber.js'
+
+import { usePoolFees, usePoolManagerLogicData } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -9,10 +8,9 @@ import {
   useTradingPanelLockTime,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
-} from '@dhedge/core-ui-kit/hooks/state'
-import { useDepositProjectedEarnings } from '@dhedge/core-ui-kit/hooks/trading'
-import { formatToUsd } from '@dhedge/core-ui-kit/utils'
-import BigNumber from 'bignumber.js'
+} from 'core-kit/hooks/state'
+import { useDepositProjectedEarnings } from 'core-kit/hooks/trading'
+import { formatToUsd } from 'core-kit/utils'
 
 import {
   useGetSlippagePlaceholder,

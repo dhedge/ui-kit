@@ -1,4 +1,4 @@
-import type { Address } from '@dhedge/core-ui-kit/types'
+import type { Address } from 'core-kit/types'
 
 export interface ContractStakeData {
   dhedgePoolAddress: Address

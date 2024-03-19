@@ -4,10 +4,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "pnpx nx build core-ui-kit",
-    "build:trading-widget": "pnpx nx build trading-widget",
-    "lint": "pnpx nx lint core-ui-kit",
-    "test": "pnpx nx test core-ui-kit",
+    "build": "pnpx nx build trading-widget",
+    "lint": "pnpx nx lint trading-widget --fix",
+    "test": "pnpx nx test trading-widget",
     "storybook": "pnpx nx run trading-widget:storybook"
   },
   "dependencies": {
@@ -83,7 +82,7 @@
     "tsup": "^7.3.0",
     "typescript": "~5.2.2",
     "viem": "^2.5.0",
-    "vite": "~4.5.0",
+    "vite": "~4.5.2",
     "vite-plugin-dts": "~2.3.0",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "~0.34.6",

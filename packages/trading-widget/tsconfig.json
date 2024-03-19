@@ -5,37 +5,7 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "types": ["node", "vitest/globals"],
-    "paths": {
-      "@dhedge/core-ui-kit": ["../../core-ui-kit"],
-      "@dhedge/core-ui-kit/abi": ["../../core-ui-kit/abi"],
-      "@dhedge/core-ui-kit/const": ["../../core-ui-kit/const"],
-      "@dhedge/core-ui-kit/types": ["../../core-ui-kit/types"],
-      "@dhedge/core-ui-kit/hooks/component": [
-        "../../core-ui-kit/hooks/component"
-      ],
-      "@dhedge/core-ui-kit/hooks/referral": [
-        "../../core-ui-kit/hooks/referral"
-      ],
-      "@dhedge/core-ui-kit/hooks/state": ["../../core-ui-kit/hooks/state"],
-      "@dhedge/core-ui-kit/hooks/trading/allowance": [
-        "../../core-ui-kit/hooks/trading/allowance"
-      ],
-      "@dhedge/core-ui-kit/hooks/trading/deposit": [
-        "../../core-ui-kit/hooks/trading/deposit"
-      ],
-      "@dhedge/core-ui-kit/hooks/trading/withdraw": [
-        "../../core-ui-kit/hooks/trading/withdraw"
-      ],
-      "@dhedge/core-ui-kit/hooks/trading": ["../../core-ui-kit/hooks/trading"],
-      "@dhedge/core-ui-kit/hooks/user": ["../../core-ui-kit/hooks/user"],
-      "@dhedge/core-ui-kit/hooks/utils": ["../../core-ui-kit/hooks/utils"],
-      "@dhedge/core-ui-kit/hooks/web3": ["../../core-ui-kit/hooks/web3"],
-      "@dhedge/core-ui-kit/hooks/pool": ["../../core-ui-kit/hooks/pool"],
-      "@dhedge/core-ui-kit/models": ["../../core-ui-kit/models"],
-      "@dhedge/core-ui-kit/providers": ["../../core-ui-kit/providers"],
-      "@dhedge/core-ui-kit/utils": ["../../core-ui-kit/utils"]
-    }
+    "types": ["vitest/globals", "node"]
   },
   "include": [
     "src",

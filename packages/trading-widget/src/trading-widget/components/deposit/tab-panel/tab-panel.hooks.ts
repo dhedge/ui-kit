@@ -1,5 +1,5 @@
-import { useTradingPanelPoolConfig } from '@dhedge/core-ui-kit/hooks/state'
-import { useDepositQuote } from '@dhedge/core-ui-kit/hooks/trading/deposit'
+import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import { useDepositQuote } from 'core-kit/hooks/trading/deposit'
 
 export const useDepositTabPanel = () => {
   const poolConfig = useTradingPanelPoolConfig()

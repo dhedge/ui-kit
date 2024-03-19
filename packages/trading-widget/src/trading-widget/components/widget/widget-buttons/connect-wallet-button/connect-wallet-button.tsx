@@ -1,4 +1,4 @@
-import { useConnect } from '@dhedge/core-ui-kit/hooks/web3'
+import { useConnect } from 'core-kit/hooks/web3'
 import type { FC } from 'react'
 
 import { ActionButton, Spinner } from 'trading-widget/components/common'

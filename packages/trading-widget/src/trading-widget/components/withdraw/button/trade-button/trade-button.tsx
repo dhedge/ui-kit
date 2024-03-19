@@ -1,5 +1,5 @@
-import { useHandleTrade } from '@dhedge/core-ui-kit/hooks/trading'
-import { useWithdraw } from '@dhedge/core-ui-kit/hooks/trading/withdraw'
+import { useHandleTrade } from 'core-kit/hooks/trading'
+import { useWithdraw } from 'core-kit/hooks/trading/withdraw'
 import type { FC } from 'react'
 
 import { ActionButton } from 'trading-widget/components/common'

@@ -1,4 +1,4 @@
-import type { TradingPanelType } from '@dhedge/core-ui-kit/types'
+import type { TradingPanelType } from 'core-kit/types'
 import { Tab } from '@headlessui/react'
 
 import type { FC } from 'react'

@@ -1,5 +1,5 @@
-import { usePoolFees } from '@dhedge/core-ui-kit/hooks/pool'
-import { useTradingPanelPoolConfig } from '@dhedge/core-ui-kit/hooks/state'
+import { usePoolFees } from 'core-kit/hooks/pool'
+import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 

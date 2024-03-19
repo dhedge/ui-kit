@@ -1,9 +1,5 @@
-import { DEFAULT_PRECISION } from '@dhedge/core-ui-kit/const'
-import {
-  formatToUsd,
-  formatUnits,
-  normalizeNumber,
-} from '@dhedge/core-ui-kit/utils'
+import { DEFAULT_PRECISION } from 'core-kit/const'
+import { formatToUsd, formatUnits, normalizeNumber } from 'core-kit/utils'
 
 import type { Balance } from 'trading-widget/types'
 

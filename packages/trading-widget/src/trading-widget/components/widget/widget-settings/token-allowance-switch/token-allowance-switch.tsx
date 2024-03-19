@@ -1,4 +1,4 @@
-import { useTokenAllowanceHandler } from '@dhedge/core-ui-kit/hooks/trading/allowance'
+import { useTokenAllowanceHandler } from 'core-kit/hooks/trading/allowance'
 
 import { Switch } from 'trading-widget/components/common'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'

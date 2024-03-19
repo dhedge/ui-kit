@@ -1,5 +1,5 @@
-import { useHandleTrade } from '@dhedge/core-ui-kit/hooks/trading'
-import { useDeposit } from '@dhedge/core-ui-kit/hooks/trading/deposit'
+import { useHandleTrade } from 'core-kit/hooks/trading'
+import { useDeposit } from 'core-kit/hooks/trading/deposit'
 
 import {
   useConfigContextActions,

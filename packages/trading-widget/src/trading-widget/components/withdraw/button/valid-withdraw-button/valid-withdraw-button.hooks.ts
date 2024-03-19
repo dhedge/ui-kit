@@ -1,11 +1,11 @@
-import { usePoolDynamicContractData } from '@dhedge/core-ui-kit/hooks/pool'
+import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
-} from '@dhedge/core-ui-kit/hooks/state'
-import { useSynthetixV3OraclesUpdate } from '@dhedge/core-ui-kit/hooks/trading'
-import { useWithdrawAllowance } from '@dhedge/core-ui-kit/hooks/trading/withdraw'
-import { isSynthetixV3Vault } from '@dhedge/core-ui-kit/utils'
+} from 'core-kit/hooks/state'
+import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
+import { useWithdrawAllowance } from 'core-kit/hooks/trading/withdraw'
+import { isSynthetixV3Vault } from 'core-kit/utils'
 
 import {
   useHighSlippageCheck,

@@ -1,15 +1,16 @@
-import { DHedgeStakingV2Abi as abi } from '@dhedge/core-ui-kit/abi'
-import { AddressZero } from '@dhedge/core-ui-kit/const'
+import { useMemo } from 'react'
+
+import { DHedgeStakingV2Abi as abi } from 'core-kit/abi'
+import { AddressZero } from 'core-kit/const'
 
 import {
   useAccount,
   useContractReadsErrorLogging,
   useReadContract,
   useReadContracts,
-} from '@dhedge/core-ui-kit/hooks/web3'
-import type { Address } from '@dhedge/core-ui-kit/types'
-import { getContractAddressById } from '@dhedge/core-ui-kit/utils'
-import { useMemo } from 'react'
+} from 'core-kit/hooks/web3'
+import type { Address } from 'core-kit/types'
+import { getContractAddressById } from 'core-kit/utils'
 
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 import type { ContractStakeData } from 'trading-widget/types'

@@ -1,5 +1,5 @@
-import { useTradingPanelPoolConfig } from '@dhedge/core-ui-kit/hooks/state'
-import { useNetwork } from '@dhedge/core-ui-kit/hooks/web3'
+import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import { useNetwork } from 'core-kit/hooks/web3'
 
 import { ActionButton } from 'trading-widget/components/common'
 

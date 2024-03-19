@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`receiveAppliedSlippage > should handle deposit type with auto slippage with valid balance 1`] = `"1.0000"`;
+
+exports[`receiveAppliedSlippage > should handle deposit type with non auto slippage with valid balance 1`] = `"0.9900"`;
+
+exports[`receiveAppliedSlippage > should handle invalid balance 1`] = `"0"`;
+
+exports[`receiveAppliedSlippage > should handle withdraw type with auto slippage with valid balance 1`] = `"0.9700"`;
+
+exports[`receiveAppliedSlippage > should handle withdraw type with non auto slippage with valid balance 1`] = `"0.9900"`;
+
+exports[`useMinReceiveText > should handle all symbol 1`] = `
+{
+  "current": "estimated multi asset fractions",
+}
+`;
+
+exports[`useMinReceiveText > should handle auto slippage with minSlippage value 1`] = `
+{
+  "current": "0.9990 RECEIVE_SYMBOL",
+}
+`;
+
+exports[`useMinReceiveText > should handle auto slippage with undefined minSlippage value 1`] = `
+{
+  "current": "0.9700 RECEIVE_SYMBOL",
+}
+`;
+
+exports[`useMinReceiveText > should handle deposit type and auto slippage 1`] = `
+{
+  "current": "1.0000 RECEIVE_SYMBOL",
+}
+`;

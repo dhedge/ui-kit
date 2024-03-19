@@ -1,13 +1,14 @@
+import { formatDuration } from 'date-fns'
+import { useCallback } from 'react'
+import { injected } from 'wagmi/connectors'
+
 import {
   DEFAULT_DEPOSIT_SLIPPAGE,
   DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
   optimism,
-} from '@dhedge/core-ui-kit/const'
-import { useConnect } from '@dhedge/core-ui-kit/hooks/web3'
-import { formatDuration } from 'date-fns'
-import { useCallback } from 'react'
-import { injected } from 'wagmi/connectors'
+} from 'core-kit/const'
+import { useConnect } from 'core-kit/hooks/web3'
 
 import type {
   ConfigProviderActions,

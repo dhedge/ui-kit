@@ -1,7 +1,7 @@
 import {
   useOnTokenSelector,
   useTradingPanelPoolConfigs,
-} from '@dhedge/core-ui-kit/hooks/state'
+} from 'core-kit/hooks/state'
 
 export interface TokenSelectorProps {
   symbol: string

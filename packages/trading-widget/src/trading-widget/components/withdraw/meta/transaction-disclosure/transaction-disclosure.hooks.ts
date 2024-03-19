@@ -1,12 +1,13 @@
+import BigNumber from 'bignumber.js'
+
+import isNumber from 'lodash.isnumber'
+
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelApprovingStatus,
   useTradingPanelSettings,
-} from '@dhedge/core-ui-kit/hooks/state'
-import BigNumber from 'bignumber.js'
-
-import isNumber from 'lodash.isnumber'
+} from 'core-kit/hooks/state'
 
 import {
   useGetSlippagePlaceholder,

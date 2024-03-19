@@ -1,4 +1,4 @@
-import { commify } from '@dhedge/core-ui-kit/utils'
+import { commify } from 'core-kit/utils'
 import type { FC, PropsWithChildren } from 'react'
 
 import { ActionButton, DisabledButtonWithPrompt } from 'trading-widget/components/common'
