@@ -17,8 +17,8 @@
     "lodash.noop": "^3.0.1",
     "lodash.uniqby": "^4.7.0"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.mjs",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "peerDependencies": {
     "react": ">=18.2.0",
