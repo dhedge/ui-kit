@@ -14,7 +14,7 @@ import { useDepositTransactionDisclosure } from './transaction-disclosure.hooks'
 export const DepositTransactionOverviewDisclosure = () => {
   const t = useTranslationContext()
   const {
-    projectedEarnings: { yearlyEarnings, dailyEarnings },
+    projectedEarnings: { yearlyEarnings, dailyEarnings, showEarnings },
     slippageTooltipText,
     slippagePlaceholder,
     isMaxSlippageLoading,
@@ -29,20 +29,22 @@ export const DepositTransactionOverviewDisclosure = () => {
     lockTime,
   } = useDepositTransactionDisclosure()
 
-  const staticItems: TransactionDisclosureItemProps[] = [
-    {
-      tooltipText: t.projectedDailyEarningsTooltip,
-      label: t.dailyEarnings,
-      value: dailyEarnings,
-      emphasised: true,
-    },
-    {
-      tooltipText: t.projectedYearlyEarningsTooltip,
-      label: t.yearlyEarnings,
-      value: yearlyEarnings,
-      emphasised: true,
-    },
-  ]
+  const staticItems: TransactionDisclosureItemProps[] = showEarnings
+    ? [
+        {
+          tooltipText: t.projectedDailyEarningsTooltip,
+          label: t.dailyEarnings,
+          value: dailyEarnings,
+          emphasised: true,
+        },
+        {
+          tooltipText: t.projectedYearlyEarningsTooltip,
+          label: t.yearlyEarnings,
+          value: yearlyEarnings,
+          emphasised: true,
+        },
+      ]
+    : []
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
     const items: TransactionDisclosureItemProps[] = [

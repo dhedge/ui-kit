@@ -37,7 +37,7 @@ export const useDepositProjectedEarnings = (): UseProjectedEarningsResult => {
   }
 
   return {
-    showEarnings: true,
+    showEarnings: !!poolFallbackData.apy?.value,
     ...projectedEarnings,
   }
 }
