@@ -15,10 +15,7 @@ import {
 
 import BigNumber from 'bignumber.js'
 
-import {
-  useHighSlippageCheck,
-  useUserVaultBalance,
-} from 'trading-widget/hooks'
+import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
   const { address, chainId, deprecated, symbol } = useTradingPanelPoolConfig()

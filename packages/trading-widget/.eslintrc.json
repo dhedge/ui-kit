@@ -32,5 +32,12 @@
         ]
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": ["packages/trading-widget/tsconfig.json"]
+      }
+    }
+  }
 }

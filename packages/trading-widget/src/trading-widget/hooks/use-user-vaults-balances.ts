@@ -6,8 +6,9 @@ import { useMemo } from 'react'
 
 import type { UserPoolBalances } from 'trading-widget/types'
 
-import { useUserStakedPools } from './use-user-staked-pools'
 import { formatBalance } from 'trading-widget/utils/format'
+
+import { useUserStakedPools } from './use-user-staked-pools'
 
 export const useUserVaultsBalances = (): UserPoolBalances => {
   const { account } = useAccount()

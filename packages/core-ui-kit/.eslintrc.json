@@ -46,5 +46,12 @@
         ]
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": ["packages/core-ui-kit/tsconfig.json"]
+      }
+    }
+  }
 }

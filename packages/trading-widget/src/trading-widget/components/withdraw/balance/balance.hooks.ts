@@ -5,6 +5,7 @@ import {
 } from '@dhedge/core-ui-kit/hooks/state'
 import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user'
 import BigNumber from 'bignumber.js'
+
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useWithdrawBalance = () => {
