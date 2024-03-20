@@ -7,6 +7,7 @@ import {
 } from 'core-kit/hooks/state'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
+import { formatToUsd } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useWithdrawBalance = () => {
@@ -24,9 +25,11 @@ export const useWithdrawBalance = () => {
       .toString()} ${symbol}`,
     formattedPrice:
       +balance > 0 && sendTokenPrice
-        ? `≈$${new BigNumber(balance)
-            .multipliedBy(sendTokenPrice)
-            .toPrecision(2, BigNumber.ROUND_DOWN)}`
+        ? `≈${formatToUsd({
+            value: new BigNumber(balance)
+              .multipliedBy(sendTokenPrice)
+              .toNumber(),
+          })}`
         : null,
   }
 }

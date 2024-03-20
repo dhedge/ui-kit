@@ -9,7 +9,7 @@ const getIcon = async (name: string): Promise<Icon> => {
     const img = await import(
       `@dhedge/crypto-assets/icons/${name.toLowerCase()}.png`
     )
-    return img?.default ?? buildIconLink(name)
+    return img?.default?.src ?? buildIconLink(name)
   } catch {
     return buildIconLink(name)
   }

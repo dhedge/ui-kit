@@ -1,10 +1,12 @@
-import type { FC } from 'react'
 import { ChevronDownIcon, CircleStackIcon } from '@heroicons/react/20/solid'
+import type { FC } from 'react'
 
 import { TokenBadge } from 'trading-widget/components/common'
 
-import { TokenSelectorProps, useTokenSelector } from './token-selector.hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
+
+import type { TokenSelectorProps } from './token-selector.hooks'
+import { useTokenSelector } from './token-selector.hooks'
 
 export const TokenSelector: FC<TokenSelectorProps> = ({ symbol }) => {
   const { isAllSymbol, onClick } = useTokenSelector({ symbol })

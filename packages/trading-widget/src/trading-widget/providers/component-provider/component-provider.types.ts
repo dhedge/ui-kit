@@ -6,6 +6,7 @@ export interface ImageProps {
   width?: number | string
   height?: number | string
   onError?: () => void
+  onLoad?: () => void
   className?: string
 }
 

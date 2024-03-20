@@ -7,6 +7,7 @@ import {
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
+import { formatToUsd } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useDepositBalance = () => {
@@ -24,9 +25,11 @@ export const useDepositBalance = () => {
       .toString()} ${symbol}`,
     formattedPrice:
       +balance > 0 && sendTokenPrice
-        ? `≈$${new BigNumber(balance)
-            .multipliedBy(sendTokenPrice)
-            .toPrecision(2, BigNumber.ROUND_DOWN)}`
+        ? `≈${formatToUsd({
+            value: new BigNumber(balance)
+              .multipliedBy(sendTokenPrice)
+              .toNumber(),
+          })}`
         : null,
   }
 }

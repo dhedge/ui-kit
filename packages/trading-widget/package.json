@@ -1,9 +1,24 @@
 {
   "name": "@dhedge/trading-widget",
   "version": "0.0.1",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
+  "dependencies": {
+    "@date-fns/utc": "^1.1.1",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
+    "bignumber.js": "^9.1.2",
+    "classnames": "^2.5.1",
+    "date-fns": "^2.30.0",
+    "lodash.chunk": "^4.2.0",
+    "lodash.debounce": "^4.0.8",
+    "lodash.isnumber": "^3.0.3",
+    "lodash.noop": "^3.0.1",
+    "lodash.uniqby": "^4.7.0",
+    "react-popper-tooltip": "^4.4.2"
+  },
   "peerDependencies": {
     "@tanstack/react-query": "^5.28.4",
     "react": ">=18.2.0",

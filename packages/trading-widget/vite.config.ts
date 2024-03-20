@@ -22,10 +22,9 @@ export default defineConfig({
     //   // Or use switch statement
     //   return fileName.endsWith('.js')
     //     ? `/*/ */ import * as requireViem from 'viem';
-    //     import * as requireChunk from './index-a3fc0e14.js';
     //    function require(m) {
     //      if (m === 'viem') return requireViem;
-    //      if (m === './index-a3fc0e14.js') return requireChunk;
+    //
     //      throw new Error(\`Unknown module \${m}\`);
     //    } `
     //     : null
