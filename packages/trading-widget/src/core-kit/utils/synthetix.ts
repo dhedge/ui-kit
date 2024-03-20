@@ -1,5 +1,3 @@
-import { PythAdapter } from 'erc7412/dist/src/adapters/pyth'
-
 import {
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
@@ -13,6 +11,7 @@ import type { Address, OracleAdapter, TransactionRequest } from 'core-kit/types'
 
 import { Eip7412 } from './synthetix-v3/eip-7412'
 import { TrustedMulticallForwarderBatcher } from './synthetix-v3/multicall-forwarder-batcher'
+import { PythAdapter } from './synthetix-v3/pyth-adapter'
 import {
   encodeFunctionData,
   getContractAbiById,
