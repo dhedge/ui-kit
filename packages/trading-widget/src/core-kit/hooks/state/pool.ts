@@ -20,12 +20,12 @@ export const useTradingPanelPoolAddress = (): [
   useTradingPanelActions().setPoolAddress,
 ]
 
-export const useTradingPanelPoolConfig = () => {
+export const useTradingPanelPoolConfig = (): PoolConfig => {
   const { poolAddress, poolConfigMap } = useTradingPanelState()
   return poolConfigMap[poolAddress] ?? EMPTY_POOL_CONFIG
 }
 
-export const useTradingPanelPoolConfigs = () => {
+export const useTradingPanelPoolConfigs = (): PoolConfig[] => {
   const { poolConfigMap } = useTradingPanelState()
   return useMemo(() => Object.values(poolConfigMap), [poolConfigMap])
 }

@@ -6,4 +6,11 @@ export { PoolFactoryAbi } from './pool-factory'
 export { PoolLogicAbi } from './pool-logic'
 export { PoolManagerLogicAbi } from './pool-manager-logic'
 export { RewardDistributionAbi } from './reward-distribution'
-export * from './synthetix-v3'
+export {
+  ITrustedMulticallForwarderAbi,
+  IERC2771ContextAbi,
+  IERC7412Abi,
+  SynthetixV3CoreAbi,
+  SynthetixV3AssetGuard,
+  SynthetixV3ContractGuard,
+} from './synthetix-v3'

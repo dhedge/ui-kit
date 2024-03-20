@@ -1,5 +1,7 @@
 import chunk from 'lodash.chunk'
 
+import type { UseReadContractsReturnType } from 'wagmi'
+
 import { PoolLogicAbi } from 'core-kit/abi'
 import { AddressZero, DEFAULT_CHAIN_ID } from 'core-kit/const'
 import { useTradingPanelPoolConfigs } from 'core-kit/hooks/state'
@@ -60,7 +62,11 @@ const POOL_CHUNK_SIZE = getPoolContracts({
   address: AddressZero,
 }).length
 
-export const usePoolsDynamic = () => {
+export const usePoolsDynamic = (): UseReadContractsReturnType<
+  ReturnType<typeof getPoolContracts>,
+  true,
+  PoolsMap
+> => {
   const { account = AddressZero } = useAccount()
   const pools = useTradingPanelPoolConfigs()
 
