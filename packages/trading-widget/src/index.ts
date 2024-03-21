@@ -100,6 +100,7 @@ export {
   WETH_POLYGON,
   WETH_BY_CHAIN_ID,
   WMATIC_POLYGON,
+  WBTC_ARBITRUM,
   TRADING_LOG_EVENT_PARAM,
   TRADING_PANEL_LOG_EVENT,
 } from './core-kit/const'
@@ -153,6 +154,7 @@ export type {
   TradingPanelAction,
   TradingPanelActionsState,
   TradingPanelState,
+  TradingPanelStateModal,
   TradingPanelSetters,
   TradingPanelType,
   TradingPanelContextConfig,

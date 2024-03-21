@@ -20,6 +20,15 @@ import type {
   WaitForTransactionReceiptReturnType,
 } from 'core-kit/types/web3.types'
 
+export interface TradingPanelStateModal {
+  isOpen: boolean
+  status: TradingModalStatus
+  action?: TransactionAction
+  link?: string
+  sendToken: TradingToken | null
+  receiveToken: TradingToken | null
+}
+
 export interface TradingPanelState {
   settings: {
     slippage: number | 'auto'
@@ -37,14 +46,7 @@ export interface TradingPanelState {
   meta: {
     approvingStatus?: 'pending' | 'success'
   }
-  modal: {
-    isOpen: boolean
-    status: TradingModalStatus
-    action?: TransactionAction
-    link?: string
-    sendToken: TradingToken | null
-    receiveToken: TradingToken | null
-  }
+  modal: TradingPanelStateModal
   poolAddress: PoolConfig['address']
   poolConfigMap: Record<PoolConfig['address'], PoolConfig>
   transactions: PendingTransaction[]

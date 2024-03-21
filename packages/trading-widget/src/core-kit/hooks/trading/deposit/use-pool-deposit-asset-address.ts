@@ -1,19 +1,29 @@
 import { useMemo } from 'react'
 
 import {
+  BRIDGED_USDC_ARBITRUM,
   BRIDGED_USDC_OPTIMISM,
   BRIDGED_USDC_POLYGON,
   DAI_OPTIMISM,
   DAI_POLYGON,
+  USDC_ARBITRUM,
+  USDC_OPTIMISM,
+  USDC_POLYGON,
   USDT_OPTIMISM,
   USDT_POLYGON,
+  WBTC_ARBITRUM,
   WBTC_OPTIMISM,
   WBTC_POLYGON,
+  WETH_ARBITRUM,
+  WETH_BASE,
   WETH_OPTIMISM,
   WETH_POLYGON,
   WMATIC_POLYGON,
+  arbitrum,
+  base,
   optimism,
   polygon,
+  USDC_BASE,
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import type { TradingToken } from 'core-kit/types/trading-panel.types'
@@ -34,7 +44,8 @@ const FALLBACK_ASSETS_ADRESSES_MAP: Record<
 > = {
   [optimism.id]: {
     WETH: WETH_OPTIMISM,
-    USDC: BRIDGED_USDC_OPTIMISM,
+    USDC: USDC_OPTIMISM,
+    USDCe: BRIDGED_USDC_OPTIMISM,
     USDT: USDT_OPTIMISM,
     DAI: DAI_OPTIMISM,
     WBTC: WBTC_OPTIMISM,
@@ -42,10 +53,21 @@ const FALLBACK_ASSETS_ADRESSES_MAP: Record<
   [polygon.id]: {
     WMATIC: WMATIC_POLYGON,
     WETH: WETH_POLYGON,
-    USDC: BRIDGED_USDC_POLYGON,
+    USDC: USDC_POLYGON,
+    USDCe: BRIDGED_USDC_POLYGON,
     USDT: USDT_POLYGON,
     DAI: DAI_POLYGON,
     WBTC: WBTC_POLYGON,
+  },
+  [arbitrum.id]: {
+    WETH: WETH_ARBITRUM,
+    USDC: USDC_ARBITRUM,
+    USDCe: BRIDGED_USDC_ARBITRUM,
+    WBTC: WBTC_ARBITRUM,
+  },
+  [base.id]: {
+    WETH: WETH_BASE,
+    USDC: USDC_BASE,
   },
 }
 

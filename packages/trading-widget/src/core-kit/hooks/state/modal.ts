@@ -1,11 +1,11 @@
 import type {
   TradingPanelActionsState,
-  TradingPanelState,
+  TradingPanelStateModal,
 } from 'core-kit/types/state.types'
 
 import { useTradingPanelActions, useTradingPanelState } from './context'
 
 export const useTradingPanelModal = (): [
-  TradingPanelState['modal'],
+  TradingPanelStateModal,
   TradingPanelActionsState['updateTradingModal'],
 ] => [useTradingPanelState().modal, useTradingPanelActions().updateTradingModal]

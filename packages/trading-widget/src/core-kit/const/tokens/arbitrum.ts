@@ -22,3 +22,10 @@ export const WETH_ARBITRUM: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const WBTC_ARBITRUM: TradingToken = {
+  address: '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f',
+  symbol: 'WBTC',
+  decimals: 8,
+  value: '',
+}
