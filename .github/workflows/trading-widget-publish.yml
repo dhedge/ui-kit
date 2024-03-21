@@ -1,4 +1,4 @@
-name: Publish Core UI Kit Package to npm
+name: Publish Trading Widget Package to npm
 on:
   workflow_dispatch:
 

@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`useTradingPriceDiff > should calculate diff 1`] = `166.66`;

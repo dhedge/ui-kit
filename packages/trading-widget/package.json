@@ -18,7 +18,8 @@
     "lodash.noop": "^3.0.1",
     "lodash.uniqby": "^4.7.0",
     "react-popper-tooltip": "^4.4.2",
-    "@pythnetwork/pyth-evm-js": "^1.36.0"
+    "@pythnetwork/pyth-evm-js": "^1.36.0",
+    "ts-custom-error": "^3.3.1"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.28.4",

@@ -7,6 +7,7 @@ import {
   DAI_OPTIMISM,
   DAI_POLYGON,
   USDC_ARBITRUM,
+  USDC_BASE,
   USDC_OPTIMISM,
   USDC_POLYGON,
   USDT_OPTIMISM,
@@ -23,7 +24,6 @@ import {
   base,
   optimism,
   polygon,
-  USDC_BASE,
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import type { TradingToken } from 'core-kit/types/trading-panel.types'

@@ -4,9 +4,6 @@ on:
     types:
       - opened
       - synchronize
-    paths:
-      - 'packages/core-ui-kit/**'
-      - 'package.json'
 
 jobs:
   run-checks:

@@ -1,8 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`useExchangeRate > should evaluate value from sendToken and receiveToken 1`] = `
-{
-  "isLoading": false,
-  "value": "1 send_symbol = 2.000000 receive_symbol",
-}
-`;

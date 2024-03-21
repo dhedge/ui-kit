@@ -1,11 +1,6 @@
-import {
-  Address,
-  Client,
-  decodeAbiParameters,
-  encodeAbiParameters,
-  Hex,
-} from 'viem'
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js'
+import type { Address, Client, Hex } from 'viem'
+import { decodeAbiParameters, encodeAbiParameters } from 'viem'
 
 interface Adapter {
   getOracleId(): string
@@ -47,7 +42,7 @@ export class PythAdapter implements Adapter {
       )
 
       const stalenessTolerance = stalenessOrTime
-      let updateData = (await this.connection.getPriceFeedsUpdateData(
+      const updateData = (await this.connection.getPriceFeedsUpdateData(
         priceIds as string[],
       )) as unknown as Address[]
 
