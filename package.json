@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "pnpx nx build trading-widget",
-    "lint": "pnpx nx lint trading-widget --fix",
+    "lint": "pnpx nx lint trading-widget",
     "test": "pnpx nx test trading-widget",
     "storybook": "pnpx nx run trading-widget:storybook"
   },
