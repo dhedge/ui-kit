@@ -1,17 +1,15 @@
-import '../src/styles/index.css'
+import 'styles/index.css'
 
-import { TradingPanelProvider } from '@dhedge/core-ui-kit'
+import type { Preview } from '@storybook/react'
+
+import { TradingPanelProvider } from 'core-kit'
 import {
   BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
   SUSD_OPTIMISM,
   optimism,
-} from '@dhedge/core-ui-kit/const'
-import type {
-  PoolConfig,
-  TradingPanelContextConfig,
-} from '@dhedge/core-ui-kit/types'
-import type { Preview } from '@storybook/react'
+} from 'core-kit/const'
+import type { PoolConfig, TradingPanelContextConfig } from 'core-kit/types'
 
 const USDY_OPTIMISM: PoolConfig = {
   chainId: optimism.id,

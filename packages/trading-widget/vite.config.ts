@@ -1,5 +1,6 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite'
+// import banner from 'vite-plugin-banner'
 import dts from 'vite-plugin-dts'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 
@@ -17,6 +18,17 @@ export default defineConfig({
       tsConfigFilePath: path.join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
     }),
+    // banner((fileName: string) => {
+    //   // Or use switch statement
+    //   return fileName.endsWith('.js')
+    //     ? `/*/ */ import * as requireViem from 'viem';
+    //    function require(m) {
+    //      if (m === 'viem') return requireViem;
+    //
+    //      throw new Error(\`Unknown module \${m}\`);
+    //    } `
+    //     : null
+    // }),
   ],
 
   // Uncomment this if you are using workers.
@@ -29,7 +41,7 @@ export default defineConfig({
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.tsx',
+      entry: 'src/index.ts',
       name: '@dhedge/trading-widget',
       fileName: 'index',
       // Change this to the formats you want to support.
@@ -47,7 +59,9 @@ export default defineConfig({
     cache: {
       dir: '../../node_modules/.vitest',
     },
-    environment: 'node',
+    environment: 'jsdom',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    setupFiles: ['./src/tests/setup.ts'],
+    clearMocks: true,
   },
 })

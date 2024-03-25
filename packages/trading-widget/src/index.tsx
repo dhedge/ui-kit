@@ -1,1 +1,0 @@
-export { TradingWidget } from './components'

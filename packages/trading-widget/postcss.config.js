@@ -1,6 +1,9 @@
-const { join } = require('path')
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-module.exports = {
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+export default {
   plugins: {
     tailwindcss: {
       config: join(__dirname, 'tailwind.config.js'),
