@@ -1,6 +1,5 @@
 import type BigNumber from 'bignumber.js'
 import debounce from 'lodash.debounce'
-import noop from 'lodash.noop'
 import { useEffect, useRef } from 'react'
 
 import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
@@ -21,6 +20,7 @@ interface WithdrawSlippageParams {
   fromTokenAmount: BigNumber
   isMultiAssetsWithdraw: boolean
 }
+const noop = () => undefined
 export const useWithdrawSlippage = ({
   estimateSell,
   fromTokenAmount,
@@ -39,7 +39,7 @@ export const useWithdrawSlippage = ({
     query: { refetchInterval: SHORTEN_POLLING_INTERVAL },
   })
 
-  const debouncedEstimateSell = useRef(noop)
+  const debouncedEstimateSell = useRef<() => Promise<void> | undefined>(noop)
   useEffect(() => {
     debouncedEstimateSell.current = debounce(
       async () => {

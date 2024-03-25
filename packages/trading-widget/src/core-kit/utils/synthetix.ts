@@ -11,7 +11,6 @@ import type { Address, OracleAdapter, TransactionRequest } from 'core-kit/types'
 
 import { Eip7412 } from './synthetix-v3/eip-7412'
 import { TrustedMulticallForwarderBatcher } from './synthetix-v3/multicall-forwarder-batcher'
-import { PythAdapter } from './synthetix-v3/pyth-adapter'
 import {
   encodeFunctionData,
   getContractAbiById,
@@ -55,6 +54,9 @@ export const getOracleUpdateTransaction = async ({
 
   const trustedMulticallForwarderBatcher =
     new TrustedMulticallForwarderBatcher()
+
+  const PythAdapter = (await import('./synthetix-v3/pyth-adapter')).PythAdapter
+
   const eip7412 = new Eip7412(
     // Check compatibility
     // Remove casting after viem update https://github.com/Synthetixio/erc7412/blob/main/package.json#L30
