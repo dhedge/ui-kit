@@ -64,7 +64,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
       },
     ]
 
-    if (isAutoSlippage) {
+    if (!isAutoSlippage) {
       items.push({
         tooltipText: t.minSlippageWarning,
         label: t.recommendedMinSlippage,
@@ -73,7 +73,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
           <IconButton
             Icon={CheckCircleIcon}
             className={classNames(
-              'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] dtw-animate-pulse',
+              'dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)] dtw-animate-pulse',
             )}
             onClick={handleMinTradingSlippage}
           />

@@ -71,8 +71,7 @@ export const useWithdrawSlippage = ({
       updateSettings({ minSlippage: 0 })
       return
     }
-    // Temporary disable slippage estimation when manual slippage is set
-    if (sendToken.value && !insufficientBalance && slippage === 'auto') {
+    if (sendToken.value && !insufficientBalance) {
       // TODO: added timeout to wait until debouncedEstimateSell will be updated. Temporary solution, can be improved
       const id = setTimeout(() => {
         debouncedEstimateSell.current()
