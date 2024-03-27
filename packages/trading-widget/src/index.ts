@@ -316,6 +316,7 @@ export {
   useIsInsufficientBalance,
   useUserTokenBalance,
   useIsPoolManagerAccount,
+  useFlatmoneyPointsUserBalances,
 } from './core-kit/hooks/user'
 export { useDebounce, useBrowserStorage } from './core-kit/hooks/utils'
 export {

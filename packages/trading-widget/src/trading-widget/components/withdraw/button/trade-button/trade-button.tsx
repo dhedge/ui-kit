@@ -1,13 +1,11 @@
-import { useHandleTrade } from 'core-kit/hooks/trading'
-import { useWithdraw } from 'core-kit/hooks/trading/withdraw'
 import type { FC } from 'react'
 
 import { ActionButton } from 'trading-widget/components/common'
 
+import { useWithdrawTradeButton } from './trade-button.hooks'
+
 export const WithdrawTradeButton: FC = () => {
-  const withdraw = useWithdraw()
-  // TODO consider transforming label into param for mapping
-  const { disabled, label, handleTrade } = useHandleTrade(withdraw)
+  const { handleTrade, disabled, label } = useWithdrawTradeButton()
 
   return (
     <ActionButton onClick={handleTrade} disabled={disabled}>
