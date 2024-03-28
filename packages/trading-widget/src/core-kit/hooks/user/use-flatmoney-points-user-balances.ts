@@ -67,43 +67,46 @@ export const useFlatmoneyPointsUserBalances = () => {
   const fetchUserPointsBalances =
     isFmedVault && !isEqualAddress(account, AddressZero)
 
-  const {
-    data = [],
-    error,
-    status,
-    isLoading,
-  } = useReadContracts({
+  const result = useReadContracts({
     contracts: getContracts(vaultAddress),
-    query: { enabled: fetchUserPointsBalances },
+    query: {
+      enabled: fetchUserPointsBalances,
+      select: (data) => {
+        const [
+          pointsLockedVaultBalance,
+          pointsUnlockTaxInPercents,
+          unlockTime,
+        ] = data
+
+        const userPortionOfLockedPointsBalance =
+          pointsLockedVaultBalance?.result
+            ? new BigNumber(pointsLockedVaultBalance.result.toString())
+                .multipliedBy(userVaultPortionInPercents)
+                .shiftedBy(-DEFAULT_PRECISION)
+            : new BigNumber(0)
+
+        const unlockTaxAmount = pointsUnlockTaxInPercents?.result
+          ? userPortionOfLockedPointsBalance
+              .multipliedBy(pointsUnlockTaxInPercents.result.toString())
+              .shiftedBy(-DEFAULT_PRECISION)
+          : new BigNumber(0)
+        const unlockTimestamp = unlockTime?.result
+          ? Number(unlockTime.result) * 1000
+          : null
+
+        return {
+          userPortionOfLockedPointsBalance:
+            userPortionOfLockedPointsBalance.toFixed(),
+          unlockTaxAmount: unlockTaxAmount.toFixed(),
+          vestedPointsAmount: userPortionOfLockedPointsBalance
+            .minus(unlockTaxAmount)
+            .toFixed(),
+          unlockTimestamp,
+          unlockDate: unlockTimestamp ? format(unlockTimestamp, 'PPP') : null,
+        }
+      },
+    },
   })
-  const [pointsLockedVaultBalance, pointsUnlockTaxInPercents, unlockTime] = data
-
-  const userPortionOfLockedPointsBalance = pointsLockedVaultBalance?.result
-    ? new BigNumber(pointsLockedVaultBalance.result.toString())
-        .multipliedBy(userVaultPortionInPercents)
-        .shiftedBy(-DEFAULT_PRECISION)
-    : new BigNumber(0)
-
-  const unlockTaxAmount = pointsUnlockTaxInPercents?.result
-    ? userPortionOfLockedPointsBalance
-        .multipliedBy(pointsUnlockTaxInPercents.result.toString())
-        .shiftedBy(-DEFAULT_PRECISION)
-    : new BigNumber(0)
-  const unlockTimestamp = unlockTime?.result
-    ? Number(unlockTime.result) * 1000
-    : null
-
-  useContractReadErrorLogging({ error, status })
-
-  return {
-    userPortionOfLockedPointsBalance:
-      userPortionOfLockedPointsBalance.toFixed(),
-    unlockTaxAmount: unlockTaxAmount.toFixed(),
-    vestedPointsAmount: userPortionOfLockedPointsBalance
-      .minus(unlockTaxAmount)
-      .toFixed(),
-    unlockTimestamp,
-    unlockDate: unlockTimestamp ? format(unlockTimestamp, 'PPP') : null,
-    isLoading,
-  }
+  useContractReadErrorLogging(result)
+  return result
 }

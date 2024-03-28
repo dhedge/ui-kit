@@ -14,8 +14,10 @@ import type { OverlayProps } from 'trading-widget/types'
 
 export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
   const { handleReject, handleConfirm } = useOverlayHandlers({ type })
-  const { unlockTaxAmount, unlockDate, unlockTimestamp, isLoading } =
-    useFlatmoneyPointsUserBalances()
+  const {
+    data: { unlockTaxAmount, unlockDate, unlockTimestamp } = {},
+    isLoading,
+  } = useFlatmoneyPointsUserBalances()
 
   return isLoading ? (
     <PendingOverlay />
@@ -35,7 +37,7 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
         Please consider the following before confirming:
       </p>
       <ul className="dtw-self-start dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-themeGray dtw-max-h-28 dtw-overflow-y-scroll">
-        {unlockTaxAmount !== '0' && (
+        {!!unlockTaxAmount && unlockTaxAmount !== '0' && (
           <>
             <li className="dtw-text-warning">
               If you withdraw now, you will incur a penalty of{' '}
