@@ -2,3 +2,4 @@ export { PendingApprovalOverlay } from './pending-approval-overlay/pending-appro
 export { OverlaySwitch } from './overlay-switch/overlay-switch'
 export { TermsOfUseOverlay } from './terms-of-use-overlay/terms-of-use-overlay'
 export { HighSlippageOverlay } from './high-slippage-overlay/high-slippage-overlay'
+export { FmedWithdrawalOverlay } from './fmed-withdrawal-overlay/fmed-withdrawal-overlay'

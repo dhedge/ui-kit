@@ -13,7 +13,7 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 export const useWithdrawBalance = () => {
   const { stablePrecision, defaultPrecision } = useConfigContextParams()
   const [{ symbol, address }] = useSendTokenInput()
-  const balance = useUserTokenBalance({ symbol, address, watch: true })
+  const balance = useUserTokenBalance({ symbol, address })
 
   const { chainId } = useTradingPanelPoolConfig()
   const sendTokenPrice = usePoolTokenPrice({ address, chainId }) ?? ''
