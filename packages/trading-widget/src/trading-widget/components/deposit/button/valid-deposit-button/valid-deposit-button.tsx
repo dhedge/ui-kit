@@ -1,7 +1,11 @@
-import { commify } from 'core-kit/utils'
 import type { FC, PropsWithChildren } from 'react'
 
-import { ActionButton, DisabledButtonWithPrompt } from 'trading-widget/components/common'
+import { commify } from 'core-kit/utils'
+
+import {
+  ActionButton,
+  DisabledButtonWithPrompt,
+} from 'trading-widget/components/common'
 import { ApproveButton } from 'trading-widget/components/widget/widget-buttons'
 
 import { useTradingTypeName } from 'trading-widget/hooks'

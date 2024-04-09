@@ -117,7 +117,8 @@ export const useSynthetixV3OraclesUpdate = ({
           })
           setTxData(txData)
         }
-      } catch {
+      } catch (err) {
+        console.error(err)
         setTxData(null)
       }
     })()
