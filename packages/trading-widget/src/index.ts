@@ -233,6 +233,7 @@ export {
   useManagerLogicAddress,
   usePoolsDynamic,
   usePoolTokenPrice,
+  useFmedVestedPoints,
 } from './core-kit/hooks/pool'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {
