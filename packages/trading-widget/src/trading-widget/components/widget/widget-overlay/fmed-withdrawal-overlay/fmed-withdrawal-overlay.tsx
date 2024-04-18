@@ -14,10 +14,8 @@ import type { OverlayProps } from 'trading-widget/types'
 
 export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
   const { handleReject, handleConfirm } = useOverlayHandlers({ type })
-  const {
-    data: { unlockTaxAmount, unlockDate, unlockTimestamp } = {},
-    isLoading,
-  } = useFlatmoneyPointsUserBalances()
+  const { unlockTaxAmount, unlockDate, unlockTimestamp, isLoading } =
+    useFlatmoneyPointsUserBalances()
 
   return isLoading ? (
     <PendingOverlay />
