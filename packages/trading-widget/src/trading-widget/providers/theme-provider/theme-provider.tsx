@@ -126,25 +126,46 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
 
         //label
         //label-typography
-        '--panel-label-font-size': `var(--panel-font-size-xs)`,
-        '--panel-label-line-height': `var(--panel-line-height-xs)`,
+        '--panel-label-font-size': `${
+          config?.global?.size?.labelFontSize ?? 'var(--panel-font-size-xs)'
+        }`,
+        '--panel-label-line-height': `${
+          config?.global?.size?.labelLineHeight ?? 'var(--panel-line-height-xs)'
+        }`,
 
         //icon
         //icon-sizing
-        '--panel-icon-size': `20px`,
-        '--panel-icon-size-sm': `24px`,
-        '--panel-icon-secondary-size': `16px`,
-        '--panel-icon-secondary-size-sm': `16px`,
+        '--panel-icon-size': `${config?.global?.size?.iconSize ?? '20px'}`,
+        '--panel-icon-size-sm': `${config?.global?.size?.iconSizeSm ?? '24px'}`,
+        '--panel-icon-secondary-size': `${
+          config?.global?.size?.iconSecondarySize ?? '16px'
+        }`,
+        '--panel-icon-secondary-size-sm': `${
+          config?.global?.size?.iconSecondarySizeSm ?? '16px'
+        }`,
         //icon-colors
-        '--panel-icon-color': `var(--panel-content-color)`,
+        '--panel-icon-color': `${
+          config?.global?.color?.colorIcon ?? 'var(--panel-content-color)'
+        }`,
 
         //popup
         //popup-color
-        '--panel-popup-content-color': `var(--panel-secondary-content-color)`,
-        '--panel-popup-bg': `var(--panel-secondary-color)`,
-        '--panel-popup-border-color': `var(--panel-secondary-content-color)`,
+        '--panel-popup-content-color': `${
+          config?.component?.popup?.color?.colorText ??
+          'var(--panel-secondary-content-color)'
+        }`,
+        '--panel-popup-bg': `${
+          config?.component?.popup?.color?.colorBg ??
+          'var(--panel-secondary-color)'
+        }`,
+        '--panel-popup-border-color': `${
+          config?.component?.popup?.color?.colorBorder ??
+          'var(--panel-secondary-content-color)'
+        }`,
         //popup-typography
-        '--panel-popup-font-size': `12px`,
+        '--panel-popup-font-size': `${
+          config?.component?.popup?.size?.fontSize ?? '12px'
+        }`,
 
         // tab-group
         //tab-group

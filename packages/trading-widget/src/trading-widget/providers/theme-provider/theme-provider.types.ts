@@ -24,6 +24,7 @@ export interface ThemeProviderConfigProps {
       colorTextError?: string
       //warning
       colorTextWarning?: string
+      colorIcon?: string
     }
     size?: {
       gap?: string
@@ -36,6 +37,12 @@ export interface ThemeProviderConfigProps {
       lineHeightSm?: string
       fontSizeLg?: string
       lineHeightLg?: string
+      iconSize?: string
+      iconSizeSm?: string
+      iconSecondarySize?: string
+      iconSecondarySizeSm?: string
+      labelFontSize?: string
+      labelLineHeight?: string
     }
     style?: {
       radiusPrimary?: string
@@ -48,9 +55,17 @@ export interface ThemeProviderConfigProps {
     }
   }
   component?: {
-    color?: object
-    size?: object
-    style?: object
+    popup?: {
+      color?: {
+        colorText?: string
+        colorBg?: string
+        colorBorder?: string
+      }
+      size?: {
+        fontSize?: string
+      }
+      style?: object
+    }
   }
 }
 
