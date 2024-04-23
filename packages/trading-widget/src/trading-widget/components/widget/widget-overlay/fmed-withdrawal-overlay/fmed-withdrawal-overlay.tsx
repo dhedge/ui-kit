@@ -46,10 +46,6 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
             </li>
           </>
         )}
-        <li>
-          If you withdraw before UNIT goes live on Base Mainnet, you won’t
-          receive any FMP
-        </li>
         <li>After withdrawal, you won’t be able to redeposit</li>
       </ul>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
