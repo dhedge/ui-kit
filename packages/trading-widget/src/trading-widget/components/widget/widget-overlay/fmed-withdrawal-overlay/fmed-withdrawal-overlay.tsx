@@ -2,7 +2,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
 import { useFlatmoneyPointsUserBalances } from 'core-kit/hooks/user'
-import { formatNumberToLimitedDecimals } from 'core-kit/utils'
+import { commify, formatNumberToLimitedDecimals } from 'core-kit/utils'
 import {
   ActionButton,
   Layout,
@@ -39,7 +39,7 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
           <>
             <li className="dtw-text-warning">
               If you withdraw now, you will incur a penalty of{' '}
-              {formatNumberToLimitedDecimals(unlockTaxAmount, 0)} FMP
+              {commify(formatNumberToLimitedDecimals(unlockTaxAmount, 0))} FMP
             </li>
             <li className="dtw-text-warning">
               Wait until {unlockDate} for locked points vesting to complete
