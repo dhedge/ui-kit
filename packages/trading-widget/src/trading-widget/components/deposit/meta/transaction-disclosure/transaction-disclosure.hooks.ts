@@ -52,7 +52,9 @@ export const useDepositTransactionDisclosure = () => {
     minSlippage,
   )
   const slippageTooltipText =
-    themeType === THEME_TYPE.DEFAULT ? t.slippageWarning : t.highSlippageWarning
+    themeType === THEME_TYPE.DEFAULT
+      ? t.depositSlippageWarning
+      : t.highSlippageWarning
 
   const getMinReceiveText = () => {
     if (isAutoSlippage) {

@@ -42,7 +42,9 @@ export const useWithdrawTransactionDisclosure = () => {
     minSlippage,
   )
   const slippageTooltipText =
-    themeType === THEME_TYPE.DEFAULT ? t.slippageWarning : t.highSlippageWarning
+    themeType === THEME_TYPE.DEFAULT
+      ? t.withdrawSlippageWarning
+      : t.highSlippageWarning
 
   const getMinReceiveText = () => {
     if (receiveToken.symbol === 'all') {

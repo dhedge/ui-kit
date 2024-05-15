@@ -1017,19 +1017,6 @@ export const PoolLogicAbi = [
         name: '_fundTokenAmount',
         type: 'uint256',
       },
-    ],
-    name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_fundTokenAmount',
-        type: 'uint256',
-      },
       {
         internalType: 'address',
         name: '_asset',
@@ -1058,6 +1045,24 @@ export const PoolLogicAbi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_fundTokenAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_slippageTolerance',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdrawSafe',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 ] as const

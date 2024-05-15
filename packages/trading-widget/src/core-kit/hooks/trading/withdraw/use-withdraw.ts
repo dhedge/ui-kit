@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react'
 
 import {
+  DEFAULT_EASY_SWAPPER_WITHDRAW_METHOD,
+  DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
   DEFAULT_PRECISION,
-  DEFAULT_WITHDRAW_METHOD,
   DEFAULT_WITHDRAW_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
 } from 'core-kit/const'
@@ -23,7 +24,11 @@ import type {
   ContractActionFunc,
   SendEstimationResult,
 } from 'core-kit/types/web3.types'
-import { getOrderedTxArgs, logTransactionArguments } from 'core-kit/utils'
+import {
+  getOrderedTxArgs,
+  getSlippageToleranceForWithdrawSafe,
+  logTransactionArguments,
+} from 'core-kit/utils'
 
 import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 import { useWithdrawSlippage } from './use-withdraw-slippage'
@@ -45,10 +50,11 @@ export const useWithdraw = (): ContractActionFunc => {
 
   const onSettled = useTradingSettleHandler(action)
 
-  const { method: functionName = DEFAULT_WITHDRAW_METHOD } =
-    poolConfig.withdrawParams.customTokens.find(
-      ({ address }) => address === receiveToken.address,
-    ) ?? { method: DEFAULT_WITHDRAW_METHOD }
+  const functionName = isMultiAssetsWithdraw
+    ? DEFAULT_MULTI_ASSET_WITHDRAW_METHOD
+    : poolConfig.withdrawParams.customTokens.find(
+        ({ address }) => address === receiveToken.address,
+      )?.method ?? DEFAULT_EASY_SWAPPER_WITHDRAW_METHOD
   const { send, estimate } = useContractFunction({
     contractId: isMultiAssetsWithdraw ? 'poolLogic' : 'easySwapper',
     dynamicContractAddress: isMultiAssetsWithdraw
@@ -135,7 +141,14 @@ export const useWithdraw = (): ContractActionFunc => {
     logTransactionArguments(txArgs)
 
     if (isMultiAssetsWithdraw) {
-      return send(txArgs.fromTokenAmount)
+      return send(
+        txArgs.fromTokenAmount,
+        getSlippageToleranceForWithdrawSafe(
+          tradingSlippage === 'auto'
+            ? DEFAULT_WITHDRAW_SLIPPAGE
+            : tradingSlippage,
+        ),
+      )
     }
     const isAuto = tradingSlippage === 'auto'
     const slippageValue = isAuto
