@@ -19,7 +19,7 @@ export const useGetSlippagePlaceholder = ({
   const { defaultDepositSlippage, defaultWithdrawSlippageScale } =
     useConfigContextParams()
 
-  if (showDefaultSlippage) {
+  if (showDefaultSlippage && slippage === 'auto') {
     return tradingType === 'deposit'
       ? defaultDepositSlippage.toString()
       : DEFAULT_WITHDRAW_SLIPPAGE.toString()
