@@ -51,11 +51,11 @@ export const SlippageSelector: FC = () => {
     onCustomSlippageSelect,
   } = useSlippageSelector()
 
-  const placeholder = useGetSlippagePlaceholder(
+  const placeholder = useGetSlippagePlaceholder({
     tradingType,
-    settings.slippage,
-    settings.minSlippage,
-  )
+    slippage: settings.slippage,
+    minSlippage: settings.minSlippage,
+  })
 
   return (
     <div className="dtw-flex dtw-items-center dtw-space-x-3">

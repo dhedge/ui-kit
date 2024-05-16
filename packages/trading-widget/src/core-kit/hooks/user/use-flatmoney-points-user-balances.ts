@@ -40,11 +40,7 @@ export const useFlatmoneyPointsUserBalances =
       address: vaultAddress,
       chainId,
     })
-    const userVaultPortionInPercents = totalSupply
-      ? new BigNumber(balance)
-          .shiftedBy(DEFAULT_PRECISION)
-          .dividedBy(totalSupply)
-      : new BigNumber(0)
+
     const isFmedVault = isFlatMoneyEarlyDepositorAddress(vaultAddress)
     const fetchUserPointsBalances =
       isFmedVault && !isEqualAddress(account, AddressZero)
@@ -55,6 +51,11 @@ export const useFlatmoneyPointsUserBalances =
     } = useFmedVestedPoints({ enabled: fetchUserPointsBalances })
 
     return useMemo(() => {
+      const userVaultPortionInPercents = totalSupply
+        ? new BigNumber(balance)
+            .shiftedBy(DEFAULT_PRECISION)
+            .dividedBy(totalSupply)
+        : new BigNumber(0)
       const userPortionOfLockedPointsBalance = lockedVaultPointsBalance
         ? new BigNumber(lockedVaultPointsBalance.toString())
             .multipliedBy(userVaultPortionInPercents)
@@ -80,10 +81,11 @@ export const useFlatmoneyPointsUserBalances =
         isLoading,
       }
     }, [
+      totalSupply,
+      balance,
       lockedVaultPointsBalance,
       unlockTaxInPercents,
       unlockTime,
-      userVaultPortionInPercents,
       isLoading,
     ])
   }

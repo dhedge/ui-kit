@@ -41,19 +41,19 @@ export const logTransactionArguments = (txArgs: TxArgs) =>
  * Calculates the slippage tolerance for withdrawSafe.
  * Returns an integer number from 0 to 10000,
  * where 10_000 = 100%, 100 = 1%, 10 = 0.1%, 1 = 0.01% etc.
- * @param {number} slippage - The slippage value in % from 0 to 100.
- * @returns {number} - The slippage tolerance.
+ * @param {string} slippage - The slippage value in % from 0 to 100.
+ * @returns {string} - The slippage tolerance.
  */
 export const getSlippageToleranceForWithdrawSafe = (
   slippage: number,
-): number => {
-  const minSlippageStep = 0.01
-  const roundedSlippage = +slippage.toFixed(2)
+): string => {
+  const minSlippageStep = new BigNumber(0.01)
+  const slippageBN = new BigNumber(slippage)
 
   const slippageToUse =
-    slippage !== 0 && roundedSlippage < minSlippageStep
+    !slippageBN.isZero() && slippageBN.lt(minSlippageStep)
       ? minSlippageStep
-      : roundedSlippage
+      : slippageBN
 
-  return slippageToUse * 100
+  return slippageToUse.multipliedBy(100).toFixed(0)
 }
