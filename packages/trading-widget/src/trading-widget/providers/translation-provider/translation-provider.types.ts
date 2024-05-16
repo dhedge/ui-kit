@@ -1,5 +1,6 @@
 export type TranslationMap = {
-  slippageWarning: string
+  depositSlippageWarning: string
+  withdrawSlippageWarning: string
   minSlippageWarning: string
   highSlippageWarning: string
   recommendedMinSlippage: string

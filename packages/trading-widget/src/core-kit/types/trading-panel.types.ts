@@ -47,7 +47,7 @@ export type TransactionAction =
 
 export type DepositMethodName = 'deposit' | 'depositWithCustomCooldown'
 
-export type WithdrawMethodName = 'withdraw' | 'withdrawSUSD'
+export type WithdrawMethodName = 'withdraw' | 'withdrawSUSD' | 'withdrawSafe'
 
 export type SwapEntity = 'token' | 'pool'
 

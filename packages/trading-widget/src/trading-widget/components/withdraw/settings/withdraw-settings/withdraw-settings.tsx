@@ -14,7 +14,7 @@ export const WithdrawSettings: FC = () => {
     <>
       <SettingsOption
         label={t.slippageTolerance}
-        tooltipText={t.slippageWarning}
+        tooltipText={t.withdrawSlippageWarning}
       >
         <SlippageSelector />
       </SettingsOption>

@@ -19,7 +19,7 @@ export const DepositSettings: FC = () => {
     <>
       <SettingsOption
         label={t.slippageTolerance}
-        tooltipText={t.slippageWarning}
+        tooltipText={t.depositSlippageWarning}
       >
         <SlippageSelector />
       </SettingsOption>

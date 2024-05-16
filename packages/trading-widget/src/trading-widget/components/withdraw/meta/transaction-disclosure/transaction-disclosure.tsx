@@ -31,6 +31,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
     allowanceRequired,
     sendTokenSymbol,
     tokenAllowance,
+    isMultiAssetsWithdraw,
   } = useWithdrawTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -64,7 +65,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
       },
     ]
 
-    if (!isAutoSlippage) {
+    if (!isAutoSlippage && !isMultiAssetsWithdraw) {
       items.push({
         tooltipText: t.minSlippageWarning,
         label: t.recommendedMinSlippage,
