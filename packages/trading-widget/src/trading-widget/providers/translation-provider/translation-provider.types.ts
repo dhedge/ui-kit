@@ -65,6 +65,7 @@ export type TranslationMap = {
   highSlippageQuoteDiff: string
   highSlippageRisk: string
   confirm: string
+  selectToken: string
   [key: string]: string
 }
 

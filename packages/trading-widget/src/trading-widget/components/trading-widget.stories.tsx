@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { base, optimism } from 'core-kit/const'
+
 import { TradingWidget as TradingWidgetComponent } from '.'
 
 const meta: Meta<typeof TradingWidgetComponent> = {
@@ -11,6 +13,17 @@ const meta: Meta<typeof TradingWidgetComponent> = {
       </div>
     ),
   ],
+  args: {
+    config: {
+      params: {
+        chainConfig: {
+          [optimism.id]: { name: 'Optimism', iconPath: '' },
+          [base.id]: { name: 'Base', iconPath: '' },
+        },
+        actions: {},
+      },
+    },
+  },
 }
 
 export default meta

@@ -2,6 +2,9 @@ import {
   useOnTokenSelector,
   useTradingPanelPoolConfigs,
 } from 'core-kit/hooks/state'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
+import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
+import { OVERLAY } from 'trading-widget/types'
 
 export interface TokenSelectorProps {
   symbol: string
@@ -9,6 +12,8 @@ export interface TokenSelectorProps {
 
 export const useTokenSelector = ({ symbol }: TokenSelectorProps) => {
   const poolConfigs = useTradingPanelPoolConfigs()
+  const dispatch = useOverlayDispatchContext()
+  const { standalone } = useConfigContextParams()
 
   const isProduct = poolConfigs.some((config) => config.symbol === symbol)
   const isAllSymbol = symbol === 'all'
@@ -16,6 +21,16 @@ export const useTokenSelector = ({ symbol }: TokenSelectorProps) => {
 
   const handleTokenClick = () => {
     onTokenSelector?.({ isOpen: true, entity: isProduct ? 'pool' : 'token' })
+
+    if (standalone) {
+      dispatch({
+        type: 'MERGE_OVERLAY',
+        payload: {
+          type: isProduct ? OVERLAY.POOL_SELECT : OVERLAY.TOKEN_SELECT,
+          isOpen: true,
+        },
+      })
+    }
   }
 
   return {

@@ -87,4 +87,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   highSlippageRisk:
     'Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade.',
   confirm: 'Confirm',
+  selectToken: 'Select token',
 }

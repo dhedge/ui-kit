@@ -11,7 +11,9 @@ import {
   HighSlippageOverlay,
   OverlaySwitch,
   PendingApprovalOverlay,
+  PoolSelectOverlay,
   TermsOfUseOverlay,
+  TokenSelectOverlay,
 } from './widget-overlay'
 import { WidgetSettings } from './widget-settings/widget-settings'
 import { WidgetTabs } from './widget-tabs/widget-tabs'
@@ -37,6 +39,8 @@ export const Widget: FC = () => {
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
         <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />
         <FmedWithdrawalOverlay type={OVERLAY.FMED_WITHDRAWAL} />
+        <TokenSelectOverlay type={OVERLAY.TOKEN_SELECT} searchQuery="" />
+        <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
       </OverlaySwitch>
       <PendingApprovalOverlay />
     </div>

@@ -44,8 +44,8 @@ export const getDefaultTradingPanelState = (
   }
 
   const type = config?.type ?? 'deposit'
-  const sendToken = type === 'deposit' ? poolToken : defaultToken
-  const receiveToken = type === 'deposit' ? defaultToken : poolToken
+  const sendToken = type === 'deposit' ? defaultToken : poolToken
+  const receiveToken = type === 'deposit' ? poolToken : defaultToken
 
   return {
     poolAddress,
@@ -310,6 +310,8 @@ export const TradingPanelProvider: FC<
     createReducerWithLogger(onLog),
     getDefaultTradingPanelState(initialState),
   )
+
+  console.log(state)
 
   const setPoolAddress = useCallback(
     (payload: TradingPanelState['poolAddress']) => {

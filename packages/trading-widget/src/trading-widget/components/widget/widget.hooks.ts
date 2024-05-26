@@ -9,8 +9,8 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import type { TradingPanelType } from 'core-kit/types'
-
 import { TABS } from 'trading-widget/constants/tab'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, TradingPanelType>>(
   (acc, type, index) => {
@@ -23,6 +23,7 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, TradingPanelType>>(
 export const useWidget = () => {
   const [type] = useTradingPanelType()
   const poolConfig = useTradingPanelPoolConfig()
+  const { standalone } = useConfigContextParams()
 
   useGeneralTradingPanelHandlers()
 
@@ -37,9 +38,9 @@ export const useWidget = () => {
   }
 
   useEffect(() => {
-    onTradingTypeChange('deposit') // Reset to "Deposit" tab on product change to set correct input tokens
+    onTradingTypeChange(standalone ? type : 'deposit')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [poolConfig.address])
+  }, [poolConfig.address, standalone, type])
   return {
     type,
     onTabChange,

@@ -7,6 +7,7 @@ import {
   BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
   SUSD_OPTIMISM,
+  base,
   optimism,
 } from 'core-kit/const'
 import { WagmiProvider } from 'core-kit/providers/wagmi-provider'
@@ -33,9 +34,23 @@ const USDY_OPTIMISM: PoolConfig = {
   },
 }
 
+const SYNTHETIX_V3_BASE: PoolConfig = {
+  chainId: base.id,
+  symbol: 'sUSDCy',
+  address: '0xc1e02884af4a283ca25ab63c45360d220d69da52',
+  depositParams: {
+    customTokens: [],
+  },
+  withdrawParams: {
+    customTokens: [],
+  },
+  usePoolLogicDeposit: true,
+}
+
 const DEMO_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {
   poolConfigMap: {
     [USDY_OPTIMISM.address]: USDY_OPTIMISM,
+    [SYNTHETIX_V3_BASE.address]: SYNTHETIX_V3_BASE,
   },
   poolAddress: USDY_OPTIMISM.address,
   poolFallbackData: {
@@ -79,6 +94,11 @@ const DEMO_ACTIONS: TradingPanelContextConfig['actions'] = {
     })
 
     return Promise.resolve(null)
+  },
+  onSetTradingType: (...args) => {
+    console.log({
+      onSetTradingType: args,
+    })
   },
 }
 
