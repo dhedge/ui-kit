@@ -36,7 +36,6 @@ export const TestProviders = ({
             poolConfigMap: initialState?.poolConfigMap ?? POOL_CONFIG_MAP_MOCK,
           }}
           actions={actions ?? CALLBACK_CONFIG_MOCK}
-          isDev
         >
           {children}
         </TradingPanelProvider>

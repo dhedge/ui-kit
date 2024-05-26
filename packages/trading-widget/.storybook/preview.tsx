@@ -3,6 +3,7 @@ import 'styles/index.css'
 import type { Preview } from '@storybook/react'
 
 import { TradingPanelProvider } from 'core-kit'
+import { WagmiProvider } from 'core-kit/providers/wagmi-provider'
 import {
   BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
@@ -84,13 +85,14 @@ const DEMO_ACTIONS: TradingPanelContextConfig['actions'] = {
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <TradingPanelProvider
-        isDev
-        initialState={DEMO_INITIAL_STATE}
-        actions={DEMO_ACTIONS}
-      >
-        <Story />
-      </TradingPanelProvider>
+      <WagmiProvider>
+        <TradingPanelProvider
+          initialState={DEMO_INITIAL_STATE}
+          actions={DEMO_ACTIONS}
+        >
+          <Story />
+        </TradingPanelProvider>
+      </WagmiProvider>
     ),
   ],
 }

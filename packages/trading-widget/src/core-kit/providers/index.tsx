@@ -20,8 +20,6 @@ import type {
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
 
-import { WagmiProvider } from './wagmi-provider'
-
 function noop() {
   return
 }
@@ -307,7 +305,6 @@ export const TradingPanelProvider: FC<
     onLog,
     onSimulateTransaction,
   },
-  isDev,
 }) => {
   const [state, dispatch] = useReducer(
     createReducerWithLogger(onLog),
@@ -441,18 +438,6 @@ export const TradingPanelProvider: FC<
       onSimulateTransaction,
     ],
   )
-
-  if (isDev) {
-    return (
-      <WagmiProvider>
-        <TradingPanelActionsContext.Provider value={actions}>
-          <TradingPanelStateContext.Provider value={state}>
-            {children}
-          </TradingPanelStateContext.Provider>
-        </TradingPanelActionsContext.Provider>
-      </WagmiProvider>
-    )
-  }
 
   return (
     <TradingPanelActionsContext.Provider value={actions}>

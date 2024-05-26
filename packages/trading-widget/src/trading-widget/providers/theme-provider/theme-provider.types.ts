@@ -66,6 +66,134 @@ export interface ThemeProviderConfigProps {
       }
       style?: object
     }
+    tabGroup?: {
+      color?: object
+      size?: {
+        px?: string
+      }
+      style?: object
+    }
+    tabContent?: {
+      color?: object
+      size?: {
+        pt?: string
+        px?: string
+        pb?: string
+        gap?: string
+      }
+      style?: object
+    }
+    tab?: {
+      color?: {
+        colorBg?: string
+        colorText?: string
+        selectColorText?: string
+        colorTextHover?: string
+      }
+      size?: {
+        px?: string
+        py?: string
+        fontSize?: string
+      }
+      style?: {
+        fontWeight?: string
+        lineHeight?: string
+      }
+    }
+    balance?: {
+      color?: {
+        colorText?: string
+        priceColorText?: string
+      }
+      size?: {
+        px?: string
+        gap?: string
+        fontSize?: string
+        lineHeight?: string
+        priceFontSize?: string
+        priceLineHeight?: string
+      }
+      style?: object
+    }
+    inputGroup?: {
+      color?: object
+      size?: {
+        px?: string
+        gap?: string
+      }
+      style?: object
+    }
+    input?: {
+      color?: {
+        textColor?: string
+        loadingTextColor?: string
+        bgColor?: string
+        bgColorFocus?: string
+        borderColor?: string
+        borderColorFocus?: string
+        placeholderColor?: string
+        buttonBgColor?: string
+        buttonBorderColor?: string
+        buttonTextColor?: string
+      }
+      size?: {
+        px?: string
+        py?: string
+        gap?: string
+        priceGap?: string
+        iconSize?: string
+        iconSizeSm?: string
+        labelFontSize?: string
+        labelLineHeight?: string
+        fontSize?: string
+        lineHeight?: string
+        fontSizeLg?: string
+        lineHeightLg?: string
+        tokenFontSize?: string
+        tokenLineHeight?: string
+        tokenFontSizeSm?: string
+        tokenLineHeightSm?: string
+        buttonPx?: string
+        buttonPy?: string
+        buttonFontSize?: string
+        buttonLineHeight?: string
+      }
+      style?: {
+        radius?: string
+        labelFontWeight?: string
+        fontWeight?: string
+        tokenFontWeight?: string
+        buttonRadius?: string
+      }
+    }
+    actionButton?: {
+      color?: {
+        colorBgFrom?: string
+        colorBgTo?: string
+        colorBgFromHover?: string
+        colorBgToHover?: string
+        colorBorder?: string
+        colorText?: string
+        outlineColorBorder?: string
+        outlineColorBorderHover?: string
+        outlineColorText?: string
+      }
+      size?: {
+        borderWidth?: string
+      }
+      style?: object
+    }
+    meta?: {
+      color?: {
+        linkTextColor?: string
+        panelBgHover?: string
+      }
+      size?: {
+        gap?: string
+        px?: string
+      }
+      style?: object
+    }
   }
 }
 
