@@ -3,7 +3,10 @@ import classNames from 'classnames'
 import { useMemo } from 'react'
 
 import type { TransactionDisclosureItemProps } from 'trading-widget/components/common'
-import { Spinner, TransactionOverviewDisclosure } from 'trading-widget/components/common'
+import {
+  Spinner,
+  TransactionOverviewDisclosure,
+} from 'trading-widget/components/common'
 import { ExchangeRate } from 'trading-widget/components/widget/widget-meta'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 

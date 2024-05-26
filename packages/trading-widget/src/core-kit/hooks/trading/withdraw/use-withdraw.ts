@@ -18,7 +18,6 @@ import {
 } from 'core-kit/hooks/trading'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import { DefaultSellingParams } from 'core-kit/models'
-import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 import type {
   ContractActionFunc,
@@ -29,6 +28,7 @@ import {
   getSlippageToleranceForWithdrawSafe,
   logTransactionArguments,
 } from 'core-kit/utils'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 import { useWithdrawSlippage } from './use-withdraw-slippage'

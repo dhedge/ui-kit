@@ -1,7 +1,8 @@
-import type { TradingPanelType } from 'core-kit/types'
 import { Tab } from '@headlessui/react'
 import classNames from 'classnames'
 import type { FC } from 'react'
+
+import type { TradingPanelType } from 'core-kit/types'
 
 import { useTradingTypeName } from 'trading-widget/hooks'
 

@@ -27,8 +27,9 @@ import {
   logTransactionArguments,
 } from 'core-kit/utils'
 
-import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
+
+import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 const action = 'deposit'
 

@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 interface MaxBalanceButtonProps {

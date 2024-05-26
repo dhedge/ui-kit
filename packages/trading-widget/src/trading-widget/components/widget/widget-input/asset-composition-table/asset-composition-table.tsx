@@ -1,11 +1,9 @@
 import classNames from 'classnames'
 
-import { TokenBadge, Skeleton } from 'trading-widget/components/common'
+import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
-import {
-  useAssetCompositionTable,
-  AssetCompositionTableProps,
-} from './asset-composition-table.hooks'
+import type { AssetCompositionTableProps } from './asset-composition-table.hooks'
+import { useAssetCompositionTable } from './asset-composition-table.hooks'
 
 export const AssetCompositionTable = ({
   className,

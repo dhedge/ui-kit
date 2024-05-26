@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js'
 import isNumber from 'lodash.isnumber'
 
 import {
+  DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   DEFAULT_PRECISION,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
-  DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
 } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 import type { TradingToken } from 'core-kit/types'

@@ -8,7 +8,6 @@ import {
   optimism,
 } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
-import * as configProviderHooks from 'trading-widget/providers/config-provider'
 
 import {
   useTradingParams,
@@ -18,6 +17,7 @@ import { useDepositSlippage } from 'core-kit/hooks/trading/deposit'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import type { Address, DynamicTradingToken } from 'core-kit/types'
 import { renderHook } from 'tests/test-utils'
+import * as configProviderHooks from 'trading-widget/providers/config-provider'
 
 import { useDeposit } from './use-deposit'
 

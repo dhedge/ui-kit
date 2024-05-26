@@ -3,13 +3,13 @@ import 'styles/index.css'
 import type { Preview } from '@storybook/react'
 
 import { TradingPanelProvider } from 'core-kit'
-import { WagmiProvider } from 'core-kit/providers/wagmi-provider'
 import {
   BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
   SUSD_OPTIMISM,
   optimism,
 } from 'core-kit/const'
+import { WagmiProvider } from 'core-kit/providers/wagmi-provider'
 import type { PoolConfig, TradingPanelContextConfig } from 'core-kit/types'
 
 const USDY_OPTIMISM: PoolConfig = {

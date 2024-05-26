@@ -1,7 +1,8 @@
-import type { TradingPanelType } from 'core-kit/types'
 import { Tab } from '@headlessui/react'
 
 import type { FC } from 'react'
+
+import type { TradingPanelType } from 'core-kit/types'
 
 import { Layout } from 'trading-widget/components/common'
 import { DepositSettings } from 'trading-widget/components/deposit'
