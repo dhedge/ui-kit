@@ -9,6 +9,7 @@ import {
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw'
 import {
   useGetSlippagePlaceholder,
   useGetThemeTypeBySlippage,
@@ -28,6 +29,7 @@ export const useWithdrawTransactionDisclosure = () => {
   ] = useTradingPanelSettings()
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
+  const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
 
   const isAutoSlippage = slippage === 'auto'
   const isMinSlippageNumber = isNumber(minSlippage)
@@ -36,13 +38,16 @@ export const useWithdrawTransactionDisclosure = () => {
     isAutoSlippage ? minSlippage ?? 0 : slippage,
   )
 
-  const slippagePlaceholder = useGetSlippagePlaceholder(
-    'withdraw',
+  const slippagePlaceholder = useGetSlippagePlaceholder({
+    tradingType: 'withdraw',
     slippage,
     minSlippage,
-  )
+    showDefaultSlippage: isMultiAssetsWithdraw,
+  })
   const slippageTooltipText =
-    themeType === THEME_TYPE.DEFAULT ? t.slippageWarning : t.highSlippageWarning
+    themeType === THEME_TYPE.DEFAULT
+      ? t.withdrawSlippageWarning
+      : t.highSlippageWarning
 
   const getMinReceiveText = () => {
     if (receiveToken.symbol === 'all') {
@@ -90,5 +95,6 @@ export const useWithdrawTransactionDisclosure = () => {
     minSlippage,
     showApplyMinSlippageButton,
     handleMinTradingSlippage,
+    isMultiAssetsWithdraw,
   }
 }

@@ -9,7 +9,10 @@ import { DefaultSellingParams } from 'core-kit/models'
 
 import type { TradingToken } from 'core-kit/types'
 
-import { getOrderedTxArgs } from 'core-kit/utils'
+import {
+  getOrderedTxArgs,
+  getSlippageToleranceForWithdrawSafe,
+} from 'core-kit/utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { act, renderHook } from 'tests/test-utils'
 
@@ -121,6 +124,7 @@ describe('useWithdraw', () => {
     expect(sendMock).toHaveBeenCalledTimes(1)
     expect(sendMock).toHaveBeenCalledWith(
       fromTokenAmount.shiftedBy(DEFAULT_PRECISION).toFixed(0),
+      getSlippageToleranceForWithdrawSafe(settings.slippage),
     )
   })
 

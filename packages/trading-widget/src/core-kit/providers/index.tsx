@@ -55,7 +55,7 @@ export const getDefaultTradingPanelState = (
     settings: {
       slippage: 'auto',
       isInfiniteAllowance: false,
-      isMultiAssetWithdrawalEnabled: false,
+      isMultiAssetWithdrawalEnabled: true,
       isMaxSlippageLoading: false,
       ...config?.settings,
     },

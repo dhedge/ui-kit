@@ -45,14 +45,15 @@ export const useDepositTransactionDisclosure = () => {
   const themeType = useGetThemeTypeBySlippage(
     isAutoSlippage ? minSlippage ?? 0 : slippage,
   )
-
-  const slippagePlaceholder = useGetSlippagePlaceholder(
-    'deposit',
+  const slippagePlaceholder = useGetSlippagePlaceholder({
+    tradingType: 'deposit',
     slippage,
     minSlippage,
-  )
+  })
   const slippageTooltipText =
-    themeType === THEME_TYPE.DEFAULT ? t.slippageWarning : t.highSlippageWarning
+    themeType === THEME_TYPE.DEFAULT
+      ? t.depositSlippageWarning
+      : t.highSlippageWarning
 
   const getMinReceiveText = () => {
     if (isAutoSlippage) {

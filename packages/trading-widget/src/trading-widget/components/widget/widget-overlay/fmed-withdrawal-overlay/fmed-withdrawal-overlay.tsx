@@ -2,7 +2,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
 import { useFlatmoneyPointsUserBalances } from 'core-kit/hooks/user'
-import { formatNumberToLimitedDecimals } from 'core-kit/utils'
+import { commify, formatNumberToLimitedDecimals } from 'core-kit/utils'
 import {
   ActionButton,
   Layout,
@@ -39,17 +39,13 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
           <>
             <li className="dtw-text-warning">
               If you withdraw now, you will incur a penalty of{' '}
-              {formatNumberToLimitedDecimals(unlockTaxAmount, 0)} FMP
+              {commify(formatNumberToLimitedDecimals(unlockTaxAmount, 0))} FMP
             </li>
             <li className="dtw-text-warning">
               Wait until {unlockDate} for locked points vesting to complete
             </li>
           </>
         )}
-        <li>
-          If you withdraw before UNIT goes live on Base Mainnet, you won’t
-          receive any FMP
-        </li>
         <li>After withdrawal, you won’t be able to redeposit</li>
       </ul>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
