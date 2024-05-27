@@ -5,3 +5,4 @@ export { HighSlippageOverlay } from './high-slippage-overlay/high-slippage-overl
 export { FmedWithdrawalOverlay } from './fmed-withdrawal-overlay/fmed-withdrawal-overlay'
 export { TokenSelectOverlay } from './token-select-overlay/token-select-overlay'
 export { PoolSelectOverlay } from './pool-select-overlay/pool-select-overlay'
+export { TradingOverlay } from './trading-overlay/trading-overlay'

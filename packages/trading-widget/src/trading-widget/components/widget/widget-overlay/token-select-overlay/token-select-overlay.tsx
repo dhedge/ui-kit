@@ -45,7 +45,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
             <li
               key={`${token.address}_${token.symbol}`}
               className={classNames(
-                'dtw-rounded-xl dtw-drop-shadow-md odd:dtw-bg-themeDark-400 dtw-group',
+                'dtw-rounded-xl dtw-drop-shadow-md even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group',
                 {
                   'dtw-cursor-pointer ': !isActive,
                 },
@@ -60,7 +60,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
           )
         })}
         {isMultiAssetWithdrawalEnabled && (
-          <li className="tw-cursor-pointer tw-rounded-2xl tw-p-0.5 odd:tw-bg-themeDark-400 tw-group">
+          <li className="tw-cursor-pointer tw-rounded-2xl tw-p-0.5 even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] tw-group">
             <MultiTokenSelectItem
               token={MULTI_ASSET_TOKEN}
               onSelect={onSelect}

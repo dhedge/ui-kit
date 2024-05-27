@@ -44,7 +44,7 @@ export const AssetCompositionTable = ({
                       }}
                     >
                       <p className="dtw-truncate">{fraction}</p>
-                      <p className="dtw-truncate dtw-text-xs dtw-text-themeGray-600">
+                      <p className="dtw-truncate dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
                         {fractionUsd}
                       </p>
                     </td>

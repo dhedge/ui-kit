@@ -37,7 +37,7 @@ export const TokenSelectItem = ({
           'dtw-opacity-100': isActive,
         })}
       />
-      <div className="dtw-flex dtw-flex-col dtw-self-end dtw-text-sm dtw-font-light dtw-text-white/70">
+      <div className="dtw-flex dtw-flex-col dtw-self-end dtw-text-sm dtw-font-light dtw-text-[color:var(--panel-balance-content-color)]">
         {isActive && (
           <CheckIcon className="dtw-w-4 dtw-self-end dtw-text-themeGreen" />
         )}

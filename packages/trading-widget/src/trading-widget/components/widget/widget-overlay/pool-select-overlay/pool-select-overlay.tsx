@@ -39,7 +39,7 @@ export const PoolSelectOverlay: FC<PoolSelectOverlayProps> = ({
               <div
                 key={`${address}_${symbol}`}
                 className={classNames(
-                  'dtw-rounded-xl dtw-drop-shadow-md odd:dtw-bg-themeDark-400 dtw-group',
+                  'dtw-rounded-xl dtw-drop-shadow-md even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group',
                   {
                     'dtw-cursor-pointer ': !isActive,
                   },

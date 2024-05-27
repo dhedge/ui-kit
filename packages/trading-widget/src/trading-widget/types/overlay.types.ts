@@ -4,6 +4,7 @@ export const OVERLAY = {
   FMED_WITHDRAWAL: 'FMED_WITHDRAWAL',
   TOKEN_SELECT: 'TOKEN_SELECT',
   POOL_SELECT: 'POOL_SELECT',
+  TRADING: 'TRADING',
 } as const
 
 export type OverlayType = (typeof OVERLAY)[keyof typeof OVERLAY]

@@ -14,6 +14,7 @@ import {
   PoolSelectOverlay,
   TermsOfUseOverlay,
   TokenSelectOverlay,
+  TradingOverlay,
 } from './widget-overlay'
 import { WidgetSettings } from './widget-settings/widget-settings'
 import { WidgetTabs } from './widget-tabs/widget-tabs'
@@ -41,6 +42,7 @@ export const Widget: FC = () => {
         <FmedWithdrawalOverlay type={OVERLAY.FMED_WITHDRAWAL} />
         <TokenSelectOverlay type={OVERLAY.TOKEN_SELECT} searchQuery="" />
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
+        <TradingOverlay type={OVERLAY.TRADING} />
       </OverlaySwitch>
       <PendingApprovalOverlay />
     </div>

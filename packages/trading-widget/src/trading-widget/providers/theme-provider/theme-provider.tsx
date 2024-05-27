@@ -169,6 +169,18 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           '12px'
         }`,
 
+        //popup-list
+        //popup-list-color
+        '--panel-popup-list-header-bg': `${
+          config?.component?.popupList?.color?.headerBg ?? COLORS.DARK['800']
+        }`,
+        '--panel-popup-list-item-bg-even': `${
+          config?.component?.popupList?.color?.itemBgEven ?? 'transparent'
+        }`,
+        '--panel-popup-list-item-bg-odd': `${
+          config?.component?.popupList?.color?.itemBgOdd ?? COLORS.DARK['400']
+        }`,
+
         // tab-group
         //tab-group-spacing
         '--panel-tab-group-px': `${
@@ -480,6 +492,22 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--panel-meta-hover-bg': `${
           config?.component?.meta?.color?.panelBgHover ??
           'var(--panel-neutral-color)'
+        }`,
+
+        //tooltip
+        //tooltip-color
+        '--panel-tooltip-bg': `${
+          config?.component?.tooltip?.color?.colorBg ?? COLORS.DARK['700']
+        }`,
+
+        //switch
+        //switch-color
+        '--panel-switch-bg-checked': `${
+          config?.component?.switch?.color?.colorBgChecked ??
+          COLORS.BLUE.DEFAULT
+        }`,
+        '--panel-switch-bg': `${
+          config?.component?.switch?.color?.colorBg ?? COLORS.GRAY['700']
         }`,
       }}
     >

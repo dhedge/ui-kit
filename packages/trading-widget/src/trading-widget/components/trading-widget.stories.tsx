@@ -20,7 +20,6 @@ const meta: Meta<typeof TradingWidgetComponent> = {
           [optimism.id]: { name: 'Optimism', iconPath: '' },
           [base.id]: { name: 'Base', iconPath: '' },
         },
-        actions: {},
       },
     },
   },

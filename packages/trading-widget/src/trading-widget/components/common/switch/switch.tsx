@@ -45,8 +45,8 @@ export const Switch = ({
           className={classNames(
             'dtw-relative dtw-inline-flex dtw-h-6 dtw-w-11 dtw-flex-shrink-0 dtw-items-center dtw-rounded-full dtw-transition-colors focus:dtw-outline-none',
             {
-              'dtw-bg-themeBlue': checked,
-              'dtw-bg-gray-700': !checked,
+              'dtw-bg-[color:var(--panel-switch-bg-checked)]': checked,
+              'dtw-bg-[color:var(--panel-switch-bg)]': !checked,
               'dtw-pointer-events-none dtw-opacity-50': disabled,
             },
           )}

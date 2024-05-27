@@ -66,6 +66,15 @@ export interface ThemeProviderConfigProps {
       }
       style?: object
     }
+    popupList?: {
+      color?: {
+        itemBgEven?: string
+        itemBgOdd?: string
+        headerBg?: string
+      }
+      size?: object
+      style?: object
+    }
     tabGroup?: {
       color?: object
       size?: {
@@ -192,6 +201,21 @@ export interface ThemeProviderConfigProps {
         gap?: string
         px?: string
       }
+      style?: object
+    }
+    tooltip?: {
+      color?: {
+        colorBg?: string
+      }
+      size?: object
+      style?: object
+    }
+    switch?: {
+      color?: {
+        colorBgChecked?: string
+        colorBg?: string
+      }
+      size?: object
       style?: object
     }
   }

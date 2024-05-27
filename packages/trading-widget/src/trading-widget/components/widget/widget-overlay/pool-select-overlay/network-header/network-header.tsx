@@ -20,7 +20,7 @@ export const NetworkHeader: FC<PropsWithChildren<NetworkHeaderProps>> = ({
   const name = chainConfig[chainId]?.name
   return (
     <div>
-      <div className="dtw-sticky dtw-top-0 dtw-z-10 dtw-flex dtw-items-center dtw-space-x-3 dtw-bg-themeDark-800 dtw-drop-shadow-md dtw-p-3">
+      <div className="dtw-sticky dtw-top-0 dtw-z-10 dtw-flex dtw-items-center dtw-space-x-3 dtw-bg-[color:var(--panel-popup-list-header-bg)] dtw-drop-shadow-md dtw-p-3">
         {src && (
           <div className="dtw-h-6 dtw-w-6">
             <Image

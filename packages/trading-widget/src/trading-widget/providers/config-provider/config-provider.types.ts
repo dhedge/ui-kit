@@ -24,8 +24,8 @@ export interface ConfigProviderActions {
 
 export interface ConfigProviderProps {
   config?: {
-    params: Partial<ConfigProviderParams>
-    actions: Partial<ConfigProviderActions>
+    params?: Partial<ConfigProviderParams>
+    actions?: Partial<ConfigProviderActions>
   }
 }
 
