@@ -2,6 +2,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { useEffect } from 'react'
 
 import { useTradingPanelModal } from 'core-kit/hooks/state'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 import { OVERLAY } from 'trading-widget/types'
 
 import {
@@ -13,15 +14,16 @@ import {
 export const OverlayProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useOverlayProvider()
   const [{ isOpen }] = useTradingPanelModal()
+  const { standalone } = useConfigContextParams()
 
   useEffect(() => {
-    if (isOpen && !state.TRADING.isOpen) {
+    if (standalone && isOpen && !state.TRADING.isOpen) {
       dispatch({
         type: 'MERGE_OVERLAY',
         payload: { type: OVERLAY.TRADING, isOpen: true },
       })
     }
-  }, [isOpen, state.TRADING.isOpen, dispatch])
+  }, [isOpen, state.TRADING.isOpen, dispatch, standalone])
 
   return (
     <OverlayProviderDispatchContext.Provider value={dispatch}>
