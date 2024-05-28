@@ -36,7 +36,9 @@ exports[`useContractPoolComposition > should return extended fund composition da
   {
     "amount": "3",
     "asset": {
-      "iconSymbols": [],
+      "iconSymbols": [
+        "0xffff...5847",
+      ],
     },
     "isDeposit": false,
     "precision": 18,

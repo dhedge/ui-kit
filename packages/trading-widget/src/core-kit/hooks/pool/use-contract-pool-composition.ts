@@ -104,6 +104,11 @@ export const useContractPoolComposition = ({
       const tokenAddress = asset.toLowerCase() as Address
       const isSynthetixAsset = isSynthetixV3Asset(tokenAddress)
       const [symbol, decimals] = chunked[i] ?? []
+      const tokenName =
+        BRIDGED_TOKENS_SYMBOLS[tokenAddress.toLowerCase()] ??
+        symbol?.result?.toString() ??
+        fallbackAssetMap?.[tokenAddress]?.tokenName ??
+        shortenAddress(tokenAddress)
       return {
         tokenAddress,
         isDeposit,
@@ -112,17 +117,14 @@ export const useContractPoolComposition = ({
           isSynthetixAsset && synthetixV3AssetBalance
             ? synthetixV3AssetBalance
             : assetsBalances?.[i]?.toString() ?? '0',
-        tokenName:
-          BRIDGED_TOKENS_SYMBOLS[tokenAddress.toLowerCase()] ??
-          symbol?.result?.toString() ??
-          fallbackAssetMap?.[tokenAddress]?.tokenName ??
-          shortenAddress(tokenAddress),
+        tokenName,
         precision: decimals?.result
           ? Number(decimals.result)
           : fallbackAssetMap?.[tokenAddress]?.precision ?? DEFAULT_PRECISION,
         asset: {
-          iconSymbols:
-            fallbackAssetMap?.[tokenAddress]?.asset.iconSymbols ?? [],
+          iconSymbols: fallbackAssetMap?.[tokenAddress]?.asset.iconSymbols ?? [
+            tokenName,
+          ],
         },
       }
     })
