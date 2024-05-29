@@ -32,7 +32,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
       <div className="dtw-mt-6 dtw-text-center dtw-font-light dtw-drop-shadow-md dtw-max-h-36 dtw-overflow-y-scroll dtw-break-all">
         <TradingSummary />
       </div>
-      <div className="dtw-mt-6 dtw-w-full dempty:tw-mt-0 dtw-flex dtw-items-center dtw-justify-center">
+      <div className="dtw-mt-6 dtw-w-full empty:dtw-mt-0 dtw-flex dtw-items-center dtw-justify-center">
         {link && (
           <ExternalLinkButton link={link}>{t.explorer}</ExternalLinkButton>
         )}

@@ -20,7 +20,16 @@ export const OverlayProvider: FC<PropsWithChildren> = ({ children }) => {
     if (standalone && isOpen && !state.TRADING.isOpen) {
       dispatch({
         type: 'MERGE_OVERLAY',
-        payload: { type: OVERLAY.TRADING, isOpen: true },
+        payload: { type: OVERLAY.TRADING, isOpen },
+      })
+    }
+  }, [isOpen, state.TRADING.isOpen, dispatch, standalone])
+
+  useEffect(() => {
+    if (standalone && !isOpen && state.TRADING.isOpen) {
+      dispatch({
+        type: 'MERGE_OVERLAY',
+        payload: { type: OVERLAY.TRADING, isOpen },
       })
     }
   }, [isOpen, state.TRADING.isOpen, dispatch, standalone])

@@ -2,6 +2,7 @@ import { BigNumber } from 'bignumber.js'
 
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 import type { TradingToken } from 'core-kit/types'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export interface TokenSelectItemProps {
   token: TradingToken
@@ -17,8 +18,9 @@ export const useTokenSelectItem = ({
     symbol: token.symbol,
     address: token.address,
   })
+  const { defaultPrecision } = useConfigContextParams()
   const formattedBalance = new BigNumber(balance).toFixed(
-    6,
+    defaultPrecision,
     BigNumber.ROUND_DOWN,
   )
 

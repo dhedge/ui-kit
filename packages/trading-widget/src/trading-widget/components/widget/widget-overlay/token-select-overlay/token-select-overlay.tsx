@@ -60,7 +60,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
           )
         })}
         {isMultiAssetWithdrawalEnabled && (
-          <li className="tw-cursor-pointer tw-rounded-2xl tw-p-0.5 even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] tw-group">
+          <li className="dtw-cursor-pointer dtw-rounded-xl dtw-p-0.5 even:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group">
             <MultiTokenSelectItem
               token={MULTI_ASSET_TOKEN}
               onSelect={onSelect}

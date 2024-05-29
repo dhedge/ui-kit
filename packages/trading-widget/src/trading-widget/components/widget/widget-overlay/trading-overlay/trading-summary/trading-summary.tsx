@@ -21,12 +21,9 @@ export const TradingSummary: FC = () => {
   if (action === 'approve' && sendToken) {
     return (
       <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1 dtw-flex-wrap dtw-overflow-hidden">
-        {t.approveSpending.replace(
-          '{symbol}',
-          `${(<TokenIcon size="sm" symbols={[sendToken.symbol]} />)} ${
-            sendToken.symbol
-          }`,
-        )}
+        <span>{t.approveSpending}</span>
+        <TokenIcon size="sm" symbols={[sendToken.symbol]} />
+        <span>{sendToken.symbol}</span>
       </div>
     )
   }

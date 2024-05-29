@@ -311,8 +311,6 @@ export const TradingPanelProvider: FC<
     getDefaultTradingPanelState(initialState),
   )
 
-  console.log(state)
-
   const setPoolAddress = useCallback(
     (payload: TradingPanelState['poolAddress']) => {
       dispatch({ type: 'SET_POOL_ADDRESS', payload })

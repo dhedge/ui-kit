@@ -91,7 +91,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   sendingOrderToWallet: 'Sending order to your wallet',
   settingUpTx: 'Setting up transaction',
   updateSynthetixOracles: 'Updating Synthetix Oracles',
-  approveSpending: 'Approve {symbol} spending',
+  approveSpending: 'Approve spending',
   pay: 'Pay',
   multiAssetFractions: 'multi asset fractions',
   explorer: 'Explorer',
