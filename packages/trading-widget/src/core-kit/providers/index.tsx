@@ -20,8 +20,6 @@ import type {
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
 
-import { WagmiProvider } from './wagmi-provider'
-
 function noop() {
   return
 }
@@ -46,8 +44,8 @@ export const getDefaultTradingPanelState = (
   }
 
   const type = config?.type ?? 'deposit'
-  const sendToken = type === 'deposit' ? poolToken : defaultToken
-  const receiveToken = type === 'deposit' ? defaultToken : poolToken
+  const sendToken = type === 'deposit' ? defaultToken : poolToken
+  const receiveToken = type === 'deposit' ? poolToken : defaultToken
 
   return {
     poolAddress,
@@ -307,7 +305,6 @@ export const TradingPanelProvider: FC<
     onLog,
     onSimulateTransaction,
   },
-  isDev,
 }) => {
   const [state, dispatch] = useReducer(
     createReducerWithLogger(onLog),
@@ -441,18 +438,6 @@ export const TradingPanelProvider: FC<
       onSimulateTransaction,
     ],
   )
-
-  if (isDev) {
-    return (
-      <WagmiProvider>
-        <TradingPanelActionsContext.Provider value={actions}>
-          <TradingPanelStateContext.Provider value={state}>
-            {children}
-          </TradingPanelStateContext.Provider>
-        </TradingPanelActionsContext.Provider>
-      </WagmiProvider>
-    )
-  }
 
   return (
     <TradingPanelActionsContext.Provider value={actions}>

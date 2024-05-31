@@ -16,13 +16,13 @@ export const useUserVaultsBalances = (): UserPoolBalances => {
   const { account } = useAccount()
   const stakedPools = useUserStakedPools()
 
-  const { data = {} } = usePoolsDynamic()
+  const { data } = usePoolsDynamic()
   return useMemo(() => {
     if (!account) {
       return {}
     }
 
-    return Object.entries(data).reduce((acc, [address, data]) => {
+    return Object.entries(data ?? {}).reduce((acc, [address, data]) => {
       const stakedBalance = stakedPools?.find((vault) =>
         isEqualAddress(address, vault.address),
       )

@@ -44,8 +44,8 @@ export interface ContractCallArgs<T extends string | undefined | void> {
 
 export interface SimulateTransactionParams {
   chainId: ChainId
-  from: string
-  to: string
+  from: Address
+  to: Address
   input: string
   gas: number
   value?: string

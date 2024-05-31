@@ -1,7 +1,11 @@
 import BigNumber from 'bignumber.js'
 import isNumber from 'lodash.isnumber'
 
-import { DEFAULT_PRECISION } from 'core-kit/const'
+import {
+  DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+  DEFAULT_PRECISION,
+  DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+} from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 import type { TradingToken } from 'core-kit/types'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -16,6 +20,13 @@ vi.mock('core-kit/hooks/state', () => ({
   useReceiveTokenInput: vi.fn(),
   useTradingPanelSettings: vi.fn(),
   useTradingPanelType: vi.fn(),
+}))
+
+vi.mock('trading-widget/providers/config-provider', () => ({
+  useConfigContextParams: vi.fn().mockReturnValue({
+    defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+    defaultDepositSlippageScale: DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+  }),
 }))
 
 describe('useMinReceiveText', () => {
@@ -147,7 +158,11 @@ describe('receiveAppliedSlippage', () => {
     expect(receiveBalance.isFinite()).toBe(true)
 
     expect(
-      receiveAppliedSlippage(receiveBalance, slippage, tradingType),
+      receiveAppliedSlippage(
+        receiveBalance,
+        slippage,
+        DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+      ),
     ).toMatchSnapshot()
   })
 
@@ -161,7 +176,11 @@ describe('receiveAppliedSlippage', () => {
     expect(receiveBalance.isFinite()).toBe(true)
 
     expect(
-      receiveAppliedSlippage(receiveBalance, slippage, tradingType),
+      receiveAppliedSlippage(
+        receiveBalance,
+        slippage,
+        DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+      ),
     ).toMatchSnapshot()
   })
 
@@ -175,7 +194,11 @@ describe('receiveAppliedSlippage', () => {
     expect(receiveBalance.isFinite()).toBe(true)
 
     expect(
-      receiveAppliedSlippage(receiveBalance, slippage, tradingType),
+      receiveAppliedSlippage(
+        receiveBalance,
+        slippage,
+        DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+      ),
     ).toMatchSnapshot()
   })
 
@@ -189,7 +212,11 @@ describe('receiveAppliedSlippage', () => {
     expect(receiveBalance.isFinite()).toBe(false)
 
     expect(
-      receiveAppliedSlippage(receiveBalance, slippage, tradingType),
+      receiveAppliedSlippage(
+        receiveBalance,
+        slippage,
+        DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
+      ),
     ).toMatchSnapshot()
   })
 
@@ -203,7 +230,11 @@ describe('receiveAppliedSlippage', () => {
     expect(receiveBalance.isFinite()).toBe(true)
 
     expect(
-      receiveAppliedSlippage(receiveBalance, slippage, tradingType),
+      receiveAppliedSlippage(
+        receiveBalance,
+        slippage,
+        DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+      ),
     ).toMatchSnapshot()
   })
 })

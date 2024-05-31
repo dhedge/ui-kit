@@ -1,7 +1,12 @@
 import { act } from '@testing-library/react'
 import BigNumber from 'bignumber.js'
 
-import { AddressZero, BRIDGED_USDC_OPTIMISM, optimism } from 'core-kit/const'
+import {
+  AddressZero,
+  BRIDGED_USDC_OPTIMISM,
+  DEFAULT_DEPOSIT_SLIPPAGE,
+  optimism,
+} from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 
 import {
@@ -12,8 +17,15 @@ import { useDepositSlippage } from 'core-kit/hooks/trading/deposit'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import type { Address, DynamicTradingToken } from 'core-kit/types'
 import { renderHook } from 'tests/test-utils'
+import * as configProviderHooks from 'trading-widget/providers/config-provider'
 
 import { useDeposit } from './use-deposit'
+
+vi.mock('trading-widget/providers/config-provider', () => ({
+  useConfigContextParams: vi.fn().mockReturnValue({
+    defaultDepositSlippage: DEFAULT_DEPOSIT_SLIPPAGE,
+  }),
+}))
 
 vi.mock('core-kit/hooks/state', () => ({
   useReceiveTokenInput: vi.fn(),
@@ -67,6 +79,14 @@ describe('useDeposit', () => {
         ({
           send: sendMock,
         }) as unknown as ReturnType<typeof useContractFunction>,
+    )
+    vi.mocked(configProviderHooks.useConfigContextParams).mockImplementation(
+      () =>
+        ({
+          defaultDepositSlippage: DEFAULT_DEPOSIT_SLIPPAGE,
+        }) as unknown as ReturnType<
+          typeof configProviderHooks.useConfigContextParams
+        >,
     )
   })
 

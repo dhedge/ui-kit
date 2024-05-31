@@ -82,7 +82,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
 
         '--panel-border-color': `${
           config?.global?.color?.colorBorderPrimary ??
-          `var('--panel-content-color)`
+          `var(--panel-content-color)`
         }`,
 
         //global-size
@@ -126,151 +126,389 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
 
         //label
         //label-typography
-        '--panel-label-font-size': `var(--panel-font-size-xs)`,
-        '--panel-label-line-height': `var(--panel-line-height-xs)`,
+        '--panel-label-font-size': `${
+          config?.global?.size?.labelFontSize ?? 'var(--panel-font-size-xs)'
+        }`,
+        '--panel-label-line-height': `${
+          config?.global?.size?.labelLineHeight ?? 'var(--panel-line-height-xs)'
+        }`,
 
         //icon
         //icon-sizing
-        '--panel-icon-size': `20px`,
-        '--panel-icon-size-sm': `24px`,
-        '--panel-icon-secondary-size': `16px`,
-        '--panel-icon-secondary-size-sm': `16px`,
+        '--panel-icon-size': `${config?.global?.size?.iconSize ?? '20px'}`,
+        '--panel-icon-size-sm': `${config?.global?.size?.iconSizeSm ?? '24px'}`,
+        '--panel-icon-secondary-size': `${
+          config?.global?.size?.iconSecondarySize ?? '16px'
+        }`,
+        '--panel-icon-secondary-size-sm': `${
+          config?.global?.size?.iconSecondarySizeSm ?? '16px'
+        }`,
         //icon-colors
-        '--panel-icon-color': `var(--panel-content-color)`,
+        '--panel-icon-color': `${
+          config?.global?.color?.colorIcon ?? 'var(--panel-content-color)'
+        }`,
 
         //popup
         //popup-color
-        '--panel-popup-content-color': `var(--panel-secondary-content-color)`,
-        '--panel-popup-bg': `var(--panel-secondary-color)`,
-        '--panel-popup-border-color': `var(--panel-secondary-content-color)`,
+        '--panel-popup-content-color': `${
+          config?.component?.popup?.color?.colorText ??
+          'var(--panel-secondary-content-color)'
+        }`,
+        '--panel-popup-bg': `${
+          config?.component?.popup?.color?.colorBg ??
+          'var(--panel-secondary-color)'
+        }`,
+        '--panel-popup-border-color': `${
+          config?.component?.popup?.color?.colorBorder ??
+          'var(--panel-secondary-content-color)'
+        }`,
         //popup-typography
-        '--panel-popup-font-size': `12px`,
+        '--panel-popup-font-size': `${
+          config?.component?.popup?.size?.fontSize ??
+          config?.global?.size?.fontSizeXs ??
+          '12px'
+        }`,
+
+        //popup-list
+        //popup-list-color
+        '--panel-popup-list-header-bg': `${
+          config?.component?.popupList?.color?.headerBg ?? COLORS.DARK['800']
+        }`,
+        '--panel-popup-list-item-bg-even': `${
+          config?.component?.popupList?.color?.itemBgEven ?? 'transparent'
+        }`,
+        '--panel-popup-list-item-bg-odd': `${
+          config?.component?.popupList?.color?.itemBgOdd ?? COLORS.DARK['400']
+        }`,
 
         // tab-group
-        //tab-group
-        '--panel-tab-group-px': `12px`,
+        //tab-group-spacing
+        '--panel-tab-group-px': `${
+          config?.component?.tabGroup?.size?.px ??
+          'calc(var(--panel-spacer) * 3'
+        }`,
 
         //tab-content
         //tab-content-spacing
-        '--panel-content-pt': `calc(var(--panel-spacer) * 3)`,
+        '--panel-content-pt': `${
+          config?.component?.tabContent?.size?.pt ??
+          'calc(var(--panel-spacer) * 3)'
+        }`,
         '--panel-content-pb': `calc(var(--panel-spacer) * 9)`,
-        '--panel-content-px': `0px`,
-        '--panel-content-gap': `calc(var(--panel-gap) * 2)`,
+        '--panel-content-px': `${
+          config?.component?.tabContent?.size?.px ?? '0px'
+        }`,
+        '--panel-content-gap': `${
+          config?.component?.tabContent?.size?.gap ??
+          'calc(var(--panel-gap) * 2)'
+        }`,
 
         // tab
         // tab-spacing
-        '--panel-tab-px': `calc(var(--panel-spacer) * 9)`,
-        '--panel-tab-py': `calc(var(--panel-spacer) * 3)`,
+        '--panel-tab-px': `${
+          config?.component?.tab?.size?.px ?? 'calc(var(--panel-spacer) * 9)'
+        }`,
+        '--panel-tab-py': `${
+          config?.component?.tab?.size?.py ?? 'calc(var(--panel-spacer) * 3)'
+        }`,
         // tab-color
-        '--panel-tab-bg': `var(--panel-neutral-color)`,
-        '--panel-tab-content-color': `var(--panel-neutral-content-color)`,
-        '--panel-tab-select-content-color': `var(--panel-content-color)`,
-        '--panel-tab-hover-content-color': `var(--panel-content-hover-color)`,
+        '--panel-tab-bg': `${
+          config?.component?.tab?.color?.colorBg ?? 'var(--panel-neutral-color)'
+        }`,
+        '--panel-tab-content-color': `${
+          config?.component?.tab?.color?.colorText ??
+          'var(--panel-neutral-content-color)'
+        }`,
+        '--panel-tab-select-content-color': `${
+          config?.component?.tab?.color?.selectColorText ??
+          'var(--panel-content-color)'
+        }`,
+        '--panel-tab-hover-content-color': `${
+          config?.component?.tab?.color?.colorTextHover ??
+          'var(--panel-content-hover-color)'
+        }`,
         // tab-typography
-        '--panel-tab-font-size': `var(--panel-font-size-sm)`,
-        '--panel-tab-font-weight': `var(--panel-font-weight-bold)`,
-        '--panel-tab-line-height': `var(--panel-line-height-sm)`,
+        '--panel-tab-font-size': `${
+          config?.component?.tab?.size?.fontSize ?? 'var(--panel-font-size-sm)'
+        }`,
+        '--panel-tab-font-weight': `${
+          config?.component?.tab?.style?.fontWeight ??
+          'var(--panel-font-weight-bold)'
+        }`,
+        '--panel-tab-line-height': `${
+          config?.component?.tab?.style?.lineHeight ??
+          'var(--panel-line-height-sm)'
+        }`,
 
         // balance
         // balance-spacing
-        '--panel-balance-group-px': `calc(var(--panel-spacer) * 3)`,
-        '--panel-balance-group-gap': `var(--panel-gap)`,
+        '--panel-balance-group-px': `${
+          config?.component?.balance?.size?.px ??
+          'calc(var(--panel-spacer) * 3)'
+        }`,
+        '--panel-balance-group-gap': `${
+          config?.component?.balance?.size?.gap ?? 'var(--panel-gap)'
+        }`,
         // balance-color
-        '--panel-balance-content-color': `var(--panel-content-color)`,
-        '--panel-balance-price-content-color': `var(
-            --panel-secondary-content-color
-          )`,
+        '--panel-balance-content-color': `${
+          config?.component?.balance?.color?.colorText ??
+          'var(--panel-content-color)'
+        }`,
+        '--panel-balance-price-content-color': `${
+          config?.component?.balance?.color?.priceColorText ??
+          'var(--panel-secondary-content-color)'
+        }`,
 
         // balance-typography
-        '--panel-balance-font-size': `var(--panel-font-size-lg)`,
-        '--panel-balance-line-height': `var(--panel-line-height-lg)`,
-        '--panel-balance-price-font-size': `var(--panel-font-size)`,
-        '--panel-balance-price-line-height': `var(--panel-line-height)`,
+        '--panel-balance-font-size': `${
+          config?.component?.balance?.size?.fontSize ??
+          'var(--panel-font-size-lg)'
+        }`,
+        '--panel-balance-line-height': `${
+          config?.component?.balance?.size?.lineHeight ??
+          'var(--panel-line-height-lg)'
+        }`,
+        '--panel-balance-price-font-size': `${
+          config?.component?.balance?.size?.priceFontSize ??
+          'var(--panel-font-size)'
+        }`,
+        '--panel-balance-price-line-height': `${
+          config?.component?.balance?.size?.priceLineHeight ??
+          'var(--panel-line-height)'
+        }`,
 
         //inputs
-        '--panel-inputs-group-gap': `var(--panel-gap)`,
-        '--panel-inputs-group-px': `calc(var(--panel-spacer) * 3)`,
+        '--panel-inputs-group-gap': `${
+          config?.component?.inputGroup?.size?.gap ?? 'var(--panel-gap)'
+        }`,
+        '--panel-inputs-group-px': `${
+          config?.component?.inputGroup?.size?.px ??
+          'calc(var(--panel-spacer) * 3)'
+        }`,
 
         //input
         //input-sizing
-        '--panel-input-radius': `var(--panel-radius)`,
+        '--panel-input-radius': `${
+          config?.component?.input?.style?.radius ?? 'var(--panel-radius)'
+        }`,
         //input-spacing
-        '--panel-input-group-gap': `calc(var(--panel-gap) * 2)`,
-        '--panel-input-px': `calc(var(--panel-spacer) * 3)`,
-        '--panel-input-py': `calc(var(--panel-spacer) * 2)`,
-        '--panel-input-price-gap': `calc(var(--panel-gap) * 2)`,
-        '--panel-input-token-icon-size': `var(--panel-icon-size)`,
-        '--panel-input-token-icon-size-sm': `var(--panel-icon-size-sm)`,
+        '--panel-input-group-gap': `${
+          config?.component?.input?.size?.gap ?? 'calc(var(--panel-gap) * 2)'
+        }`,
+        '--panel-input-px': `${
+          config?.component?.input?.size?.px ?? 'calc(var(--panel-spacer) * 3)'
+        }`,
+        '--panel-input-py': `${
+          config?.component?.input?.size?.py ?? 'calc(var(--panel-spacer) * 2)'
+        }`,
+        '--panel-input-price-gap': `${
+          config?.component?.input?.size?.priceGap ??
+          'calc(var(--panel-gap) * 2)'
+        }`,
+        '--panel-input-token-icon-size': `${
+          config?.component?.input?.size?.iconSize ?? 'var(--panel-icon-size)'
+        }`,
+        '--panel-input-token-icon-size-sm': `${
+          config?.component?.input?.size?.iconSizeSm ??
+          'var(--panel-icon-size-sm)'
+        }`,
         //input-color
-        '--panel-input-content-color': `var(--panel-content-color)`,
-        '--panel-input-loading-content-color': `var(
-            --panel-loading-content-color
-          )`,
-        '--panel-input-bg': `var(--panel-neutral-color)`,
-        '--panel-input-focus-bg': `transparent`,
-        '--panel-input-border-color': `${COLORS.GRAY[700]}`,
-        '--panel-input-focus-border-color': `var(--panel-content-color)`,
-        '--panel-input-placeholder-color': `var(--panel-secondary-content-color)`,
+        '--panel-input-content-color': `${
+          config?.component?.input?.color?.textColor ??
+          'var(--panel-content-color)'
+        }`,
+        '--panel-input-loading-content-color': `${
+          config?.component?.input?.color?.loadingTextColor ??
+          'var(--panel-loading-content-color)'
+        }`,
+        '--panel-input-bg': `${
+          config?.component?.input?.color?.bgColor ??
+          'var(--panel-neutral-color)'
+        }`,
+        '--panel-input-focus-bg': `${
+          config?.component?.input?.color?.bgColorFocus ?? 'transparent'
+        }`,
+        '--panel-input-border-color': `${
+          config?.component?.input?.color?.borderColor ?? COLORS.GRAY[700]
+        }`,
+        '--panel-input-focus-border-color': `${
+          config?.component?.input?.color?.borderColorFocus ??
+          'var(--panel-content-color)'
+        }`,
+        '--panel-input-placeholder-color': `${
+          config?.component?.input?.color?.placeholderColor ??
+          'var(--panel-secondary-content-color)'
+        }`,
         //input-typography
-        '--panel-input-label-font-size': `var(--panel-font-size-sm)`,
-        '--panel-input-label-line-height': `var(--panel-line-height-sm)`,
-        '--panel-input-label-font-weight': `var(--panel-font-weight-light)`,
+        '--panel-input-label-font-size': `${
+          config?.component?.input?.size?.labelFontSize ??
+          'var(--panel-font-size-sm)'
+        }`,
+        '--panel-input-label-line-height': `${
+          config?.component?.input?.size?.labelLineHeight ??
+          'var(--panel-line-height-sm)'
+        }`,
+        '--panel-input-label-font-weight': `${
+          config?.component?.input?.style?.labelFontWeight ??
+          'var(--panel-font-weight-light)'
+        }`,
 
-        '--panel-input-font-size': `var(--panel-font-size-sm)`,
-        '--panel-input-line-height': `var(--panel-line-height-sm)`,
+        '--panel-input-font-size': `${
+          config?.component?.input?.size?.fontSize ??
+          'var(--panel-font-size-sm)'
+        }`,
+        '--panel-input-line-height': `${
+          config?.component?.input?.size?.lineHeight ??
+          'var(--panel-line-height-sm)'
+        }`,
 
-        '--panel-input-font-size-lg': `var(--panel-font-size-lg)`,
-        '--panel-input-line-height-lg': `var(--panel-line-height-lg)`,
-        '--panel-input-font-weight': `var(--panel-font-weight-light)`,
+        '--panel-input-font-size-lg': `${
+          config?.component?.input?.size?.fontSizeLg ??
+          'var(--panel-font-size-lg)'
+        }`,
+        '--panel-input-line-height-lg': `${
+          config?.component?.input?.size?.lineHeightLg ??
+          'var(--panel-line-height-lg)'
+        }`,
+        '--panel-input-font-weight': `${
+          config?.component?.input?.style?.fontWeight ??
+          'var(--panel-font-weight-light)'
+        }`,
 
-        '--panel-input-token-font-size': `var(--panel-font-size-xs)`,
-        '--panel-input-token-line-height': `var(--panel-line-height-xs)`,
+        '--panel-input-token-font-size': `${
+          config?.component?.input?.size?.tokenFontSize ??
+          'var(--panel-font-size-xs)'
+        }`,
+        '--panel-input-token-line-height': `${
+          config?.component?.input?.size?.tokenLineHeight ??
+          'var(--panel-line-height-xs)'
+        }`,
 
-        '--panel-input-token-font-size-sm': `var(--panel-font-size)`,
-        '--panel-input-token-line-height-sm': `var(--panel-line-height)`,
-        '--panel-input-token-font-weight': `var(--panel-font-weight-medium)`,
+        '--panel-input-token-font-size-sm': `${
+          config?.component?.input?.size?.tokenFontSizeSm ??
+          'var(--panel-font-size)'
+        }`,
+        '--panel-input-token-line-height-sm': `${
+          config?.component?.input?.size?.tokenLineHeightSm ??
+          'var(--panel-line-height)'
+        }`,
+        '--panel-input-token-font-weight': `${
+          config?.component?.input?.style?.tokenFontWeight ??
+          'var(--panel-font-weight-medium)'
+        }`,
 
         //input-button
         //input-button-spacing
-        '--panel-input-button-radius': `30px`,
-        '--panel-input-button-px': `calc(var(--panel-spacer) * 2)`,
-        '--panel-input-button-py': `var(--panel-spacer)`,
+        '--panel-input-button-radius': `${
+          config?.component?.input?.style?.buttonRadius ?? '30px'
+        }`,
+        '--panel-input-button-px': `${
+          config?.component?.input?.size?.buttonPx ??
+          'calc(var(--panel-spacer) * 2)'
+        }`,
+        '--panel-input-button-py': `${
+          config?.component?.input?.size?.buttonPy ?? 'var(--panel-spacer)'
+        }`,
         //input-button-color
-        '--panel-input-button-bg': `var(--panel-secondary-color)`,
-        '--panel-input-button-border-color': `var(--panel-accent-to-color)`,
-        '--panel-input-button-content-color': `var(--panel-content-color)`,
+        '--panel-input-button-bg': `${
+          config?.component?.input?.color?.buttonBgColor ??
+          'var(--panel-secondary-color)'
+        }`,
+        '--panel-input-button-border-color': `${
+          config?.component?.input?.color?.buttonBorderColor ??
+          'var(--panel-accent-to-color)'
+        }`,
+        '--panel-input-button-content-color': `${
+          config?.component?.input?.color?.buttonTextColor ??
+          'var(--panel-content-color)'
+        }`,
         //input-button-typography
-        '--panel-input-button-font-size': `var(--panel-font-size-xs)`,
-        '--panel-input-button-line-height': `var(--panel-line-height-xs)`,
+        '--panel-input-button-font-size': `${
+          config?.component?.input?.size?.buttonFontSize ??
+          'var(--panel-font-size-xs)'
+        }`,
+        '--panel-input-button-line-height': `${
+          config?.component?.input?.size?.buttonLineHeight ??
+          'var(--panel-line-height-xs)'
+        }`,
 
         //action-button
         //action-button-spacing
-        '--panel-action-accent-button-border-width': `1px`,
+        '--panel-action-accent-button-border-width': `${
+          config?.component?.actionButton?.size?.borderWidth ?? '1px'
+        }`,
         //action-button-color
-        '--panel-action-accent-button-bg-from': `var(--panel-accent-from-color)`,
-        '--panel-action-accent-button-bg-to': `var(--panel-accent-to-color)`,
-        '--panel-action-accent-button-hover-bg-from': `var(
-            --panel-accent-hover-from-color
-          )`,
-        '--panel-action-accent-button-hover-bg-to': `var(
-            --panel-accent-hover-to-color
-          )`,
-        '--panel-action-accent-button-border-color': `var(
-            --panel-accent-from-color
-          )`,
-        '--panel-action-accent-button-color': `var(--panel-accent-content-color)`,
+        '--panel-action-accent-button-bg-from': `${
+          config?.component?.actionButton?.color?.colorBgFrom ??
+          'var(--panel-accent-from-color)'
+        }`,
+        '--panel-action-accent-button-bg-to': `${
+          config?.component?.actionButton?.color?.colorBgTo ??
+          'var(--panel-accent-to-color)'
+        }`,
+        '--panel-action-accent-button-hover-bg-from': `${
+          config?.component?.actionButton?.color?.colorBgFromHover ??
+          'var(--panel-accent-hover-from-color)'
+        }`,
+        '--panel-action-accent-button-hover-bg-to': `${
+          config?.component?.actionButton?.color?.colorBgToHover ??
+          'var(--panel-accent-hover-to-color)'
+        }`,
+        '--panel-action-accent-button-border-color': `${
+          config?.component?.actionButton?.color?.colorBorder ??
+          'var(--panel-accent-from-color)'
+        }`,
+        '--panel-action-accent-button-color': `${
+          config?.component?.actionButton?.color?.colorText ??
+          'var(--panel-accent-content-color)'
+        }`,
 
-        '--panel-action-outline-button-border-color': `${COLORS.WHITE.DEFAULT}33`,
-        '--panel-action-outline-button-border-hover-color': `${COLORS.WHITE.DEFAULT}CC`,
-        '--panel-action-outline-button-color': `var(--panel-content-color)`,
+        '--panel-action-outline-button-border-color': `${
+          config?.component?.actionButton?.color?.outlineColorBorder ??
+          `${COLORS.WHITE.DEFAULT}33`
+        }`,
+        '--panel-action-outline-button-border-hover-color': `${
+          config?.component?.actionButton?.color?.outlineColorBorderHover ??
+          `${COLORS.WHITE.DEFAULT}CC`
+        }`,
+        '--panel-action-outline-button-color': `${
+          config?.component?.actionButton?.color?.outlineColorText ??
+          'var(--panel-content-color)'
+        }`,
 
         //meta
         //meta-spacing
-        '--panel-meta-group-gap': `var(--panel-gap)`,
-        '--panel-meta-group-px': `calc(var(--panel-spacer) * 3)`,
+        '--panel-meta-group-gap': `${
+          config?.component?.meta?.size?.gap ?? 'var(--panel-gap)'
+        }`,
+        '--panel-meta-group-px': `${
+          config?.component?.meta?.size?.px ?? 'calc(var(--panel-spacer) * 3)'
+        }`,
         //meta-color
-        '--panel-meta-link-color': `var(--panel-accent-from-color)`,
-        '--panel-meta-hover-bg': `var(--panel-neutral-color)`,
+        '--panel-meta-link-color': `${
+          config?.component?.meta?.color?.linkTextColor ??
+          'var(--panel-accent-from-color)'
+        }`,
+        '--panel-meta-hover-bg': `${
+          config?.component?.meta?.color?.panelBgHover ??
+          'var(--panel-neutral-color)'
+        }`,
+
+        //tooltip
+        //tooltip-color
+        '--panel-tooltip-bg': `${
+          config?.component?.tooltip?.color?.colorBg ?? COLORS.DARK['700']
+        }`,
+
+        //switch
+        //switch-color
+        '--panel-switch-bg-checked': `${
+          config?.component?.switch?.color?.colorBgChecked ??
+          COLORS.BLUE.DEFAULT
+        }`,
+        '--panel-switch-bg': `${
+          config?.component?.switch?.color?.colorBg ?? COLORS.GRAY['700']
+        }`,
       }}
     >
       {children}

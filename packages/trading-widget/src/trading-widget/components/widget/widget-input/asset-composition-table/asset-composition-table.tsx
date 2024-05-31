@@ -1,11 +1,9 @@
 import classNames from 'classnames'
 
-import { TokenBadge, Skeleton } from 'trading-widget/components/common'
+import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
-import {
-  useAssetCompositionTable,
-  AssetCompositionTableProps,
-} from './asset-composition-table.hooks'
+import type { AssetCompositionTableProps } from './asset-composition-table.hooks'
+import { useAssetCompositionTable } from './asset-composition-table.hooks'
 
 export const AssetCompositionTable = ({
   className,
@@ -46,7 +44,7 @@ export const AssetCompositionTable = ({
                       }}
                     >
                       <p className="dtw-truncate">{fraction}</p>
-                      <p className="dtw-truncate dtw-text-xs dtw-text-themeGray-600">
+                      <p className="dtw-truncate dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
                         {fractionUsd}
                       </p>
                     </td>

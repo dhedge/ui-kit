@@ -5,7 +5,6 @@ import {
   DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
   DEFAULT_PRECISION,
   DEFAULT_WITHDRAW_SLIPPAGE,
-  DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
 } from 'core-kit/const'
 import {
   useReceiveTokenInput,
@@ -29,6 +28,7 @@ import {
   getSlippageToleranceForWithdrawSafe,
   logTransactionArguments,
 } from 'core-kit/utils'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 import { useWithdrawSlippage } from './use-withdraw-slippage'
@@ -47,6 +47,7 @@ export const useWithdraw = (): ContractActionFunc => {
     receiveAssetInputValue,
     fromTokenAmount,
   } = useTradingParams()
+  const { defaultWithdrawSlippageScale } = useConfigContextParams()
 
   const onSettled = useTradingSettleHandler(action)
 
@@ -87,10 +88,8 @@ export const useWithdraw = (): ContractActionFunc => {
   const estimateSell = useCallback(async () => {
     const isAuto = tradingSlippage === 'auto'
     const slippageScale = isAuto
-      ? DEFAULT_WITHDRAW_SLIPPAGE_SCALE
-      : Array.from(
-          new Set([tradingSlippage, ...DEFAULT_WITHDRAW_SLIPPAGE_SCALE]),
-        )
+      ? defaultWithdrawSlippageScale
+      : Array.from(new Set([tradingSlippage, ...defaultWithdrawSlippageScale]))
     const estimationMap = new Map<number, SendEstimationResult>()
 
     for (let i = 0; i < slippageScale.length; i++) {
@@ -122,7 +121,7 @@ export const useWithdraw = (): ContractActionFunc => {
       )
     }
     return estimationMap
-  }, [estimate, tradingSlippage, txArgs])
+  }, [estimate, tradingSlippage, txArgs, defaultWithdrawSlippageScale])
 
   useWithdrawSlippage({
     estimateSell,

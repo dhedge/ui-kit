@@ -13,6 +13,8 @@ export interface ConfigProviderParams {
   defaultPrecision: number
   stakingChainId: ChainId
   termsOfUseAccepted: boolean
+  standalone: boolean
+  chainConfig: Partial<Record<ChainId, { name: string; iconPath: string }>>
 }
 
 export interface ConfigProviderActions {
@@ -22,8 +24,8 @@ export interface ConfigProviderActions {
 
 export interface ConfigProviderProps {
   config?: {
-    params: Partial<ConfigProviderParams>
-    actions: Partial<ConfigProviderActions>
+    params?: Partial<ConfigProviderParams>
+    actions?: Partial<ConfigProviderActions>
   }
 }
 

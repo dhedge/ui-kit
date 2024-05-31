@@ -87,4 +87,12 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   highSlippageRisk:
     'Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade.',
   confirm: 'Confirm',
+  selectToken: 'Select token',
+  sendingOrderToWallet: 'Sending order to your wallet',
+  settingUpTx: 'Setting up transaction',
+  updateSynthetixOracles: 'Updating Synthetix Oracles',
+  approveSpending: 'Approve spending',
+  pay: 'Pay',
+  multiAssetFractions: 'multi asset fractions',
+  explorer: 'Explorer',
 }

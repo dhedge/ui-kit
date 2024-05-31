@@ -15,7 +15,7 @@ export const PendingOverlay: FC<PendingOverlayProps> = ({ title, text }) => {
     <Layout.Overlay transparent>
       <div className="dtw-flex dtw-flex-col dtw-items-center dtw-rounded-xl dtw-px-5 dtw-py-5">
         {title && (
-          <span className="dtw-mb-8 dtw-font-medium dtw-text-themeGray-600">
+          <span className="dtw-mb-8 dtw-font-medium dtw-text-[color:var(--panel-secondary-content-color)]">
             {title}
           </span>
         )}

@@ -28,6 +28,8 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   defaultPrecision: 6,
   stakingChainId: optimism.id,
   termsOfUseAccepted: true,
+  standalone: true,
+  chainConfig: {},
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {

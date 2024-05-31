@@ -65,6 +65,14 @@ export type TranslationMap = {
   highSlippageQuoteDiff: string
   highSlippageRisk: string
   confirm: string
+  selectToken: string
+  sendingOrderToWallet: string
+  settingUpTx: string
+  updateSynthetixOracles: string
+  approveSpending: string
+  pay: string
+  multiAssetFractions: string
+  explorer: string
   [key: string]: string
 }
 

@@ -153,7 +153,6 @@ export type TradingPanelAction =
 
 export interface TradingPanelContextConfig {
   actions: Partial<CallbackConfig>
-  isDev?: boolean
   initialState?: Partial<TradingPanelState>
 }
 

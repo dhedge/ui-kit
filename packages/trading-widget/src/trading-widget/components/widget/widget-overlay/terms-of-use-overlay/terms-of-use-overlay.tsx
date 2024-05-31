@@ -23,7 +23,7 @@ export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
         <p className="dtw-self-start dtw-text-sm dtw-mb-1">
           {t.termOfUseDepositListTitle}:
         </p>
-        <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-themeGray">
+        <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)]">
           <li>{t.termOfUseDepositAssetSlippage}</li>
           <li>{t.termOfUseDepositBugs}</li>
           <li>{t.termOfUseDepositDowntime}</li>

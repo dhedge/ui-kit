@@ -16,14 +16,14 @@ export const IconButton: FC<IconButtonProps> = ({
 }) => (
   <div
     className={classNames(
-      'dtw-group dtw-w-fit dtw-cursor-pointer dtw-self-end dtw-rounded-lg dtw-p-1 hover:dtw-bg-gray-700',
+      'dtw-group dtw-w-fit dtw-cursor-pointer dtw-self-end dtw-rounded-lg dtw-p-1 hover:dtw-opacity-80',
       containerClassName,
     )}
     onClick={onClick}
   >
     <Icon
       className={classNames(
-        'dtw-text-themeGray group-hover:dtw-text-white',
+        'dtw-text-[color:var(--panel-icon-color)] group-hover:dtw-text-white',
         className,
       )}
     />

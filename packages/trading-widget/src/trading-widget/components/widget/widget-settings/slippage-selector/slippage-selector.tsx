@@ -26,8 +26,9 @@ const SelectorContainer: FC<SlippageSelectorProps> = ({
         'dtw-cursor-pointer dtw-rounded-lg dtw-py-1 dtw-text-center dtw-text-sm',
         className,
         {
-          'dtw-bg-themeBlue': selected,
-          'dtw-bg-gray-700 dtw-text-white hover:dtw-bg-themeBlue': !selected,
+          'dtw-bg-[color:var(--panel-switch-bg-checked)]': selected,
+          'dtw-bg-[color:var(--panel-switch-bg)] dtw-text-white hover:dtw-bg-[color:var(--panel-switch-bg-checked)]':
+            !selected,
         },
       )}
       onClick={onClick}

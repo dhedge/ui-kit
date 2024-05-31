@@ -1,6 +1,7 @@
-import { useExchangeRate } from 'core-kit/hooks/trading'
 import classNames from 'classnames'
 import type { FC } from 'react'
+
+import { useExchangeRate } from 'core-kit/hooks/trading'
 
 import { Spinner } from 'trading-widget/components/common/spinner/spinner'
 import { THEME_TYPE } from 'trading-widget/types'

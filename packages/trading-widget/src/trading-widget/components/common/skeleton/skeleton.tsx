@@ -1,5 +1,5 @@
-import type { FC, CSSProperties } from 'react'
 import classNames from 'classnames'
+import type { CSSProperties, FC } from 'react'
 
 interface SkeletonProps {
   style?: CSSProperties

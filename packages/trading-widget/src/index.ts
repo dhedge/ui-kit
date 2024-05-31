@@ -1,4 +1,5 @@
 export { TradingWidget } from './trading-widget/components'
+export type { ProvidersProps } from './trading-widget/providers'
 export { TradingPanelProvider } from './core-kit'
 export {
   erc20Abi,

@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react'
 
-import { DEFAULT_DEPOSIT_SLIPPAGE } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -28,6 +27,8 @@ import {
   logTransactionArguments,
 } from 'core-kit/utils'
 
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
+
 import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 const action = 'deposit'
@@ -47,6 +48,7 @@ export const useDeposit = (): ContractActionFunc => {
     receiveAssetInputValue,
     fromTokenAmount,
   } = useTradingParams()
+  const { defaultDepositSlippage } = useConfigContextParams()
 
   useDepositSlippage(receiveAssetInputValue)
 
@@ -115,7 +117,7 @@ export const useDeposit = (): ContractActionFunc => {
     logTransactionArguments(txArgs)
     const args: unknown[] = getOrderedTxArgs(
       txArgs,
-      slippage === 'auto' ? DEFAULT_DEPOSIT_SLIPPAGE : slippage,
+      slippage === 'auto' ? defaultDepositSlippage : slippage,
     )
     if (isDepositNative) {
       args.push({ value: BigInt(txArgs.fromTokenAmount) })
@@ -129,5 +131,6 @@ export const useDeposit = (): ContractActionFunc => {
     send,
     txArgs,
     slippage,
+    defaultDepositSlippage,
   ])
 }

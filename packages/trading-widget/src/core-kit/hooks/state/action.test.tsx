@@ -339,8 +339,8 @@ describe('useOnSimulateTransaction', () => {
     const testParams: Parameters<CallbackConfig['onSimulateTransaction']> = [
       {
         chainId: polygon.id,
-        from: 'from',
-        to: 'to',
+        from: AddressZero,
+        to: AddressZero,
         input: 'input',
         gas: 0,
         value: 'value',

@@ -1,5 +1,6 @@
-import { useConnect } from 'core-kit/hooks/web3'
 import type { FC } from 'react'
+
+import { useConnect } from 'core-kit/hooks/web3'
 
 import { ActionButton, Spinner } from 'trading-widget/components/common'
 import { useConfigContextActions } from 'trading-widget/providers/config-provider'
