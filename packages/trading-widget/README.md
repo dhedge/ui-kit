@@ -39,13 +39,15 @@ See bare minimum setup example: `packages/trading-widget/src/examples/simple-exa
 import '@dhedge/trading-widget/style.css'
 ```
 
+Initially widget takes full parent width and doesn't have any background color transferring control to parent container component
+
 See [TradingWidget](#tradingwidget) -> `theme` config to manage customization
 
 ## API
 
 ### TradingPanelProvider
 
-Top level provider component. Headless part of trading logic. API handles params to setup `initialState` and `actions`. See below for more details 
+Top level provider component. Headless part of trading logic. API handles params to setup `initialState` and `actions`. See below for more details
 
 <details>
 <summary><code>actions</code> <code><b>/</b></code> <code>Optional General callbacks to interact with 3rd party services</code></summary>

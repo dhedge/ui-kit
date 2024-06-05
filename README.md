@@ -39,6 +39,8 @@ See bare minimum setup example: `packages/trading-widget/src/examples/simple-exa
 import '@dhedge/trading-widget/style.css'
 ```
 
+Initially widget takes full parent width and doesn't have any background color transferring control to parent container component
+
 See [TradingWidget](#tradingwidget) -> `theme` config to manage customization
 
 ## API
