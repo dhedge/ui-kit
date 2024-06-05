@@ -47,7 +47,7 @@ See [TradingWidget](#tradingwidget) -> `theme` config to manage customization
 
 ### TradingPanelProvider
 
-Top level provider component. Headless part of trading logic. API handles params to setup `initialState` and `actions`. See below for more details 
+Top level provider component. Headless part of trading logic. API handles params to setup `initialState` and `actions`. See below for more details
 
 <details>
 <summary><code>actions</code> <code><b>/</b></code> <code>Optional General callbacks to interact with 3rd party services</code></summary>
