@@ -185,7 +185,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //tab-group-spacing
         '--panel-tab-group-px': `${
           config?.component?.tabGroup?.size?.px ??
-          'calc(var(--panel-spacer) * 3'
+          'calc(var(--panel-spacer) * 3)'
         }`,
 
         //tab-content
