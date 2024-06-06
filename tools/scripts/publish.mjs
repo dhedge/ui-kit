@@ -10,7 +10,6 @@
 import { execSync } from 'child_process'
 
 import devkit from '@nx/devkit'
-import { copyFileSync, existsSync } from 'node:fs'
 const { readCachedProjectGraph } = devkit
 
 function invariant(condition, message) {
@@ -38,16 +37,6 @@ invariant(
 )
 
 process.chdir(outputPath)
-
-// Check if README.md exists in parent directory
-const readmePath = `${outputPath}/../README.md`
-if (existsSync(readmePath)) {
-  try {
-    copyFileSync(readmePath, `${outputPath}/README.md`)
-  } catch (error) {
-    console.error('Error copying README.md:', error)
-  }
-}
 
 // Execute "npm publish" to publish
 execSync(`npm publish --access public`)
