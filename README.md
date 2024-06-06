@@ -39,7 +39,7 @@ See bare minimum setup example: `packages/trading-widget/src/examples/simple-exa
 import '@dhedge/trading-widget/style.css'
 ```
 
-Initially widget takes full parent width and doesn't have any background color transferring control to parent container component
+Initially widget takes full parent width
 
 See [TradingWidget](#tradingwidget) -> `theme` config to manage customization
 
@@ -175,6 +175,7 @@ path: `global.color[name]`
 > | `colorTextPrimaryHover`    | string     | `#ffffffCC`                                  | Primary hover text color              |
 > | `colorBorderPrimary`       | string     | `global?.color?.colorTextPrimary ?? #ffffff` | Primary border color                  |
 > | `colorTextSecondary`       | string     | `#9DA2AD`                                    | Secondary text color                  |
+> | `colorBgPrimary`           | string     | `#1B2432`                                    | Primary bg color                      |
 > | `colorBgSecondary`         | string     | `#2B313E`                                    | Secondary bg color                    |
 > | `colorTextAccent`          | string     | `#ffffff`                                    | Accent text color                     |
 > | `colorTextAccentHover`     | string     | `#ffffffCC`                                  | Accent hover text color               |

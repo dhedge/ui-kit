@@ -6,7 +6,10 @@ import {
   DEFAULT_DEPOSIT_SLIPPAGE,
   DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
+  arbitrum,
+  base,
   optimism,
+  polygon,
 } from 'core-kit/const'
 import { useConnect } from 'core-kit/hooks/web3'
 
@@ -29,7 +32,24 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   stakingChainId: optimism.id,
   termsOfUseAccepted: true,
   standalone: true,
-  chainConfig: {},
+  chainConfig: {
+    [arbitrum.id]: {
+      name: 'Arbitrum',
+      iconPath: '',
+    },
+    [optimism.id]: {
+      name: 'Optimism',
+      iconPath: '',
+    },
+    [polygon.id]: {
+      name: 'Polygon',
+      iconPath: '',
+    },
+    [base.id]: {
+      name: 'Base',
+      iconPath: '',
+    },
+  },
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {

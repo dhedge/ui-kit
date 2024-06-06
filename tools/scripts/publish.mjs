@@ -7,37 +7,48 @@
  * You might need to authenticate with NPM before running this script.
  */
 
-import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+import { execSync } from 'child_process'
 
-import devkit from '@nx/devkit';
-const { readCachedProjectGraph } = devkit;
+import devkit from '@nx/devkit'
+import {copyFileSync, existsSync} from "node:fs";
+const { readCachedProjectGraph } = devkit
 
 function invariant(condition, message) {
-	if (!condition) {
-		console.error(message);
-		process.exit(1);
-	}
+  if (!condition) {
+    console.error(message)
+    process.exit(1)
+  }
 }
 
 // Executing publish script: node path/to/publish.mjs {name}
-const [, , name] = process.argv;
+const [, , name] = process.argv
 
-const graph = readCachedProjectGraph();
-const project = graph.nodes[name];
+const graph = readCachedProjectGraph()
+const project = graph.nodes[name]
 
 invariant(
-	project,
-	`Could not find project "${name}" in the workspace. Is the project.json configured correctly?`,
-);
+  project,
+  `Could not find project "${name}" in the workspace. Is the project.json configured correctly?`,
+)
 
-const outputPath = project.data?.targets?.build?.options?.outputPath;
+const outputPath = project.data?.targets?.build?.options?.outputPath
 invariant(
-	outputPath,
-	`Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`,
-);
+  outputPath,
+  `Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`,
+)
 
-process.chdir(outputPath);
+// const readmePath = outputPath.split('/').slice(0, -1).join('/') + '/README.md' // in case README.md will be in project folder
+const readmePath = 'README.md'
+
+if (existsSync(readmePath)) {
+  try {
+    copyFileSync(readmePath, `${outputPath}/README.md`)
+  } catch (error) {
+    console.error('Error copying README.md:', error)
+  }
+}
+
+process.chdir(outputPath)
 
 // Execute "npm publish" to publish
-execSync(`npm publish --access public`);
+execSync(`npm publish --access public`)
