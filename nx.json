@@ -46,11 +46,11 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudAccessToken": "OGRkY2NiM2ItNTNjYy00YmVkLThhZjItYjQyMGQ2YWUwYWFlfHJlYWQtd3JpdGU=",
+  "neverConnectToCloud": true,
   "tasksRunnerOptions": {
     "default": {
       "options": {
-        "cacheableOperations": ["build-storybook"]
+        "cacheableOperations": ["build-storybook"],
       }
     }
   }
