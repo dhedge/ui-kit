@@ -20,6 +20,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.global?.style?.radiusSecondary ?? `1rem`
         }`,
 
+        //widget background
+        '--panel-background-color': `${
+          config?.global?.color?.colorBgPrimary ?? COLORS.DARK['800']
+        }`,
+
         //global-size
         '--panel-gap': `${config?.global?.size?.gap ?? `0.25rem`}`,
         '--panel-spacer': `${config?.global?.size?.spacer ?? `4px`}`,

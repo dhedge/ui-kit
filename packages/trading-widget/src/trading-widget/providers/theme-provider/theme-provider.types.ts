@@ -5,6 +5,7 @@ export interface ThemeProviderConfigProps {
       colorTextPrimary?: string
       colorTextPrimaryHover?: string
       colorBorderPrimary?: string
+      colorBgPrimary?: string
       //secondary
       colorTextSecondary?: string
       colorBgSecondary?: string

@@ -26,7 +26,7 @@ export const Widget: FC = () => {
   const { type, onTabChange } = useWidget()
 
   return (
-    <div className="dtw-relative dtw-pt-3 dtw-bg-[var(--panel-secondary-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)]">
+    <div className="dtw-relative dtw-pt-3 dtw-bg-[var(--panel-background-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)]">
       <Tab.Group selectedIndex={TABS.indexOf(type)} onChange={onTabChange}>
         <WidgetTabs>
           <WidgetSettings tradingType={type} />
