@@ -10,6 +10,7 @@
 import { execSync } from 'child_process'
 
 import devkit from '@nx/devkit'
+import {copyFileSync, existsSync} from "node:fs";
 const { readCachedProjectGraph } = devkit
 
 function invariant(condition, message) {
@@ -35,6 +36,17 @@ invariant(
   outputPath,
   `Could not find "build.options.outputPath" of project "${name}". Is project.json configured  correctly?`,
 )
+
+// const readmePath = outputPath.split('/').slice(0, -1).join('/') + '/README.md' // in case README.md will be in project folder
+const readmePath = 'README.md'
+
+if (existsSync(readmePath)) {
+  try {
+    copyFileSync(readmePath, `${outputPath}/README.md`)
+  } catch (error) {
+    console.error('Error copying README.md:', error)
+  }
+}
 
 process.chdir(outputPath)
 
