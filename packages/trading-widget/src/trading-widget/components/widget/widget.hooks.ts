@@ -38,9 +38,19 @@ export const useWidget = () => {
   }
 
   useEffect(() => {
-    onTradingTypeChange(standalone ? type : 'deposit')
+    if (!standalone) {
+      onTradingTypeChange('deposit')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [poolConfig.address, standalone])
+
+  useEffect(() => {
+    if (standalone) {
+      onTradingTypeChange(type)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [poolConfig.address, standalone, type])
+
   return {
     type,
     onTabChange,
