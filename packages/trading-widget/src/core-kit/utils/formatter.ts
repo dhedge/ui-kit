@@ -64,3 +64,8 @@ export const formatByCurrency = ({
     4,
   )}`
 }
+
+export const formatBalance = (value: string, precision: number) =>
+  new BigNumber(
+    new BigNumber(value).toFixed(precision, BigNumber.ROUND_DOWN),
+  ).toString()

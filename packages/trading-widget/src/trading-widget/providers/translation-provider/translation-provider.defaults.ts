@@ -22,7 +22,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   minReceiveAmount: 'You will receive no less than this amount.',
   minReceived: 'Minimum Received',
   estimatedMultiAssetFractions: 'Estimated multi asset fractions',
-  infinite: 'Infinite',
+  infinite: 'Infinite approval',
   tokenAllowance: 'Token Allowance',
   entryFee: 'Entry Fee',
   entryFeeExplanation:
@@ -38,7 +38,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   bypassEntryFee: 'Bypass Entry Fee',
   entryFeeSwitchWarning:
     'By removing the entry fee, your position is locked for up to {defaultLockTime} instead of the normal {customLockTime}.',
-  tokenAmountToApprove: 'Amount of tokens to be approved.',
+  toggleTokenApprovalAmount:
+    'Toggle between exact and infinite token approval.',
   auto: 'Auto',
   autoSlippageDescription:
     "App is testing different slippage ranges, starting low and increasing until it's likely to pass",

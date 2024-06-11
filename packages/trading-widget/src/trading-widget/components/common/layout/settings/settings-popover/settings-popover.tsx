@@ -1,6 +1,6 @@
 import { Popover } from '@headlessui/react'
 
-import { CogIcon } from '@heroicons/react/24/outline'
+import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
 
@@ -19,9 +19,9 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
   return (
     <Popover className={classNames('dtw-flex dtw-items-center', className)}>
       <Popover.Button onClick={onClick}>
-        <CogIcon
+        <Cog6ToothIcon
           className={classNames(
-            'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] hover:dtw-animate-spin',
+            'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] hover:dtw-opacity-80',
             iconClassName,
           )}
         />

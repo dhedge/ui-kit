@@ -35,7 +35,7 @@ export const DepositSettings: FC = () => {
       )}
       <SettingsOption
         label={t.tokenAllowance}
-        tooltipText={t.tokenAmountToApprove}
+        tooltipText={t.toggleTokenApprovalAmount}
       >
         <TokenAllowanceSwitch />
       </SettingsOption>
