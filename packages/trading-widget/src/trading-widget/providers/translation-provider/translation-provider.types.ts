@@ -24,12 +24,12 @@ export type TranslationMap = {
   minDeposit: string
   tokensLockTime: string
   slippageTolerance: string
-  bypassEntryFee: string
+  reduceLockupTime: string
   entryFeeSwitchWarning: string
-  tokenAmountToApprove: string
+  toggleTokenApprovalAmount: string
   auto: string
   autoSlippageDescription: string
-  lengthenLockup: string
+  reduceLockup: string
   deposit: string
   withdraw: string
   yourBalance: string

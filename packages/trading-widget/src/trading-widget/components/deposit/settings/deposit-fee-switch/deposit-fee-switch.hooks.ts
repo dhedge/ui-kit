@@ -8,12 +8,12 @@ export const useDepositFeeSwitch = () => {
   const log = useTradingPanelLogger()
 
   const handleChange = (enabled: boolean) => {
-    setDepositMethod(enabled ? 'deposit' : 'depositWithCustomCooldown')
+    setDepositMethod(enabled ? 'depositWithCustomCooldown' : 'deposit')
     log?.(TRADING_PANEL_LOG_EVENT.DEPOSIT_METHOD_CHANGE)
   }
 
   return {
-    defaultEnabled: depositMethod === 'deposit',
+    defaultEnabled: depositMethod === 'depositWithCustomCooldown',
     disabled: !hasOptions,
     onChange: handleChange,
   }

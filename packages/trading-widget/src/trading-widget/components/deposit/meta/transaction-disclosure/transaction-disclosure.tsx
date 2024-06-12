@@ -35,15 +35,15 @@ export const DepositTransactionOverviewDisclosure = () => {
   const staticItems: TransactionDisclosureItemProps[] = showEarnings
     ? [
         {
-          tooltipText: t.projectedDailyEarningsTooltip,
-          label: t.dailyEarnings,
-          value: dailyEarnings,
-          emphasised: true,
-        },
-        {
           tooltipText: t.projectedYearlyEarningsTooltip,
           label: t.yearlyEarnings,
           value: yearlyEarnings,
+          emphasised: true,
+        },
+        {
+          tooltipText: t.projectedDailyEarningsTooltip,
+          label: t.dailyEarnings,
+          value: dailyEarnings,
           emphasised: true,
         },
       ]

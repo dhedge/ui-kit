@@ -20,7 +20,7 @@ export const WithdrawSettings: FC = () => {
       </SettingsOption>
       <SettingsOption
         label={t.tokenAllowance}
-        tooltipText={t.tokenAmountToApprove}
+        tooltipText={t.toggleTokenApprovalAmount}
       >
         <TokenAllowanceSwitch />
       </SettingsOption>

@@ -7,7 +7,7 @@ import {
 } from 'core-kit/hooks/state'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
-import { formatToUsd } from 'core-kit/utils'
+import { formatBalance, formatToUsd } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useWithdrawBalance = () => {
@@ -20,9 +20,7 @@ export const useWithdrawBalance = () => {
   const precision = symbol === 'USDC' ? stablePrecision : defaultPrecision
 
   return {
-    formattedBalance: `${new BigNumber(balance)
-      .precision(precision, BigNumber.ROUND_DOWN)
-      .toString()} ${symbol}`,
+    formattedBalance: `${formatBalance(balance, precision)} ${symbol}`,
     formattedPrice:
       +balance > 0 && sendTokenPrice
         ? `≈${formatToUsd({

@@ -1,4 +1,5 @@
 import {
+  formatBalance,
   formatNumeratorToPercentage,
   formatPercentage,
   formatToUsd,
@@ -41,5 +42,16 @@ describe('formatPercentage', () => {
     expect(formatPercentage(25.13344, 3)).toEqual('25.133%')
     expect(formatPercentage(102.99)).toEqual('103%')
     expect(formatPercentage(109.765, 5)).toEqual('109.765%')
+  })
+})
+
+describe('formatBalance', () => {
+  it('should format balance with precision', () => {
+    expect(formatBalance('56619.095563', 3)).toEqual('56619.095')
+    expect(formatBalance('56619.001', 3)).toEqual('56619.001')
+    expect(formatBalance('0', 3)).toEqual('0')
+    expect(formatBalance('0.000001', 6)).toEqual('0.000001')
+    expect(formatBalance('56619.09556399', 6)).toEqual('56619.095563')
+    expect(formatBalance('0', 6)).toEqual('0')
   })
 })

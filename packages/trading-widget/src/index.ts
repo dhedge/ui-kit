@@ -290,6 +290,7 @@ export {
   useMinReceiveText,
   useTradingPriceDiff,
   useTradingSettleHandler,
+  useIsEasySwapperTrading,
 } from './core-kit/hooks/trading'
 export {
   useDeposit,
