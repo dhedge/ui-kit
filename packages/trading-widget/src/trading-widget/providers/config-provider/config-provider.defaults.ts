@@ -20,6 +20,7 @@ import type {
 
 export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   isGeoBlocked: false,
+  isSanctioned: false,
   depositQuoteDiffWarningThreshold: 1,
   depositQuoteDiffErrorThreshold: 3,
   defaultDepositSlippage: DEFAULT_DEPOSIT_SLIPPAGE,

@@ -13,6 +13,7 @@ export interface ImageProps {
 export interface ComponentProviderProps {
   config?: {
     GeoBlockAlert?: ComponentType
+    SanctionedAlert?: ComponentType
     DepositMetaInfo?: ComponentType
     WithdrawMetaInfo?: ComponentType
     ExtraActionButton?: ComponentType
