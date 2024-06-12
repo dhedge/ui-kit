@@ -35,15 +35,15 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   minDeposit: 'Minimum Deposit',
   tokensLockTime: 'Purchased tokens will have a {lockTime} lock.',
   slippageTolerance: 'Slippage tolerance',
-  bypassEntryFee: 'Bypass Entry Fee',
+  reduceLockupTime: 'Reduce Lockup Time',
   entryFeeSwitchWarning:
-    'By removing the entry fee, your position is locked for up to {defaultLockTime} instead of the normal {customLockTime}.',
+    'Your position will be locked for up to {customLockTime} instead of the normal {defaultLockTime}.',
   toggleTokenApprovalAmount:
     'Toggle between exact and infinite token approval.',
   auto: 'Auto',
   autoSlippageDescription:
     "App is testing different slippage ranges, starting low and increasing until it's likely to pass",
-  lengthenLockup: 'Lengthen lockup to remove entry fee',
+  reduceLockup: 'Reduce lockup to {customLockTime} min by paying 0.1% fee',
   deposit: 'Buy',
   withdraw: 'Sell',
   yourBalance: 'Your Balance',

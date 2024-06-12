@@ -12,8 +12,12 @@ import { DepositFeeSwitch } from '../deposit-fee-switch/deposit-fee-switch'
 
 export const DepositSettings: FC = () => {
   const t = useTranslationContext()
-  const { customLockTime, defaultLockTime, hasPoolEntryFee } =
-    useDepositSettings()
+  const {
+    customLockTime,
+    defaultLockTime,
+    hasPoolEntryFee,
+    isEasySwapperTrading,
+  } = useDepositSettings()
 
   return (
     <>
@@ -23,9 +27,9 @@ export const DepositSettings: FC = () => {
       >
         <SlippageSelector />
       </SettingsOption>
-      {!hasPoolEntryFee && (
+      {isEasySwapperTrading && !hasPoolEntryFee && (
         <SettingsOption
-          label={t.bypassEntryFee}
+          label={t.reduceLockupTime}
           tooltipText={t.entryFeeSwitchWarning
             .replace('{defaultLockTime}', defaultLockTime)
             .replace('{customLockTime}', customLockTime)}
