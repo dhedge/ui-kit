@@ -43,7 +43,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   auto: 'Auto',
   autoSlippageDescription:
     "App is testing different slippage ranges, starting low and increasing until it's likely to pass",
-  reduceLockup: 'Reduce lockup to {customLockTime} min by paying 0.1% fee',
+  reduceLockup: 'Reduce lockup to {customLockTime} by paying 0.1% fee',
   deposit: 'Buy',
   withdraw: 'Sell',
   yourBalance: 'Your Balance',
