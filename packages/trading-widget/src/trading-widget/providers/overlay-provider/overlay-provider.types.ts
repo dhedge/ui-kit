@@ -2,13 +2,14 @@ import type { OverlayType } from 'trading-widget/types'
 
 export type OverlayProviderState = Record<
   OverlayType,
-  Pick<MergeOverlayActionPayload, 'isOpen' | 'onConfirm'>
+  Pick<MergeOverlayActionPayload, 'isOpen' | 'onConfirm' | 'isPending'>
 >
 
 type MergeOverlayActionPayload = {
   isOpen: boolean
   type: OverlayType
-  onConfirm?: () => void
+  isPending?: boolean
+  onConfirm?: (setPendingState: (pending: boolean) => void) => Promise<void>
 }
 
 export type OverlayProviderAction = {

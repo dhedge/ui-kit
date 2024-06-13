@@ -20,7 +20,9 @@ const reducer = (
         [action.payload.type]: {
           ...state[action.payload.type],
           isOpen: action.payload.isOpen,
-          onConfirm: action.payload.onConfirm,
+          isPending: action.payload.isPending ?? false,
+          onConfirm:
+            action.payload.onConfirm ?? state[action.payload.type].onConfirm,
         },
       }
 
@@ -32,7 +34,7 @@ const reducer = (
 const defaultState: OverlayProviderState = Object.values(OVERLAY).reduce(
   (acc, name) => ({
     ...acc,
-    [name]: { isOpen: false },
+    [name]: { isOpen: false, isPending: false },
   }),
   {} as OverlayProviderState,
 )
@@ -71,18 +73,29 @@ export const useOverlayHandlers = ({ type }: OverlayProps) => {
   const dispatch = useOverlayDispatchContext()
 
   const handleClose = () => {
-    dispatch({ type: 'MERGE_OVERLAY', payload: { type, isOpen: false } })
+    dispatch({
+      type: 'MERGE_OVERLAY',
+      payload: { type, isOpen: false, isPending: false },
+    })
   }
 
-  const { onConfirm } = state[type]
+  const { onConfirm, isPending } = state[type]
 
-  const handleConfirm = () => {
-    onConfirm?.()
+  const setPendingState = (isPending: boolean) => {
+    dispatch({
+      type: 'MERGE_OVERLAY',
+      payload: { type, isOpen: true, isPending },
+    })
+  }
+
+  const handleConfirm = async () => {
+    await onConfirm?.(setPendingState)
     handleClose()
   }
 
   return {
     handleReject: handleClose,
     handleConfirm,
+    isPending,
   }
 }
