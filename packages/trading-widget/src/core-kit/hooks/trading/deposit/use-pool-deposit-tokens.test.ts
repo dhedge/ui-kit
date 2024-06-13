@@ -51,7 +51,7 @@ describe('usePoolDepositTokens', () => {
       chainId: optimism.id,
     })
     expect(poolHooks.usePoolComposition).toHaveBeenCalledTimes(1)
-    // expect(userHooks.useIsPoolManagerAccount).toHaveBeenCalledTimes(1)
+    expect(userHooks.useIsPoolManagerAccount).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useReadContracts).toHaveBeenCalledWith(
       expect.objectContaining({
         query: expect.objectContaining({
@@ -113,7 +113,7 @@ describe('usePoolDepositTokens', () => {
     ])
   })
 
-  it.skip('should return deposit tokens with balances when custom deposit tokens are defined and include native token when the user is not a vault manager', () => {
+  it('should return deposit tokens with balances when custom deposit tokens are defined and include native token when the user is not a vault manager', () => {
     const isPoolManagerAccount = false
     const chainId = optimism.id
     const defaultDepositToken = {
@@ -272,16 +272,16 @@ describe('usePoolDepositTokens', () => {
         symbol: 'WETH',
         value: '',
       },
-      // {
-      //   address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
-      //   symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
-      //   decimals: CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
-      //   value: '',
-      // },
+      {
+        address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
+        symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
+        decimals: CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
+        value: '',
+      },
     ])
   })
 
-  it.skip('should return deposit tokens with balances and move default deposit token to the first place', () => {
+  it('should return deposit tokens with balances and move default deposit token to the first place', () => {
     const isPoolManagerAccount = false
     const chainId = optimism.id
     const depositToken = {
