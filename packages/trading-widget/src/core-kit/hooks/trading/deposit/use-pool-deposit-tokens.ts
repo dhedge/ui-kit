@@ -5,12 +5,12 @@ import { useMemo } from 'react'
 import { erc20Abi } from 'core-kit/abi'
 import {
   AddressZero,
-  CHAIN_NATIVE_TOKENS,
+  // CHAIN_NATIVE_TOKENS,
   DEFAULT_PRECISION,
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
+// import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
 import {
   useAccount,
   useContractReadsErrorLogging,
@@ -20,7 +20,7 @@ import type { TradingToken } from 'core-kit/types/trading-panel.types'
 import type { Address } from 'core-kit/types/web3.types'
 import { normalizeNumber } from 'core-kit/utils'
 
-import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
+// import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 interface ProductDepositToken extends TradingToken {
   balance?: number
@@ -30,8 +30,8 @@ export const usePoolDepositTokens = (): TradingToken[] => {
   const { address, chainId, depositParams } = useTradingPanelPoolConfig()
   const { account } = useAccount()
   const poolComposition = usePoolComposition({ address, chainId })
-  const isPoolManagerAccount = useIsPoolManagerAccount()
-  const isEasySwapperTrading = useIsEasySwapperTrading()
+  // const isPoolManagerAccount = useIsPoolManagerAccount()
+  // const isEasySwapperTrading = useIsEasySwapperTrading()
 
   const depositTokens = useMemo(
     () =>
@@ -111,25 +111,25 @@ export const usePoolDepositTokens = (): TradingToken[] => {
         ({ symbol }) => symbol !== depositParams.defaultDepositTokenSymbol,
       ),
       // remove native deposits for dHEDGE managers and in SynthetixV3 vaults
-      ...(isPoolManagerAccount || !isEasySwapperTrading
-        ? []
-        : [
-            {
-              value: '',
-              address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
-              symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
-              decimals:
-                CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
-            },
-          ]),
+      // ...(isPoolManagerAccount || !isEasySwapperTrading
+      //   ? []
+      //   : [
+      //       {
+      //         value: '',
+      //         address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
+      //         symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
+      //         decimals:
+      //           CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
+      //       },
+      //     ]),
     ]
   }, [
     hasDepositTokens,
-    isPoolManagerAccount,
+    // isPoolManagerAccount,
     depositTokens,
     balances,
-    chainId,
+    // chainId,
     depositParams.defaultDepositTokenSymbol,
-    isEasySwapperTrading,
+    // isEasySwapperTrading,
   ])
 }
