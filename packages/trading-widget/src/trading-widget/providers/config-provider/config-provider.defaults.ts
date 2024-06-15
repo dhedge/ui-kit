@@ -60,10 +60,11 @@ export const useConfigProviderDefaultActions = (): ConfigProviderActions => {
     [connect],
   )
 
-  const onAcceptTermsOfUse = useCallback(() => {
+  const onAcceptTermsOfUse = useCallback(async () => {
     console.log(
       'terms of use were accepted. Assume `termsOfUseAccepted` config value switch to true',
     )
+    return Promise.resolve(true)
   }, [])
 
   return {
