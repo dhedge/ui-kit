@@ -37,7 +37,7 @@ export const useValidWithdrawButton = () => {
       payload: {
         type: OVERLAY.HIGH_SLIPPAGE,
         isOpen: true,
-        onConfirm: confirmHighSlippage,
+        onConfirm: async () => confirmHighSlippage(),
       },
     })
   }
