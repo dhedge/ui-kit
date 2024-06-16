@@ -15,8 +15,23 @@ import { DepositMeta } from '../meta/meta'
 export const DepositTab: FC = () => {
   useDepositTabPanel()
 
-  const { isGeoBlocked } = useConfigContextParams()
-  const { GeoBlockAlert, ExtraActionButton } = useComponentContext()
+  const { isGeoBlocked, isSanctioned } = useConfigContextParams()
+  const { GeoBlockAlert, ExtraActionButton, SanctionedAlert } =
+    useComponentContext()
+
+  const isBlocked = isGeoBlocked || isSanctioned
+  const alerts = [
+    {
+      Component: GeoBlockAlert,
+      value: isGeoBlocked,
+      key: 'geo-block',
+    },
+    {
+      Component: SanctionedAlert,
+      value: isSanctioned,
+      key: 'sanctioned',
+    },
+  ].filter(({ value }) => value)
 
   return (
     <>
@@ -27,8 +42,10 @@ export const DepositTab: FC = () => {
         <DepositInputGroup />
       </Layout.InputGroup>
       <DepositMeta>
-        {isGeoBlocked && GeoBlockAlert ? (
-          <GeoBlockAlert />
+        {isBlocked ? (
+          alerts.map(
+            ({ Component, key }) => Component && <Component key={key} />,
+          )
         ) : (
           <>
             <ValidNetworkButton>

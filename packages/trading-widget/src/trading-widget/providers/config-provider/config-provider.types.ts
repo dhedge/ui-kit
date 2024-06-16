@@ -2,6 +2,7 @@ import type { ChainId } from 'core-kit/types'
 
 export interface ConfigProviderParams {
   isGeoBlocked: boolean
+  isSanctioned: boolean
   depositQuoteDiffWarningThreshold: number
   depositQuoteDiffErrorThreshold: number
   defaultDepositSlippage: number
