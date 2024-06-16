@@ -20,7 +20,7 @@ export interface ConfigProviderParams {
 
 export interface ConfigProviderActions {
   onConnect: () => void
-  onAcceptTermsOfUse: () => void
+  onAcceptTermsOfUse: () => Promise<boolean>
 }
 
 export interface ConfigProviderProps {

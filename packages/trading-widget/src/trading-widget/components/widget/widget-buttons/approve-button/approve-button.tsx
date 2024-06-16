@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { ActionButton, Spinner } from 'trading-widget/components/common'
+import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 import { THEME_TYPE } from 'trading-widget/types'
 
 import type { ApproveButtonProps } from './approve-button.hooks'
@@ -10,16 +11,17 @@ export const ApproveButton: FC<ApproveButtonProps> = ({
   onApprove,
   symbol,
 }) => {
+  const t = useTranslationContext()
   const { disabled, isLoading } = useApproveButton()
 
   return (
     <ActionButton disabled={disabled} onClick={onApprove}>
-      <div className="dtw-flex dtw-items-center dtw-justify-center">
-        <span>Approve {symbol}</span>
+      <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1">
+        <span>
+          {t.approve} {symbol}
+        </span>
         {isLoading && (
-          <span className="dtw-ml-1">
-            <Spinner type={THEME_TYPE.DEFAULT} className="dtw-h-4 dtw-w-4" />
-          </span>
+          <Spinner type={THEME_TYPE.DEFAULT} className="dtw-h-4 dtw-w-4" />
         )}
       </div>
     </ActionButton>

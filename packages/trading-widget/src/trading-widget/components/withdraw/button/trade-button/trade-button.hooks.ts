@@ -23,7 +23,7 @@ export const useWithdrawTradeButton = () => {
           payload: {
             type: OVERLAY.FMED_WITHDRAWAL,
             isOpen: true,
-            onConfirm: () => {
+            onConfirm: async () => {
               handleTrade()
             },
           },

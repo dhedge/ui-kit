@@ -26,9 +26,19 @@ export const useDepositTradeButton = () => {
         payload: {
           type: OVERLAY.TERMS_OF_USE,
           isOpen: true,
-          onConfirm: () => {
-            onAcceptTermsOfUse()
-            handleTrade()
+          onConfirm: async (setPendingState) => {
+            try {
+              setPendingState(true)
+              const isAccepted = await onAcceptTermsOfUse()
+
+              if (isAccepted) {
+                handleTrade()
+              }
+            } catch (error) {
+              console.error('Failed to verify terms of use acceptance')
+            } finally {
+              setPendingState(false)
+            }
           },
         },
       })
