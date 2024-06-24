@@ -110,6 +110,7 @@ export const TradingPanelActionsContext =
     updateTransactions: noop,
     updatePoolConfigDepositMethod: noop,
     updatePoolFallbackData: noop,
+    onTradingSettleError: noop,
     onTransactionError: noop,
     onTransactionSuccess: noop,
     onTransactionEstimationError: noop,
@@ -304,6 +305,7 @@ export const TradingPanelProvider: FC<
     onTokenSelector,
     onLog,
     onSimulateTransaction,
+    onTradingSettleError,
   },
 }) => {
   const [state, dispatch] = useReducer(
@@ -417,6 +419,7 @@ export const TradingPanelProvider: FC<
       onTokenSelector,
       onLog,
       onSimulateTransaction,
+      onTradingSettleError,
     }),
     [
       setPoolAddress,
@@ -436,6 +439,7 @@ export const TradingPanelProvider: FC<
       onTokenSelector,
       onLog,
       onSimulateTransaction,
+      onTradingSettleError,
     ],
   )
 
