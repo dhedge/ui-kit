@@ -70,6 +70,7 @@ export {
   contractsAddressesMap,
   contractsAbisMap,
   CBETH_BASE,
+  RETH_BASE,
   BRIDGED_TOKENS_SYMBOLS,
   CHAIN_NATIVE_TOKENS,
   ALCHEMY_RPC_URL_MAP,
