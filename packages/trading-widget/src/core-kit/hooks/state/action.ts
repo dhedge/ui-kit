@@ -26,6 +26,9 @@ export const useUpdatePoolFallbackData = () =>
 export const useOnTransactionError = () =>
   useTradingPanelActions().onTransactionError
 
+export const useOnTradingSettleError = () =>
+  useTradingPanelActions().onTradingSettleError
+
 export const useOnTransactionSuccess = () =>
   useTradingPanelActions().onTransactionSuccess
 

@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import {
+  useOnTradingSettleError,
   useSendTokenInput,
   useTradingPanelApprovingStatus,
   useTradingPanelModal,
@@ -17,6 +18,7 @@ export const useTradingSettleHandler = (
   const [, updateTradingModal] = useTradingPanelModal()
   const [, updatePendingTransactions] = useTradingPanelTransactions()
   const [, updateSendToken] = useSendTokenInput()
+  const onTradingSettleError = useOnTradingSettleError()
 
   return useCallback<
     Required<Required<UseWriteContractParameters>['mutation']>['onSettled']
@@ -37,6 +39,9 @@ export const useTradingSettleHandler = (
 
         updatePendingTransactions({ type: 'remove', status: 'fail' })
         console.debug(`${action} transaction failed`, error)
+
+        onTradingSettleError?.(error)
+
         return
       }
 
@@ -57,6 +62,7 @@ export const useTradingSettleHandler = (
       updatePendingTransactions,
       updateSendToken,
       updateTradingModal,
+      onTradingSettleError,
     ],
   )
 }

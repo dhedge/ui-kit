@@ -83,6 +83,7 @@ export interface CallbackConfig {
   onUpdateEntryFee: TradingPanelSetters['updateEntryFee']
   onUpdateTradingModal: TradingPanelSetters['updateTradingModal']
   onUpdateTransactions: TradingPanelSetters['updateTransactions']
+  onTradingSettleError: (error: Error) => void
   onTransactionError: (
     error: Error,
     action: TransactionAction | undefined,
@@ -157,6 +158,7 @@ export interface TradingPanelContextConfig {
 }
 
 export type TradingPanelActionsState = TradingPanelSetters & {
+  onTradingSettleError: CallbackConfig['onTradingSettleError'] | undefined
   onTransactionError: CallbackConfig['onTransactionError'] | undefined
   onTransactionSuccess: CallbackConfig['onTransactionSuccess'] | undefined
   onTransactionEstimationError:
