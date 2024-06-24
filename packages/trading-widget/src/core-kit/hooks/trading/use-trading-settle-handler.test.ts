@@ -12,6 +12,7 @@ vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelApprovingStatus: vi.fn(),
   useTradingPanelModal: vi.fn(),
   useTradingPanelTransactions: vi.fn(),
+  useOnTradingSettleError: vi.fn(),
 }))
 
 describe('useTradingSettleHandler', () => {
