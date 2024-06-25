@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 
+import { FLATMONEY_COLLATERAL_SYMBOL_MAP } from 'core-kit/const'
 import { isFlatMoneyLeveragedRethAsset } from 'core-kit/utils'
 import {
   Skeleton,
@@ -9,13 +10,15 @@ import {
 
 import type { AssetCompositionTableProps } from './asset-composition-table.hooks'
 import { useAssetCompositionTable } from './asset-composition-table.hooks'
+import { useTranslationContext } from '../../../../providers/translation-provider'
 
 export const AssetCompositionTable = ({
   className,
   showFraction = true,
   iconSize,
 }: AssetCompositionTableProps) => {
-  const { poolComposition } = useAssetCompositionTable()
+  const t = useTranslationContext()
+  const { poolComposition, chainId } = useAssetCompositionTable()
 
   return (
     <div className={classNames('dtw-text-sm dtw-font-light', className)}>
@@ -45,7 +48,15 @@ export const AssetCompositionTable = ({
                       />
                       {isLeveragedRethAsset && (
                         <div className="dtw-flex dtw-gap-1 dtw-items-center dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
-                          As <TokenIcon symbols={['reth']} size="xs" /> rETH
+                          {t.as}{' '}
+                          <TokenIcon
+                            symbols={[
+                              FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ??
+                                'reth',
+                            ]}
+                            size="xs"
+                          />{' '}
+                          {FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ?? 'rETH'}
                         </div>
                       )}
                     </td>

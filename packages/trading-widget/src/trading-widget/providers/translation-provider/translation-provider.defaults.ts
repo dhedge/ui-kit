@@ -96,4 +96,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   pay: 'Pay',
   multiAssetFractions: 'multi asset fractions',
   explorer: 'Explorer',
+  as: 'As'
 }

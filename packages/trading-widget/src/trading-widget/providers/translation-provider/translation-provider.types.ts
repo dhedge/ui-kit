@@ -73,6 +73,7 @@ export type TranslationMap = {
   pay: string
   multiAssetFractions: string
   explorer: string
+  as: string
   [key: string]: string
 }
 
