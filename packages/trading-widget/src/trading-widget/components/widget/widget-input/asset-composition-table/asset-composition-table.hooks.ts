@@ -21,5 +21,5 @@ export const useAssetCompositionTable = () => {
     chainId,
   })
 
-  return { poolComposition }
+  return { poolComposition, chainId }
 }

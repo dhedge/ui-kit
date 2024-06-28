@@ -28,3 +28,10 @@ export const CBETH_BASE: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const RETH_BASE: TradingToken = {
+  address: '0xb6fe221fe9eef5aba221c348ba20a1bf5e73624c',
+  symbol: 'rETH',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
