@@ -21,7 +21,9 @@ export const useDepositSlippage = (receiveAssetInputValue: string) => {
 
   useEffect(() => {
     if (isDeposit) {
-      updateSettings({ minSlippage: Math.abs(priceDiffDebounced) })
+      const minSlippage =
+        priceDiffDebounced < 0 ? Math.abs(priceDiffDebounced) : 0
+      updateSettings({ minSlippage })
     }
   }, [updateSettings, isDeposit, priceDiffDebounced])
 }

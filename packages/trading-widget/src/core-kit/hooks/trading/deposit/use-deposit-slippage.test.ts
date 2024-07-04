@@ -59,7 +59,7 @@ describe('useDepositSlippage', () => {
       receiveAssetValue: receiveAssetInputValue,
     })
     expect(updateSettingsMock).toHaveBeenCalledTimes(1)
-    expect(updateSettingsMock).toHaveBeenCalledWith({ minSlippage: 2.12 })
+    expect(updateSettingsMock).toHaveBeenCalledWith({ minSlippage: 0 })
     act(() => rerender())
     expect(updateSettingsMock).toHaveBeenCalledTimes(2)
     expect(updateSettingsMock).toHaveBeenLastCalledWith({ minSlippage: 1.13 })
