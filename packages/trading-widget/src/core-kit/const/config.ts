@@ -96,3 +96,7 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   synthetixV3Core: SynthetixV3CoreAbi,
   flatcoinPointsModule: FlatcoinPointsModuleABI,
 }
+
+export const QUERY_KEYS = {
+  SYNTHETIX_ORACLES_UPDATE: 'useOraclesUpdateTransactionData',
+}

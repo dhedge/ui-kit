@@ -11,6 +11,8 @@ export const DEFAULT_PRECISION = 18
 
 export const DEFAULT_POLLING_INTERVAL = 59_000
 export const SHORTEN_POLLING_INTERVAL = 30_000
+export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
+export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
