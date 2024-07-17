@@ -102,13 +102,13 @@ export const useOraclesUpdateTransactionData = (
         console.error(err)
       }
 
-      if (transactions.length <= 1 || !transactions.length) {
-        return null
+      if (transactions.length > 1) {
+        // only execute the prepended txns, so remove the last one
+        const prependedCalls = transactions.slice(0, transactions.length - 1)
+        return trustedMulticallForwarderBatcher.batch(prependedCalls)
       }
 
-      // only execute the prepended txns, so remove the last one
-      const prependedCalls = transactions.slice(0, transactions.length - 1)
-      return trustedMulticallForwarderBatcher.batch(prependedCalls)
+      return null
     },
     ...options,
   })
