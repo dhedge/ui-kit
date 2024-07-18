@@ -1,9 +1,10 @@
 import chunk from 'lodash.chunk'
 
 import type { UseReadContractsReturnType } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 
 import { PoolLogicAbi } from 'core-kit/abi'
-import { AddressZero, DEFAULT_CHAIN_ID } from 'core-kit/const'
+import { AddressZero } from 'core-kit/const'
 import { useTradingPanelPoolConfigs } from 'core-kit/hooks/state'
 import {
   useAccount,
@@ -58,7 +59,7 @@ const getContracts = (pools: PoolContractAccountCallParams[]) =>
 
 const POOL_CHUNK_SIZE = getPoolContracts({
   account: AddressZero,
-  chainId: DEFAULT_CHAIN_ID,
+  chainId: optimism.id,
   address: AddressZero,
 }).length
 
