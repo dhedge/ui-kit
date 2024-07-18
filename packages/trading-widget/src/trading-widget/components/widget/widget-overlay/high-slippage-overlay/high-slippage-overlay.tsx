@@ -2,12 +2,14 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
 import { ActionButton, Layout } from 'trading-widget/components/common'
+import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 import type { OverlayProps } from 'trading-widget/types'
 
 export const HighSlippageOverlay: FC<OverlayProps> = ({ type }) => {
   const t = useTranslationContext()
+  const { ActionButton: Button = ActionButton } = useComponentContext()
 
   const { handleReject, handleConfirm } = useOverlayHandlers({ type })
 
@@ -26,10 +28,10 @@ export const HighSlippageOverlay: FC<OverlayProps> = ({ type }) => {
         <li>{t.termOfUseDepositAuditRisk}</li>
       </ul>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
-        <ActionButton highlighted={false} onClick={handleReject}>
+        <Button highlighted={false} onClick={handleReject}>
           {t.back}
-        </ActionButton>
-        <ActionButton onClick={handleConfirm}>{t.confirm}</ActionButton>
+        </Button>
+        <Button onClick={handleConfirm}>{t.confirm}</Button>
       </div>
     </Layout.Overlay>
   )

@@ -10,11 +10,13 @@ import { ApproveButton } from 'trading-widget/components/widget/widget-buttons'
 
 import { useTradingTypeName } from 'trading-widget/hooks'
 
+import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 import { useValidDepositButton } from './valid-deposit-button.hooks'
 
 export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
+  const { ActionButton: Button = ActionButton } = useComponentContext()
   const t = useTranslationContext()
   const name = useTradingTypeName('deposit')
 
@@ -36,12 +38,12 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresMinDeposit) {
     return (
-      <ActionButton disabled>
+      <Button disabled>
         {t.minimumPurchase.replace(
           '{value}',
           commify(minDepositUSD.toString() ?? ''),
         )}
-      </ActionButton>
+      </Button>
     )
   }
 
@@ -64,19 +66,17 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
   }
 
   if (requiresUpdate) {
-    return (
-      <ActionButton onClick={updateOracles}>{t.updateOracles}</ActionButton>
-    )
+    return <Button onClick={updateOracles}>{t.updateOracles}</Button>
   }
 
   if (requiresHighSlippageConfirm) {
     return (
-      <ActionButton onClick={confirmHighSlippage}>
+      <Button onClick={confirmHighSlippage}>
         {t.confirmMaxSlippage.replace(
           '{slippagePercentage}',
           `${Math.abs(slippageToBeUsed)}`,
         )}
-      </ActionButton>
+      </Button>
     )
   }
 

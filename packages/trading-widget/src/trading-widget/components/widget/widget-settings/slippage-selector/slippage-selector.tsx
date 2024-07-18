@@ -23,7 +23,7 @@ const SelectorContainer: FC<SlippageSelectorProps> = ({
   return (
     <div
       className={classNames(
-        'dtw-cursor-pointer dtw-rounded-lg dtw-py-1 dtw-text-center dtw-text-sm',
+        'dtw-cursor-pointer dtw-rounded-[var(--panel-input-button-radius,var(--panel-radius))] dtw-py-1 dtw-text-center dtw-text-sm',
         className,
         {
           'dtw-bg-[color:var(--panel-switch-bg-checked)]': selected,

@@ -1,4 +1,4 @@
-import type { ComponentType, SVGProps } from 'react'
+import type { ComponentType, PropsWithChildren, SVGProps } from 'react'
 
 export interface ImageProps {
   src: string
@@ -8,6 +8,14 @@ export interface ImageProps {
   onError?: () => void
   onLoad?: () => void
   className?: string
+}
+
+interface ButtonProps {
+  onClick?: () => void
+  highlighted?: boolean
+  disabled?: boolean
+  className?: string
+  type?: 'submit' | 'button'
 }
 
 export interface ComponentProviderProps {
@@ -20,5 +28,6 @@ export interface ComponentProviderProps {
     Image?: ComponentType<ImageProps>
     LogoSpinner?: ComponentType<SVGProps<SVGElement>>
     DepositTermsOfUse?: ComponentType
+    ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
   }
 }
