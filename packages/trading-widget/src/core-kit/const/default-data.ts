@@ -24,11 +24,11 @@ export const DEFAULT_DEPOSIT_LOCKTIME_MAP: Record<
   deposit: DEFAULT_LOCK_TIME,
   depositWithCustomCooldown: CUSTOM_LOCK_TIME,
 }
-export const DEFAULT_CHAIN_ID = optimism.id
+
 export const EMPTY_POOL_CONFIG: PoolConfig = {
   address: AddressZero,
   symbol: '',
-  chainId: DEFAULT_CHAIN_ID,
+  chainId: optimism.id,
   depositParams: { customTokens: [] },
   withdrawParams: { customTokens: [] },
   deprecated: false,

@@ -1,6 +1,7 @@
 import * as w from 'wagmi'
 
-import { DEFAULT_CHAIN_ID, optimism, polygon } from 'core-kit/const'
+import { base, optimism, polygon } from 'core-kit/const'
+import * as stateHooks from 'core-kit/hooks/state'
 import { renderHook } from 'tests/test-utils'
 
 import { useNetwork } from './use-network'
@@ -18,6 +19,10 @@ vi.mock('wagmi', async () => {
     }),
   }
 })
+
+vi.mock('core-kit/hooks/state', () => ({
+  useTradingPanelDefaultChainId: vi.fn(),
+}))
 
 describe('useNetwork', () => {
   it('should return network data', () => {
@@ -88,7 +93,7 @@ describe('useNetwork', () => {
     expect(result.current.isSupported).toBe(true)
   })
 
-  it('should fallback to default chain id on supportedChainId', () => {
+  it('should fallback to first chain id on supportedChainId', () => {
     vi.mocked(w.useAccount).mockImplementationOnce(
       () =>
         ({
@@ -105,7 +110,55 @@ describe('useNetwork', () => {
 
     const { result } = renderHook(() => useNetwork())
 
-    expect(result.current.supportedChainId).toBe(DEFAULT_CHAIN_ID)
+    expect(result.current.supportedChainId).toBe(optimism.id)
+  })
+
+  it('should fallback to state defaultChainId on supportedChainId', () => {
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: polygon,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism, base],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
+
+    vi.mocked(stateHooks.useTradingPanelDefaultChainId).mockImplementation(
+      () => base.id,
+    )
+
+    const { result } = renderHook(() => useNetwork())
+
+    expect(result.current.supportedChainId).toBe(base.id)
+  })
+
+  it('should fallback to first chain id on supportedChainId if state defaultChainId is out of chains list', () => {
+    vi.mocked(w.useAccount).mockImplementationOnce(
+      () =>
+        ({
+          chain: polygon,
+        }) as unknown as ReturnType<typeof w.useAccount>,
+    )
+
+    vi.mocked(w.useConfig).mockImplementationOnce(
+      () =>
+        ({
+          chains: [optimism],
+        }) as unknown as ReturnType<typeof w.useConfig>,
+    )
+
+    vi.mocked(stateHooks.useTradingPanelDefaultChainId).mockImplementation(
+      () => base.id,
+    )
+
+    const { result } = renderHook(() => useNetwork())
+
+    expect(result.current.supportedChainId).toBe(optimism.id)
   })
 
   it('should return undefined for unsupported chain on chainId', () => {
