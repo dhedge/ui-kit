@@ -2,6 +2,8 @@ import type { QueryKey } from '@tanstack/react-query'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
+import { QUERY_KEYS } from 'core-kit/const'
+
 type ContractReadQueryKey = ['readContract', { functionName?: string }]
 type ContractReadsQueryKey = [
   'readContracts',
@@ -14,6 +16,7 @@ const tradingContractCalls = [
   'getFundComposition',
 ]
 const allowanceContractCalls = ['allowance']
+const customQueries = [QUERY_KEYS.SYNTHETIX_ORACLES_UPDATE]
 
 const filterQueries = (
   queryKey: QueryKey,
@@ -30,7 +33,8 @@ const filterQueries = (
       contractCalls.includes(functionName ?? ''),
     )
   }
-  return false
+
+  return customQueries.some((key) => key === queryKey[0])
 }
 
 export const useInvalidateTradingQueries = () => {

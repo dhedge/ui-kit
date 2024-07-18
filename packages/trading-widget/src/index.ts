@@ -200,7 +200,6 @@ export {
   toErrorWithMessage,
   getNativeTokenInvestableBalance,
   isNativeToken,
-  getOracleUpdateTransaction,
   getOrderedTxArgs,
   getPercent,
   getPoolFraction,
