@@ -8,3 +8,11 @@ export const FLATMONEY_LEVERAGED_RETH_ASSET_MAP: Record<ChainId, Address> = {
 export const FLATMONEY_COLLATERAL_SYMBOL_MAP: Record<ChainId, string> = {
   [base.id]: 'rETH',
 }
+
+export const FLATMONEY_UNIT_SYMBOL_MAP: Record<ChainId, string> = {
+  [base.id]: 'UNIT',
+}
+
+export const FLATMONEY_UNIT_ADDRESS_MAP: Record<ChainId, Address> = {
+  [base.id]: '0xb95fb324b8a2faf8ec4f76e3df46c718402736e2',
+}
