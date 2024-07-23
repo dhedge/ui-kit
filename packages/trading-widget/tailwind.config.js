@@ -33,4 +33,7 @@ module.exports = {
   },
   plugins: [],
   prefix: 'dtw-',
+  corePlugins: {
+    preflight: false,
+  },
 }
