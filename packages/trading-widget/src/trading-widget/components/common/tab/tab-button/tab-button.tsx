@@ -19,9 +19,9 @@ export const TabButton: FC<TabProps> = ({ tradingType }) => {
         classNames(
           'dtw-relative dtw-text-[length:var(--panel-tab-font-size,var(--panel-font-size-sm))] dtw-px-[var(--panel-tab-px)] dtw-py-[var(--panel-tab-py)] dtw-font-[var(--panel-tab-font-weight,var(--panel-font-weight-bold))] dtw-leading-[var(--panel-tab-line-height, var(--panel-line-height))] dtw-outline-0',
           {
-            'dtw-text-[color:var(--panel-tab-select-content-color,var(--panel-content-color))]':
+            '!dtw-text-[color:var(--panel-tab-select-content-color,var(--panel-content-color))]':
               selected,
-            'dtw-text-[color:var(--panel-tab-content-color,var(--panel-neutral-content-color))] hover:dtw-text-[color:var(--panel-tab-hover-content-color,var(--panel-content-hover-color))]':
+            '!dtw-text-[color:var(--panel-tab-content-color,var(--panel-neutral-content-color))] hover:dtw-text-[color:var(--panel-tab-hover-content-color,var(--panel-content-hover-color))]':
               !selected,
           },
         )
