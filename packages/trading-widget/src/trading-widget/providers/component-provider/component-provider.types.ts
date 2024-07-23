@@ -10,7 +10,7 @@ export interface ImageProps {
   className?: string
 }
 
-interface ButtonProps {
+export interface ButtonProps {
   onClick?: () => void
   highlighted?: boolean
   disabled?: boolean
