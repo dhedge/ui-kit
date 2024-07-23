@@ -9,7 +9,8 @@ import type { OverlayProps } from 'trading-widget/types'
 
 export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
   const t = useTranslationContext()
-  const { DepositTermsOfUse } = useComponentContext()
+  const { DepositTermsOfUse, ActionButton: Button = ActionButton } =
+    useComponentContext()
 
   const { handleReject, handleConfirm, isPending } = useOverlayHandlers({
     type,
@@ -34,17 +35,17 @@ export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
         {DepositTermsOfUse && <DepositTermsOfUse />}
       </div>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
-        <ActionButton highlighted={false} onClick={handleReject}>
+        <Button highlighted={false} onClick={handleReject}>
           {t.back}
-        </ActionButton>
-        <ActionButton onClick={handleConfirm} disabled={isPending}>
+        </Button>
+        <Button onClick={handleConfirm} disabled={isPending}>
           <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1">
             <span>
               {isPending ? t.confirmInWallet : t.termOfUseDepositAccept}
             </span>
             {isPending && <Spinner className="dtw-h-4 dtw-w-4" />}
           </div>
-        </ActionButton>
+        </Button>
       </div>
     </Layout.Overlay>
   )

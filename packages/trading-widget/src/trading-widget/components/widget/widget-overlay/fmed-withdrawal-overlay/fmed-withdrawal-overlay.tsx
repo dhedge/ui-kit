@@ -9,10 +9,12 @@ import {
   PendingOverlay,
 } from 'trading-widget/components/common'
 
+import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import type { OverlayProps } from 'trading-widget/types'
 
 export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
+  const { ActionButton: Button = ActionButton } = useComponentContext()
   const { handleReject, handleConfirm } = useOverlayHandlers({ type })
   const { unlockTaxAmount, unlockDate, unlockTimestamp, isLoading } =
     useFlatmoneyPointsUserBalances()
@@ -49,10 +51,10 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
         <li>After withdrawal, you won’t be able to redeposit</li>
       </ul>
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
-        <ActionButton highlighted={false} onClick={handleReject}>
+        <Button highlighted={false} onClick={handleReject}>
           Back
-        </ActionButton>
-        <ActionButton onClick={handleConfirm}>Confirm</ActionButton>
+        </Button>
+        <Button onClick={handleConfirm}>Confirm</Button>
       </div>
     </Layout.Overlay>
   )
