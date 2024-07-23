@@ -43,7 +43,7 @@ export const Switch = ({
           checked={checked}
           onChange={onSwitchChange}
           className={classNames(
-            'dtw-relative dtw-inline-flex dtw-h-6 dtw-w-11 dtw-flex-shrink-0 dtw-items-center dtw-rounded-full dtw-transition-colors focus:dtw-outline-none',
+            'dtw-p-0 dtw-relative dtw-inline-flex dtw-h-6 dtw-w-11 dtw-flex-shrink-0 dtw-items-center dtw-rounded-full dtw-transition-colors focus:dtw-outline-none',
             {
               '!dtw-bg-[color:var(--panel-switch-bg-checked)]': checked,
               '!dtw-bg-[color:var(--panel-switch-bg)]': !checked,
@@ -55,8 +55,8 @@ export const Switch = ({
             className={classNames(
               'dtw-inline-block dtw-h-4 dtw-w-4 dtw-transform dtw-rounded-full dtw-bg-white dtw-transition-transform',
               {
-                'dtw-translate-x-4': checked,
-                'dtw-translate-x-0': !checked,
+                'dtw-translate-x-6': checked,
+                'dtw-translate-x-1': !checked,
               },
             )}
           />

@@ -86,7 +86,6 @@ html,
     */
 
   a {
-    color: inherit;
     text-decoration: inherit;
   }
 
@@ -178,8 +177,8 @@ html,
     font-family: inherit; /* 1 */
     font-feature-settings: inherit; /* 1 */
     font-variation-settings: inherit; /* 1 */
-    font-size: 100%; /* 1 */
-    font-weight: inherit; /* 1 */
+    /*font-size: 100%; !* 1 *!*/
+    /*font-weight: inherit; !* 1 *!*/
     line-height: inherit; /* 1 */
     color: inherit; /* 1 */
   }

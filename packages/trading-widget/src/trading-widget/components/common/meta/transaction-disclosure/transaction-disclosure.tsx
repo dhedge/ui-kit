@@ -37,7 +37,7 @@ export const TransactionOverviewDisclosure: FC<
             {staticItems?.map((props) => (
               <TransactionDisclosureItem key={props.label} {...props} />
             ))}
-            <Disclosure.Button className="dtw-flex dtw-w-full dtw-justify-between dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] hover:dtw-bg-[var(--panel-meta-hover-bg,var(--panel-neutral-color))] focus:dtw-outline-none">
+            <Disclosure.Button className="dtw-p-0 dtw-flex dtw-w-full dtw-justify-between dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] hover:dtw-bg-[var(--panel-meta-hover-bg,var(--panel-neutral-color))] focus:dtw-outline-none">
               <TransactionDisclosureItem
                 tooltipText={t.fullReceiveDetails}
                 label={t.tradeDetails}
@@ -47,7 +47,7 @@ export const TransactionOverviewDisclosure: FC<
                 {buttonItemChildren}
                 <ChevronDownIcon
                   className={classNames(
-                    'dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))] dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]',
+                    'dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))] !dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] !dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]',
                     { 'dtw-rotate-180 dtw-transform': open },
                   )}
                 />

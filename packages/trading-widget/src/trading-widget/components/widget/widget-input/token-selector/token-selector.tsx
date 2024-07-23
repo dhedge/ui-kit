@@ -14,7 +14,7 @@ export const TokenSelector: FC<TokenSelectorProps> = ({ symbol }) => {
 
   return (
     <button
-      className="dtw-flex dtw-items-center dtw-gap-1 dtw-rounded-[var(--panel-input-button-radius,var(--panel-radius))] dtw-border dtw-border-[var(--panel-input-button-border-color,var(--panel-accent-to-color))] dtw-bg-[var(--panel-input-button-bg,var(--panel-secondary-color))] dtw-px-[var(--panel-input-button-px)] dtw-py-[var(--panel-input-button-py)] hover:dtw-opacity-[var(--panel-action-hover-opacity)] dtw-opacity-[var(--panel-action-opacity)]"
+      className="dtw-flex dtw-items-center dtw-gap-1 dtw-rounded-[var(--panel-input-button-radius,var(--panel-radius))] dtw-border dtw-border-[var(--panel-input-button-border-color,var(--panel-accent-to-color))] !dtw-bg-[var(--panel-input-button-bg,var(--panel-secondary-color))] dtw-px-[var(--panel-input-button-px)] dtw-py-[var(--panel-input-button-py)] hover:dtw-opacity-[var(--panel-action-hover-opacity)] dtw-opacity-[var(--panel-action-opacity)]"
       onClick={onClick}
     >
       <TokenBadge
