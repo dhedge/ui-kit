@@ -51,6 +51,7 @@ export interface TradingPanelState {
   poolConfigMap: Record<PoolConfig['address'], PoolConfig>
   transactions: PendingTransaction[]
   poolFallbackData: PoolFallbackData
+  defaultChainId?: ChainId
 }
 
 export interface TradingPanelSetters {

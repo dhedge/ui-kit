@@ -87,6 +87,7 @@ export const getDefaultTradingPanelState = (
     },
     transactions: config?.transactions ?? [],
     poolFallbackData: { address: AddressZero, ...config?.poolFallbackData },
+    defaultChainId: config?.defaultChainId,
   }
 }
 
