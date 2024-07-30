@@ -61,11 +61,12 @@ export const TokenIcon: FC<TokenIconProps> = ({
   className = '',
 }) => {
   const { Image = DefaultImage } = useComponentContext()
-  const [error, setError] = useState(false)
+  const symbolsString = symbols.join('')
+  const [error, setError] = useState({ [symbolsString]: false })
   const { height, width, diameter } = getSizeClasses(size)
   const icons = useCryptoIcon(symbols)
 
-  if (!icons?.length || !icons[0] || error) return null
+  if (!icons?.length || !icons[0] || error[symbolsString]) return null
 
   if (icons.length === 1) {
     return (
@@ -75,7 +76,7 @@ export const TokenIcon: FC<TokenIconProps> = ({
         className={classNames(height, width, className)}
         width={diameter}
         height={diameter}
-        onError={() => setError(true)}
+        onError={() => setError({ [symbolsString]: true })}
       />
     )
   }
@@ -97,7 +98,7 @@ export const TokenIcon: FC<TokenIconProps> = ({
           )}
           width={diameter}
           height={diameter}
-          onError={() => setError(true)}
+          onError={() => setError({ [symbolsString]: true })}
         />
       ))}
     </span>
