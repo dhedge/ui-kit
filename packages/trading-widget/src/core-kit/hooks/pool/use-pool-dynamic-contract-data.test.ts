@@ -74,6 +74,7 @@ describe('usePoolDynamicContractData', () => {
               performanceFee: '5',
               streamingFee: '6',
               entryFee: '7',
+              exitFee: '10',
             },
           },
         }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
@@ -109,6 +110,7 @@ describe('usePoolDynamicContractData', () => {
         performanceFee: '5',
         streamingFee: '6',
         entryFee: '7',
+        exitFee: '10',
       }),
     )
   })
@@ -171,6 +173,7 @@ describe('usePoolDynamicContractData', () => {
               performanceFee: '5',
               streamingFee: '6',
               entryFee: '7',
+              exitFee: '10',
             },
           },
         }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,

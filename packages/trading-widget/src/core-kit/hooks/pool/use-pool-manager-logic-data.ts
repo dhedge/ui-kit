@@ -9,11 +9,13 @@ export const normalizeFeeIncreaseInfo = (
   const announcedPerformanceFee = feeIncreaseInfo?.[0]?.toString() ?? ''
   const announcedStreamingFee = feeIncreaseInfo?.[1]?.toString() ?? ''
   const announcedEntryFee = feeIncreaseInfo?.[2]?.toString() ?? ''
-  const announcedTimestamp = feeIncreaseInfo?.[3]?.toString() ?? ''
+  const announcedExitFee = feeIncreaseInfo?.[3]?.toString() ?? ''
+  const announcedTimestamp = feeIncreaseInfo?.[4]?.toString() ?? ''
   return {
     announcedPerformanceFee,
     announcedStreamingFee,
     announcedEntryFee,
+    announcedExitFee,
     announcedTimestamp,
   }
 }

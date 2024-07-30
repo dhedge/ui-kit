@@ -11,6 +11,7 @@ import { useWithdrawQuote } from './use-withdraw-quote'
 
 vi.mock('core-kit/hooks/pool', () => ({
   usePoolTokenPrice: vi.fn(),
+  usePoolFees: vi.fn(),
 }))
 
 vi.mock('core-kit/hooks/state', () => ({
@@ -39,6 +40,7 @@ describe('useWithdrawQuote', () => {
     }
     const receiveTokenPrice = '2'
     const updateReceiveTokenMock = vi.fn()
+    const exitFeeNumber = 0.1
 
     expect(sendToken.value).toEqual('')
 
@@ -46,6 +48,9 @@ describe('useWithdrawQuote', () => {
       sendToken,
       vi.fn(),
     ])
+    vi.mocked(poolHooks.usePoolFees).mockReturnValue({
+      exitFeeNumber,
+    } as ReturnType<typeof poolHooks.usePoolFees>)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue(sendTokenPrice)
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValue([
       receiveToken,
@@ -77,6 +82,7 @@ describe('useWithdrawQuote', () => {
     }
     const receiveTokenPrice = '2'
     const updateReceiveTokenMock = vi.fn()
+    const exitFeeNumber = 0.2
 
     expect(sendToken.value).toEqual('0')
 
@@ -84,6 +90,9 @@ describe('useWithdrawQuote', () => {
       sendToken,
       vi.fn(),
     ])
+    vi.mocked(poolHooks.usePoolFees).mockReturnValue({
+      exitFeeNumber,
+    } as ReturnType<typeof poolHooks.usePoolFees>)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue(sendTokenPrice)
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValue([
       receiveToken,
@@ -115,6 +124,7 @@ describe('useWithdrawQuote', () => {
     }
     const receiveTokenPrice = '2'
     const updateReceiveTokenMock = vi.fn()
+    const exitFeeNumber = 0.1
 
     expect(sendToken.value).not.toEqual('0')
 
@@ -122,6 +132,9 @@ describe('useWithdrawQuote', () => {
       sendToken,
       vi.fn(),
     ])
+    vi.mocked(poolHooks.usePoolFees).mockReturnValue({
+      exitFeeNumber,
+    } as ReturnType<typeof poolHooks.usePoolFees>)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue(sendTokenPrice)
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValue([
       receiveToken,
@@ -136,7 +149,7 @@ describe('useWithdrawQuote', () => {
     expect(updateReceiveTokenMock).toHaveBeenCalledTimes(1)
     expect(updateReceiveTokenMock).toHaveBeenCalledWith({
       value: (
-        (+sendToken.value * +sendTokenPrice) /
+        (+sendToken.value * (1 - exitFeeNumber / 100) * +sendTokenPrice) /
         +receiveTokenPrice
       ).toString(),
     })

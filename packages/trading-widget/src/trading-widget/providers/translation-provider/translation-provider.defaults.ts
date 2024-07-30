@@ -25,8 +25,9 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   infinite: 'Infinite approval',
   tokenAllowance: 'Token Allowance',
   entryFee: 'Entry Fee',
-  entryFeeExplanation:
-    "When you deposit, the token takes a small entry fee. This fee helps cover the costs when we rebalance the underlying funds, and it's shared among all token holders.",
+  exitFee: 'Exit Fee',
+  entryFeeExplanation: "Entry fee is charged in vault's tokens.",
+  exitFeeExplanation: "Exit fee is charged in vault's tokens.",
   easySwapperEntryFee:
     'Entry fee is charged when a cooldown of {time} is selected. Bypass Entry Fee at trading settings.',
   amountToBeApproved:

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { usePoolTokenPrice } from 'core-kit/hooks/pool'
+import { usePoolFees, usePoolTokenPrice } from 'core-kit/hooks/pool'
 import { useReceiveTokenInput, useSendTokenInput } from 'core-kit/hooks/state'
 import type { PoolConfig } from 'core-kit/types/config.types'
 
@@ -23,7 +23,10 @@ export const useWithdrawQuote = (
   poolConfig: Pick<PoolConfig, 'address' | 'chainId'>,
 ) => {
   const sendToken = useSendToken(poolConfig)
-
+  const { exitFeeNumber } = usePoolFees({
+    address: poolConfig.address,
+    chainId: poolConfig.chainId,
+  })
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const receiveTokenPrice =
     useAssetPrice({
@@ -36,15 +39,24 @@ export const useWithdrawQuote = (
       updateReceiveToken({ value: '0' })
       return
     }
+    // apply exit fee
+    const sendTokenValueAfterExitFee =
+      Number(sendToken.value) * (1 - exitFeeNumber / 100)
 
     const sendTokenPriceNumber = Number(sendToken.price)
     const receiveTokenPriceNumber = Number(receiveTokenPrice)
     const newReceiveAssetValue = receiveTokenPriceNumber
       ? (
-          (Number(sendToken.value) * sendTokenPriceNumber) /
+          (sendTokenValueAfterExitFee * sendTokenPriceNumber) /
           receiveTokenPriceNumber
         ).toString()
       : '0'
     updateReceiveToken({ value: newReceiveAssetValue })
-  }, [receiveTokenPrice, sendToken.price, sendToken.value, updateReceiveToken])
+  }, [
+    receiveTokenPrice,
+    sendToken.price,
+    sendToken.value,
+    updateReceiveToken,
+    exitFeeNumber,
+  ])
 }

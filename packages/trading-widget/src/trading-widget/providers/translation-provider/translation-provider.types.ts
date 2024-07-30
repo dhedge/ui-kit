@@ -18,6 +18,8 @@ export type TranslationMap = {
   tokenAllowance: string
   entryFee: string
   entryFeeExplanation: string
+  exitFee: string
+  exitFeeExplanation: string
   easySwapperEntryFee: string
   amountToBeApproved: string
   minDepositUsd: string

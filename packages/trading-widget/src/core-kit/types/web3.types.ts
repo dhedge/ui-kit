@@ -74,4 +74,5 @@ export interface DynamicPoolContractData {
   performanceFee: string | undefined
   streamingFee: string | undefined
   entryFee: string | undefined
+  exitFee: string | undefined
 }
