@@ -13,6 +13,10 @@ export interface TokenIconProps {
   className?: string
 }
 
+interface IconLoadingErrors {
+  [iconSymbol: string]: boolean
+}
+
 export const getRowClasses = (index: number, length: number) => {
   if (index === 0) {
     return `dtw-z-${(length - 1) * 10}`
@@ -62,11 +66,16 @@ export const TokenIcon: FC<TokenIconProps> = ({
 }) => {
   const { Image = DefaultImage } = useComponentContext()
   const symbolsString = symbols.join('')
-  const [error, setError] = useState({ [symbolsString]: false })
+  const [error, setError] = useState<IconLoadingErrors>({
+    [symbolsString]: false,
+  })
   const { height, width, diameter } = getSizeClasses(size)
   const icons = useCryptoIcon(symbols)
 
   if (!icons?.length || !icons[0] || error[symbolsString]) return null
+
+  const handleIconLoadingError = () =>
+    setError((state) => ({ ...state, [symbolsString]: true }))
 
   if (icons.length === 1) {
     return (
@@ -76,7 +85,7 @@ export const TokenIcon: FC<TokenIconProps> = ({
         className={classNames(height, width, className)}
         width={diameter}
         height={diameter}
-        onError={() => setError({ [symbolsString]: true })}
+        onError={handleIconLoadingError}
       />
     )
   }
@@ -98,7 +107,7 @@ export const TokenIcon: FC<TokenIconProps> = ({
           )}
           width={diameter}
           height={diameter}
-          onError={() => setError({ [symbolsString]: true })}
+          onError={handleIconLoadingError}
         />
       ))}
     </span>
