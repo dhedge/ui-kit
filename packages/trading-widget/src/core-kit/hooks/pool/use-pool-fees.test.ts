@@ -13,6 +13,7 @@ vi.mock('./use-pool-dynamic-contract-data', () => ({
 
 vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelEntryFee: vi.fn(),
+  useTradingPanelPoolFallbackData: vi.fn(),
 }))
 
 describe('usePoolFees', () => {
@@ -33,6 +34,12 @@ describe('usePoolFees', () => {
       0,
       vi.fn(),
     ])
+    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+      () =>
+        [{}] as unknown as ReturnType<
+          typeof stateHooks.useTradingPanelPoolFallbackData
+        >,
+    )
 
     renderHook(() => usePoolFees({ address, chainId }))
 
@@ -195,5 +202,44 @@ describe('usePoolFees', () => {
     const { result } = renderHook(() => usePoolFees({ address, chainId }))
 
     expect(result.current.entryFee).toEqual(`${stateFee}%`)
+  })
+
+  it('should rely on fallback fees', () => {
+    const address = TEST_ADDRESS
+    const chainId = optimism.id
+    const fallbackData = {
+      performanceFeeNumerator: '100',
+      streamingFeeNumerator: '200',
+      entryFeeNumerator: '300',
+      exitFeeNumerator: '400',
+      address,
+    }
+
+    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
+      () =>
+        ({
+          performanceFee: undefined,
+          streamingFee: undefined,
+          entryFee: undefined,
+          exitFee: undefined,
+        }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
+    )
+    vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
+      0,
+      vi.fn(),
+    ])
+    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+      () =>
+        [fallbackData] as unknown as ReturnType<
+          typeof stateHooks.useTradingPanelPoolFallbackData
+        >,
+    )
+
+    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+
+    expect(result.current.performanceFee).toEqual('1%')
+    expect(result.current.streamingFee).toEqual('2%')
+    expect(result.current.entryFee).toEqual('3%')
+    expect(result.current.exitFee).toEqual('4%')
   })
 })
