@@ -33,4 +33,8 @@ export interface PoolFallbackData {
     value: number
     currency: ApyCurrency
   }
+  performanceFeeNumerator?: string | null
+  streamingFeeNumerator?: string | null
+  entryFeeNumerator?: string | null
+  exitFeeNumerator?: string | null
 }
