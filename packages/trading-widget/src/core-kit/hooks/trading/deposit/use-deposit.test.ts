@@ -10,10 +10,13 @@ import {
 import * as stateHooks from 'core-kit/hooks/state'
 
 import {
-  useTradingParams,
+  useIsEasySwapperTrading,
   useTradingSettleHandler,
 } from 'core-kit/hooks/trading'
-import { useDepositSlippage } from 'core-kit/hooks/trading/deposit'
+import {
+  useDepositSlippage,
+  useDepositTradingParams,
+} from 'core-kit/hooks/trading/deposit'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import type { Address, DynamicTradingToken } from 'core-kit/types'
 import { renderHook } from 'tests/test-utils'
@@ -38,9 +41,11 @@ vi.mock('core-kit/hooks/state', () => ({
 vi.mock('core-kit/hooks/trading', () => ({
   useTradingSettleHandler: vi.fn(),
   useTradingParams: vi.fn(),
+  useIsEasySwapperTrading: vi.fn(),
 }))
 vi.mock('core-kit/hooks/trading/deposit', () => ({
   useDepositSlippage: vi.fn(),
+  useDepositTradingParams: vi.fn(),
 }))
 vi.mock('core-kit/hooks/web3', () => ({
   useContractFunction: vi.fn(),
@@ -88,6 +93,7 @@ describe('useDeposit', () => {
           typeof configProviderHooks.useConfigContextParams
         >,
     )
+    vi.mocked(useIsEasySwapperTrading).mockReturnValue(true)
   })
 
   afterEach(() => {
@@ -107,7 +113,7 @@ describe('useDeposit', () => {
       poolDepositAddress: '0x111' as Address,
       receiveAssetAddress: receiveToken.address,
       sendAssetAddress: sendToken.address,
-      receiveAssetInputValue: receiveToken.value,
+      receiveAssetAmount: receiveToken.value,
       fromTokenAmount: new BigNumber(sendToken.value),
     }
     vi.mocked(stateHooks.useTradingPanelDepositMethod).mockImplementation(
@@ -130,13 +136,13 @@ describe('useDeposit', () => {
           vi.fn,
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
-    vi.mocked(useTradingParams).mockImplementation(() => tradingParams)
+    vi.mocked(useDepositTradingParams).mockImplementation(() => tradingParams)
 
     const { result } = renderHook(() => useDeposit())
 
     expect(useDepositSlippage).toHaveBeenCalledTimes(1)
     expect(useDepositSlippage).toHaveBeenCalledWith(
-      tradingParams.receiveAssetInputValue,
+      tradingParams.receiveAssetAmount,
     )
     expect(useTradingSettleHandler).toHaveBeenCalledTimes(1)
     expect(useTradingSettleHandler).toHaveBeenCalledWith('deposit')
@@ -182,7 +188,7 @@ describe('useDeposit', () => {
       poolDepositAddress: BRIDGED_USDC_OPTIMISM.address,
       receiveAssetAddress: receiveToken.address,
       sendAssetAddress: sendToken.address,
-      receiveAssetInputValue: receiveToken.value,
+      receiveAssetAmount: receiveToken.value,
       fromTokenAmount: new BigNumber(sendToken.value),
     }
     vi.mocked(stateHooks.useTradingPanelDepositMethod).mockImplementation(
@@ -205,13 +211,13 @@ describe('useDeposit', () => {
           vi.fn,
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
-    vi.mocked(useTradingParams).mockImplementation(() => tradingParams)
+    vi.mocked(useDepositTradingParams).mockImplementation(() => tradingParams)
 
     const { result } = renderHook(() => useDeposit())
 
     expect(useDepositSlippage).toHaveBeenCalledTimes(1)
     expect(useDepositSlippage).toHaveBeenCalledWith(
-      tradingParams.receiveAssetInputValue,
+      tradingParams.receiveAssetAmount,
     )
     expect(useTradingSettleHandler).toHaveBeenCalledTimes(1)
     expect(useTradingSettleHandler).toHaveBeenCalledWith('deposit')

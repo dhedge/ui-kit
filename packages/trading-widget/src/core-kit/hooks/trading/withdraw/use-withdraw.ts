@@ -12,10 +12,7 @@ import {
   useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
-import {
-  useTradingParams,
-  useTradingSettleHandler,
-} from 'core-kit/hooks/trading'
+import { useTradingSettleHandler } from 'core-kit/hooks/trading'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import { DefaultSellingParams } from 'core-kit/models'
 
@@ -32,6 +29,7 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 
 import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 import { useWithdrawSlippage } from './use-withdraw-slippage'
+import { useWithdrawTradingParams } from './use-withdraw-trading-params'
 
 const action = 'withdraw'
 
@@ -44,9 +42,9 @@ export const useWithdraw = (): ContractActionFunc => {
   const {
     receiveAssetAddress,
     sendAssetAddress,
-    receiveAssetInputValue,
+    receiveAssetAmount,
     fromTokenAmount,
-  } = useTradingParams()
+  } = useWithdrawTradingParams()
   const { defaultWithdrawSlippageScale } = useConfigContextParams()
 
   const onSettled = useTradingSettleHandler(action)
@@ -73,13 +71,13 @@ export const useWithdraw = (): ContractActionFunc => {
           .shiftedBy(DEFAULT_PRECISION)
           .toFixed(0),
         receiveAssetAddress,
-        receiveAssetInputValue,
+        receiveAssetInputValue: receiveAssetAmount,
         decimalsReceiveToken: receiveToken.decimals,
       }),
     [
       fromTokenAmount,
       receiveAssetAddress,
-      receiveAssetInputValue,
+      receiveAssetAmount,
       sendAssetAddress,
       receiveToken.decimals,
     ],

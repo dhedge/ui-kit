@@ -1,5 +1,6 @@
 import isNumber from 'lodash.isnumber'
 
+import { DEFAULT_DEPOSIT_SLIPPAGE } from 'core-kit/const'
 import {
   useTradingPanelSettings,
   useTradingPanelType,
@@ -9,8 +10,7 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 export const useMaxSlippagePlaceholder = () => {
   const [tradingType] = useTradingPanelType()
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
-  const { defaultWithdrawSlippageScale, defaultDepositSlippage } =
-    useConfigContextParams()
+  const { defaultWithdrawSlippageScale } = useConfigContextParams()
 
   if (slippage !== 'auto') {
     return slippage.toString()
@@ -21,7 +21,7 @@ export const useMaxSlippagePlaceholder = () => {
   }
 
   return tradingType === 'deposit'
-    ? defaultDepositSlippage.toString()
+    ? DEFAULT_DEPOSIT_SLIPPAGE.toString()
     : `auto ${defaultWithdrawSlippageScale[0]}-${
         defaultWithdrawSlippageScale[defaultWithdrawSlippageScale.length - 1]
       }`
