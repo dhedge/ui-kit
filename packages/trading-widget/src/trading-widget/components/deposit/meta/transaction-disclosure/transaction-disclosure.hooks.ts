@@ -1,6 +1,10 @@
 import BigNumber from 'bignumber.js'
 
-import { usePoolFees, usePoolManagerLogicData } from 'core-kit/hooks/pool'
+import {
+  usePoolFees,
+  usePoolManagerLogicData,
+  usePoolTokenPrice,
+} from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -9,7 +13,10 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
-import { useDepositProjectedEarnings } from 'core-kit/hooks/trading'
+import {
+  useAssetPrice,
+  useDepositProjectedEarnings,
+} from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
 
 import {
@@ -27,9 +34,23 @@ export const useDepositTransactionDisclosure = () => {
   const [approvingStatus] = useTradingPanelApprovingStatus()
   const [{ slippage, minSlippage, isInfiniteAllowance, isMaxSlippageLoading }] =
     useTradingPanelSettings()
+  const isAutoSlippage = slippage === 'auto'
+
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
   const { address, chainId } = useTradingPanelPoolConfig()
+  const sendTokenPrice =
+    useAssetPrice({
+      address: sendToken.address,
+      chainId,
+      disabled: isAutoSlippage,
+    }) ?? ''
+  const receiveAssetPrice =
+    usePoolTokenPrice({
+      address: receiveToken.address,
+      chainId,
+      disabled: isAutoSlippage,
+    }) ?? ''
 
   const { entryFee, hasPoolEntryFee } = usePoolFees({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
@@ -39,8 +60,6 @@ export const useDepositTransactionDisclosure = () => {
   const minDeposit = minDepositUSD
     ? formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 })
     : ''
-
-  const isAutoSlippage = slippage === 'auto'
 
   const themeType = useGetThemeTypeBySlippage(
     isAutoSlippage ? minSlippage ?? 0 : slippage,
@@ -61,17 +80,15 @@ export const useDepositTransactionDisclosure = () => {
         4,
       )} ${receiveToken.symbol.toUpperCase()}`
     }
-    if (receiveToken.symbol === 'all') {
-      return t.estimatedMultiAssetFractions
-    }
-
-    const receiveBalance = new BigNumber(receiveToken.value ?? 0)
-    const receiveValueAfterSlippage =
-      receiveToken.value && receiveBalance.isFinite()
-        ? receiveBalance.times(1 - slippage / 100).toFixed(4)
+    const expectedReceiveTokenAmount = new BigNumber(sendToken.value || '0')
+      .multipliedBy(sendTokenPrice)
+      .dividedBy(receiveAssetPrice)
+    const receiveTokenAmountAfterSlippage =
+      expectedReceiveTokenAmount.isFinite()
+        ? expectedReceiveTokenAmount.times(1 - slippage / 100).toFixed(4)
         : '0'
 
-    return `${receiveValueAfterSlippage} ${receiveToken.symbol.toUpperCase()}`
+    return `${receiveTokenAmountAfterSlippage} ${receiveToken.symbol.toUpperCase()}`
   }
 
   const tokenAllowance = isInfiniteAllowance
