@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
-import { useTradingParams } from 'core-kit/hooks/trading'
 import * as tradingWithdrawHooks from 'core-kit/hooks/trading/withdraw'
 import * as web3Hooks from 'core-kit/hooks/web3'
 import { DefaultSellingParams } from 'core-kit/models'
@@ -27,7 +26,6 @@ vi.mock('core-kit/hooks/state', () => ({
 
 vi.mock('core-kit/hooks/trading', () => ({
   useTradingSettleHandler: vi.fn(),
-  useTradingParams: vi.fn(),
 }))
 
 vi.mock('core-kit/hooks/web3', () => ({
@@ -38,6 +36,10 @@ vi.mock('./use-is-multi-asset-withdraw', () => ({
   useIsMultiAssetWithdraw: vi.fn(),
 }))
 
+vi.mock('./use-withdraw-trading-params', () => ({
+  useWithdrawTradingParams: vi.fn(),
+}))
+
 vi.mock('./use-withdraw-slippage', () => ({
   useWithdrawSlippage: vi.fn(),
 }))
@@ -46,7 +48,7 @@ describe('useWithdraw', () => {
   it('should handle multi asset withdraw', async () => {
     const receiveAssetAddress = TEST_ADDRESS
     const sendAssetAddress = TEST_ADDRESS
-    const receiveAssetInputValue = '1'
+    const receiveAssetAmount = '1'
     const fromTokenAmount = new BigNumber('1')
 
     const poolConfig = {
@@ -96,12 +98,14 @@ describe('useWithdraw', () => {
       send: sendMock,
       estimate: estimateMock,
     })
-    vi.mocked(useTradingParams).mockImplementation(() => ({
-      receiveAssetAddress,
-      sendAssetAddress,
-      receiveAssetInputValue,
-      fromTokenAmount,
-    }))
+    vi.mocked(tradingWithdrawHooks.useWithdrawTradingParams).mockImplementation(
+      () => ({
+        receiveAssetAddress,
+        sendAssetAddress,
+        receiveAssetAmount,
+        fromTokenAmount,
+      }),
+    )
 
     const { result } = renderHook(() => useWithdraw())
 
@@ -131,7 +135,7 @@ describe('useWithdraw', () => {
   it('should handle single asset withdraw', async () => {
     const receiveAssetAddress = TEST_ADDRESS
     const sendAssetAddress = TEST_ADDRESS
-    const receiveAssetInputValue = '1'
+    const receiveAssetAmount = '1'
     const fromTokenAmount = new BigNumber('1')
 
     const poolConfig = {
@@ -182,12 +186,14 @@ describe('useWithdraw', () => {
       send: sendMock,
       estimate: estimateMock,
     })
-    vi.mocked(useTradingParams).mockImplementation(() => ({
-      receiveAssetAddress,
-      sendAssetAddress,
-      receiveAssetInputValue,
-      fromTokenAmount,
-    }))
+    vi.mocked(tradingWithdrawHooks.useWithdrawTradingParams).mockImplementation(
+      () => ({
+        receiveAssetAddress,
+        sendAssetAddress,
+        receiveAssetAmount,
+        fromTokenAmount,
+      }),
+    )
 
     const { result } = renderHook(() => useWithdraw())
 
@@ -212,7 +218,7 @@ describe('useWithdraw', () => {
       sendAssetAddress,
       fromTokenAmount: fromTokenAmount.shiftedBy(DEFAULT_PRECISION).toFixed(0),
       receiveAssetAddress,
-      receiveAssetInputValue,
+      receiveAssetInputValue: receiveAssetAmount,
       decimalsReceiveToken: receiveToken.decimals,
     })
 
@@ -225,7 +231,7 @@ describe('useWithdraw', () => {
   it('should handle single asset withdraw with auto slippage', async () => {
     const receiveAssetAddress = TEST_ADDRESS
     const sendAssetAddress = TEST_ADDRESS
-    const receiveAssetInputValue = '1'
+    const receiveAssetAmount = '1'
     const fromTokenAmount = new BigNumber('1')
 
     const poolConfig = {
@@ -300,7 +306,7 @@ describe('useWithdraw', () => {
       sendAssetAddress,
       fromTokenAmount: fromTokenAmount.shiftedBy(DEFAULT_PRECISION).toFixed(0),
       receiveAssetAddress,
-      receiveAssetInputValue,
+      receiveAssetInputValue: receiveAssetAmount,
       decimalsReceiveToken: receiveToken.decimals,
     })
 

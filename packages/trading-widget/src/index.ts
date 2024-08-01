@@ -284,7 +284,6 @@ export {
   useHandleTrade,
   useIsTradingEnabled,
   useRawAssetPrice,
-  useTradingParams,
   useTradingResultHandling,
   useMaxSlippagePlaceholder,
   useMinReceiveText,
@@ -302,6 +301,7 @@ export {
   usePoolDepositAssetAddress,
   usePoolDepositTokens,
   useShouldBeWhitelisted,
+  useDepositTradingParams,
 } from './core-kit/hooks/trading/deposit'
 export {
   useWithdraw,
@@ -310,6 +310,7 @@ export {
   useWithdrawSlippage,
   useIsMultiAssetWithdraw,
   useWithdrawTypeHandler,
+  useWithdrawTradingParams,
 } from './core-kit/hooks/trading/withdraw'
 export {
   useApprove,

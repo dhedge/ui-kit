@@ -25,7 +25,6 @@ vi.mock('core-kit/hooks/state', () => ({
 vi.mock('trading-widget/providers/config-provider', () => ({
   useConfigContextParams: vi.fn().mockReturnValue({
     defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
-    defaultDepositSlippageScale: DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   }),
 }))
 
