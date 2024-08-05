@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
+import { DEFAULT_DEPOSIT_SLIPPAGE } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -9,10 +10,13 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import {
-  useTradingParams,
+  useIsEasySwapperTrading,
   useTradingSettleHandler,
 } from 'core-kit/hooks/trading'
-import { useDepositSlippage } from 'core-kit/hooks/trading/deposit'
+import {
+  useDepositSlippage,
+  useDepositTradingParams,
+} from 'core-kit/hooks/trading/deposit'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import {
@@ -26,10 +30,6 @@ import {
   isNativeToken,
   logTransactionArguments,
 } from 'core-kit/utils'
-
-import { useConfigContextParams } from 'trading-widget/providers/config-provider'
-
-import { useIsEasySwapperTrading } from '../use-is-easy-swapper-trading'
 
 const action = 'deposit'
 
@@ -45,12 +45,11 @@ export const useDeposit = (): ContractActionFunc => {
     poolDepositAddress,
     receiveAssetAddress,
     sendAssetAddress,
-    receiveAssetInputValue,
+    receiveAssetAmount,
     fromTokenAmount,
-  } = useTradingParams()
-  const { defaultDepositSlippage } = useConfigContextParams()
+  } = useDepositTradingParams()
 
-  useDepositSlippage(receiveAssetInputValue)
+  useDepositSlippage(receiveAssetAmount)
 
   const isDepositNative =
     poolConfig.chainId && isEasySwapperDeposit
@@ -69,7 +68,7 @@ export const useDeposit = (): ContractActionFunc => {
       receiveAssetAddress,
       fromTokenAmount: fromTokenAmount.shiftedBy(sendToken.decimals).toFixed(0),
       poolDepositAddress: depositAddress,
-      receiveAssetInputValue,
+      receiveAssetInputValue: receiveAssetAmount,
     }
 
     if (!isEasySwapperDeposit) {
@@ -93,7 +92,7 @@ export const useDeposit = (): ContractActionFunc => {
     isEasySwapperDeposit,
     poolDepositAddress,
     receiveAssetAddress,
-    receiveAssetInputValue,
+    receiveAssetAmount,
     sendAssetAddress,
     sendToken.decimals,
   ])
@@ -117,7 +116,7 @@ export const useDeposit = (): ContractActionFunc => {
     logTransactionArguments(txArgs)
     const args: unknown[] = getOrderedTxArgs(
       txArgs,
-      slippage === 'auto' ? defaultDepositSlippage : slippage,
+      slippage === 'auto' ? DEFAULT_DEPOSIT_SLIPPAGE : slippage,
     )
     if (isDepositNative) {
       args.push({ value: BigInt(txArgs.fromTokenAmount) })
@@ -131,6 +130,5 @@ export const useDeposit = (): ContractActionFunc => {
     send,
     txArgs,
     slippage,
-    defaultDepositSlippage,
   ])
 }

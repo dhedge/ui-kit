@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import isNumber from 'lodash.isnumber'
 
+import { DEFAULT_DEPOSIT_SLIPPAGE_SCALE } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelSettings,
@@ -24,8 +25,7 @@ export const useMinReceiveText = () => {
   const [tradingType] = useTradingPanelType()
   const [receiveToken] = useReceiveTokenInput()
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
-  const { defaultWithdrawSlippageScale, defaultDepositSlippageScale } =
-    useConfigContextParams()
+  const { defaultWithdrawSlippageScale } = useConfigContextParams()
 
   if (tradingType === 'deposit' && slippage === 'auto') {
     return `${new BigNumber(receiveToken.value || 0).toFixed(
@@ -42,7 +42,7 @@ export const useMinReceiveText = () => {
         new BigNumber(receiveToken.value || 0),
         isAutoSlippageWithMinValue ? minSlippage : slippage,
         tradingType === 'deposit'
-          ? defaultDepositSlippageScale
+          ? DEFAULT_DEPOSIT_SLIPPAGE_SCALE
           : defaultWithdrawSlippageScale,
       )
     : '0'

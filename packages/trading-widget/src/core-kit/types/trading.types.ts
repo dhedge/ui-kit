@@ -11,7 +11,7 @@ import type { Address, ChainId } from 'core-kit/types/web3.types'
 export interface TradingParams {
   sendAssetAddress: Address
   fromTokenAmount: BigNumber
-  receiveAssetInputValue: string
+  receiveAssetAmount: string
   poolDepositAddress?: Address
   receiveAssetAddress: Address
 }
