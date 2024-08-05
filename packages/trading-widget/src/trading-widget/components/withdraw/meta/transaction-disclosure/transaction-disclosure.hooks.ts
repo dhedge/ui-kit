@@ -2,10 +2,12 @@ import BigNumber from 'bignumber.js'
 
 import isNumber from 'lodash.isnumber'
 
+import { usePoolFees } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelApprovingStatus,
+  useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 
@@ -21,6 +23,7 @@ import { THEME_TYPE } from 'trading-widget/types'
 
 export const useWithdrawTransactionDisclosure = () => {
   const t = useTranslationContext()
+  const { address, chainId } = useTradingPanelPoolConfig()
   const { defaultWithdrawSlippageScale } = useConfigContextParams()
   const [approvingStatus] = useTradingPanelApprovingStatus()
   const [
@@ -30,6 +33,7 @@ export const useWithdrawTransactionDisclosure = () => {
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
+  const { exitFee } = usePoolFees({ address, chainId })
 
   const isAutoSlippage = slippage === 'auto'
   const isMinSlippageNumber = isNumber(minSlippage)
@@ -96,5 +100,6 @@ export const useWithdrawTransactionDisclosure = () => {
     showApplyMinSlippageButton,
     handleMinTradingSlippage,
     isMultiAssetsWithdraw,
+    exitFee,
   }
 }

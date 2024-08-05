@@ -20,11 +20,13 @@ describe('normalizeFeeIncreaseInfo', () => {
       BigInt(0),
       BigInt(0),
       BigInt(0),
+      BigInt(0),
     ] as const
     const [
       announcedPerformanceFee,
       announcedStreamingFee,
       announcedEntryFee,
+      announcedExitFee,
       announcedTimestamp,
     ] = feeIncreaseInfo
 
@@ -32,6 +34,7 @@ describe('normalizeFeeIncreaseInfo', () => {
       announcedPerformanceFee: announcedPerformanceFee.toString(),
       announcedStreamingFee: announcedStreamingFee.toString(),
       announcedEntryFee: announcedEntryFee.toString(),
+      announcedExitFee: announcedExitFee.toString(),
       announcedTimestamp: announcedTimestamp.toString(),
     })
   })
@@ -41,7 +44,7 @@ describe('usePoolManagerLogicData', () => {
   it('should call usePoolManagerStatic with poolAddress and chainId', () => {
     const poolAddress = TEST_ADDRESS
     const chainId = optimism.id
-    const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
+    const feeInfo = [BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5)]
     const minDepositUSD = BigInt(0)
 
     vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
@@ -66,7 +69,7 @@ describe('usePoolManagerLogicData', () => {
   it('should return normalized fee data', () => {
     const poolAddress = TEST_ADDRESS
     const chainId = optimism.id
-    const feeInfo = [BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
+    const feeInfo = [BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5)]
     const minDepositUSD = BigInt(0)
 
     vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(

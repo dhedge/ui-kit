@@ -13,6 +13,7 @@ vi.mock('./use-pool-dynamic-contract-data', () => ({
 
 vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelEntryFee: vi.fn(),
+  useTradingPanelPoolFallbackData: vi.fn(),
 }))
 
 describe('usePoolFees', () => {
@@ -23,15 +24,22 @@ describe('usePoolFees', () => {
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
         ({
-          performanceFee: 'performanceFee',
-          streamingFee: 'streamingFee',
-          entryFee: 'entryFee',
+          performanceFee: '1',
+          streamingFee: '2',
+          entryFee: '3',
+          exitFee: '4',
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
     vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
       0,
       vi.fn(),
     ])
+    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+      () =>
+        [{}] as unknown as ReturnType<
+          typeof stateHooks.useTradingPanelPoolFallbackData
+        >,
+    )
 
     renderHook(() => usePoolFees({ address, chainId }))
 
@@ -53,9 +61,10 @@ describe('usePoolFees', () => {
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
         ({
-          performanceFee: 'performanceFee',
-          streamingFee: 'streamingFee',
-          entryFee: 'entryFee',
+          performanceFee: '1',
+          streamingFee: '2',
+          entryFee: '3',
+          exitFee: '4',
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
     vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
@@ -79,8 +88,8 @@ describe('usePoolFees', () => {
       () =>
         ({
           performanceFee,
-          streamingFee: 'streamingFee',
-          entryFee: 'entryFee',
+          streamingFee: '2',
+          entryFee: '3',
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
     vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
@@ -103,9 +112,9 @@ describe('usePoolFees', () => {
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
         ({
-          performanceFee: 'performanceFee',
+          performanceFee: '2',
           streamingFee,
-          entryFee: 'entryFee',
+          entryFee: '3',
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
     vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
@@ -128,8 +137,8 @@ describe('usePoolFees', () => {
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
         ({
-          performanceFee: 'performanceFee',
-          streamingFee: 'streamingFee',
+          performanceFee: '3',
+          streamingFee: '4',
           entryFee,
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
@@ -145,6 +154,32 @@ describe('usePoolFees', () => {
     )
   })
 
+  it('should return contract exit fee data', () => {
+    const address = TEST_ADDRESS
+    const chainId = optimism.id
+    const exitFee = '10'
+
+    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
+      () =>
+        ({
+          performanceFee: '5',
+          streamingFee: '6',
+          entryFee: '7',
+          exitFee,
+        }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
+    )
+
+    vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
+      0,
+      vi.fn(),
+    ])
+
+    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+
+    expect(result.current.exitFee).toEqual('0.1%')
+    expect(result.current.exitFeeNumber).toEqual(0.1)
+  })
+
   it('should return state entryFee data as fallback', () => {
     const address = TEST_ADDRESS
     const chainId = optimism.id
@@ -154,8 +189,8 @@ describe('usePoolFees', () => {
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
         ({
-          performanceFee: 'performanceFee',
-          streamingFee: 'streamingFee',
+          performanceFee: '1',
+          streamingFee: '2',
           entryFee,
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
@@ -167,5 +202,44 @@ describe('usePoolFees', () => {
     const { result } = renderHook(() => usePoolFees({ address, chainId }))
 
     expect(result.current.entryFee).toEqual(`${stateFee}%`)
+  })
+
+  it('should rely on fallback fees', () => {
+    const address = TEST_ADDRESS
+    const chainId = optimism.id
+    const fallbackData = {
+      performanceFeeNumerator: '100',
+      streamingFeeNumerator: '200',
+      entryFeeNumerator: '300',
+      exitFeeNumerator: '400',
+      address,
+    }
+
+    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
+      () =>
+        ({
+          performanceFee: undefined,
+          streamingFee: undefined,
+          entryFee: undefined,
+          exitFee: undefined,
+        }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
+    )
+    vi.mocked(stateHooks.useTradingPanelEntryFee).mockImplementation(() => [
+      0,
+      vi.fn(),
+    ])
+    vi.mocked(stateHooks.useTradingPanelPoolFallbackData).mockImplementation(
+      () =>
+        [fallbackData] as unknown as ReturnType<
+          typeof stateHooks.useTradingPanelPoolFallbackData
+        >,
+    )
+
+    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+
+    expect(result.current.performanceFee).toEqual('1%')
+    expect(result.current.streamingFee).toEqual('2%')
+    expect(result.current.entryFee).toEqual('3%')
+    expect(result.current.exitFee).toEqual('4%')
   })
 })

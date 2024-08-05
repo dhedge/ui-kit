@@ -91,6 +91,7 @@ export const usePoolsDynamic = (): UseReadContractsReturnType<
                 performanceFee: summary?.performanceFeeNumerator?.toString(),
                 streamingFee: summary?.managerFeeNumerator?.toString(),
                 entryFee: summary?.entryFeeNumerator?.toString(),
+                exitFee: summary?.exitFeeNumerator?.toString(),
               },
             }
           },

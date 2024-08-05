@@ -32,6 +32,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
     sendTokenSymbol,
     tokenAllowance,
     isMultiAssetsWithdraw,
+    exitFee,
   } = useWithdrawTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -63,6 +64,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
         label: t.minReceived,
         value: minReceive,
       },
+      { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
     ]
 
     if (!isAutoSlippage && !isMultiAssetsWithdraw) {

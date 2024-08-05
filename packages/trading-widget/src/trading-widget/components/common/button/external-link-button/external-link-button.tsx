@@ -20,7 +20,7 @@ export const ExternalLinkButton: FC<
 }) => (
   <a
     className={classNames(
-      'dtw-inline-flex dtw-cursor-pointer dtw-items-center dtw-gap-x-1 dtw-drop-shadow-md hover:dtw-border-themeGray-600',
+      'dtw-inline-flex dtw-cursor-pointer dtw-items-center dtw-gap-x-1 dtw-drop-shadow-md hover:dtw-border-themeGray-600 !dtw-text-[color:var(--panel-meta-link-color,var(--panel-content-color))]',
       className,
     )}
     href={link}
