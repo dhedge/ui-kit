@@ -27,7 +27,6 @@ export type TranslationMap = {
   tokensLockTime: string
   slippageTolerance: string
   reduceLockupTime: string
-  entryFeeSwitchWarning: string
   toggleTokenApprovalAmount: string
   auto: string
   autoSlippageDescription: string

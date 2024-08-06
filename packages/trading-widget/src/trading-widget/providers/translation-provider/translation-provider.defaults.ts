@@ -37,8 +37,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   tokensLockTime: 'Purchased tokens will have a {lockTime} lock.',
   slippageTolerance: 'Slippage tolerance',
   reduceLockupTime: 'Reduce Lockup Time',
-  entryFeeSwitchWarning:
-    'Your position will be locked for up to {customLockTime} instead of the normal {defaultLockTime}.',
   toggleTokenApprovalAmount:
     'Toggle between exact and infinite token approval.',
   auto: 'Auto',
