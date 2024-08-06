@@ -4,7 +4,8 @@ import {
   AaveLendingPoolAbi,
   DHedgeStakingV2Abi,
   DhedgeEasySwapperAbi,
-  FlatcoinPointsModuleABI,
+  EasySwapperV2Abi,
+  FlatcoinPointsModuleAbi,
   PoolFactoryAbi,
   PoolLogicAbi,
   PoolManagerLogicAbi,
@@ -24,6 +25,7 @@ import {
   EASY_SWAPPER_ADDRESS_BASE,
   EASY_SWAPPER_ADDRESS_OPTIMISM,
   EASY_SWAPPER_ADDRESS_POLYGON,
+  EASY_SWAPPER_V2_ADDRESS_BASE,
   FACTORY_ADDRESS_ARBITRUM,
   FACTORY_ADDRESS_BASE,
   FACTORY_ADDRESS_OPTIMISM,
@@ -48,6 +50,7 @@ export type ContractId =
   | 'synthetixV3AssetGuard'
   | 'synthetixV3Core'
   | 'flatcoinPointsModule'
+  | 'easySwapperV2'
 
 type ContractsAddressesMap = Readonly<
   Record<ChainId, { [id in ContractId]?: Address }>
@@ -78,6 +81,7 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_BASE,
     flatcoinPointsModule: FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
     easySwapper: EASY_SWAPPER_ADDRESS_BASE,
+    easySwapperV2: EASY_SWAPPER_V2_ADDRESS_BASE,
   },
 }
 
@@ -94,7 +98,8 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   poolLogic: PoolLogicAbi,
   synthetixV3AssetGuard: SynthetixV3AssetGuard,
   synthetixV3Core: SynthetixV3CoreAbi,
-  flatcoinPointsModule: FlatcoinPointsModuleABI,
+  flatcoinPointsModule: FlatcoinPointsModuleAbi,
+  easySwapperV2: EasySwapperV2Abi,
 }
 
 export const QUERY_KEYS = {
