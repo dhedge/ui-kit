@@ -1,4 +1,9 @@
-import { Disclosure, Transition } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Transition,
+} from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
@@ -37,7 +42,7 @@ export const TransactionOverviewDisclosure: FC<
             {staticItems?.map((props) => (
               <TransactionDisclosureItem key={props.label} {...props} />
             ))}
-            <Disclosure.Button className="dtw-p-0 dtw-flex dtw-w-full dtw-justify-between dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] hover:dtw-bg-[var(--panel-meta-hover-bg,var(--panel-neutral-color))] focus:dtw-outline-none">
+            <DisclosureButton className="dtw-p-0 dtw-flex dtw-w-full dtw-justify-between dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] hover:dtw-bg-[var(--panel-meta-hover-bg,var(--panel-neutral-color))] focus:dtw-outline-none">
               <TransactionDisclosureItem
                 tooltipText={t.fullReceiveDetails}
                 label={t.tradeDetails}
@@ -52,22 +57,14 @@ export const TransactionOverviewDisclosure: FC<
                   )}
                 />
               </TransactionDisclosureItem>
-            </Disclosure.Button>
-            <Transition
-              show={open}
-              enter="dtw-transition dtw-duration-100 dtw-ease-out"
-              enterFrom="dtw-transform dtw-scale-95 dtw-opacity-0"
-              enterTo="dtw-transform dtw-scale-100 dtw-opacity-100"
-              leave="dtw-transition dtw-duration-75 dtw-ease-out"
-              leaveFrom="dtw-transform dtw-scale-100 dtw-opacity-100"
-              leaveTo="dtw-transform dtw-scale-95 dtw-opacity-0"
-            >
-              <Disclosure.Panel className="dtw-static dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))] dtw-text-[color:var(--panel-secondary-content-color)] dtw-font-[var(--panel-meta-font-weight,var(--panel-font-weight-light))] dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] dtw-flex dtw-flex-col dtw-gap-1">
+            </DisclosureButton>
+            <Transition show={open}>
+              <DisclosurePanel className="dtw-transition dtw-transform dtw-duration-100 dtw-ease-out data-[closed]:opacity-0 data-[closed]:-dtw-translate-y-2.5 dtw-static dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))] dtw-text-[color:var(--panel-secondary-content-color)] dtw-font-[var(--panel-meta-font-weight,var(--panel-font-weight-light))] dtw-rounded-[var(--panel-radius-secondary,var(--panel-radius))] dtw-flex dtw-flex-col dtw-gap-1">
                 {collapseItems?.map((props) => (
                   <TransactionDisclosureItem key={props.label} {...props} />
                 ))}
                 {children}
-              </Disclosure.Panel>
+              </DisclosurePanel>
             </Transition>
           </>
         )}
