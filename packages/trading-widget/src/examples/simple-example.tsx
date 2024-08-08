@@ -20,7 +20,6 @@ const SYNTHETIX_BASE: PoolConfig = {
   withdrawParams: {
     customTokens: [],
   },
-  usePoolLogicDeposit: true,
 }
 
 const SIMPLE_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {
@@ -69,6 +68,7 @@ const SIMPLE_ACTIONS: TradingPanelContextConfig['actions'] = {
       onSetTradingType: args,
     })
   },
+  getSwapData: async () => Promise.resolve(null),
 }
 
 const SIMPLE_WIDGET_CONFIG: ProvidersProps = {

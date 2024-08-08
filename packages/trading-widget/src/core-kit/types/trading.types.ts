@@ -27,10 +27,37 @@ export type ChainNativeTokenMap = {
   }
 }
 
-export type PoolDepositMethodName = 'deposit' | 'depositWithCustomCooldown'
-
 export type TxArgs =
   | BuyingWithEasyswapperArgs
   | BuyingWithNativeAssetArgs
   | DefaultSellingParams
   | BuyingWithPoolLogicArgs
+
+export interface SwapDataResponse {
+  dstAmount: string
+  tx: { data: string }
+}
+
+export interface SwapDataRequest {
+  chainId: number
+  sourceAddress: Address
+  destinationAddress: Address
+  walletAddress: Address
+  amount: string
+  slippage: string
+}
+
+export interface VaultDepositParams {
+  depositMethod: DepositMethodName | undefined
+  vaultDepositTokenAddress: Address
+}
+
+export type DepositMethodName =
+  | 'deposit'
+  | 'depositWithCustomCooldown'
+  | 'nativeDeposit'
+  | 'nativeDepositWithCustomCooldown'
+  | 'zapNativeDeposit'
+  | 'zapNativeDepositWithCustomCooldown'
+  | 'zapDeposit'
+  | 'zapDepositWithCustomCooldown'

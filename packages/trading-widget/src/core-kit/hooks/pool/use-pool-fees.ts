@@ -2,10 +2,7 @@ import { useMemo } from 'react'
 
 import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
 import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
-import {
-  useTradingPanelEntryFee,
-  useTradingPanelPoolFallbackData,
-} from 'core-kit/hooks/state'
+import { useTradingPanelPoolFallbackData } from 'core-kit/hooks/state'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 import {
   formatNumeratorToPercentage,
@@ -23,13 +20,15 @@ export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
   const poolFallbackData = isEqualAddress(poolData.address, address)
     ? poolData
     : null
-  const { performanceFee, streamingFee, entryFee, exitFee } =
-    usePoolDynamicContractData({ address, chainId })
-  const [easySwapperEntryFee] = useTradingPanelEntryFee()
-  const vaultNativeEntryFee = entryFee ?? poolFallbackData?.entryFeeNumerator
-  const hasVaultNativeEntryFee =
-    !!vaultNativeEntryFee && +vaultNativeEntryFee > 0
-  const vaultExitFee = exitFee ?? poolFallbackData?.exitFeeNumerator ?? '0'
+  const {
+    performanceFee,
+    streamingFee,
+    entryFee: entryFeeContract,
+    exitFee: exitFeeContract,
+  } = usePoolDynamicContractData({ address, chainId })
+  const entryFee =
+    entryFeeContract ?? poolFallbackData?.entryFeeNumerator ?? '0'
+  const exitFee = exitFeeContract ?? poolFallbackData?.exitFeeNumerator ?? '0'
 
   return useMemo(
     () => ({
@@ -42,20 +41,17 @@ export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
         MANAGER_FEE_DENOMINATOR,
         2,
       ),
-      entryFee: hasVaultNativeEntryFee
-        ? formatNumeratorToPercentage(
-            vaultNativeEntryFee,
-            MANAGER_FEE_DENOMINATOR,
-            2,
-          )
-        : `${easySwapperEntryFee}%`,
-      hasPoolEntryFee: hasVaultNativeEntryFee,
+      entryFee: formatNumeratorToPercentage(
+        entryFee,
+        MANAGER_FEE_DENOMINATOR,
+        2,
+      ),
       exitFee: formatNumeratorToPercentage(
         exitFee ?? poolFallbackData?.exitFeeNumerator ?? '0',
         MANAGER_FEE_DENOMINATOR,
         2,
       ),
-      exitFeeNumber: getPercent(+vaultExitFee, MANAGER_FEE_DENOMINATOR),
+      exitFeeNumber: getPercent(+exitFee, MANAGER_FEE_DENOMINATOR),
     }),
     [
       performanceFee,
@@ -63,11 +59,8 @@ export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
       poolFallbackData?.streamingFeeNumerator,
       poolFallbackData?.exitFeeNumerator,
       streamingFee,
-      hasVaultNativeEntryFee,
-      vaultNativeEntryFee,
-      easySwapperEntryFee,
+      entryFee,
       exitFee,
-      vaultExitFee,
     ],
   )
 }

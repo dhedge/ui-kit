@@ -9,7 +9,6 @@ import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelApprovingStatus,
-  useTradingPanelLockTime,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
@@ -17,20 +16,19 @@ import {
   useAssetPrice,
   useDepositProjectedEarnings,
 } from 'core-kit/hooks/trading'
+import { useDepositLockTime } from 'core-kit/hooks/trading/deposit-v2'
 import { formatToUsd } from 'core-kit/utils'
 
 import {
   useGetSlippagePlaceholder,
   useGetThemeTypeBySlippage,
 } from 'trading-widget/hooks'
-import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 import { THEME_TYPE } from 'trading-widget/types'
 
 export const useDepositTransactionDisclosure = () => {
   const t = useTranslationContext()
-  const { customLockTime } = useConfigContextParams()
   const [approvingStatus] = useTradingPanelApprovingStatus()
   const [{ slippage, minSlippage, isInfiniteAllowance, isMaxSlippageLoading }] =
     useTradingPanelSettings()
@@ -52,10 +50,10 @@ export const useDepositTransactionDisclosure = () => {
       disabled: isAutoSlippage,
     }) ?? ''
 
-  const { entryFee, hasPoolEntryFee } = usePoolFees({ address, chainId })
+  const { entryFee } = usePoolFees({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
   const projectedEarnings = useDepositProjectedEarnings()
-  const lockTime = useTradingPanelLockTime()
+  const lockTime = useDepositLockTime()
 
   const minDeposit = minDepositUSD
     ? formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 })
@@ -95,10 +93,6 @@ export const useDepositTransactionDisclosure = () => {
     ? t.infinite
     : `${new BigNumber(sendToken.value || '0').toFixed(4)} ${sendToken.symbol}`
 
-  const entryFeeTooltipText = hasPoolEntryFee
-    ? t.entryFeeExplanation
-    : t.easySwapperEntryFee.replace('{time}', customLockTime)
-
   return {
     projectedEarnings,
     themeType,
@@ -110,7 +104,7 @@ export const useDepositTransactionDisclosure = () => {
     tokenAllowance,
     sendTokenSymbol: sendToken.symbol,
     entryFee,
-    entryFeeTooltipText,
+    entryFeeTooltipText: t.entryFeeExplanation,
     minDeposit,
     lockTime,
   }

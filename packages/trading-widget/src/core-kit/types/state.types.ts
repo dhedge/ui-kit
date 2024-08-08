@@ -2,7 +2,6 @@ import type { EstimationError } from 'core-kit/models'
 
 import type { PoolConfig, PoolFallbackData } from 'core-kit/types/config.types'
 import type {
-  DepositMethodName,
   DynamicTradingToken,
   PendingTransaction,
   TokenSelectorPayload,
@@ -12,6 +11,10 @@ import type {
   TransactionAction,
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
+import type {
+  SwapDataRequest,
+  SwapDataResponse,
+} from 'core-kit/types/trading.types'
 import type {
   Address,
   ChainId,
@@ -42,7 +45,6 @@ export interface TradingPanelState {
     sendToken: DynamicTradingToken
     receiveToken: DynamicTradingToken
   }
-  entryFee: Record<DepositMethodName, number>
   meta: {
     approvingStatus?: 'pending' | 'success'
   }
@@ -56,10 +58,6 @@ export interface TradingPanelState {
 
 export interface TradingPanelSetters {
   setPoolAddress: (payload: TradingPanelState['poolAddress']) => void
-  updatePoolConfigDepositMethod: (
-    payload: Pick<PoolConfig, 'address'> &
-      Pick<PoolConfig['depositParams'], 'method'>,
-  ) => void
   updateSendTokenInput: (payload: Partial<DynamicTradingToken>) => void
   updateReceiveTokenInput: (payload: Partial<DynamicTradingToken>) => void
   updateTradingSettings: (
@@ -67,7 +65,6 @@ export interface TradingPanelSetters {
   ) => void
   setTradingType: (payload: TradingPanelState['type']) => void
   updateTradingMeta: (payload: Partial<TradingPanelState['meta']>) => void
-  updateEntryFee: (payload: Partial<TradingPanelState['entryFee']>) => void
   updateTradingModal: (payload: Partial<TradingPanelState['modal']>) => void
   updateTransactions: (payload: UpdateTransactionsArguments) => void
   updatePoolFallbackData: (payload: PoolFallbackData) => void
@@ -75,13 +72,11 @@ export interface TradingPanelSetters {
 
 export interface CallbackConfig {
   onSetPoolAddress: TradingPanelSetters['setPoolAddress']
-  onUpdatePoolConfigDepositMethod: TradingPanelSetters['updatePoolConfigDepositMethod']
   onUpdateSendTokenInput: TradingPanelSetters['updateSendTokenInput']
   onUpdateReceiveTokenInput: TradingPanelSetters['updateReceiveTokenInput']
   onUpdateTradingSettings: TradingPanelSetters['updateTradingSettings']
   onSetTradingType: TradingPanelSetters['setTradingType']
   onUpdateTradingMeta: TradingPanelSetters['updateTradingMeta']
-  onUpdateEntryFee: TradingPanelSetters['updateEntryFee']
   onUpdateTradingModal: TradingPanelSetters['updateTradingModal']
   onUpdateTransactions: TradingPanelSetters['updateTransactions']
   onTradingSettleError: (error: Error) => void
@@ -107,6 +102,10 @@ export interface CallbackConfig {
   onSimulateTransaction: (
     params: SimulateTransactionParams,
   ) => Promise<SimulateTransactionResponse | null>
+  getSwapData: (args: {
+    signal: AbortSignal
+    variables: SwapDataRequest
+  }) => Promise<SwapDataResponse | null>
 }
 
 export type TradingPanelAction =
@@ -117,11 +116,6 @@ export type TradingPanelAction =
   | {
       type: 'SET_TRADING_TYPE'
       payload: TradingPanelState['type']
-    }
-  | {
-      type: 'UPDATE_POOL_CONFIG_DEPOSIT_METHOD'
-      payload: Pick<PoolConfig, 'address'> &
-        Pick<PoolConfig['depositParams'], 'method'>
     }
   | {
       type: 'UPDATE_SEND_TOKEN_INPUT'
@@ -140,10 +134,6 @@ export type TradingPanelAction =
       payload: Partial<TradingPanelState['meta']>
     }
   | {
-      type: 'UPDATE_ENTRY_FEE'
-      payload: Partial<TradingPanelState['entryFee']>
-    }
-  | {
       type: 'UPDATE_TRADING_MODAL'
       payload: Partial<TradingPanelState['modal']>
     }
@@ -154,7 +144,7 @@ export type TradingPanelAction =
   | { type: 'UPDATE_POOL_FALLBACK_DATA'; payload: PoolFallbackData }
 
 export interface TradingPanelContextConfig {
-  actions: Partial<CallbackConfig>
+  actions: Partial<CallbackConfig> & Pick<CallbackConfig, 'getSwapData'>
   initialState?: Partial<TradingPanelState>
 }
 
@@ -168,4 +158,5 @@ export type TradingPanelActionsState = TradingPanelSetters & {
   onTokenSelector: CallbackConfig['onTokenSelector'] | undefined
   onLog: CallbackConfig['onLog'] | undefined
   onSimulateTransaction: CallbackConfig['onSimulateTransaction'] | undefined
+  getSwapData: CallbackConfig['getSwapData']
 }

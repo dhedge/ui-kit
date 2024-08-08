@@ -413,4 +413,19 @@ export const EasySwapperV2Abi = [
     stateMutability: 'payable',
     type: 'function',
   },
+  {
+    inputs: [
+      { internalType: 'address', name: '_dHedgeVault', type: 'address' },
+      {
+        internalType: 'contract IERC20',
+        name: '_vaultDepositToken',
+        type: 'address',
+      },
+      { internalType: 'uint256', name: '_depositAmount', type: 'uint256' },
+    ],
+    name: 'deposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ] as const

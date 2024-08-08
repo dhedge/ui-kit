@@ -45,8 +45,6 @@ export type TransactionAction =
   | 'approve'
   | 'oraclesUpdate'
 
-export type DepositMethodName = 'deposit' | 'depositWithCustomCooldown'
-
 export type WithdrawMethodName = 'withdraw' | 'withdrawSUSD' | 'withdrawSafe'
 
 export type SwapEntity = 'token' | 'pool'
@@ -64,3 +62,5 @@ export interface UseProjectedEarningsResult {
   yearlyEarnings: string | null
   showEarnings: boolean
 }
+
+

@@ -1,16 +1,10 @@
 import { useCallback } from 'react'
 
-import {
-  DEFAULT_DEPOSIT_LOCKTIME_MAP,
-  DEFAULT_DEPOSIT_METHOD,
-} from 'core-kit/const'
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import type {
   TradingPanelActionsState,
   TradingPanelState,
 } from 'core-kit/types/state.types'
 
-import { useUpdateEntryFee } from './action'
 import { useTradingPanelActions, useTradingPanelState } from './context'
 
 export const useTradingPanelMeta = (): [
@@ -30,26 +24,4 @@ export const useTradingPanelApprovingStatus = (): [
   )
 
   return [meta.approvingStatus, setApprovingStatus]
-}
-
-export const useTradingPanelEntryFee = (): [
-  number,
-  (entryFeeSlice: Partial<TradingPanelState['entryFee']>) => void,
-] => {
-  const { depositParams } = useTradingPanelPoolConfig()
-  const entryFee = useTradingPanelState().entryFee
-  const updateEntryFee = useUpdateEntryFee()
-
-  return [
-    entryFee[depositParams.method ?? DEFAULT_DEPOSIT_METHOD],
-    updateEntryFee,
-  ]
-}
-
-export const useTradingPanelLockTime = (): string => {
-  const { depositParams } = useTradingPanelPoolConfig()
-
-  return DEFAULT_DEPOSIT_LOCKTIME_MAP[
-    depositParams.method ?? DEFAULT_DEPOSIT_METHOD
-  ]
 }

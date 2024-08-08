@@ -9,9 +9,8 @@ import {
 import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
 import {
   useDepositAllowance,
-  useShouldBeWhitelisted,
-} from 'core-kit/hooks/trading/deposit'
-
+  useIsVaultDepositLocked,
+} from 'core-kit/hooks/trading/deposit-v2'
 import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
@@ -19,7 +18,8 @@ export const useValidDepositButton = () => {
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
 
-  const { shouldBeWhitelisted, isAccountWhitelisted } = useShouldBeWhitelisted()
+  const { isVaultDepositLocked, isAccountWhitelisted } =
+    useIsVaultDepositLocked()
   const poolTokenPrice = usePoolTokenPrice({ address, chainId })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
   const poolBalance = useUserVaultBalance(address)
@@ -42,7 +42,7 @@ export const useValidDepositButton = () => {
 
   return {
     requiresMinDeposit,
-    requiresWhitelist: shouldBeWhitelisted && !isAccountWhitelisted,
+    requiresWhitelist: isVaultDepositLocked && !isAccountWhitelisted,
     requiresApprove: !canSpend,
     requiresUpdate: needToBeUpdated && !!sendToken.value,
     requiresHighSlippageConfirm,

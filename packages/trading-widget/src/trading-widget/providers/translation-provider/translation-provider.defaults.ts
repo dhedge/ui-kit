@@ -28,8 +28,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   exitFee: 'Exit Fee',
   entryFeeExplanation: "Entry fee is charged in vault's tokens.",
   exitFeeExplanation: "Exit fee is charged in vault's tokens.",
-  easySwapperEntryFee:
-    'Entry fee is charged when a cooldown of {time} is selected. Bypass Entry Fee at trading settings.',
   amountToBeApproved:
     'Amount of {symbol} tokens to be approved. Can be customized in settings.',
   minDepositUsd: 'Minimum deposit in USD.',
