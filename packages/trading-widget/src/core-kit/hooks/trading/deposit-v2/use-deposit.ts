@@ -7,7 +7,6 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
-import { useDepositSlippage } from 'core-kit/hooks/trading/deposit-v2'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
@@ -27,7 +26,6 @@ export const useDeposit = (): ContractActionFunc => {
     depositMethod,
     vaultDepositTokenAddress,
   })
-  useDepositSlippage(receiveToken.value)
 
   console.log('depositMethod', depositMethod)
   console.log('vaultDepositTokenAddress', vaultDepositTokenAddress)

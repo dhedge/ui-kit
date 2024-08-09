@@ -16,7 +16,10 @@ import {
   useAssetPrice,
   useDepositProjectedEarnings,
 } from 'core-kit/hooks/trading'
-import { useDepositLockTime } from 'core-kit/hooks/trading/deposit-v2'
+import {
+  useDepositLockTime,
+  useIsDepositWithSwapTransaction,
+} from 'core-kit/hooks/trading/deposit-v2'
 import { formatToUsd } from 'core-kit/utils'
 
 import {
@@ -54,6 +57,7 @@ export const useDepositTransactionDisclosure = () => {
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
   const projectedEarnings = useDepositProjectedEarnings()
   const lockTime = useDepositLockTime()
+  const showMinimumReceivedAmount = useIsDepositWithSwapTransaction()
 
   const minDeposit = minDepositUSD
     ? formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 })
@@ -107,5 +111,6 @@ export const useDepositTransactionDisclosure = () => {
     entryFeeTooltipText: t.entryFeeExplanation,
     minDeposit,
     lockTime,
+    showMinimumReceivedAmount,
   }
 }

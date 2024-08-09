@@ -2,7 +2,7 @@ import type { TranslationMap } from './translation-provider.types'
 
 export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   depositSlippageWarning:
-    'Includes entry fee. We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info.',
+    'Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.',
   withdrawSlippageWarning:
     'Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.',
   minSlippageWarning:

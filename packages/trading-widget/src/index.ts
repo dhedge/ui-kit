@@ -107,13 +107,7 @@ export {
   TRADING_LOG_EVENT_PARAM,
   TRADING_PANEL_LOG_EVENT,
 } from './core-kit/const'
-export {
-  BuyingWithPoolLogicArgs,
-  BuyingWithEasyswapperArgs,
-  BuyingWithNativeAssetArgs,
-  DefaultSellingParams,
-  EstimationError,
-} from './core-kit/models'
+export { DefaultSellingParams, EstimationError } from './core-kit/models'
 export type {
   SendEstimationResult,
   ChainId,
@@ -281,9 +275,7 @@ export {
   useTradingResultHandling,
   useMaxSlippagePlaceholder,
   useMinReceiveText,
-  useTradingPriceDiff,
   useTradingSettleHandler,
-  useIsEasySwapperTrading,
 } from './core-kit/hooks/trading'
 // export {
 //   useDeposit,
@@ -299,6 +291,7 @@ export {
 export {
   useVaultDepositTokens,
   useDepositLockTime,
+  useDepositPriceDiff,
 } from './core-kit/hooks/trading/deposit-v2'
 export {
   useWithdraw,

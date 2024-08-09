@@ -1,6 +1,5 @@
 export { useTradingResultHandling } from './use-trading-result-handling'
 export { useTradingSettleHandler } from './use-trading-settle-handler'
-export { useTradingPriceDiff } from './use-trading-price-diff'
 export { useAssetPrice } from './use-asset-price'
 export { useRawAssetPrice } from './use-raw-asset-price'
 export { useIsTradingEnabled } from './use-is-trading-enabled'

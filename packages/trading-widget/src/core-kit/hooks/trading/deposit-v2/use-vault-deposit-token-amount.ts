@@ -2,23 +2,17 @@ import BigNumber from 'bignumber.js'
 
 import { useSendTokenInput } from 'core-kit/hooks/state'
 import { useDebounce } from 'core-kit/hooks/utils'
-import { isEqualAddress } from 'core-kit/utils'
 
+import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
-import { useVaultDepositParams } from './use-vault-deposit-params'
 
 export const useVaultDepositTokenAmount = () => {
   const [sendToken] = useSendTokenInput()
   const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
 
-  const { vaultDepositTokenAddress } = useVaultDepositParams()
-
-  const isCustomDepositToken = !isEqualAddress(
-    sendToken.address,
-    vaultDepositTokenAddress,
-  )
   const { data } = useSwapDataBasedOnSendToken()
-  return isCustomDepositToken
+  return isDepositWithSwapTransaction
     ? data?.dstAmount
     : new BigNumber(debouncedSendTokenValue || '0')
         .shiftedBy(sendToken.decimals)

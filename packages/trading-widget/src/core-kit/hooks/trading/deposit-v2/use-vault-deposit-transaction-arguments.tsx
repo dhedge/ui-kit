@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
 import {
-  useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
@@ -10,6 +9,7 @@ import type { VaultDepositParams } from 'core-kit/types'
 
 import { buildZapDepositTransactionArguments } from 'core-kit/utils'
 
+import { useMinVaultTokensReceivedAmount } from './use-min-vault-tokens-received-amount'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 import { useVaultDepositTokenAmount } from './use-vault-deposit-token-amount'
 
@@ -18,16 +18,13 @@ export const useVaultDepositTransactionArguments = ({
   vaultDepositTokenAddress,
 }: VaultDepositParams): unknown[] => {
   const { address } = useTradingPanelPoolConfig()
-  const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
   const sendTokenAmount = new BigNumber(sendToken.value)
     .shiftedBy(sendToken.decimals)
     .toFixed(0)
   const vaultDepositTokenAmount = useVaultDepositTokenAmount()
-  const { data } = useSwapDataBasedOnSendToken()
-  const minVaultTokensReceivedAmount = new BigNumber(receiveToken.value)
-    .shiftedBy(receiveToken.decimals)
-    .toFixed(0)
+  const { data: swapData } = useSwapDataBasedOnSendToken()
+  const minVaultTokensReceivedAmount = useMinVaultTokensReceivedAmount()
 
   return useMemo(() => {
     switch (depositMethod) {
@@ -43,7 +40,7 @@ export const useVaultDepositTransactionArguments = ({
             sendTokenAmount,
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
-            swapData: data?.tx?.data ?? '',
+            swapData: swapData?.tx?.data ?? '',
           }),
           { value: sendTokenAmount },
         ]
@@ -56,7 +53,7 @@ export const useVaultDepositTransactionArguments = ({
             sendTokenAmount,
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
-            swapData: data?.tx.data ?? '',
+            swapData: swapData?.tx.data ?? '',
           }),
         ]
       default:
@@ -64,13 +61,13 @@ export const useVaultDepositTransactionArguments = ({
         return [address, vaultDepositTokenAddress, vaultDepositTokenAmount]
     }
   }, [
+    depositMethod,
     address,
     vaultDepositTokenAmount,
     sendToken.address,
     sendTokenAmount,
     minVaultTokensReceivedAmount,
     vaultDepositTokenAddress,
-    data?.tx?.data,
-    depositMethod,
+    swapData?.tx?.data,
   ])
 }
