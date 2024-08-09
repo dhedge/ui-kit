@@ -41,6 +41,8 @@ import type {
 
 import { isEqualAddress, isNativeToken } from 'core-kit/utils'
 
+import { useIsCustomCooldownDeposit } from './use-is-custom-cooldown-deposit'
+
 const FALLBACK_ASSETS_MAP: Record<ChainId, Record<string, TradingToken>> = {
   [optimism.id]: {
     WETH: WETH_OPTIMISM,
@@ -97,8 +99,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
     address,
     chainId,
   })
-  // TODO: IMPLEMENT
-  const isCustomCooldownAvailable = false
+  const isCustomCooldownDeposit = useIsCustomCooldownDeposit()
 
   return useMemo<VaultDepositParams>(() => {
     const availableDepositOptions = poolComposition.filter(
@@ -114,7 +115,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
       )
       if (wrappedNativeTokenInComposition) {
         return {
-          depositMethod: isCustomCooldownAvailable
+          depositMethod: isCustomCooldownDeposit
             ? EASY_SWAPPER_V2_DEPOSIT_METHODS.NATIVE_CUSTOM
             : EASY_SWAPPER_V2_DEPOSIT_METHODS.NATIVE,
           vaultDepositTokenAddress:
@@ -122,7 +123,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
         }
       }
       return {
-        depositMethod: isCustomCooldownAvailable
+        depositMethod: isCustomCooldownDeposit
           ? EASY_SWAPPER_V2_DEPOSIT_METHODS.ZAP_NATIVE_DEPOSIT_CUSTOM
           : EASY_SWAPPER_V2_DEPOSIT_METHODS.ZAP_NATIVE_DEPOSIT,
         vaultDepositTokenAddress:
@@ -140,7 +141,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
     // Step 2: Check if the token is presented in the vault
     if (depositTokenPresentedInVault) {
       return {
-        depositMethod: isCustomCooldownAvailable
+        depositMethod: isCustomCooldownDeposit
           ? EASY_SWAPPER_V2_DEPOSIT_METHODS.DEPOSIT_CUSTOM
           : EASY_SWAPPER_V2_DEPOSIT_METHODS.DEPOSIT,
         vaultDepositTokenAddress: depositTokenPresentedInVault.tokenAddress,
@@ -149,7 +150,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
 
     // Step 3: Handle custom token deposit
     return {
-      depositMethod: isCustomCooldownAvailable
+      depositMethod: isCustomCooldownDeposit
         ? EASY_SWAPPER_V2_DEPOSIT_METHODS.ZAP_DEPOSIT_CUSTOM
         : EASY_SWAPPER_V2_DEPOSIT_METHODS.ZAP_DEPOSIT,
       vaultDepositTokenAddress:
@@ -158,7 +159,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
     }
   }, [
     chainId,
-    isCustomCooldownAvailable,
+    isCustomCooldownDeposit,
     poolComposition,
     sendToken.address,
     sendToken.symbol,

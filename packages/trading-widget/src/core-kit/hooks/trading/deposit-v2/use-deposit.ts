@@ -49,8 +49,7 @@ export const useDeposit = (): ContractActionFunc => {
       chainId,
     })
 
-    // logTransactionArguments(txArgs)
-    console.log('txArgs', txArgs)
+    console.log('Transaction Arguments:', txArgs)
     return send(...txArgs)
   }, [updatePendingTransactions, chainId, receiveToken.symbol, send, txArgs])
 }

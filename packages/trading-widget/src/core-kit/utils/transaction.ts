@@ -1,5 +1,8 @@
 import BigNumber from 'bignumber.js'
 
+import type { Address } from 'viem'
+import { stringToHex } from 'viem'
+
 import type { TxArgs } from 'core-kit/types/trading.types'
 
 import { shiftBy } from './number'
@@ -56,4 +59,25 @@ export const getSlippageToleranceForWithdrawSafe = (
       : slippageBN
 
   return slippageToUse.multipliedBy(100).toFixed(0)
+}
+
+export const buildZapDepositTransactionArguments = ({
+  vaultAddress,
+  swapData,
+  sendTokenAddress,
+  sendTokenAmount,
+  vaultDepositTokenAddress,
+  minVaultTokensReceivedAmount,
+}: {
+  vaultAddress: Address
+  swapData: string
+  sendTokenAddress: Address
+  sendTokenAmount: string
+  vaultDepositTokenAddress: Address
+  minVaultTokensReceivedAmount: string
+}) => {
+  const aggregatorData = [stringToHex('ONE_INCH', { size: 32 }), swapData]
+  const srcData = [sendTokenAddress, sendTokenAmount, aggregatorData]
+  const destData = [vaultDepositTokenAddress, '0']
+  return [vaultAddress, [srcData, destData], minVaultTokensReceivedAmount]
 }

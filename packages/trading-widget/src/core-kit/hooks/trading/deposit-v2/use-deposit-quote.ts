@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { useEffect } from 'react'
 
-import { DEPOSIT_QUOTE_MULTIPLIER_DEFAULT } from 'core-kit/const'
+// import { DEPOSIT_QUOTE_MULTIPLIER_DEFAULT } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -34,7 +34,8 @@ export const useDepositQuote = ({
     updateReceiveToken({ isLoading })
     if (quoteResult) {
       const formattedVal = new BigNumber(quoteResult.toString())
-        .multipliedBy(DEPOSIT_QUOTE_MULTIPLIER_DEFAULT)
+        // .multipliedBy(DEPOSIT_QUOTE_MULTIPLIER_DEFAULT)
+        .multipliedBy(0.99)
         .shiftedBy(-receiveToken.decimals)
         .toFixed(receiveToken.decimals)
 

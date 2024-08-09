@@ -1,11 +1,6 @@
 import type { BigNumber } from 'bignumber.js'
 
-import type {
-  BuyingWithEasyswapperArgs,
-  BuyingWithNativeAssetArgs,
-  BuyingWithPoolLogicArgs,
-  DefaultSellingParams,
-} from 'core-kit/models'
+import type { DefaultSellingParams } from 'core-kit/models'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
 export interface TradingParams {
@@ -27,11 +22,7 @@ export type ChainNativeTokenMap = {
   }
 }
 
-export type TxArgs =
-  | BuyingWithEasyswapperArgs
-  | BuyingWithNativeAssetArgs
-  | DefaultSellingParams
-  | BuyingWithPoolLogicArgs
+export type TxArgs = DefaultSellingParams
 
 export interface SwapDataResponse {
   dstAmount: string
@@ -43,6 +34,7 @@ export interface SwapDataRequest {
   sourceAddress: Address
   destinationAddress: Address
   walletAddress: Address
+  fromAddress: Address
   amount: string
   slippage: string
 }

@@ -1,8 +1,16 @@
+import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import {
+  useReceiveTokenInput,
+  useSendTokenInput,
+  useTradingPanelPoolConfig,
+} from 'core-kit/hooks/state'
 import type { VaultDepositParams } from 'core-kit/types'
 
+import { buildZapDepositTransactionArguments } from 'core-kit/utils'
+
+import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 import { useVaultDepositTokenAmount } from './use-vault-deposit-token-amount'
 
 export const useVaultDepositTransactionArguments = ({
@@ -10,31 +18,59 @@ export const useVaultDepositTransactionArguments = ({
   vaultDepositTokenAddress,
 }: VaultDepositParams): unknown[] => {
   const { address } = useTradingPanelPoolConfig()
+  const [receiveToken] = useReceiveTokenInput()
+  const [sendToken] = useSendTokenInput()
+  const sendTokenAmount = new BigNumber(sendToken.value)
+    .shiftedBy(sendToken.decimals)
+    .toFixed(0)
   const vaultDepositTokenAmount = useVaultDepositTokenAmount()
+  const { data } = useSwapDataBasedOnSendToken()
+  const minVaultTokensReceivedAmount = new BigNumber(receiveToken.value)
+    .shiftedBy(receiveToken.decimals)
+    .toFixed(0)
 
   return useMemo(() => {
     switch (depositMethod) {
-      case 'deposit':
-      case 'depositWithCustomCooldown':
-        return [address, vaultDepositTokenAddress, vaultDepositTokenAmount]
       case 'nativeDeposit':
       case 'nativeDepositWithCustomCooldown':
         return [address, { value: vaultDepositTokenAmount }]
       case 'zapNativeDeposit':
-        return [] as unknown[]
       case 'zapNativeDepositWithCustomCooldown':
-        return [] as unknown[]
+        return [
+          ...buildZapDepositTransactionArguments({
+            vaultAddress: address,
+            sendTokenAddress: sendToken.address,
+            sendTokenAmount,
+            minVaultTokensReceivedAmount,
+            vaultDepositTokenAddress,
+            swapData: data?.tx?.data ?? '',
+          }),
+          { value: sendTokenAmount },
+        ]
       case 'zapDeposit':
-        return [] as unknown[]
       case 'zapDepositWithCustomCooldown':
-        return [] as unknown[]
+        return [
+          ...buildZapDepositTransactionArguments({
+            vaultAddress: address,
+            sendTokenAddress: sendToken.address,
+            sendTokenAmount,
+            minVaultTokensReceivedAmount,
+            vaultDepositTokenAddress,
+            swapData: data?.tx.data ?? '',
+          }),
+        ]
       default:
-        return [] as unknown[]
+        // deposit, deposit with custom cooldown
+        return [address, vaultDepositTokenAddress, vaultDepositTokenAmount]
     }
   }, [
     address,
-    depositMethod,
-    vaultDepositTokenAddress,
     vaultDepositTokenAmount,
+    sendToken.address,
+    sendTokenAmount,
+    minVaultTokensReceivedAmount,
+    vaultDepositTokenAddress,
+    data?.tx?.data,
+    depositMethod,
   ])
 }

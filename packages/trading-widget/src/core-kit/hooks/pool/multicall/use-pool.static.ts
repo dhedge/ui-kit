@@ -1,8 +1,4 @@
-import {
-  DhedgeEasySwapperAbi,
-  PoolFactoryAbi,
-  PoolLogicAbi,
-} from 'core-kit/abi'
+import { EasySwapperV2Abi, PoolFactoryAbi, PoolLogicAbi } from 'core-kit/abi'
 import { AddressZero } from 'core-kit/const'
 import {
   useAccount,
@@ -43,22 +39,10 @@ const getContracts = ({
       chainId,
     },
     {
-      address: getContractAddressById('easySwapper', chainId),
-      abi: DhedgeEasySwapperAbi,
-      functionName: 'allowedPools',
+      address: getContractAddressById('easySwapperV2', chainId),
+      abi: EasySwapperV2Abi,
+      functionName: 'customCooldownDepositsWhitelist',
       args: [address],
-      chainId,
-    },
-    {
-      address: getContractAddressById('easySwapper', chainId),
-      abi: DhedgeEasySwapperAbi,
-      functionName: 'feeNumerator',
-      chainId,
-    },
-    {
-      address: getContractAddressById('easySwapper', chainId),
-      abi: DhedgeEasySwapperAbi,
-      functionName: 'feeDenominator',
       chainId,
     },
   ] as const
@@ -69,9 +53,7 @@ const selector = (data: Data) => ({
   isPool: data[0].result,
   isMemberAllowed: data[1].result,
   poolManagerLogic: data[2].result,
-  easySwapperAllowedPools: data[3].result,
-  easySwapperFeeNumerator: data[4].result,
-  easySwapperFeeDenominator: data[5].result,
+  isCustomCooldownDepositAllowed: data[3].result,
 })
 
 export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {
