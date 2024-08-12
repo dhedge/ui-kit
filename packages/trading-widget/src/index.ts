@@ -48,8 +48,6 @@ export {
   EASY_SWAPPER_ADDRESS_ARBITRUM,
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
-  DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
-  DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
   DEFAULT_DEPOSIT_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
@@ -166,6 +164,8 @@ export type {
   UseReadContractsParameters,
   UseWriteContractParameters,
   WaitForTransactionReceiptReturnType,
+  SwapDataRequest,
+  SwapDataResponse,
 } from './core-kit/types'
 export {
   formatNumberToLimitedDecimals,
@@ -209,10 +209,6 @@ export {
   encodeFunctionData,
 } from './core-kit/utils'
 
-export {
-  useGeneralTradingPanelHandlers,
-  useOnTradingTypeChange,
-} from './core-kit/hooks/component'
 export {
   usePoolDynamicContractData,
   useInvalidatePoolContractData,
@@ -277,36 +273,10 @@ export {
   useMinReceiveText,
   useTradingSettleHandler,
 } from './core-kit/hooks/trading'
-// export {
-//   useDeposit,
-//   useDepositQuote,
-//   useDepositSlippage,
-//   useDepositMethodHandler,
-//   useHandlePoolDepositData,
-//   usePoolDepositAssetAddress,
-//   usePoolDepositTokens,
-//   useShouldBeWhitelisted,
-//   useDepositTradingParams,
-// } from './core-kit/hooks/trading/deposit'
 export {
   useVaultDepositTokens,
   useDepositLockTime,
-  useDepositPriceDiff,
 } from './core-kit/hooks/trading/deposit-v2'
-export {
-  useWithdraw,
-  useWithdrawAllowance,
-  useWithdrawQuote,
-  useWithdrawSlippage,
-  useIsMultiAssetWithdraw,
-  useWithdrawTypeHandler,
-  useWithdrawTradingParams,
-} from './core-kit/hooks/trading/withdraw'
-export {
-  useApprove,
-  useCanSpend,
-  useTokenAllowanceHandler,
-} from './core-kit/hooks/trading/allowance'
 export {
   useIsInsufficientBalance,
   useUserTokenBalance,

@@ -13,3 +13,4 @@ export { useVaultDepositTransactionArguments } from './use-vault-deposit-transac
 export { useDepositLockTime } from './use-deposit-lock-time'
 export { useDepositPriceDiff } from './use-deposit-price-diff'
 export { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
+export { useMinVaultTokensReceivedAmount } from './use-min-vault-tokens-received-amount'

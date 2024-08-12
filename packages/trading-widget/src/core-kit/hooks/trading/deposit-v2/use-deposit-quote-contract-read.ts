@@ -1,7 +1,8 @@
+import { keepPreviousData } from '@tanstack/react-query'
 import { useReadContract } from 'wagmi'
 
 import { EasySwapperV2Abi } from 'core-kit/abi'
-import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
+import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useIsDepositTradingPanelType,
   useSendTokenInput,
@@ -36,7 +37,8 @@ export const useDepositQuoteContractRead = ({
     query: {
       enabled:
         isDeposit && hasSendInputValue && !!sendToken.address && !!sendAmount,
-      refetchInterval: SHORTEN_POLLING_INTERVAL,
+      refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+      placeholderData: keepPreviousData,
     },
   })
 

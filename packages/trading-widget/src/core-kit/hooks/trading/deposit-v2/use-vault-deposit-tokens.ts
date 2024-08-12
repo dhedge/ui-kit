@@ -107,7 +107,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
       ...productDepositTokens.filter(
         ({ symbol }) => symbol !== depositParams.defaultDepositTokenSymbol,
       ),
-      // remove native deposits for dHEDGE managers and in SynthetixV3 vaults
+      // remove native deposits for dHEDGE managers
       ...(isPoolManagerAccount
         ? []
         : [

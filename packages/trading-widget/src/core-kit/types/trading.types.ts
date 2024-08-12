@@ -40,7 +40,7 @@ export interface SwapDataRequest {
 }
 
 export interface VaultDepositParams {
-  depositMethod: DepositMethodName | undefined
+  depositMethod: DepositMethodName
   vaultDepositTokenAddress: Address
 }
 

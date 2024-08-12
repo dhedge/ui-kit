@@ -1,9 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import {
-  DEFAULT_DEPOSIT_SLIPPAGE,
-  MANAGER_FEE_DENOMINATOR,
-} from 'core-kit/const'
+import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
 import {
   usePoolDynamicContractData,
   usePoolTokenPrice,
@@ -17,6 +14,8 @@ import {
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { getPercent } from 'core-kit/utils'
 
+import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
+
 export const useMinVaultTokensReceivedAmount = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
@@ -25,7 +24,7 @@ export const useMinVaultTokensReceivedAmount = () => {
   const entryFeeValue = getPercent(+entryFee, MANAGER_FEE_DENOMINATOR)
   const [{ slippage }] = useTradingPanelSettings()
   const isAutoSlippage = slippage === 'auto'
-  const depositSlippage = isAutoSlippage ? DEFAULT_DEPOSIT_SLIPPAGE : slippage
+  const depositSlippage = useAppliedDepositSlippage()
 
   // calculate expected received vault tokens amount excluding entry fee
   const sendTokenPrice = +useAssetPrice({

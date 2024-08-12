@@ -3,10 +3,6 @@ import BigNumber from 'bignumber.js'
 import { useEffect } from 'react'
 
 import {
-  DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
-  DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
-} from 'core-kit/const'
-import {
   useIsDepositTradingPanelType,
   useReceiveTokenInput,
   useSendTokenInput,
@@ -38,22 +34,15 @@ export const useDepositQuote = () => {
     if (!isDeposit) {
       return
     }
-    updateReceiveToken({ isLoading })
     if (quoteResult) {
       const formattedVal = new BigNumber(quoteResult.toString())
-        .multipliedBy(
-          isDepositWithSwapTransaction
-            ? DEPOSIT_QUOTE_MULTIPLIER_CUSTOM
-            : DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
-        )
         .shiftedBy(-receiveToken.decimals)
         .toFixed(receiveToken.decimals)
 
-      updateReceiveToken({ value: isLoading ? '0' : formattedVal })
+      updateReceiveToken({ value: formattedVal })
     }
   }, [
     quoteResult,
-    isLoading,
     receiveToken.decimals,
     sendToken.address,
     updateReceiveToken,
@@ -62,7 +51,14 @@ export const useDepositQuote = () => {
   ])
 
   useEffect(() => {
-    if (!sendToken.value && isDeposit) {
+    updateReceiveToken({ isLoading })
+  }, [isLoading, updateReceiveToken])
+
+  useEffect(() => {
+    if (!isDeposit) {
+      return
+    }
+    if (!sendToken.value || sendToken.value === '0') {
       updateReceiveToken({ value: '0' })
       updateSettings({ minSlippage: 0 })
     }

@@ -27,15 +27,17 @@ export const useDeposit = (): ContractActionFunc => {
     vaultDepositTokenAddress,
   })
 
+  // TODO: remove
   console.log('depositMethod', depositMethod)
   console.log('vaultDepositTokenAddress', vaultDepositTokenAddress)
   console.log('sendToken.address', sendToken.address)
+  console.log('Transaction Arguments:', txArgs)
 
   const onSettled = useTradingSettleHandler(action)
 
   const { send } = useContractFunction({
     contractId: 'easySwapperV2',
-    functionName: depositMethod ?? 'deposit',
+    functionName: depositMethod,
     onSettled,
   })
 

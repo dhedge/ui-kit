@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
+import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
 import {
   usePoolDynamicContractData,
   usePoolTokenPrice,
@@ -10,10 +11,8 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
+import { useAssetPrice } from 'core-kit/hooks/trading'
 import { getConventionalTokenPriceDecimals, getPercent } from 'core-kit/utils'
-
-import { MANAGER_FEE_DENOMINATOR } from '../../../const'
-import { useAssetPrice } from '../use-asset-price'
 
 type UseDepositPriceDiffProps =
   | {
@@ -36,32 +35,32 @@ export const useDepositPriceDiff = (props: UseDepositPriceDiffProps = {}) => {
     : 0
 
   return useMemo(() => {
-    const sendValue = Number(sendToken.value || '0')
-    const receiveValue = Number(receiveToken.value || '0')
-
-    const sendAmount = new BigNumber(sendValue)
+    const sendAmount = Number(sendToken.value || '0')
+    const sendAmountBN = new BigNumber(sendAmount)
       .times(sendTokenPrice ?? '0')
       .times(1 - entryFeeValue / 100)
-    const receiveAmount = new BigNumber(receiveValue).times(
+
+    const receiveAmount = Number(receiveToken.value || '0')
+    const receiveAmountBN = new BigNumber(receiveAmount).times(
       vaultTokenPrice ?? '0',
     )
 
-    if (sendAmount.isZero() || receiveAmount.isZero()) {
+    if (sendAmountBN.isZero() || receiveAmountBN.isZero()) {
       return 0
     }
 
-    const canBeCompared = sendAmount
-      .decimalPlaces(getConventionalTokenPriceDecimals(sendValue))
+    const canBeCompared = sendAmountBN
+      .decimalPlaces(getConventionalTokenPriceDecimals(sendAmount))
       .comparedTo(
-        receiveAmount.decimalPlaces(
-          getConventionalTokenPriceDecimals(receiveValue),
+        receiveAmountBN.decimalPlaces(
+          getConventionalTokenPriceDecimals(receiveAmount),
         ),
       )
 
     if (canBeCompared) {
-      return sendAmount.isGreaterThan(0)
-        ? receiveAmount
-            .dividedBy(sendAmount)
+      return sendAmountBN.isGreaterThan(0)
+        ? receiveAmountBN
+            .dividedBy(sendAmountBN)
             .minus(1)
             .times(100)
             .decimalPlaces(2, BigNumber.ROUND_DOWN)
@@ -70,5 +69,11 @@ export const useDepositPriceDiff = (props: UseDepositPriceDiffProps = {}) => {
     }
 
     return 0
-  }, [receiveToken.value, sendToken.value, sendTokenPrice, vaultTokenPrice])
+  }, [
+    entryFeeValue,
+    receiveToken.value,
+    sendToken.value,
+    sendTokenPrice,
+    vaultTokenPrice,
+  ])
 }

@@ -1,9 +1,10 @@
+import { keepPreviousData } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 
 import {
   AddressZero,
   DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
-  SHORTEN_POLLING_INTERVAL,
+  EXTREMELY_SHORT_POLLING_INTERVAL,
 } from 'core-kit/const'
 import {
   useSendTokenInput,
@@ -47,7 +48,8 @@ export const useSwapDataBasedOnSendToken = () => {
     },
     {
       enabled: isDepositWithSwapTransaction && !!debouncedSendTokenValue,
-      refetchInterval: SHORTEN_POLLING_INTERVAL,
+      refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+      placeholderData: keepPreviousData,
     },
   )
 }
