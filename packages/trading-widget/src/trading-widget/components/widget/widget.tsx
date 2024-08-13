@@ -1,5 +1,5 @@
 import 'styles/index.css'
-import { Tab } from '@headlessui/react'
+import { TabGroup, TabPanels } from '@headlessui/react'
 import type { FC } from 'react'
 
 import { TABS } from 'trading-widget/constants/tab'
@@ -26,16 +26,16 @@ export const Widget: FC = () => {
   const { type, onTabChange } = useWidget()
 
   return (
-    <div className="trading-widget dtw-relative dtw-pt-3 dtw-bg-[var(--panel-background-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)]">
-      <Tab.Group selectedIndex={TABS.indexOf(type)} onChange={onTabChange}>
+    <div className="trading-widget dtw-relative dtw-pt-3 dtw-bg-[var(--panel-background-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)] dtw-overflow-hidden">
+      <TabGroup selectedIndex={TABS.indexOf(type)} onChange={onTabChange}>
         <WidgetTabs>
           <WidgetSettings tradingType={type} />
         </WidgetTabs>
-        <Tab.Panels>
+        <TabPanels>
           <DepositTabPanel />
           <WithdrawTabPanel />
-        </Tab.Panels>
-      </Tab.Group>
+        </TabPanels>
+      </TabGroup>
       <OverlaySwitch>
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
         <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />

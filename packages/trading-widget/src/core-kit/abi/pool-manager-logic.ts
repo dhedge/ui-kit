@@ -68,6 +68,25 @@ export const PoolManagerLogicAbi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'member',
+        type: 'address',
+      },
+    ],
+    name: 'isMemberAllowed',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'minDepositUSD',
     outputs: [

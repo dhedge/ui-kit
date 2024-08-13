@@ -1,4 +1,4 @@
-import { Switch as HeadlessSwitch } from '@headlessui/react'
+import { Field, Switch as HeadlessSwitch, Label } from '@headlessui/react'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 
@@ -32,7 +32,7 @@ export const Switch = ({
   }
 
   return (
-    <HeadlessSwitch.Group>
+    <Field>
       <div
         className={classNames('dtw-flex', {
           'dtw-flex-col dtw-gap-y-0.5': vertical,
@@ -62,15 +62,15 @@ export const Switch = ({
           />
         </HeadlessSwitch>
         {label && (
-          <HeadlessSwitch.Label
+          <Label
             className={classNames('dtw-cursor-pointer dtw-text-xs', {
               'dtw-ml-2': !vertical,
             })}
           >
             {label}
-          </HeadlessSwitch.Label>
+          </Label>
         )}
       </div>
-    </HeadlessSwitch.Group>
+    </Field>
   )
 }

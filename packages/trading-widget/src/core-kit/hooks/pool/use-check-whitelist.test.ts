@@ -11,11 +11,11 @@ vi.mock('core-kit/hooks/web3', () => ({
 }))
 
 vi.mock('core-kit/hooks/pool/multicall', () => ({
-  usePoolStatic: vi.fn(),
+  usePoolManagerStatic: vi.fn(),
 }))
 
 describe('useCheckWhitelist', () => {
-  it('should return isMemberAllowed from PoolStatic data', async () => {
+  it('should return isMemberAllowed from PoolManagerStatic data', async () => {
     const isMemberAllowed = true
 
     vi.mocked(web3Hooks.useAccount).mockImplementation(
@@ -24,19 +24,23 @@ describe('useCheckWhitelist', () => {
           account: TEST_ADDRESS,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(poolMulticallHooks.usePoolStatic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
         ({
           data: { isMemberAllowed },
-        }) as ReturnType<typeof poolMulticallHooks.usePoolStatic>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolManagerStatic>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledWith({
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledTimes(1)
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledWith({
       address: TEST_ADDRESS,
       chainId: optimism.id,
     })
@@ -53,19 +57,23 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(poolMulticallHooks.usePoolStatic).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
         ({
           data: { isMemberAllowed },
-        }) as ReturnType<typeof poolMulticallHooks.usePoolStatic>,
+        }) as ReturnType<typeof poolMulticallHooks.usePoolManagerStatic>,
     )
 
     const { result } = renderHook(() =>
       useCheckWhitelist({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledWith({
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledTimes(1)
+    expect(
+      vi.mocked(poolMulticallHooks.usePoolManagerStatic),
+    ).toHaveBeenCalledWith({
       address: TEST_ADDRESS,
       chainId: optimism.id,
     })

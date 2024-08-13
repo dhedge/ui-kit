@@ -1,4 +1,4 @@
-import { Tab } from '@headlessui/react'
+import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/react'
 
 import type { FC } from 'react'
 
@@ -14,19 +14,19 @@ interface WidgetSettingsProps {
 }
 
 export const WidgetSettings: FC<WidgetSettingsProps> = ({ tradingType }) => (
-  <Tab.Group selectedIndex={TABS.indexOf(tradingType)}>
-    <Tab.List className="dtw-flex dtw-px-[var(--panel-tab-group-px)]">
+  <TabGroup selectedIndex={TABS.indexOf(tradingType)}>
+    <TabList className="dtw-flex dtw-px-[var(--panel-tab-group-px)]">
       {TABS.map((tradingType) => (
         <Tab key={tradingType} className="dtw-hidden" />
       ))}
-    </Tab.List>
-    <Tab.Panels>
+    </TabList>
+    <TabPanels>
       <Layout.Settings>
         <DepositSettings />
       </Layout.Settings>
       <Layout.Settings>
         <WithdrawSettings />
       </Layout.Settings>
-    </Tab.Panels>
-  </Tab.Group>
+    </TabPanels>
+  </TabGroup>
 )
