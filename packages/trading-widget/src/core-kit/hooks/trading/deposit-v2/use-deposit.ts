@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 
 import {
   useReceiveTokenInput,
-  useSendTokenInput,
   useTradingPanelPoolConfig,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
@@ -19,19 +18,12 @@ const action = 'deposit'
 export const useDeposit = (): ContractActionFunc => {
   const { chainId } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
-  const [sendToken] = useSendTokenInput()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const { depositMethod, vaultDepositTokenAddress } = useVaultDepositParams()
   const txArgs = useVaultDepositTransactionArguments({
     depositMethod,
     vaultDepositTokenAddress,
   })
-
-  // TODO: remove
-  console.log('depositMethod', depositMethod)
-  console.log('vaultDepositTokenAddress', vaultDepositTokenAddress)
-  console.log('sendToken.address', sendToken.address)
-  console.log('Transaction Arguments:', txArgs)
 
   const onSettled = useTradingSettleHandler(action)
 

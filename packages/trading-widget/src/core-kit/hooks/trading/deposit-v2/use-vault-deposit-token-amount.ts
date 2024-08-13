@@ -13,7 +13,7 @@ export const useVaultDepositTokenAmount = () => {
 
   const { data } = useSwapDataBasedOnSendToken()
   return isDepositWithSwapTransaction
-    ? data?.dstAmount
+    ? data?.dstAmount ?? '0'
     : new BigNumber(debouncedSendTokenValue || '0')
         .shiftedBy(sendToken.decimals)
         .toFixed(0)
