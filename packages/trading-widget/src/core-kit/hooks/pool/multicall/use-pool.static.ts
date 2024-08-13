@@ -5,22 +5,16 @@ import {
 } from 'core-kit/abi'
 import { AddressZero } from 'core-kit/const'
 import {
-  useAccount,
   useContractReadErrorLogging,
   useReadContracts,
 } from 'core-kit/hooks/web3'
 import type {
   MulticallReturnType,
-  PoolContractAccountCallParams,
   PoolContractCallParams,
 } from 'core-kit/types'
 import { getContractAddressById, isZeroAddress } from 'core-kit/utils'
 
-const getContracts = ({
-  address,
-  chainId,
-  account,
-}: PoolContractAccountCallParams) =>
+const getContracts = ({ address, chainId }: PoolContractCallParams) =>
   [
     {
       address: getContractAddressById('factory', chainId),
@@ -28,13 +22,6 @@ const getContracts = ({
       functionName: 'isPool',
       chainId,
       args: [address],
-    },
-    {
-      address,
-      abi: PoolLogicAbi,
-      functionName: 'isMemberAllowed',
-      args: [account ?? AddressZero],
-      chainId,
     },
     {
       address: address ?? AddressZero,
@@ -67,18 +54,15 @@ type Data = MulticallReturnType<ReturnType<typeof getContracts>>
 
 const selector = (data: Data) => ({
   isPool: data[0].result,
-  isMemberAllowed: data[1].result,
-  poolManagerLogic: data[2].result,
-  easySwapperAllowedPools: data[3].result,
-  easySwapperFeeNumerator: data[4].result,
-  easySwapperFeeDenominator: data[5].result,
+  poolManagerLogic: data[1].result,
+  easySwapperAllowedPools: data[2].result,
+  easySwapperFeeNumerator: data[3].result,
+  easySwapperFeeDenominator: data[4].result,
 })
 
 export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {
-  const { account = AddressZero } = useAccount()
-
   const result = useReadContracts({
-    contracts: getContracts({ address, chainId, account }),
+    contracts: getContracts({ address, chainId }),
     query: {
       enabled: !!address && !isZeroAddress(address),
       staleTime: Infinity,
