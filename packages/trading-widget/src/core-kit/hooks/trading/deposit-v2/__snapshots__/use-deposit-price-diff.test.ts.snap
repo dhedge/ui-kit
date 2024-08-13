@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useTradingPriceDiff > should calculate diff excluding entry fee 1`] = `-2`;
+
+exports[`useTradingPriceDiff > should calculate diff including entry fee 1`] = `-1.01`;

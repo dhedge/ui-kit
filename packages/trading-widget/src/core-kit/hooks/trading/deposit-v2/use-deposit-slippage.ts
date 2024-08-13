@@ -11,10 +11,11 @@ import { useDepositPriceDiff } from './use-deposit-price-diff'
 
 export const useDepositSlippage = () => {
   const isDeposit = useIsDepositTradingPanelType()
-  const updateSettings = useTradingPanelSettings()[1]
-  const depositSlippage = useAppliedDepositSlippage()
+  const [, updateSettings] = useTradingPanelSettings()
 
+  const depositSlippage = useAppliedDepositSlippage()
   const priceDiff = useDepositPriceDiff({ includesEntryFee: true })
+
   const priceDiffDebounced = useDebounce(priceDiff - depositSlippage, 100)
 
   useEffect(() => {
