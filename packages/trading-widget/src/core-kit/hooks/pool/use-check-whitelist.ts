@@ -1,4 +1,4 @@
-import { usePoolStatic } from 'core-kit/hooks/pool/multicall'
+import { usePoolManagerStatic } from 'core-kit/hooks/pool/multicall'
 import { useAccount } from 'core-kit/hooks/web3'
 import type { PoolContractCallParams } from 'core-kit/types/web3.types'
 
@@ -7,7 +7,7 @@ export const useCheckWhitelist = ({
   chainId,
 }: PoolContractCallParams) => {
   const { account } = useAccount()
-  const { data: { isMemberAllowed = false } = {} } = usePoolStatic({
+  const { data: { isMemberAllowed = false } = {} } = usePoolManagerStatic({
     address,
     chainId,
   })
