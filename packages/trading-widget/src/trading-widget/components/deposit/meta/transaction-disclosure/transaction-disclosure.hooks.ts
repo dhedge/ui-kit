@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 
+import { CUSTOM_LOCK_TIME } from 'core-kit/const'
 import {
   usePoolFees,
   usePoolManagerLogicData,
@@ -30,7 +31,7 @@ import { THEME_TYPE } from 'trading-widget/types'
 
 export const useDepositTransactionDisclosure = () => {
   const t = useTranslationContext()
-  const { customLockTime } = useConfigContextParams()
+  const { chainCustomLockTimeMap } = useConfigContextParams()
   const [approvingStatus] = useTradingPanelApprovingStatus()
   const [{ slippage, minSlippage, isInfiniteAllowance, isMaxSlippageLoading }] =
     useTradingPanelSettings()
@@ -73,6 +74,7 @@ export const useDepositTransactionDisclosure = () => {
     themeType === THEME_TYPE.DEFAULT
       ? t.depositSlippageWarning
       : t.highSlippageWarning
+  const customLockTime = chainCustomLockTimeMap[chainId] ?? CUSTOM_LOCK_TIME
 
   const getMinReceiveText = () => {
     if (isAutoSlippage) {
