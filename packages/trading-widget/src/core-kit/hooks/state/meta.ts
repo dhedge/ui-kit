@@ -1,14 +1,13 @@
 import { useCallback } from 'react'
 
-import {
-  DEFAULT_DEPOSIT_LOCKTIME_MAP,
-  DEFAULT_DEPOSIT_METHOD,
-} from 'core-kit/const'
+import { CUSTOM_LOCK_TIME, DEFAULT_DEPOSIT_METHOD } from 'core-kit/const'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import type {
   TradingPanelActionsState,
   TradingPanelState,
 } from 'core-kit/types/state.types'
+
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 import { useUpdateEntryFee } from './action'
 import { useTradingPanelActions, useTradingPanelState } from './context'
@@ -47,9 +46,12 @@ export const useTradingPanelEntryFee = (): [
 }
 
 export const useTradingPanelLockTime = (): string => {
-  const { depositParams } = useTradingPanelPoolConfig()
+  const { depositParams, chainId } = useTradingPanelPoolConfig()
+  const { chainCustomLockTimeMap, defaultLockTime } = useConfigContextParams()
 
-  return DEFAULT_DEPOSIT_LOCKTIME_MAP[
-    depositParams.method ?? DEFAULT_DEPOSIT_METHOD
-  ]
+  if (depositParams.method === 'depositWithCustomCooldown') {
+    return chainCustomLockTimeMap[chainId] ?? CUSTOM_LOCK_TIME
+  }
+
+  return defaultLockTime
 }

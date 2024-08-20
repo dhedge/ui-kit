@@ -1,6 +1,7 @@
 import { formatDuration } from 'date-fns'
-import { optimism } from 'wagmi/chains'
+import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 
+import type { ChainId } from 'core-kit/types'
 import type { PoolConfig } from 'core-kit/types/config.types'
 import type { DepositMethodName } from 'core-kit/types/trading-panel.types'
 import type { PoolDepositMethodName } from 'core-kit/types/trading.types'
@@ -16,13 +17,28 @@ export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
+export const EXTENDED_CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
 
 export const DEFAULT_DEPOSIT_LOCKTIME_MAP: Record<
-  PoolDepositMethodName,
-  string
+  ChainId,
+  Record<PoolDepositMethodName, string>
 > = {
-  deposit: DEFAULT_LOCK_TIME,
-  depositWithCustomCooldown: CUSTOM_LOCK_TIME,
+  [optimism.id]: {
+    deposit: DEFAULT_LOCK_TIME,
+    depositWithCustomCooldown: EXTENDED_CUSTOM_LOCK_TIME,
+  },
+  [polygon.id]: {
+    deposit: DEFAULT_LOCK_TIME,
+    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
+  },
+  [arbitrum.id]: {
+    deposit: DEFAULT_LOCK_TIME,
+    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
+  },
+  [base.id]: {
+    deposit: DEFAULT_LOCK_TIME,
+    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
+  },
 }
 
 export const EMPTY_POOL_CONFIG: PoolConfig = {
