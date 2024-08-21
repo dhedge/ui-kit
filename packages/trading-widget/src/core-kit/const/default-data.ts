@@ -16,8 +16,7 @@ export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
 export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
-export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
-export const EXTENDED_CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
+export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
 
 export const DEFAULT_DEPOSIT_LOCKTIME_MAP: Record<
   ChainId,
@@ -25,7 +24,7 @@ export const DEFAULT_DEPOSIT_LOCKTIME_MAP: Record<
 > = {
   [optimism.id]: {
     deposit: DEFAULT_LOCK_TIME,
-    depositWithCustomCooldown: EXTENDED_CUSTOM_LOCK_TIME,
+    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
   },
   [polygon.id]: {
     deposit: DEFAULT_LOCK_TIME,
