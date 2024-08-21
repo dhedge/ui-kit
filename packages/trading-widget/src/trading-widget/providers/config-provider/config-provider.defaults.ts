@@ -5,7 +5,6 @@ import {
   CUSTOM_LOCK_TIME,
   DEFAULT_LOCK_TIME,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
-  EXTENDED_CUSTOM_LOCK_TIME,
   arbitrum,
   base,
   optimism,
@@ -27,7 +26,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   defaultLockTime: DEFAULT_LOCK_TIME,
   chainCustomLockTimeMap: {
     [arbitrum.id]: CUSTOM_LOCK_TIME,
-    [optimism.id]: EXTENDED_CUSTOM_LOCK_TIME,
+    [optimism.id]: CUSTOM_LOCK_TIME,
     [polygon.id]: CUSTOM_LOCK_TIME,
     [base.id]: CUSTOM_LOCK_TIME,
   },
