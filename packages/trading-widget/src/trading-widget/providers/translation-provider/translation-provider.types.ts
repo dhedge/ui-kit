@@ -76,6 +76,7 @@ export type TranslationMap = {
   multiAssetFractions: string
   explorer: string
   as: string
+  switchNetwork: string
   [key: string]: string
 }
 

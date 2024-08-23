@@ -29,6 +29,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
     withdrawalWindowStartTime,
     approve,
     updateOracles,
+    isUpdateOraclesPending,
     handleHighSlippageClick,
   } = useValidWithdrawButton()
 
@@ -72,7 +73,11 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
   }
 
   if (requiresUpdate) {
-    return <Button onClick={updateOracles}>{t.updateOracles}</Button>
+    return (
+      <Button onClick={updateOracles} loading={isUpdateOraclesPending}>
+        {t.updateOracles}
+      </Button>
+    )
   }
 
   return children

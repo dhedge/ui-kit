@@ -32,6 +32,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     sendTokenSymbol,
     slippageToBeUsed,
     updateOracles,
+    isUpdateOraclesPending,
     approve,
     confirmHighSlippage,
   } = useValidDepositButton()
@@ -66,7 +67,11 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
   }
 
   if (requiresUpdate) {
-    return <Button onClick={updateOracles}>{t.updateOracles}</Button>
+    return (
+      <Button onClick={updateOracles} loading={isUpdateOraclesPending}>
+        {t.updateOracles}
+      </Button>
+    )
   }
 
   if (requiresHighSlippageConfirm) {

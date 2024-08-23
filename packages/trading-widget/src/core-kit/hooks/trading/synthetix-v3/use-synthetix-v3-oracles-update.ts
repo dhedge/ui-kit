@@ -27,7 +27,9 @@ export const useSynthetixV3OraclesUpdate = ({
   const isSynthetixVault = isSynthetixV3Vault(vaultAddress)
   const publicClient = usePublicClient({ chainId })
   const updateTradingModal = useTradingPanelModal()[1]
-  const { sendTransaction } = useSendOraclesUpdateTransaction({ chainId })
+  const { sendTransaction, isPending } = useSendOraclesUpdateTransaction({
+    chainId,
+  })
   const { data: oraclesUpdateTransactionData } =
     useOraclesUpdateTransactionData(
       {
@@ -75,5 +77,6 @@ export const useSynthetixV3OraclesUpdate = ({
   return {
     needToBeUpdated: isSynthetixVault && !!oraclesUpdateTransactionData,
     updateOracles,
+    isPending,
   }
 }

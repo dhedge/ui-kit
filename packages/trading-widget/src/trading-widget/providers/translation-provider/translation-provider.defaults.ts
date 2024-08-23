@@ -98,4 +98,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   multiAssetFractions: 'multi asset fractions',
   explorer: 'Explorer',
   as: 'As',
+  switchNetwork: 'Switch Network',
 }
