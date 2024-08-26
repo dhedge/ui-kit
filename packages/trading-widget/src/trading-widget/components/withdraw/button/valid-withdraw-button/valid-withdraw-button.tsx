@@ -75,7 +75,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
   if (requiresUpdate) {
     return (
       <Button onClick={updateOracles} loading={isUpdateOraclesPending}>
-        {t.updateOracles}
+        {isUpdateOraclesPending ? t.checkingOracles : t.updateOracles}
       </Button>
     )
   }

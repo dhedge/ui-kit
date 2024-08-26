@@ -50,6 +50,7 @@ export type TranslationMap = {
   poolIsInactive: string
   poolIsPrivate: string
   updateOracles: string
+  checkingOracles: string
   confirmMaxSlippage: string
   withdrawalWindowDisabled: string
   withdrawCooldown: string
