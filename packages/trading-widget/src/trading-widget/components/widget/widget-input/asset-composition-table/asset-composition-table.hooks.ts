@@ -28,5 +28,5 @@ export const useAssetCompositionTable = () => {
       amount !== '0',
   )
 
-  return { poolComposition, chainId, showUnitWithdrawalTip }
+  return { poolComposition, chainId, showUnitWithdrawalTip, address }
 }

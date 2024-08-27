@@ -40,8 +40,8 @@ export const formatPoolComposition = ({
       const isSynthetixAsset = isSynthetixV3Asset(token.tokenAddress)
       return {
         ...token,
-        tokenName: isSynthetixAsset ? 'USDC' : token.tokenName,
-        asset: isSynthetixAsset ? { iconSymbols: ['USDC'] } : token.asset,
+        tokenName: isSynthetixAsset ? 'Synthetix V3' : token.tokenName,
+        asset: isSynthetixAsset ? { iconSymbols: ['snxv3'] } : token.asset,
       }
     })
     .reduce<PoolComposition[]>((acc, asset) => {
