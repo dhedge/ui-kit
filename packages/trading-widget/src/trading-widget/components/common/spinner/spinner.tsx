@@ -19,7 +19,8 @@ export const Spinner: FC<SpinnerProps> = ({
         'dtw-animate-spin',
         {
           'dtw-stroke-themeGreen': type === THEME_TYPE.SUCCESS,
-          'dtw-stroke-info': type === THEME_TYPE.DEFAULT,
+          'dtw-stroke-[color:var(--panel-accent-content-color)]':
+            type === THEME_TYPE.DEFAULT,
         },
         className,
       )}

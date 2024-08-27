@@ -64,6 +64,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
     '{poolSymbol} token is no longer active. Please withdraw from them.',
   poolIsPrivate: 'This vault is currently private',
   updateOracles: 'Update Oracles',
+  checkingOracles: 'Checking Oracles',
   confirmMaxSlippage: 'Confirm {slippagePercentage}% max slippage',
   withdrawalWindowDisabled:
     'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
@@ -98,4 +99,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   multiAssetFractions: 'multi asset fractions',
   explorer: 'Explorer',
   as: 'As',
+  switchNetwork: 'Switch Network',
 }

@@ -24,9 +24,10 @@ export const useValidDepositButton = () => {
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
   const poolBalance = useUserVaultBalance(address)
   const { approve, canSpend } = useDepositAllowance()
-  const { needToBeUpdated, updateOracles } = useSynthetixV3OraclesUpdate({
-    disabled: !canSpend,
-  })
+  const { needToBeUpdated, updateOracles, isCheckOraclesPending } =
+    useSynthetixV3OraclesUpdate({
+      disabled: !canSpend,
+    })
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
 
@@ -54,5 +55,6 @@ export const useValidDepositButton = () => {
     confirmHighSlippage,
     updateOracles,
     slippageToBeUsed,
+    isCheckOraclesPending,
   }
 }

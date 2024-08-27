@@ -1,12 +1,16 @@
 import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
 
+import { Spinner } from 'trading-widget/components/common/spinner/spinner'
+import { THEME_TYPE } from 'trading-widget/types'
+
 interface ActionButtonProps {
   onClick?: () => void
   highlighted?: boolean
   disabled?: boolean
   className?: string
   type?: 'submit' | 'button'
+  loading?: boolean
 }
 
 const NON_HIGHLIGHTED_CLASSNAMES = [
@@ -35,6 +39,7 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
   disabled = false,
   className,
   type,
+  loading = false,
 }) => (
   <button
     className={classNames(
@@ -51,13 +56,17 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
       {
         [HIGHLIGHTED_CLASSNAMES.join(' ')]: highlighted,
         [NON_HIGHLIGHTED_CLASSNAMES.join(' ')]: !highlighted,
+        'dtw-flex dtw-items-center dtw-justify-center dtw-gap-1': loading,
       },
       className,
     )}
     onClick={onClick}
-    disabled={disabled}
+    disabled={disabled || loading}
     type={type}
   >
+    {loading && (
+      <Spinner type={THEME_TYPE.DEFAULT} className="dtw-h-4 dtw-w-4" />
+    )}
     {children}
   </button>
 )
