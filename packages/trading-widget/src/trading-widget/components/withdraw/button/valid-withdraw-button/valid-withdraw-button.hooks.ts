@@ -25,13 +25,10 @@ export const useValidWithdrawButton = () => {
     chainId,
   })
   const { approve, canSpend } = useWithdrawAllowance()
-  const {
-    needToBeUpdated,
-    updateOracles,
-    isPending: isUpdateOraclesPending,
-  } = useSynthetixV3OraclesUpdate({
-    disabled: !canSpend || cooldownActive,
-  })
+  const { needToBeUpdated, updateOracles, isCheckOraclesPending } =
+    useSynthetixV3OraclesUpdate({
+      disabled: !canSpend || cooldownActive,
+    })
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
 
@@ -59,6 +56,6 @@ export const useValidWithdrawButton = () => {
     approve,
     updateOracles,
     handleHighSlippageClick,
-    isUpdateOraclesPending,
+    isCheckOraclesPending,
   }
 }

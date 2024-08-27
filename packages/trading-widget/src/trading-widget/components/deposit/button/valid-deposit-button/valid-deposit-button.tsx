@@ -32,7 +32,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     sendTokenSymbol,
     slippageToBeUsed,
     updateOracles,
-    isUpdateOraclesPending,
+    isCheckOraclesPending,
     approve,
     confirmHighSlippage,
   } = useValidDepositButton()
@@ -66,10 +66,10 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     return <ApproveButton symbol={sendTokenSymbol} onApprove={approve} />
   }
 
-  if (requiresUpdate) {
+  if (requiresUpdate || isCheckOraclesPending) {
     return (
-      <Button onClick={updateOracles} loading={isUpdateOraclesPending}>
-        {isUpdateOraclesPending ? t.checkingOracles : t.updateOracles}
+      <Button onClick={updateOracles} loading={isCheckOraclesPending}>
+        {isCheckOraclesPending ? t.checkingOracles : t.updateOracles}
       </Button>
     )
   }
