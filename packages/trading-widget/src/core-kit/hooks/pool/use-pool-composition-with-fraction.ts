@@ -84,6 +84,7 @@ export const formatPoolComposition = ({
         ...asset,
         fraction: fraction.toFixed(getConventionalTokenPriceDecimals(fraction)),
         fractionUsd: formatToUsd({ value: fractionUsd }),
+        fractionUsdNumber: fractionUsd,
       }
     })
     .filter(({ amount }) => amount !== '0')

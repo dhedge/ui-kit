@@ -13,3 +13,4 @@ export { useSynthetixV3OraclesUpdate } from './synthetix-v3/use-synthetix-v3-ora
 export { useDepositProjectedEarnings } from './projected-earnings/use-deposit-projected-earnings'
 export { useProjectedEarningsCore } from './projected-earnings/use-projected-earnings-core'
 export { useIsEasySwapperTrading } from './use-is-easy-swapper-trading'
+export { useAvailableWithdrawLiquidity } from './synthetix-v3/use-available-withdraw-liquidity'

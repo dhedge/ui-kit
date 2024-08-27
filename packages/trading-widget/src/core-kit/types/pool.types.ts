@@ -15,4 +15,5 @@ export interface PoolComposition {
 export interface PoolCompositionWithFraction extends PoolComposition {
   fraction: string
   fractionUsd: string
+  fractionUsdNumber: number
 }

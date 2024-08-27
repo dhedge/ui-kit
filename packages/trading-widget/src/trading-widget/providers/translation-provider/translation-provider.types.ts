@@ -53,6 +53,7 @@ export type TranslationMap = {
   checkingOracles: string
   confirmMaxSlippage: string
   withdrawalWindowDisabled: string
+  withdrawalLiquidityDisabled: string
   withdrawCooldown: string
   termsOfUse: string
   termOfUseDepositListTitle: string
