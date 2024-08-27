@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from 'react'
 
 /** Replace by commented imports while using example */
 import { TradingPanelProvider } from 'core-kit'
-import { base } from 'core-kit/const'
+import { arbitrum, base } from 'core-kit/const'
 import { WagmiProvider } from 'core-kit/providers/wagmi-provider'
 import type { PoolConfig, TradingPanelContextConfig } from 'core-kit/types'
 import { TradingWidget } from 'trading-widget/components'
@@ -23,9 +23,23 @@ const SYNTHETIX_BASE: PoolConfig = {
   usePoolLogicDeposit: true,
 }
 
+const SYNTHETIX_ARBITRUM: PoolConfig = {
+  chainId: arbitrum.id,
+  symbol: 'sARBy',
+  address: '0xddd6b1f34e12c0230ab23cbd4514560b24438514',
+  depositParams: {
+    customTokens: [],
+  },
+  withdrawParams: {
+    customTokens: [],
+  },
+  usePoolLogicDeposit: true,
+}
+
 const SIMPLE_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {
   poolConfigMap: {
     [SYNTHETIX_BASE.address]: SYNTHETIX_BASE,
+    [SYNTHETIX_ARBITRUM.address]: SYNTHETIX_ARBITRUM,
   },
   poolAddress: SYNTHETIX_BASE.address,
 }
