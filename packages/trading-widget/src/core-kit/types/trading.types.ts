@@ -27,7 +27,7 @@ export type TxArgs = DefaultSellingParams
 export interface SwapDataResponse {
   dstAmount: string
   tx: { data: string }
-  routerKey?: string
+  routerKey: 'ONE_INCH' | 'ZERO_X' | 'PARASWAP'
 }
 
 export interface SwapDataRequest {
