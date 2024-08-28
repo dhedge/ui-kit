@@ -32,7 +32,6 @@ const SYNTHETIX_ARBITRUM: PoolConfig = {
   withdrawParams: {
     customTokens: [],
   },
-  usePoolLogicDeposit: true,
 }
 
 const SIMPLE_INITIAL_STATE: TradingPanelContextConfig['initialState'] = {

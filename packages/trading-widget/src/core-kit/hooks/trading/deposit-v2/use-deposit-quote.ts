@@ -12,7 +12,6 @@ import {
 import { useDebounce } from 'core-kit/hooks/utils'
 
 import { useDepositQuoteContractRead } from './use-deposit-quote-contract-read'
-import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 
 export const useDepositQuote = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
@@ -22,7 +21,6 @@ export const useDepositQuote = () => {
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
   const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
-  const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
   const { data: quoteResult, isFetching } = useDepositQuoteContractRead({
     address,
     chainId,
@@ -47,12 +45,14 @@ export const useDepositQuote = () => {
     sendToken.address,
     updateReceiveToken,
     isDeposit,
-    isDepositWithSwapTransaction,
   ])
 
   useEffect(() => {
+    if (!isDeposit) {
+      return
+    }
     updateReceiveToken({ isLoading })
-  }, [isLoading, updateReceiveToken])
+  }, [isDeposit, isLoading, updateReceiveToken])
 
   useEffect(() => {
     if (!isDeposit) {

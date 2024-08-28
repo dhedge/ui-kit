@@ -1,5 +1,4 @@
 import { keepPreviousData } from '@tanstack/react-query'
-import { useReadContract } from 'wagmi'
 
 import { EasySwapperV2Abi } from 'core-kit/abi'
 import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
@@ -8,7 +7,10 @@ import {
   useSendTokenInput,
 } from 'core-kit/hooks/state'
 import { useDebounce } from 'core-kit/hooks/utils'
-import { useContractReadErrorLogging } from 'core-kit/hooks/web3'
+import {
+  useContractReadErrorLogging,
+  useReadContract,
+} from 'core-kit/hooks/web3'
 import type { PoolConfig } from 'core-kit/types/config.types'
 import { getContractAddressById } from 'core-kit/utils'
 
@@ -25,7 +27,6 @@ export const useDepositQuoteContractRead = ({
 
   const sendAmount = useVaultDepositTokenAmount()
   const debouncedSendAmount = useDebounce(sendAmount, 500)
-
   const hasSendInputValue = !!(debouncedSendAmount && +debouncedSendAmount > 0)
 
   const quoteResponse = useReadContract({
