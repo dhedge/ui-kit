@@ -32,6 +32,13 @@ const getContracts = ({ address, chainId }: PoolContractCallParams) =>
       args: [address],
       chainId,
     },
+    {
+      address: getContractAddressById('easySwapperV2', chainId),
+      abi: EasySwapperV2Abi,
+      functionName: 'customCooldown',
+      args: [],
+      chainId,
+    },
   ] as const
 
 type Data = MulticallReturnType<ReturnType<typeof getContracts>>
@@ -40,6 +47,7 @@ const selector = (data: Data) => ({
   isPool: data[0].result,
   poolManagerLogic: data[1].result,
   isCustomCooldownDepositAllowed: data[2].result,
+  customCooldown: data[3].result,
 })
 
 export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {

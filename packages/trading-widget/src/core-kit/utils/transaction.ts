@@ -68,6 +68,7 @@ export const buildZapDepositTransactionArguments = ({
   sendTokenAmount,
   vaultDepositTokenAddress,
   minVaultTokensReceivedAmount,
+  routerKey = 'ONE_INCH',
 }: {
   vaultAddress: Address
   swapData: string
@@ -75,8 +76,9 @@ export const buildZapDepositTransactionArguments = ({
   sendTokenAmount: string
   vaultDepositTokenAddress: Address
   minVaultTokensReceivedAmount: string
+  routerKey: string | undefined
 }) => {
-  const aggregatorData = [stringToHex('ONE_INCH', { size: 32 }), swapData]
+  const aggregatorData = [stringToHex(routerKey, { size: 32 }), swapData]
   const srcData = [sendTokenAddress, sendTokenAmount, aggregatorData]
   const destData = [vaultDepositTokenAddress, '0']
   return [vaultAddress, [srcData, destData], minVaultTokensReceivedAmount]

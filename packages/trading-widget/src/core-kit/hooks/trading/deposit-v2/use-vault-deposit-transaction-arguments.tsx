@@ -45,6 +45,7 @@ export const useVaultDepositTransactionArguments = ({
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
             swapData: swapData?.tx?.data ?? '',
+            routerKey: swapData?.routerKey,
           }),
           { value: sendTokenAmount },
         ]
@@ -58,6 +59,7 @@ export const useVaultDepositTransactionArguments = ({
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
             swapData: swapData?.tx.data ?? '',
+            routerKey: swapData?.routerKey,
           }),
         ]
       default:

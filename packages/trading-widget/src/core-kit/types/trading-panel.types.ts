@@ -62,5 +62,3 @@ export interface UseProjectedEarningsResult {
   yearlyEarnings: string | null
   showEarnings: boolean
 }
-
-

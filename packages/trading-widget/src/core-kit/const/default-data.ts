@@ -14,18 +14,6 @@ export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
 export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
-export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
-
-export const DEPOSIT_LOCKTIME_MAP: Record<DepositMethodName, string> = {
-  deposit: DEFAULT_LOCK_TIME,
-  depositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  nativeDeposit: DEFAULT_LOCK_TIME,
-  zapDeposit: DEFAULT_LOCK_TIME,
-  nativeDepositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  zapNativeDeposit: DEFAULT_LOCK_TIME,
-  zapDepositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  zapNativeDepositWithCustomCooldown: CUSTOM_LOCK_TIME,
-}
 
 export const EMPTY_POOL_CONFIG: PoolConfig = {
   address: AddressZero,
