@@ -1,6 +1,9 @@
 import BigNumber from 'bignumber.js'
 
-import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
+import {
+  DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP,
+  MANAGER_FEE_DENOMINATOR,
+} from 'core-kit/const'
 import {
   usePoolDynamicContractData,
   usePoolTokenPrice,
@@ -15,6 +18,7 @@ import { useAssetPrice } from 'core-kit/hooks/trading'
 import { getPercent } from 'core-kit/utils'
 
 import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
+import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 
 export const useMinVaultTokensReceivedAmount = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
@@ -25,24 +29,36 @@ export const useMinVaultTokensReceivedAmount = () => {
   const [{ slippage }] = useTradingPanelSettings()
   const isAutoSlippage = slippage === 'auto'
   const depositSlippage = useAppliedDepositSlippage()
+  const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
 
-  // calculate expected received vault tokens amount excluding entry fee
   const sendTokenPrice = +useAssetPrice({
     address: sendToken.address,
     chainId,
   })
   const vaultTokenPrice = +usePoolTokenPrice({ address, chainId })
 
-  const sendValue =
-    Number(sendToken.value || 0) * sendTokenPrice * (1 - entryFeeValue / 100)
-  const expectedReceivedVaultTokensAmount = sendValue / vaultTokenPrice
+  if (isDepositWithSwapTransaction) {
+    const sendValue =
+      Number(sendToken.value || 0) * sendTokenPrice * (1 - entryFeeValue / 100)
+    // calculate expected received vault tokens amount excluding entry fee
+    const expectedReceivedVaultTokensAmount = sendValue / vaultTokenPrice
 
-  return new BigNumber(
-    isAutoSlippage
-      ? receiveToken.value || '0'
-      : expectedReceivedVaultTokensAmount,
-  )
+    // when slippage is manual use expectedReceivedVaultTokensAmount
+    return new BigNumber(
+      isAutoSlippage
+        ? receiveToken.value || '0'
+        : expectedReceivedVaultTokensAmount,
+    )
+      .shiftedBy(receiveToken.decimals)
+      .times(1 - depositSlippage / 100)
+      .toFixed(0)
+  }
+
+  const noSwapMinValueGap = isAutoSlippage
+    ? DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP
+    : depositSlippage
+  return new BigNumber(receiveToken.value || '0')
     .shiftedBy(receiveToken.decimals)
-    .times(1 - depositSlippage / 100)
+    .times(1 - noSwapMinValueGap / 100)
     .toFixed(0)
 }

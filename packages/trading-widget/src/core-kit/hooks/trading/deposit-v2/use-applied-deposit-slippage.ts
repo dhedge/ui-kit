@@ -11,9 +11,11 @@ export const useAppliedDepositSlippage = () => {
   const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
   const isAutoSlippage = slippage === 'auto'
 
-  if (!isDepositWithSwapTransaction) {
-    return DEFAULT_DEPOSIT_SLIPPAGE
+  if (isAutoSlippage) {
+    return isDepositWithSwapTransaction
+      ? DEFAULT_SWAP_TRANSACTION_SLIPPAGE
+      : DEFAULT_DEPOSIT_SLIPPAGE
   }
 
-  return isAutoSlippage ? DEFAULT_SWAP_TRANSACTION_SLIPPAGE : slippage
+  return slippage
 }

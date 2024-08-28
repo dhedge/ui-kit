@@ -30,7 +30,11 @@ export const useVaultDepositTransactionArguments = ({
     switch (depositMethod) {
       case 'nativeDeposit':
       case 'nativeDepositWithCustomCooldown':
-        return [address, { value: vaultDepositTokenAmount }]
+        return [
+          address,
+          minVaultTokensReceivedAmount,
+          { value: vaultDepositTokenAmount },
+        ]
       case 'zapNativeDeposit':
       case 'zapNativeDepositWithCustomCooldown':
         return [
@@ -58,7 +62,12 @@ export const useVaultDepositTransactionArguments = ({
         ]
       default:
         // deposit, deposit with custom cooldown
-        return [address, vaultDepositTokenAddress, vaultDepositTokenAmount]
+        return [
+          address,
+          vaultDepositTokenAddress,
+          vaultDepositTokenAmount,
+          minVaultTokensReceivedAmount,
+        ]
     }
   }, [
     depositMethod,
