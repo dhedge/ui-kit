@@ -4,28 +4,25 @@ import classNames from 'classnames'
 import {
   FLATMONEY_COLLATERAL_SYMBOL_MAP,
   FLAT_MONEY_UNIT_LINK,
+  SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP,
 } from 'core-kit/const'
 import {
   getFlatMonetUnitSymbol,
   isFlatMoneyLeveragedRethAsset,
+  isSynthetixV3Asset,
 } from 'core-kit/utils'
-import {
-  Skeleton,
-  TokenBadge,
-  TokenIcon,
-} from 'trading-widget/components/common'
+import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
 import type { AssetCompositionTableProps } from './asset-composition-table.hooks'
 import { useAssetCompositionTable } from './asset-composition-table.hooks'
-import { useTranslationContext } from '../../../../providers/translation-provider'
+import { WithdrawExplanationTip } from './withdraw-explanation-tip'
 
 export const AssetCompositionTable = ({
   className,
   showFraction = true,
   iconSize,
 }: AssetCompositionTableProps) => {
-  const t = useTranslationContext()
-  const { poolComposition, chainId, showUnitWithdrawalTip } =
+  const { poolComposition, chainId, showUnitWithdrawalTip, address } =
     useAssetCompositionTable()
 
   return (
@@ -41,6 +38,8 @@ export const AssetCompositionTable = ({
                 ({ fraction, fractionUsd, tokenName, asset, tokenAddress }) => {
                   const isLeveragedRethAsset =
                     isFlatMoneyLeveragedRethAsset(tokenAddress)
+                  const isSynthetixAsset = isSynthetixV3Asset(tokenAddress)
+
                   return (
                     <tr key={tokenName}>
                       <td
@@ -56,17 +55,20 @@ export const AssetCompositionTable = ({
                           size={iconSize}
                         />
                         {isLeveragedRethAsset && (
-                          <div className="dtw-flex dtw-gap-1 dtw-items-center dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
-                            {t.as}{' '}
-                            <TokenIcon
-                              symbols={[
-                                FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ??
-                                  'reth',
-                              ]}
-                              size="xs"
-                            />{' '}
-                            {FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ?? 'rETH'}
-                          </div>
+                          <WithdrawExplanationTip
+                            symbol={
+                              FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ?? 'rETH'
+                            }
+                          />
+                        )}
+                        {isSynthetixAsset && (
+                          <WithdrawExplanationTip
+                            symbol={
+                              SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[
+                                address
+                              ] ?? 'Synthetix V3'
+                            }
+                          />
                         )}
                       </td>
                       {showFraction && (

@@ -1,8 +1,9 @@
-import { formatDuration } from 'date-fns'
 import { useCallback } from 'react'
 import { injected } from 'wagmi/connectors'
 
 import {
+  CUSTOM_LOCK_TIME,
+  DEFAULT_LOCK_TIME,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
   arbitrum,
   base,
@@ -22,8 +23,13 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   depositQuoteDiffWarningThreshold: 1,
   depositQuoteDiffErrorThreshold: 3,
   defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
-  defaultLockTime: formatDuration({ hours: 24 }),
-  customLockTime: formatDuration({ minutes: 15 }),
+  defaultLockTime: DEFAULT_LOCK_TIME,
+  chainCustomLockTimeMap: {
+    [arbitrum.id]: CUSTOM_LOCK_TIME,
+    [optimism.id]: CUSTOM_LOCK_TIME,
+    [polygon.id]: CUSTOM_LOCK_TIME,
+    [base.id]: CUSTOM_LOCK_TIME,
+  },
   stablePrecision: 3,
   defaultPrecision: 6,
   stakingChainId: optimism.id,

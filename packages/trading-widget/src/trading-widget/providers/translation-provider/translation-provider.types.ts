@@ -48,6 +48,7 @@ export type TranslationMap = {
   poolIsInactive: string
   poolIsPrivate: string
   updateOracles: string
+  checkingOracles: string
   confirmMaxSlippage: string
   withdrawalWindowDisabled: string
   withdrawCooldown: string
@@ -74,6 +75,7 @@ export type TranslationMap = {
   multiAssetFractions: string
   explorer: string
   as: string
+  switchNetwork: string
   [key: string]: string
 }
 

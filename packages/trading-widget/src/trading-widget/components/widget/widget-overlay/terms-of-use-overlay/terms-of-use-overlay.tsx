@@ -1,7 +1,7 @@
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
-import { ActionButton, Layout, Spinner } from 'trading-widget/components/common'
+import { ActionButton, Layout } from 'trading-widget/components/common'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
@@ -38,13 +38,14 @@ export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
         <Button highlighted={false} onClick={handleReject}>
           {t.back}
         </Button>
-        <Button onClick={handleConfirm} disabled={isPending}>
-          <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1">
-            <span>
-              {isPending ? t.confirmInWallet : t.termOfUseDepositAccept}
-            </span>
-            {isPending && <Spinner className="dtw-h-4 dtw-w-4" />}
-          </div>
+        <Button
+          onClick={handleConfirm}
+          disabled={isPending}
+          loading={isPending}
+        >
+          <span>
+            {isPending ? t.confirmInWallet : t.termOfUseDepositAccept}
+          </span>
         </Button>
       </div>
     </Layout.Overlay>

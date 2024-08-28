@@ -16,6 +16,7 @@ export interface ButtonProps {
   disabled?: boolean
   className?: string
   type?: 'submit' | 'button'
+  loading?: boolean
 }
 
 export interface ComponentProviderProps {

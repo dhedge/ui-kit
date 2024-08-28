@@ -14,7 +14,7 @@ export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
 export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
-export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 15 })
+export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
 
 export const DEPOSIT_LOCKTIME_MAP: Record<DepositMethodName, string> = {
   deposit: DEFAULT_LOCK_TIME,
