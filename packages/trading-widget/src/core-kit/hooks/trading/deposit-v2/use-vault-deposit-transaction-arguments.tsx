@@ -9,6 +9,7 @@ import type { VaultDepositParams } from 'core-kit/types'
 
 import { buildZapDepositTransactionArguments } from 'core-kit/utils'
 
+import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
 import { useMinVaultTokensReceivedAmount } from './use-min-vault-tokens-received-amount'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 import { useVaultDepositTokenAmount } from './use-vault-deposit-token-amount'
@@ -25,6 +26,7 @@ export const useVaultDepositTransactionArguments = ({
   const vaultDepositTokenAmount = useVaultDepositTokenAmount()
   const { data: swapData } = useSwapDataBasedOnSendToken()
   const minVaultTokensReceivedAmount = useMinVaultTokensReceivedAmount()
+  const depositSlippage = useAppliedDepositSlippage()
 
   return useMemo(() => {
     switch (depositMethod) {
@@ -44,8 +46,10 @@ export const useVaultDepositTransactionArguments = ({
             sendTokenAmount,
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
-            swapData: swapData?.tx?.data ?? '',
+            swapData: swapData?.txData ?? '',
             routerKey: swapData?.routerKey,
+            swapDestinationAmount: swapData?.destinationAmount ?? '0',
+            swapSlippage: depositSlippage,
           }),
           { value: sendTokenAmount },
         ]
@@ -58,8 +62,10 @@ export const useVaultDepositTransactionArguments = ({
             sendTokenAmount,
             minVaultTokensReceivedAmount,
             vaultDepositTokenAddress,
-            swapData: swapData?.tx.data ?? '',
+            swapData: swapData?.txData ?? '',
             routerKey: swapData?.routerKey,
+            swapDestinationAmount: swapData?.destinationAmount ?? '0',
+            swapSlippage: depositSlippage,
           }),
         ]
       default:
@@ -74,11 +80,14 @@ export const useVaultDepositTransactionArguments = ({
   }, [
     depositMethod,
     address,
+    minVaultTokensReceivedAmount,
     vaultDepositTokenAmount,
     sendToken.address,
     sendTokenAmount,
-    minVaultTokensReceivedAmount,
     vaultDepositTokenAddress,
-    swapData?.tx?.data,
+    swapData?.txData,
+    swapData?.routerKey,
+    swapData?.destinationAmount,
+    depositSlippage,
   ])
 }

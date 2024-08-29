@@ -25,8 +25,8 @@ export type ChainNativeTokenMap = {
 export type TxArgs = DefaultSellingParams
 
 export interface SwapDataResponse {
-  dstAmount: string
-  tx: { data: string }
+  destinationAmount: string
+  txData: string
   routerKey: 'ONE_INCH' | 'ZERO_X' | 'PARASWAP'
 }
 
