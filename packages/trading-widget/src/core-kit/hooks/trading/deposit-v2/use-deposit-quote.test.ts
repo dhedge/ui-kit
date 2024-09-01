@@ -26,6 +26,9 @@ vi.mock('core-kit/hooks/utils', () => ({
 vi.mock('./use-deposit-quote-contract-read', () => ({
   useDepositQuoteContractRead: vi.fn(),
 }))
+vi.mock('./use-swap-data-based-on-send-token', () => ({
+  useSwapDataBasedOnSendToken: vi.fn().mockReturnValue({}),
+}))
 
 describe('useDepositQuote', () => {
   const address = '0x123'
