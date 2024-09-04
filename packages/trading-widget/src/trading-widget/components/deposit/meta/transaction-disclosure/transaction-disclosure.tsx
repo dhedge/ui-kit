@@ -30,6 +30,7 @@ export const DepositTransactionOverviewDisclosure = () => {
     entryFeeTooltipText,
     minDeposit,
     lockTime,
+    showMinimumReceivedAmount,
   } = useDepositTransactionDisclosure()
 
   const staticItems: TransactionDisclosureItemProps[] = showEarnings
@@ -73,12 +74,15 @@ export const DepositTransactionOverviewDisclosure = () => {
           </div>
         ),
       },
-      {
+    ]
+
+    if (showMinimumReceivedAmount) {
+      items.push({
         tooltipText: t.minReceiveAmount,
         label: t.minReceived,
         value: minReceive,
-      },
-    ]
+      })
+    }
 
     if (allowanceRequired) {
       items.push({

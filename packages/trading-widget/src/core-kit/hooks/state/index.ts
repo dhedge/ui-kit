@@ -6,7 +6,6 @@ export {
   useSetPoolAddress,
   useUpdateReceiveTokenInput,
   useUpdateTradingSettings,
-  useUpdateEntryFee,
   useOnTransactionError,
   useOnTransactionSuccess,
   useOnTransactionEstimationError,
@@ -15,23 +14,18 @@ export {
   useOnSimulateTransaction,
   useUpdatePoolFallbackData,
   useOnTradingSettleError,
+  useGetSwapData,
 } from './action'
 export {
   useTradingPanelPoolAddress,
   useTradingPanelPoolConfig,
-  useTradingPanelDepositMethod,
   useTradingPanelPoolConfigs,
   useTradingPanelPoolFallbackData,
   useIsPoolAddress,
 } from './pool'
 export { useSendTokenInput, useReceiveTokenInput } from './input'
 export { useTradingPanelSettings } from './settings'
-export {
-  useTradingPanelMeta,
-  useTradingPanelApprovingStatus,
-  useTradingPanelEntryFee,
-  useTradingPanelLockTime,
-} from './meta'
+export { useTradingPanelMeta, useTradingPanelApprovingStatus } from './meta'
 export { useTradingPanelModal } from './modal'
 export { useTradingPanelType, useIsDepositTradingPanelType } from './type'
 export { useTradingPanelTransactions } from './transaction'

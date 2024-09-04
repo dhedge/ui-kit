@@ -7,7 +7,7 @@ import {
   useTradingPanelSettings,
   useTradingPanelType,
 } from 'core-kit/hooks/state'
-import { usePoolDepositTokens } from 'core-kit/hooks/trading/deposit'
+import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
 import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
 import type { TradingPanelActionsState, TradingToken } from 'core-kit/types'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
@@ -27,7 +27,7 @@ const useTokens = (): {
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
 
   const poolConfig = useTradingPanelPoolConfig()
-  const depositTokens = usePoolDepositTokens()
+  const depositTokens = useVaultDepositTokens()
   const withdrawTokens = poolConfig.withdrawParams.customTokens
 
   return useMemo(

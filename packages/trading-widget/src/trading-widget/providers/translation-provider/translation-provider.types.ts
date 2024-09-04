@@ -20,14 +20,12 @@ export type TranslationMap = {
   entryFeeExplanation: string
   exitFee: string
   exitFeeExplanation: string
-  easySwapperEntryFee: string
   amountToBeApproved: string
   minDepositUsd: string
   minDeposit: string
   tokensLockTime: string
   slippageTolerance: string
   reduceLockupTime: string
-  entryFeeSwitchWarning: string
   toggleTokenApprovalAmount: string
   auto: string
   autoSlippageDescription: string

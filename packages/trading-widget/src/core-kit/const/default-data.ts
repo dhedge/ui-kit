@@ -1,10 +1,8 @@
 import { formatDuration } from 'date-fns'
-import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
+import { optimism } from 'wagmi/chains'
 
-import type { ChainId } from 'core-kit/types'
 import type { PoolConfig } from 'core-kit/types/config.types'
-import type { DepositMethodName } from 'core-kit/types/trading-panel.types'
-import type { PoolDepositMethodName } from 'core-kit/types/trading.types'
+import type { DepositMethodName } from 'core-kit/types/trading.types'
 
 import { AddressZero } from './web3'
 
@@ -16,29 +14,6 @@ export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
 export const DEFAULT_RETRIES_NUMBER = 5
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
-export const CUSTOM_LOCK_TIME = formatDuration({ minutes: 60 })
-
-export const DEFAULT_DEPOSIT_LOCKTIME_MAP: Record<
-  ChainId,
-  Record<PoolDepositMethodName, string>
-> = {
-  [optimism.id]: {
-    deposit: DEFAULT_LOCK_TIME,
-    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  },
-  [polygon.id]: {
-    deposit: DEFAULT_LOCK_TIME,
-    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  },
-  [arbitrum.id]: {
-    deposit: DEFAULT_LOCK_TIME,
-    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  },
-  [base.id]: {
-    deposit: DEFAULT_LOCK_TIME,
-    depositWithCustomCooldown: CUSTOM_LOCK_TIME,
-  },
-}
 
 export const EMPTY_POOL_CONFIG: PoolConfig = {
   address: AddressZero,
@@ -51,8 +26,10 @@ export const EMPTY_POOL_CONFIG: PoolConfig = {
 
 export const DEFAULT_DEPOSIT_METHOD: DepositMethodName = 'deposit'
 
-export const DEFAULT_WITHDRAW_SLIPPAGE = 3
-export const DEFAULT_DEPOSIT_SLIPPAGE = 0
+export const DEFAULT_WITHDRAW_SLIPPAGE = 3 // %
+export const DEFAULT_DEPOSIT_SLIPPAGE = 0 // %
+export const DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP = 0.1 // %
+export const DEFAULT_SWAP_TRANSACTION_SLIPPAGE = 0.3 // %
 
 export const DEFAULT_WITHDRAW_SLIPPAGE_SCALE = [
   0.1,
@@ -70,9 +47,6 @@ export const DEFAULT_MULTI_ASSET_WITHDRAW_METHOD = 'withdrawSafe'
 export const NATIVE_TOKEN_DEPOSIT_GAS_LIMIT = 4200000
 
 export const GAS_LIMIT_BUFFER_COEFF = 1.25
-
-export const DEPOSIT_QUOTE_MULTIPLIER_DEFAULT = 0.9997
-export const DEPOSIT_QUOTE_MULTIPLIER_CUSTOM = 0.999
 
 export const MANAGER_FEE_DENOMINATOR = 10000
 

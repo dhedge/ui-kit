@@ -48,8 +48,6 @@ export {
   EASY_SWAPPER_ADDRESS_ARBITRUM,
   DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES,
   DHEDGE_SYNTHETIX_V3_ASSETS_MAP,
-  DEPOSIT_QUOTE_MULTIPLIER_CUSTOM,
-  DEPOSIT_QUOTE_MULTIPLIER_DEFAULT,
   DEFAULT_DEPOSIT_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
@@ -58,9 +56,7 @@ export {
   DEFAULT_DEPOSIT_SLIPPAGE_SCALE,
   DEFAULT_DEPOSIT_METHOD,
   DEFAULT_PROMISE_TIMEOUT_MS,
-  DEFAULT_DEPOSIT_LOCKTIME_MAP,
   DEFAULT_LOCK_TIME,
-  CUSTOM_LOCK_TIME,
   DAI_POLYGON,
   DAI_OPTIMISM,
   BRIDGED_USDC_POLYGON,
@@ -107,13 +103,7 @@ export {
   TRADING_LOG_EVENT_PARAM,
   TRADING_PANEL_LOG_EVENT,
 } from './core-kit/const'
-export {
-  BuyingWithPoolLogicArgs,
-  BuyingWithEasyswapperArgs,
-  BuyingWithNativeAssetArgs,
-  DefaultSellingParams,
-  EstimationError,
-} from './core-kit/models'
+export { DefaultSellingParams, EstimationError } from './core-kit/models'
 export type {
   SendEstimationResult,
   ChainId,
@@ -147,7 +137,6 @@ export type {
   PublicClient,
   WalletClient,
   DepositMethodName,
-  PoolDepositMethodName,
   WithdrawMethodName,
   OracleAdapter,
   PendingTransaction,
@@ -173,6 +162,8 @@ export type {
   UseReadContractsParameters,
   UseWriteContractParameters,
   WaitForTransactionReceiptReturnType,
+  SwapDataRequest,
+  SwapDataResponse,
 } from './core-kit/types'
 export {
   formatNumberToLimitedDecimals,
@@ -217,10 +208,6 @@ export {
 } from './core-kit/utils'
 
 export {
-  useGeneralTradingPanelHandlers,
-  useOnTradingTypeChange,
-} from './core-kit/hooks/component'
-export {
   usePoolDynamicContractData,
   useInvalidatePoolContractData,
   useContractPoolComposition,
@@ -252,9 +239,6 @@ export {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelApprovingStatus,
-  useTradingPanelDepositMethod,
-  useTradingPanelEntryFee,
-  useTradingPanelLockTime,
   useTradingPanelLogger,
   useTradingPanelMeta,
   useTradingPanelModal,
@@ -265,7 +249,6 @@ export {
   useTradingPanelPoolConfigs,
   useTradingPanelSettings,
   useTradingPanelTransactions,
-  useUpdateEntryFee,
   useTradingPanelType,
   useUpdatePoolFallbackData,
   useUpdateReceiveTokenInput,
@@ -280,43 +263,18 @@ export {
   useAssetPrice,
   useDepositProjectedEarnings,
   useSynthetixV3OraclesUpdate,
-  useHandlePoolSwapInfo,
   useHandleTrade,
   useIsTradingEnabled,
   useRawAssetPrice,
   useTradingResultHandling,
   useMaxSlippagePlaceholder,
   useMinReceiveText,
-  useTradingPriceDiff,
   useTradingSettleHandler,
-  useIsEasySwapperTrading,
 } from './core-kit/hooks/trading'
 export {
-  useDeposit,
-  useDepositAllowance,
-  useDepositQuote,
-  useDepositSlippage,
-  useDepositMethodHandler,
-  useHandlePoolDepositData,
-  usePoolDepositAssetAddress,
-  usePoolDepositTokens,
-  useShouldBeWhitelisted,
-  useDepositTradingParams,
-} from './core-kit/hooks/trading/deposit'
-export {
-  useWithdraw,
-  useWithdrawAllowance,
-  useWithdrawQuote,
-  useWithdrawSlippage,
-  useIsMultiAssetWithdraw,
-  useWithdrawTypeHandler,
-  useWithdrawTradingParams,
-} from './core-kit/hooks/trading/withdraw'
-export {
-  useApprove,
-  useCanSpend,
-  useTokenAllowanceHandler,
-} from './core-kit/hooks/trading/allowance'
+  useVaultDepositTokens,
+  useDepositLockTime,
+} from './core-kit/hooks/trading/deposit-v2'
 export {
   useIsInsufficientBalance,
   useUserTokenBalance,

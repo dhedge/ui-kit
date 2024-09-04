@@ -1,7 +1,6 @@
 import type { PoolComposition } from 'core-kit/types/pool.types'
 import type {
   ApyCurrency,
-  DepositMethodName,
   TradingToken,
   WithdrawTradingToken,
 } from 'core-kit/types/trading-panel.types'
@@ -12,16 +11,13 @@ export interface PoolConfig {
   symbol: string
   chainId: ChainId
   depositParams: {
-    method?: DepositMethodName
     customTokens: TradingToken[]
     defaultDepositTokenSymbol?: string
   }
   withdrawParams: {
-    method?: string
     customTokens: WithdrawTradingToken[]
   }
   deprecated?: boolean
-  usePoolLogicDeposit?: boolean
 }
 
 export interface PoolFallbackData {

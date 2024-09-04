@@ -14,4 +14,5 @@ export {
   SynthetixV3AssetGuard,
   SynthetixV3ContractGuard,
 } from './synthetix-v3'
-export { FlatcoinPointsModuleABI } from './flatcoin-points-module'
+export { FlatcoinPointsModuleAbi } from './flatcoin-points-module'
+export { EasySwapperV2Abi } from './easy-swapper-v2'

@@ -2,8 +2,9 @@ import { useCallback } from 'react'
 import { injected } from 'wagmi/connectors'
 
 import {
-  CUSTOM_LOCK_TIME,
   DEFAULT_LOCK_TIME,
+  DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP,
+  DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
   arbitrum,
   base,
@@ -24,12 +25,8 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   depositQuoteDiffErrorThreshold: 3,
   defaultWithdrawSlippageScale: DEFAULT_WITHDRAW_SLIPPAGE_SCALE,
   defaultLockTime: DEFAULT_LOCK_TIME,
-  chainCustomLockTimeMap: {
-    [arbitrum.id]: CUSTOM_LOCK_TIME,
-    [optimism.id]: CUSTOM_LOCK_TIME,
-    [polygon.id]: CUSTOM_LOCK_TIME,
-    [base.id]: CUSTOM_LOCK_TIME,
-  },
+  defaultNoSwapMinDepositAmountGap: DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP,
+  defaultSwapTransactionSlippage: DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
   stablePrecision: 3,
   defaultPrecision: 6,
   stakingChainId: optimism.id,

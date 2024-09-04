@@ -5,12 +5,12 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelType,
 } from 'core-kit/hooks/state'
-import { usePoolDepositTokens } from 'core-kit/hooks/trading/deposit'
+import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
 import type { TradingPanelType } from 'core-kit/types/trading-panel.types'
 
 export const useOnTradingTypeChange = () => {
   const poolConfig = useTradingPanelPoolConfig()
-  const [initialDepositToken] = usePoolDepositTokens()
+  const [initialDepositToken] = useVaultDepositTokens()
 
   const setTradingType = useTradingPanelType()[1]
   const updateSendToken = useSendTokenInput()[1]

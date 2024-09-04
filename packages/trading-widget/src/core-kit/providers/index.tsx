@@ -8,7 +8,7 @@ import {
   TRADING_LOG_EVENT_PARAM,
   TRADING_PANEL_LOG_EVENT,
 } from 'core-kit/const'
-import type { PoolConfig, PoolFallbackData } from 'core-kit/types/config.types'
+import type { PoolFallbackData } from 'core-kit/types/config.types'
 import type {
   TradingPanelAction,
   TradingPanelActionsState,
@@ -73,11 +73,6 @@ export const getDefaultTradingPanelState = (
     meta: {
       ...config?.meta,
     },
-    entryFee: {
-      deposit: 0,
-      depositWithCustomCooldown: 0.1,
-      ...config?.entryFee,
-    },
     modal: {
       isOpen: false,
       status: 'None',
@@ -106,10 +101,8 @@ export const TradingPanelActionsContext =
     updateReceiveTokenInput: noop,
     updateTradingSettings: noop,
     updateTradingMeta: noop,
-    updateEntryFee: noop,
     updateTradingModal: noop,
     updateTransactions: noop,
-    updatePoolConfigDepositMethod: noop,
     updatePoolFallbackData: noop,
     onTradingSettleError: noop,
     onTransactionError: noop,
@@ -118,6 +111,7 @@ export const TradingPanelActionsContext =
     onTokenSelector: noop,
     onLog: noop,
     onSimulateTransaction: () => Promise.resolve(null),
+    getSwapData: () => Promise.resolve(null),
   })
 
 const createReducerWithLogger =
@@ -133,20 +127,6 @@ const createReducerWithLogger =
         return {
           ...state,
           type: action.payload,
-        }
-      case 'UPDATE_POOL_CONFIG_DEPOSIT_METHOD':
-        return {
-          ...state,
-          poolConfigMap: {
-            ...state.poolConfigMap,
-            [action.payload.address]: {
-              ...state.poolConfigMap[action.payload.address],
-              depositParams: {
-                ...state.poolConfigMap[action.payload.address]?.depositParams,
-                method: action.payload.method,
-              },
-            },
-          },
         }
       case 'UPDATE_SEND_TOKEN_INPUT':
         return {
@@ -183,15 +163,6 @@ const createReducerWithLogger =
           ...state,
           meta: {
             ...state.meta,
-            ...action.payload,
-          },
-        }
-      }
-      case 'UPDATE_ENTRY_FEE': {
-        return {
-          ...state,
-          entryFee: {
-            ...state.entryFee,
             ...action.payload,
           },
         }
@@ -291,7 +262,6 @@ export const TradingPanelProvider: FC<
   initialState,
   actions: {
     onSetPoolAddress,
-    onUpdatePoolConfigDepositMethod,
     onUpdateSendTokenInput,
     onUpdateReceiveTokenInput,
     onUpdateTradingSettings,
@@ -299,7 +269,6 @@ export const TradingPanelProvider: FC<
     onUpdateTradingMeta,
     onUpdateTradingModal,
     onUpdateTransactions,
-    onUpdateEntryFee,
     onTransactionError,
     onTransactionSuccess,
     onTransactionEstimationError,
@@ -307,6 +276,7 @@ export const TradingPanelProvider: FC<
     onLog,
     onSimulateTransaction,
     onTradingSettleError,
+    getSwapData,
   },
 }) => {
   const [state, dispatch] = useReducer(
@@ -362,14 +332,6 @@ export const TradingPanelProvider: FC<
     [onUpdateTradingMeta],
   )
 
-  const updateEntryFee = useCallback(
-    (payload: Partial<TradingPanelState['entryFee']>) => {
-      dispatch({ type: 'UPDATE_ENTRY_FEE', payload })
-      onUpdateEntryFee?.(payload)
-    },
-    [onUpdateEntryFee],
-  )
-
   const updateTradingModal = useCallback(
     (payload: Partial<TradingPanelState['modal']>) => {
       dispatch({ type: 'UPDATE_TRADING_MODAL', payload })
@@ -386,17 +348,6 @@ export const TradingPanelProvider: FC<
     [onUpdateTransactions],
   )
 
-  const updatePoolConfigDepositMethod = useCallback(
-    (
-      payload: Pick<PoolConfig, 'address'> &
-        Pick<PoolConfig['depositParams'], 'method'>,
-    ) => {
-      dispatch({ type: 'UPDATE_POOL_CONFIG_DEPOSIT_METHOD', payload })
-      onUpdatePoolConfigDepositMethod?.(payload)
-    },
-    [onUpdatePoolConfigDepositMethod],
-  )
-
   const updatePoolFallbackData = useCallback((payload: PoolFallbackData) => {
     dispatch({ type: 'UPDATE_POOL_FALLBACK_DATA', payload })
   }, [])
@@ -405,14 +356,12 @@ export const TradingPanelProvider: FC<
     () => ({
       setPoolAddress,
       setTradingType,
-      updatePoolConfigDepositMethod,
       updateTradingSettings,
       updateSendTokenInput,
       updateReceiveTokenInput,
       updateTradingMeta,
       updateTradingModal,
       updateTransactions,
-      updateEntryFee,
       updatePoolFallbackData,
       onTransactionError,
       onTransactionSuccess,
@@ -421,18 +370,17 @@ export const TradingPanelProvider: FC<
       onLog,
       onSimulateTransaction,
       onTradingSettleError,
+      getSwapData,
     }),
     [
       setPoolAddress,
       setTradingType,
-      updatePoolConfigDepositMethod,
       updateTradingSettings,
       updateSendTokenInput,
       updateReceiveTokenInput,
       updateTradingMeta,
       updateTradingModal,
       updateTransactions,
-      updateEntryFee,
       updatePoolFallbackData,
       onTransactionError,
       onTransactionSuccess,
@@ -441,6 +389,7 @@ export const TradingPanelProvider: FC<
       onLog,
       onSimulateTransaction,
       onTradingSettleError,
+      getSwapData,
     ],
   )
 

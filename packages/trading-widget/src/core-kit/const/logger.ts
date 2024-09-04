@@ -4,7 +4,6 @@ export const TRADING_PANEL_LOG_EVENT = {
   DEPOSIT: 'deposit',
   WITHDRAWAL: 'withdrawal',
   TRADING_SETTINGS_OPENED: 'trading_settings_opened',
-  DEPOSIT_METHOD_CHANGE: 'deposit_method_change',
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
   MULTI_ASSET_WITHDRAWAL_CHANGE: 'multi_asset_withdrawal_change',
 }
