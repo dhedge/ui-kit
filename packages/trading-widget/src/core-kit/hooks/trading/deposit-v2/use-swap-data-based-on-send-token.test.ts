@@ -13,7 +13,6 @@ import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
 import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 import { useVaultDepositParams } from './use-vault-deposit-params'
-import { getContractAddressById } from '../../../utils'
 
 vi.mock('core-kit/hooks/state', () => ({
   useSendTokenInput: vi.fn(),
@@ -83,7 +82,6 @@ describe('useSwapDataBasedOnSendToken', () => {
         amount: '1000',
         chainId,
         destinationAddress: vaultDepositTokenAddress,
-        fromAddress: getContractAddressById('easySwapperV2', chainId),
         slippage: '1',
         sourceAddress: '0x123',
         walletAddress: account,

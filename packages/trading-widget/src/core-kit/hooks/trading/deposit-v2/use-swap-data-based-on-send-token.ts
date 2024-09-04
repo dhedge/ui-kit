@@ -9,7 +9,6 @@ import {
 import { useSwapDataQuery } from 'core-kit/hooks/trading'
 import { useDebounce } from 'core-kit/hooks/utils'
 import { useAccount } from 'core-kit/hooks/web3'
-import { getContractAddressById } from 'core-kit/utils'
 
 import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
 import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
@@ -22,7 +21,6 @@ export const useSwapDataBasedOnSendToken = () => {
   const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
   const { vaultDepositTokenAddress } = useVaultDepositParams()
   const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
-  const easySwapperV2Address = getContractAddressById('easySwapperV2', chainId)
   const slippage = useAppliedDepositSlippage()
 
   return useSwapDataQuery(
@@ -35,7 +33,6 @@ export const useSwapDataBasedOnSendToken = () => {
       chainId,
       slippage: slippage.toString(),
       walletAddress,
-      fromAddress: easySwapperV2Address,
     },
     {
       enabled: isDepositWithSwapTransaction && !!debouncedSendTokenValue,
