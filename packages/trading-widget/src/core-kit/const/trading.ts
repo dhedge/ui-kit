@@ -1,3 +1,5 @@
+import type { DepositMethodName } from 'core-kit/types'
+
 export const EASY_SWAPPER_V2_DEPOSIT_METHODS = {
   DEPOSIT: 'deposit',
   DEPOSIT_CUSTOM: 'depositWithCustomCooldown',
@@ -7,4 +9,4 @@ export const EASY_SWAPPER_V2_DEPOSIT_METHODS = {
   ZAP_NATIVE_DEPOSIT_CUSTOM: 'zapNativeDepositWithCustomCooldown',
   ZAP_DEPOSIT: 'zapDeposit',
   ZAP_DEPOSIT_CUSTOM: 'zapDepositWithCustomCooldown',
-} as const
+} satisfies Record<string, DepositMethodName>

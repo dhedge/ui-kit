@@ -1,31 +1,9 @@
 import { useMemo } from 'react'
 
 import {
-  BRIDGED_USDC_ARBITRUM,
-  BRIDGED_USDC_OPTIMISM,
-  BRIDGED_USDC_POLYGON,
   CHAIN_NATIVE_TOKENS,
-  DAI_OPTIMISM,
-  DAI_POLYGON,
   EASY_SWAPPER_V2_DEPOSIT_METHODS,
-  USDC_ARBITRUM,
-  USDC_BASE,
-  USDC_OPTIMISM,
-  USDC_POLYGON,
-  USDT_OPTIMISM,
-  USDT_POLYGON,
-  WBTC_ARBITRUM,
-  WBTC_OPTIMISM,
-  WBTC_POLYGON,
-  WETH_ARBITRUM,
-  WETH_BASE,
-  WETH_OPTIMISM,
-  WETH_POLYGON,
-  WMATIC_POLYGON,
-  arbitrum,
-  base,
-  optimism,
-  polygon,
+  FALLBACK_ASSETS_MAP,
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import {
@@ -35,43 +13,12 @@ import {
 import type {
   ChainId,
   PoolComposition,
-  TradingToken,
   VaultDepositParams,
 } from 'core-kit/types'
 
 import { isEqualAddress, isNativeToken } from 'core-kit/utils'
 
 import { useIsCustomCooldownDeposit } from './use-is-custom-cooldown-deposit'
-
-const FALLBACK_ASSETS_MAP: Record<ChainId, Record<string, TradingToken>> = {
-  [optimism.id]: {
-    WETH: WETH_OPTIMISM,
-    USDC: USDC_OPTIMISM,
-    WBTC: WBTC_OPTIMISM,
-    USDCe: BRIDGED_USDC_OPTIMISM,
-    USDT: USDT_OPTIMISM,
-    DAI: DAI_OPTIMISM,
-  },
-  [polygon.id]: {
-    WMATIC: WMATIC_POLYGON,
-    WETH: WETH_POLYGON,
-    USDC: USDC_POLYGON,
-    WBTC: WBTC_POLYGON,
-    USDCe: BRIDGED_USDC_POLYGON,
-    USDT: USDT_POLYGON,
-    DAI: DAI_POLYGON,
-  },
-  [arbitrum.id]: {
-    WETH: WETH_ARBITRUM,
-    USDC: USDC_ARBITRUM,
-    WBTC: WBTC_ARBITRUM,
-    USDCe: BRIDGED_USDC_ARBITRUM,
-  },
-  [base.id]: {
-    WETH: WETH_BASE,
-    USDC: USDC_BASE,
-  },
-}
 
 const getVaultDepositTokenAddress = (
   availableDepositOptions: PoolComposition[],

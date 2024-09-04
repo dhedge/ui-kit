@@ -29,6 +29,25 @@ export const useVaultDepositTransactionArguments = ({
   const depositSlippage = useAppliedDepositSlippage()
 
   return useMemo(() => {
+    const isZapDeposit =
+      depositMethod === 'zapNativeDeposit' ||
+      depositMethod === 'zapNativeDepositWithCustomCooldown' ||
+      depositMethod === 'zapDeposit' ||
+      depositMethod === 'zapDepositWithCustomCooldown'
+    const zapDepositArguments = isZapDeposit
+      ? buildZapDepositTransactionArguments({
+          vaultAddress: address,
+          sendTokenAddress: sendToken.address,
+          sendTokenAmount,
+          minVaultTokensReceivedAmount,
+          vaultDepositTokenAddress,
+          swapData: swapData?.txData ?? '',
+          routerKey: swapData?.routerKey,
+          swapDestinationAmount: swapData?.destinationAmount ?? '0',
+          swapSlippage: depositSlippage,
+        })
+      : []
+
     switch (depositMethod) {
       case 'nativeDeposit':
       case 'nativeDepositWithCustomCooldown':
@@ -39,35 +58,10 @@ export const useVaultDepositTransactionArguments = ({
         ]
       case 'zapNativeDeposit':
       case 'zapNativeDepositWithCustomCooldown':
-        return [
-          ...buildZapDepositTransactionArguments({
-            vaultAddress: address,
-            sendTokenAddress: sendToken.address,
-            sendTokenAmount,
-            minVaultTokensReceivedAmount,
-            vaultDepositTokenAddress,
-            swapData: swapData?.txData ?? '',
-            routerKey: swapData?.routerKey,
-            swapDestinationAmount: swapData?.destinationAmount ?? '0',
-            swapSlippage: depositSlippage,
-          }),
-          { value: sendTokenAmount },
-        ]
+        return [...zapDepositArguments, { value: sendTokenAmount }]
       case 'zapDeposit':
       case 'zapDepositWithCustomCooldown':
-        return [
-          ...buildZapDepositTransactionArguments({
-            vaultAddress: address,
-            sendTokenAddress: sendToken.address,
-            sendTokenAmount,
-            minVaultTokensReceivedAmount,
-            vaultDepositTokenAddress,
-            swapData: swapData?.txData ?? '',
-            routerKey: swapData?.routerKey,
-            swapDestinationAmount: swapData?.destinationAmount ?? '0',
-            swapSlippage: depositSlippage,
-          }),
-        ]
+        return zapDepositArguments
       default:
         // deposit, deposit with custom cooldown
         return [
