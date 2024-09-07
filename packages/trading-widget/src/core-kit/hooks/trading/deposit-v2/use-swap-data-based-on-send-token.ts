@@ -1,4 +1,3 @@
-import { keepPreviousData } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 
 import { AddressZero, EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
@@ -6,8 +5,10 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
-import { useSwapDataQuery } from 'core-kit/hooks/trading'
-import { useDebounce } from 'core-kit/hooks/utils'
+import {
+  useSendTokenDebouncedValue,
+  useSwapDataQuery,
+} from 'core-kit/hooks/trading'
 import { useAccount } from 'core-kit/hooks/web3'
 
 import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
@@ -18,7 +19,8 @@ export const useSwapDataBasedOnSendToken = () => {
   const { account: walletAddress = AddressZero } = useAccount()
   const { chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const { debouncedSendTokenValue } = useSendTokenDebouncedValue()
+
   const { vaultDepositTokenAddress } = useVaultDepositParams()
   const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
   const slippage = useAppliedDepositSlippage()
@@ -37,7 +39,6 @@ export const useSwapDataBasedOnSendToken = () => {
     {
       enabled: isDepositWithSwapTransaction && !!debouncedSendTokenValue,
       refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
-      placeholderData: keepPreviousData,
     },
   )
 }

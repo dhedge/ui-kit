@@ -12,6 +12,8 @@ export const DEFAULT_POLLING_INTERVAL = 59_000
 export const SHORTEN_POLLING_INTERVAL = 30_000
 export const EXTREMELY_SHORT_POLLING_INTERVAL = 15_000
 export const DEFAULT_RETRIES_NUMBER = 5
+export const DEFAULT_DEBOUNCE_TIME = 400
+export const EXTENDED_DEBOUNCE_TIME = 600
 
 export const DEFAULT_LOCK_TIME = formatDuration({ hours: 24 })
 

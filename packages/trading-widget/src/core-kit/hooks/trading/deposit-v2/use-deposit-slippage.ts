@@ -2,29 +2,39 @@ import { useEffect } from 'react'
 
 import {
   useIsDepositTradingPanelType,
+  useReceiveTokenInput,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
-import { useDebounce } from 'core-kit/hooks/utils'
+
+import { useSendTokenDebouncedValue } from 'core-kit/hooks/trading'
 
 import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
 import { useDepositPriceDiff } from './use-deposit-price-diff'
 
 export const useDepositSlippage = () => {
   const isDeposit = useIsDepositTradingPanelType()
+  const [receivedToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
+  const { isDebouncing } = useSendTokenDebouncedValue()
 
   const depositSlippage = useAppliedDepositSlippage()
   const priceDiff = useDepositPriceDiff({ includesEntryFee: true })
 
-  const priceDiffDebounced = useDebounce(priceDiff - depositSlippage, 100)
-
   useEffect(() => {
-    if (isDeposit) {
-      const minSlippage =
-        priceDiffDebounced < 0
-          ? Math.abs(Number(priceDiffDebounced.toFixed(2)))
-          : 0
-      updateSettings({ minSlippage })
+    if (!isDeposit || receivedToken.isLoading || isDebouncing) {
+      return
     }
-  }, [updateSettings, isDeposit, priceDiffDebounced])
+
+    const diff = priceDiff - depositSlippage
+    const minSlippage = diff < 0 ? Math.abs(Number(diff.toFixed(2))) : 0
+
+    updateSettings({ minSlippage })
+  }, [
+    updateSettings,
+    isDeposit,
+    receivedToken.isLoading,
+    priceDiff,
+    depositSlippage,
+    isDebouncing,
+  ])
 }

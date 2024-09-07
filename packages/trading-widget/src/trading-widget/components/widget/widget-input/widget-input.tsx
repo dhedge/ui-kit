@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
 
-import { MaxBalanceButton } from 'trading-widget/components/common'
+import { MaxBalanceButton, Spinner } from 'trading-widget/components/common'
 import { THEME_TYPE } from 'trading-widget/types'
 
 import { AssetCompositionTable } from './asset-composition-table/asset-composition-table'
@@ -58,18 +58,29 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
         <span className={textColorClassNames}>{label}</span>
         <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1">
           {displayCalculatedValue && (
-            <input
-              className={classNames(
-                'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1',
-                {
-                  'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
-                    isLoading,
-                },
-                textColorClassNames,
+            <>
+              {isLoading ? (
+                <div className="dtw-ml-auto dtw-h-[22px]">
+                  <Spinner
+                    type={THEME_TYPE.CUSTOM}
+                    className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]"
+                  />
+                </div>
+              ) : (
+                <input
+                  className={classNames(
+                    'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1',
+                    {
+                      'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
+                        isLoading,
+                    },
+                    textColorClassNames,
+                  )}
+                  value={usdAmount}
+                  disabled
+                />
               )}
-              value={usdAmount}
-              disabled
-            />
+            </>
           )}
           {displayMax && <MaxBalanceButton onClick={onMaxBalanceClick} />}
         </div>

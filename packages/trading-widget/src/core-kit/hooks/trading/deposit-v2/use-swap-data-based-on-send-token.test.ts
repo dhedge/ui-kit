@@ -3,7 +3,10 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
-import { useSwapDataQuery } from 'core-kit/hooks/trading'
+import {
+  useSendTokenDebouncedValue,
+  useSwapDataQuery,
+} from 'core-kit/hooks/trading'
 import { useDebounce } from 'core-kit/hooks/utils'
 import { useAccount } from 'core-kit/hooks/web3'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -20,6 +23,7 @@ vi.mock('core-kit/hooks/state', () => ({
 }))
 vi.mock('core-kit/hooks/trading', () => ({
   useSwapDataQuery: vi.fn(),
+  useSendTokenDebouncedValue: vi.fn(),
 }))
 vi.mock('core-kit/hooks/utils', () => ({
   useDebounce: vi.fn(),
@@ -62,6 +66,9 @@ describe('useSwapDataBasedOnSendToken', () => {
     vi.mocked(useSendTokenInput).mockReturnValue([
       sendToken,
     ] as unknown as ReturnType<typeof useSendTokenInput>)
+    vi.mocked(useSendTokenDebouncedValue).mockReturnValue({
+      debouncedSendTokenValue: sendToken.value,
+    } as unknown as ReturnType<typeof useSendTokenDebouncedValue>)
     vi.mocked(useDebounce).mockImplementation((value) => value)
     vi.mocked(useVaultDepositParams).mockReturnValue({
       vaultDepositTokenAddress: vaultDepositTokenAddress,
