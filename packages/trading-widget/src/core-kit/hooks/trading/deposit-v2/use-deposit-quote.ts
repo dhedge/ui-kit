@@ -37,16 +37,13 @@ export const useDepositQuote = () => {
     if (!isDeposit || isLoading) {
       return
     }
-    if (quoteResult) {
-      const formattedVal = new BigNumber(quoteResult?.toString())
-        .shiftedBy(-receiveToken.decimals)
-        .toFixed(receiveToken.decimals)
+    const formattedVal = quoteResult
+      ? new BigNumber(quoteResult.toString())
+          .shiftedBy(-receiveToken.decimals)
+          .toFixed(receiveToken.decimals)
+      : ''
 
-      updateReceiveToken({ value: formattedVal })
-      return
-    }
-
-    updateReceiveToken({ value: '' })
+    updateReceiveToken({ value: formattedVal })
   }, [
     quoteResult,
     receiveToken.decimals,

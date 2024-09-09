@@ -15,7 +15,9 @@ export const useDepositSlippage = () => {
   const isDeposit = useIsDepositTradingPanelType()
   const [receivedToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
-  const { isDebouncing } = useSendTokenDebouncedValue()
+  const { isDebouncing } = useSendTokenDebouncedValue({
+    extendedDebounceTime: true,
+  })
 
   const depositSlippage = useAppliedDepositSlippage()
   const priceDiff = useDepositPriceDiff({ includesEntryFee: true })
