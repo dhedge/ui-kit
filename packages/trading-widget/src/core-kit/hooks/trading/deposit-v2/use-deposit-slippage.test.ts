@@ -2,6 +2,7 @@ import { act } from '@testing-library/react'
 
 import * as stateHooks from 'core-kit/hooks/state'
 
+import { useSendTokenDebouncedValue } from 'core-kit/hooks/trading'
 import type { TradingPanelState } from 'core-kit/types'
 import { renderHook } from 'tests/test-utils'
 
@@ -12,6 +13,10 @@ import { useDepositSlippage } from './use-deposit-slippage'
 vi.mock('core-kit/hooks/state', () => ({
   useIsDepositTradingPanelType: vi.fn(),
   useTradingPanelSettings: vi.fn(),
+  useReceiveTokenInput: vi.fn(),
+}))
+vi.mock('core-kit/hooks/trading', () => ({
+  useSendTokenDebouncedValue: vi.fn(),
 }))
 vi.mock('./use-deposit-price-diff', () => ({ useDepositPriceDiff: vi.fn() }))
 vi.mock('core-kit/hooks/utils', () => ({
@@ -31,7 +36,13 @@ describe('useDepositSlippage', () => {
       {} as unknown as TradingPanelState['settings'],
       updateSettingsMock,
     ])
+    vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValue([
+      { isLoading: false },
+    ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
     vi.mocked(useAppliedDepositSlippage).mockReturnValue(0)
+    vi.mocked(useSendTokenDebouncedValue).mockReturnValue({
+      isDebouncing: false,
+    } as ReturnType<typeof useSendTokenDebouncedValue>)
   })
 
   it('should update min slippage including deposit slippage', () => {

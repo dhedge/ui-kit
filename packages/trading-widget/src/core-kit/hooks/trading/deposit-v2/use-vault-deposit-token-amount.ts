@@ -1,14 +1,15 @@
 import BigNumber from 'bignumber.js'
 
 import { useSendTokenInput } from 'core-kit/hooks/state'
-import { useDebounce } from 'core-kit/hooks/utils'
+import { useSendTokenDebouncedValue } from 'core-kit/hooks/trading'
 
 import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 
 export const useVaultDepositTokenAmount = () => {
   const [sendToken] = useSendTokenInput()
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const { debouncedSendTokenValue } = useSendTokenDebouncedValue()
+
   const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
 
   const { data } = useSwapDataBasedOnSendToken()

@@ -1,12 +1,9 @@
-import { keepPreviousData } from '@tanstack/react-query'
-
 import { EasySwapperV2Abi } from 'core-kit/abi'
 import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useIsDepositTradingPanelType,
   useSendTokenInput,
 } from 'core-kit/hooks/state'
-import { useDebounce } from 'core-kit/hooks/utils'
 import {
   useContractReadErrorLogging,
   useReadContract,
@@ -26,8 +23,7 @@ export const useDepositQuoteContractRead = ({
   const { vaultDepositTokenAddress } = useVaultDepositParams()
 
   const sendAmount = useVaultDepositTokenAmount()
-  const debouncedSendAmount = useDebounce(sendAmount, 500)
-  const hasSendInputValue = !!(debouncedSendAmount && +debouncedSendAmount > 0)
+  const hasSendInputValue = !!(sendAmount && +sendAmount > 0)
 
   const quoteResponse = useReadContract({
     address: getContractAddressById('easySwapperV2', chainId),
@@ -39,7 +35,6 @@ export const useDepositQuoteContractRead = ({
       enabled:
         isDeposit && hasSendInputValue && !!sendToken.address && !!sendAmount,
       refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
-      placeholderData: keepPreviousData,
     },
   })
 

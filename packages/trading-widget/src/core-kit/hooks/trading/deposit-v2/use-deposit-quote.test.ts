@@ -29,6 +29,9 @@ vi.mock('./use-deposit-quote-contract-read', () => ({
 vi.mock('./use-swap-data-based-on-send-token', () => ({
   useSwapDataBasedOnSendToken: vi.fn().mockReturnValue({}),
 }))
+vi.mock('core-kit/hooks', () => ({
+  useSendTokenDebouncedValue: vi.fn(),
+}))
 
 describe('useDepositQuote', () => {
   const address = '0x123'
@@ -183,7 +186,6 @@ describe('useDepositQuote', () => {
 
     renderHook(() => useDepositQuote())
 
-    expect(updateReceiveTokenMock).toHaveBeenCalledTimes(2)
     expect(updateReceiveTokenMock).toHaveBeenCalledWith({ isLoading: false })
     expect(updateReceiveTokenMock).toHaveBeenCalledWith({ value: '0' })
     expect(updateSettingsMock).toHaveBeenCalledTimes(1)

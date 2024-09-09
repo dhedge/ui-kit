@@ -9,7 +9,8 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
-import { useDebounce } from 'core-kit/hooks/utils'
+
+import { useSendTokenDebouncedValue } from 'core-kit/hooks/trading'
 
 import { useDepositQuoteContractRead } from './use-deposit-quote-contract-read'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
@@ -21,7 +22,8 @@ export const useDepositQuote = () => {
   const [sendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const [, updateSettings] = useTradingPanelSettings()
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500)
+  const { isDebouncing, debouncedSendTokenValue } = useSendTokenDebouncedValue()
+
   const { isFetching: isSwapDataFetching } = useSwapDataBasedOnSendToken()
   const { data: quoteResult, isFetching: isDepositQuoteFetching } =
     useDepositQuoteContractRead({
@@ -29,28 +31,27 @@ export const useDepositQuote = () => {
       chainId,
     })
 
-  const isLoading =
-    isSwapDataFetching ||
-    isDepositQuoteFetching ||
-    sendToken.value !== debouncedSendTokenValue
+  const isLoading = isSwapDataFetching || isDepositQuoteFetching || isDebouncing
 
   useEffect(() => {
-    if (!isDeposit) {
+    if (!isDeposit || isLoading) {
       return
     }
-    if (quoteResult) {
-      const formattedVal = new BigNumber(quoteResult.toString())
-        .shiftedBy(-receiveToken.decimals)
-        .toFixed(receiveToken.decimals)
+    const formattedVal = quoteResult
+      ? new BigNumber(quoteResult.toString())
+          .shiftedBy(-receiveToken.decimals)
+          .toFixed(receiveToken.decimals)
+      : ''
 
-      updateReceiveToken({ value: formattedVal })
-    }
+    updateReceiveToken({ value: formattedVal })
   }, [
     quoteResult,
     receiveToken.decimals,
     sendToken.address,
     updateReceiveToken,
     isDeposit,
+    isLoading,
+    debouncedSendTokenValue, // add debouncedSendTokenValue in order to update receive token value with same quote for the second time
   ])
 
   useEffect(() => {
