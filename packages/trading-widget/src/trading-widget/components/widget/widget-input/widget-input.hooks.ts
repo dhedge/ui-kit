@@ -48,9 +48,9 @@ export const useWidgetInput = ({
       maximumFractionDigits: getConventionalTokenPriceDecimals(amount),
     })
     if (tradingPriceDiff) {
-      return `${amountInUsd} (${tradingPriceDiff}% ${
-        type === THEME_TYPE.ERROR ? '\u{26A0}' : ''
-      })`
+      return `${amountInUsd} (${
+        tradingPriceDiff > 0 ? '+' : ''
+      }${tradingPriceDiff}% ${type === THEME_TYPE.ERROR ? '\u{26A0}' : ''})`
     }
     return amountInUsd
   }, [assetInput, assetPrice, tradingPriceDiff, displayCalculatedValue, type])
