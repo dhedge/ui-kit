@@ -30,7 +30,7 @@ export const DEFAULT_DEPOSIT_METHOD: DepositMethodName = 'deposit'
 
 export const DEFAULT_WITHDRAW_SLIPPAGE = 3 // %
 export const DEFAULT_DEPOSIT_SLIPPAGE = 0 // %
-export const DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP = 0.1 // %
+export const DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP = 0.2 // %
 export const DEFAULT_SWAP_TRANSACTION_SLIPPAGE = 0.3 // %
 
 export const DEFAULT_WITHDRAW_SLIPPAGE_SCALE = [

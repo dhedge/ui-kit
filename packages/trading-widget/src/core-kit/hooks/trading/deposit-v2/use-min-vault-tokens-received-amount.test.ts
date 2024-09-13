@@ -83,7 +83,7 @@ describe('useMinVaultTokensReceivedAmount', () => {
     const { result, rerender } = renderHook(() =>
       useMinVaultTokensReceivedAmount(),
     )
-    expect(result.current).toBe('1998')
+    expect(result.current).toBe('1996')
 
     vi.mocked(useTradingPanelSettings).mockReturnValueOnce([
       { slippage: 0 },
