@@ -26,16 +26,6 @@ export const SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP: Record<
   '0xe9b5260d99d283ff887859c569baf8ad1bd12aac': 'WETH',
 }
 
-export const SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_DECIMALS_MAP: Record<
-  string,
-  number
-> = {
-  '0xc1e02884af4a283ca25ab63c45360d220d69da52': 6,
-  '0xc3198eb5102fb3335c0e911ef1da4bc07e403dd1': 6,
-  '0xddd6b1f34e12c0230ab23cbd4514560b24438514': 18,
-  '0xe9b5260d99d283ff887859c569baf8ad1bd12aac': 18,
-}
-
 export const SYNTHETIX_V3_POSITION_DEBT_ARGUMENTS: Record<string, string[]> = {
   '0xc1e02884af4a283ca25ab63c45360d220d69da52': [
     '170141183460469231731687303715884105982', // Synthetix USDC Yield Base ID

@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 
 import {
   AddressZero,
-  SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_DECIMALS_MAP,
   SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP,
 } from 'core-kit/const'
 import { usePoolCompositionWithFraction } from 'core-kit/hooks/pool'
@@ -47,18 +46,10 @@ export const useWithdrawLiquidity = () => {
   return {
     noLiquidity: new BigNumber(availableLiquidity?.value ?? '0')
       .multipliedBy(
-        normalizeNumber(
-          availableLiquidityAssetPriceUsd?.toString() ?? '0',
-          SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_DECIMALS_MAP[
-            availableLiquidity?.address ?? AddressZero
-          ],
-        ),
+        normalizeNumber(availableLiquidityAssetPriceUsd?.toString() ?? '0'),
       )
       .lt(snxFractionUsd),
-    symbol:
-      SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[
-        availableLiquidity?.address ?? AddressZero
-      ],
+    symbol: SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[address],
     availableLiquidity: availableLiquidity?.formatted,
   }
 }
