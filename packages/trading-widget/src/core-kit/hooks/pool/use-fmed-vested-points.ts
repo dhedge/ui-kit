@@ -1,4 +1,4 @@
-import { FlatcoinPointsModuleABI } from 'core-kit/abi'
+import { FlatcoinPointsModuleAbi } from 'core-kit/abi'
 import { base } from 'core-kit/const'
 
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
@@ -24,21 +24,21 @@ const getContracts = (vaultAddress: string) => {
     {
       address: pointsContractAddress,
       chainId: FMED_CHAIN_ID,
-      abi: FlatcoinPointsModuleABI,
+      abi: FlatcoinPointsModuleAbi,
       functionName: 'lockedBalance',
       args: [vaultAddress],
     },
     {
       address: pointsContractAddress,
       chainId: FMED_CHAIN_ID,
-      abi: FlatcoinPointsModuleABI,
+      abi: FlatcoinPointsModuleAbi,
       functionName: 'getUnlockTax',
       args: [vaultAddress],
     },
     {
       address: pointsContractAddress,
       chainId: FMED_CHAIN_ID,
-      abi: FlatcoinPointsModuleABI,
+      abi: FlatcoinPointsModuleAbi,
       functionName: 'unlockTime',
       args: [vaultAddress],
     },

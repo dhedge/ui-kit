@@ -6,8 +6,9 @@ export interface ConfigProviderParams {
   depositQuoteDiffWarningThreshold: number
   depositQuoteDiffErrorThreshold: number
   defaultWithdrawSlippageScale: number[]
+  defaultSwapTransactionSlippage: number
+  defaultNoSwapMinDepositAmountGap: number
   defaultLockTime: string
-  chainCustomLockTimeMap: Record<ChainId, string>
   stablePrecision: number
   defaultPrecision: number
   stakingChainId: ChainId

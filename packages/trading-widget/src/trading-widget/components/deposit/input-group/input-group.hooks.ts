@@ -7,7 +7,8 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
-import { useAssetPrice, useTradingPriceDiff } from 'core-kit/hooks/trading'
+import { useAssetPrice } from 'core-kit/hooks/trading'
+import { useDepositPriceDiff } from 'core-kit/hooks/trading/deposit-v2'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
@@ -43,11 +44,7 @@ export const useDepositInputGroup = () => {
   const sendToken = useSendToken()
   const receiveToken = useReceiveToken()
   const log = useTradingPanelLogger()
-  const tradingPriceDiff = useTradingPriceDiff({
-    sendAssetAddress: sendToken.address,
-    sendAssetValue: sendToken.value,
-    receiveAssetValue: receiveToken.value,
-  })
+  const tradingPriceDiff = useDepositPriceDiff()
   const [{ minSlippage }] = useTradingPanelSettings()
 
   const handleInputChange = (value: string) => {

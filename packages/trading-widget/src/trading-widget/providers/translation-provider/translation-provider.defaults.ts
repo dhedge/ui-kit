@@ -2,7 +2,7 @@ import type { TranslationMap } from './translation-provider.types'
 
 export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   depositSlippageWarning:
-    'Includes entry fee. We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info.',
+    'Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.',
   withdrawSlippageWarning:
     'Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.',
   minSlippageWarning:
@@ -28,8 +28,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   exitFee: 'Exit fee',
   entryFeeExplanation: "Entry fee is charged in vault's tokens.",
   exitFeeExplanation: "Exit fee is charged in vault's tokens.",
-  easySwapperEntryFee:
-    'Entry fee is charged when a cooldown of {time} is selected. Bypass entry fee at trading settings.',
   amountToBeApproved:
     'Amount of {symbol} tokens to be approved. Can be customized in settings.',
   minDepositUsd: 'Minimum deposit in USD.',
@@ -37,8 +35,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   tokensLockTime: 'Purchased tokens will have a {lockTime} lock.',
   slippageTolerance: 'Slippage tolerance',
   reduceLockupTime: 'Reduce lockup time',
-  entryFeeSwitchWarning:
-    'Your position will be locked for up to {customLockTime} instead of the normal {defaultLockTime}.',
   toggleTokenApprovalAmount:
     'Toggle between exact and infinite token approval.',
   auto: 'Auto',

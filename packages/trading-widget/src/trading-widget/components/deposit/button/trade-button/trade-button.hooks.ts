@@ -1,5 +1,5 @@
 import { useHandleTrade } from 'core-kit/hooks/trading'
-import { useDeposit } from 'core-kit/hooks/trading/deposit'
+import { useDeposit } from 'core-kit/hooks/trading/deposit-v2'
 
 import {
   useConfigContextActions,

@@ -1,11 +1,6 @@
 import type { BigNumber } from 'bignumber.js'
 
-import type {
-  BuyingWithEasyswapperArgs,
-  BuyingWithNativeAssetArgs,
-  BuyingWithPoolLogicArgs,
-  DefaultSellingParams,
-} from 'core-kit/models'
+import type { DefaultSellingParams } from 'core-kit/models'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
 export interface TradingParams {
@@ -27,10 +22,35 @@ export type ChainNativeTokenMap = {
   }
 }
 
-export type PoolDepositMethodName = 'deposit' | 'depositWithCustomCooldown'
+export type TxArgs = DefaultSellingParams
 
-export type TxArgs =
-  | BuyingWithEasyswapperArgs
-  | BuyingWithNativeAssetArgs
-  | DefaultSellingParams
-  | BuyingWithPoolLogicArgs
+export interface SwapDataResponse {
+  destinationAmount: string
+  txData: string
+  routerKey: 'ONE_INCH' | 'ZERO_X' | 'PARASWAP' | 'ONE_INCH_V5'
+}
+
+export interface SwapDataRequest {
+  chainId: number
+  sourceAddress: Address
+  destinationAddress: Address
+  walletAddress: Address
+  fromAddress: Address
+  amount: string
+  slippage: string
+}
+
+export interface VaultDepositParams {
+  depositMethod: DepositMethodName
+  vaultDepositTokenAddress: Address
+}
+
+export type DepositMethodName =
+  | 'deposit'
+  | 'depositWithCustomCooldown'
+  | 'nativeDeposit'
+  | 'nativeDepositWithCustomCooldown'
+  | 'zapNativeDeposit'
+  | 'zapNativeDepositWithCustomCooldown'
+  | 'zapDeposit'
+  | 'zapDepositWithCustomCooldown'

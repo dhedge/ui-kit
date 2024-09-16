@@ -15,7 +15,6 @@ export const useSetTradingType = () => useTradingPanelActions().setTradingType
 
 export const useUpdateTradingMeta = () =>
   useTradingPanelActions().updateTradingMeta
-export const useUpdateEntryFee = () => useTradingPanelActions().updateEntryFee
 
 export const useUpdateTradingModal = () =>
   useTradingPanelActions().updateTradingModal
@@ -41,3 +40,5 @@ export const useTradingPanelLogger = () => useTradingPanelActions().onLog
 
 export const useOnSimulateTransaction = () =>
   useTradingPanelActions().onSimulateTransaction
+
+export const useGetSwapData = () => useTradingPanelActions().getSwapData
