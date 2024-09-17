@@ -4,6 +4,7 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
+import { useWithdrawLiquidity } from 'core-kit/hooks/trading/synthetix-v3/use-withdraw-liquidity'
 import { useWithdrawAllowance } from 'core-kit/hooks/trading/withdraw'
 import { isSynthetixV3Vault } from 'core-kit/utils'
 
@@ -31,6 +32,7 @@ export const useValidWithdrawButton = () => {
     })
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
+  const liquidity = useWithdrawLiquidity()
 
   const handleHighSlippageClick = () => {
     dispatch({
@@ -43,8 +45,12 @@ export const useValidWithdrawButton = () => {
     })
   }
 
+  const isSynthetixVault = isSynthetixV3Vault(address)
+
   return {
-    requiresWithdrawalWindow: isSynthetixV3Vault(address) && !isWithdrawal,
+    requiresWithdrawalWindow: isSynthetixVault && !isWithdrawal,
+    requiresWithdrawalLiquidity:
+      isSynthetixVault && !!sendToken.value && liquidity.noLiquidity,
     requiresEndOfCooldown: cooldownActive,
     requiresApprove: !canSpend,
     requiresHighSlippageConfirm,
@@ -53,6 +59,8 @@ export const useValidWithdrawButton = () => {
     slippageToBeUsed,
     cooldownEndsInTime,
     withdrawalWindowStartTime: startTime,
+    withdrawalLiquidity: liquidity.availableLiquidity ?? '0',
+    withdrawalLiquiditySymbol: liquidity.symbol,
     approve,
     updateOracles,
     handleHighSlippageClick,

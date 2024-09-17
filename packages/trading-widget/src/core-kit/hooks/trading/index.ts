@@ -12,3 +12,4 @@ export { useDepositProjectedEarnings } from './projected-earnings/use-deposit-pr
 export { useProjectedEarningsCore } from './projected-earnings/use-projected-earnings-core'
 export { useSwapDataQuery } from './use-swap-data-query'
 export { useSendTokenDebouncedValue } from './use-send-token-debounced-value'
+export { useAvailableWithdrawLiquidity } from './synthetix-v3/use-available-withdraw-liquidity'

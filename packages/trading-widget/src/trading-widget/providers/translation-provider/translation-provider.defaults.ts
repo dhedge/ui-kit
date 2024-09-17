@@ -64,6 +64,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   confirmMaxSlippage: 'Confirm {slippagePercentage}% max slippage',
   withdrawalWindowDisabled:
     'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
+  withdrawalLiquidityDisabled:
+    'Intended withdraw value is greater than available liquidity ({symbol} {value})',
   withdrawCooldown:
     'You can sell your {tokenSymbol} tokens in {cooldownEndTime}',
   termsOfUse: 'Terms Of Use',

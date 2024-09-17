@@ -19,6 +19,7 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
   const name = useTradingTypeName('withdraw')
   const {
     requiresWithdrawalWindow,
+    requiresWithdrawalLiquidity,
     requiresEndOfCooldown,
     requiresApprove,
     requiresHighSlippageConfirm,
@@ -27,6 +28,8 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
     slippageToBeUsed,
     cooldownEndsInTime,
     withdrawalWindowStartTime,
+    withdrawalLiquidity,
+    withdrawalLiquiditySymbol = '',
     approve,
     updateOracles,
     isCheckOraclesPending,
@@ -39,6 +42,18 @@ export const ValidWithdrawButton: FC<PropsWithChildren> = ({ children }) => {
         promptText={t.withdrawalWindowDisabled
           .replace('{tokenSymbol}', sendTokenSymbol)
           .replace('{startTime}', withdrawalWindowStartTime)}
+      >
+        {name}
+      </DisabledButtonWithPrompt>
+    )
+  }
+
+  if (requiresWithdrawalLiquidity) {
+    return (
+      <DisabledButtonWithPrompt
+        promptText={t.withdrawalLiquidityDisabled
+          .replace('{value}', withdrawalLiquidity)
+          .replace('{symbol}', withdrawalLiquiditySymbol)}
       >
         {name}
       </DisabledButtonWithPrompt>

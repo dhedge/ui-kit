@@ -270,6 +270,7 @@ export {
   useMaxSlippagePlaceholder,
   useMinReceiveText,
   useTradingSettleHandler,
+  useAvailableWithdrawLiquidity,
 } from './core-kit/hooks/trading'
 export {
   useVaultDepositTokens,

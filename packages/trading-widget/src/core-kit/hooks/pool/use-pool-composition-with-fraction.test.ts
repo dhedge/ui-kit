@@ -60,6 +60,7 @@ describe('formatPoolComposition', () => {
         ...poolComposition,
         fraction: fraction.toFixed(getConventionalTokenPriceDecimals(fraction)),
         fractionUsd,
+        fractionUsdNumber: fraction,
       },
     ])
   })
@@ -104,6 +105,7 @@ describe('formatPoolComposition', () => {
         ...poolComposition,
         fraction: fraction.toFixed(getConventionalTokenPriceDecimals(fraction)),
         fractionUsd,
+        fractionUsdNumber: fraction,
       },
     ])
   })
