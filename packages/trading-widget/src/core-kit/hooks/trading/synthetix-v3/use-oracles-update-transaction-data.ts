@@ -11,8 +11,10 @@ import {
 } from 'core-kit/const'
 import type { Address, OracleAdapter, TransactionRequest } from 'core-kit/types'
 import { getContractAbiById, getContractAddressById } from 'core-kit/utils'
-import { Eip7412 } from 'core-kit/utils/synthetix-v3/eip-7412'
-import { TrustedMulticallForwarderBatcher } from 'core-kit/utils/synthetix-v3/multicall-forwarder-batcher'
+import {
+  makeTrustedForwarderMulticall,
+  resolvePrependTransaction,
+} from 'core-kit/utils/synthetix-v3/eip-7412'
 
 interface UseOraclesUpdateQueryVariables {
   account?: Address
@@ -20,14 +22,76 @@ interface UseOraclesUpdateQueryVariables {
   vaultAddress: string
 }
 
-// eip-7412: https://eips.ethereum.org/EIPS/eip-7412
-// usecannon example, https://github.com/usecannon/cannon/blob/main/packages/website/src/helpers/ethereum.ts
+type UseOraclesUpdateQueryResult = {
+  isOracleDataUpdateNeeded: boolean
+  prependedTxns: TransactionRequest[]
+}
 
-// some of the code is modified from: https://github.com/Synthetixio/erc7412/pull/10
+export const DEFAULT_ORACLES_DATA_RESPONSE = {
+  isOracleDataUpdateNeeded: false,
+  prependedTxns: [],
+}
+
+// modified to only build the prepended txs
+const buildPrependedTxs = async (
+  transactions: TransactionRequest[],
+  publicClient: NonNullable<ReturnType<typeof usePublicClient>> | undefined,
+  adapters: OracleAdapter[],
+  chainId: number,
+  maxIter = 100,
+): Promise<{
+  isOracleDataUpdateNeeded: boolean
+  prependedTxns: TransactionRequest[]
+}> => {
+  const prependedTxns: TransactionRequest[] = []
+  for (let i = 0; i < maxIter; i++) {
+    let result
+    try {
+      result = await publicClient?.call(
+        makeTrustedForwarderMulticall([
+          ...prependedTxns,
+          ...transactions,
+        ] as TransactionRequest[]),
+      )
+    } catch (error) {
+      console.error(error)
+      prependedTxns.push(
+        ...(await resolvePrependTransaction(
+          error,
+          publicClient,
+          adapters,
+          chainId,
+        )),
+      )
+      continue
+    }
+    if (result?.data === undefined) {
+      throw new Error('missing return data from multicall')
+    }
+
+    const isOracleDataUpdateNeeded = prependedTxns.length > 0
+
+    return {
+      isOracleDataUpdateNeeded,
+      prependedTxns,
+    }
+  }
+
+  throw new Error('erc7412 callback repeat exceeded')
+}
+
+// eip-7412: https://eips.ethereum.org/EIPS/eip-7412
+// usecannon example, https://github.com/usecannon/cannon/blob/main/packages/website/src/helpers/ethereum.ts (may not be updated)
+
+// some of the code, under this erc7412 folder, is modified from: https://github.com/Synthetixio/erc7412
 
 // this is to check and update the oracle data if necessary,
 // to ensure all actions executed as expected.
-
+//
+// the usage of erc7412 is different from the original proposal,
+// because any tx from dHEDGE vault is (trader_EOA_account => dhedge_contract_guard => synthetixV3) instead of (EOA => synthetixV3)
+// so we use the write-func, getPositionDebt, to probe and build up the prepended txs as a single multicall and execute it if there is any
+//
 // desc: https://mirror.xyz/noahlitvin.eth/_R6jCY5JHlPl2q8VvXblCDzQAqptXdz5AhRxfvsVYLc
 export const useOraclesUpdateTransactionData = (
   {
@@ -40,18 +104,18 @@ export const useOraclesUpdateTransactionData = (
   } & UseOraclesUpdateQueryVariables,
   options?: Omit<
     UseQueryOptions<
-      TransactionRequest | null,
+      UseOraclesUpdateQueryResult,
       DefaultError,
-      TransactionRequest | null,
+      UseOraclesUpdateQueryResult,
       [string, UseOraclesUpdateQueryVariables]
     >,
     'queryKey' | 'queryFn'
   >,
 ) =>
   useQuery<
-    TransactionRequest | null,
+    UseOraclesUpdateQueryResult,
     DefaultError,
-    TransactionRequest | null,
+    UseOraclesUpdateQueryResult,
     [string, UseOraclesUpdateQueryVariables]
   >({
     queryKey: [
@@ -65,22 +129,12 @@ export const useOraclesUpdateTransactionData = (
     queryFn: async ({ queryKey: [, param] }) => {
       const { chainId, vaultAddress, account } = param
       if (!account || !publicClient) {
-        return null
+        return DEFAULT_ORACLES_DATA_RESPONSE
       }
-
-      const trustedMulticallForwarderBatcher =
-        new TrustedMulticallForwarderBatcher()
 
       const PythAdapter = (
         await import('../../../utils/synthetix-v3/pyth-adapter')
       ).PythAdapter
-
-      const eip7412 = new Eip7412(
-        // Check compatibility
-        // Remove casting after viem update https://github.com/Synthetixio/erc7412/blob/main/package.json#L30
-        [new PythAdapter(PYTH_API_LINK) as OracleAdapter],
-        trustedMulticallForwarderBatcher,
-      )
 
       // use getPositionDebt as the probing transaction
       const txData = encodeFunctionData({
@@ -91,24 +145,21 @@ export const useOraclesUpdateTransactionData = (
           [],
       })
 
-      let transactions: TransactionRequest[] = []
-      try {
-        transactions = await eip7412.buildTransactions(publicClient, {
+      // operation to probe and execute the required oracle update tx
+      const txns = [
+        {
           from: account,
           to: getContractAddressById('synthetixV3Core', chainId),
-          data: txData as `0x${string}`,
-        })
-      } catch (err) {
-        console.error(err)
-      }
+          data: txData,
+        },
+      ]
 
-      if (transactions.length > 1) {
-        // only execute the prepended txns, so remove the last one
-        const prependedCalls = transactions.slice(0, transactions.length - 1)
-        return trustedMulticallForwarderBatcher.batch(prependedCalls)
-      }
-
-      return null
+      return await buildPrependedTxs(
+        txns,
+        publicClient,
+        [new PythAdapter(PYTH_API_LINK) as OracleAdapter],
+        chainId,
+      )
     },
     ...options,
   })

@@ -16,6 +16,7 @@ export type {
   WaitForTransactionReceiptReturnType,
   CallExecutionError,
   MulticallReturnType,
+  Hash,
   ContractFunctionReturnType,
 } from 'viem'
 export type { Address, Chain }

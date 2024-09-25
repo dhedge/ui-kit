@@ -1,138 +1,164 @@
-import { IERC7412Abi } from 'core-kit/abi'
-import { AddressZero } from 'core-kit/const'
-import type {
-  Address,
-  Batcher,
-  CallExecutionError,
-  Hex,
-  OracleAdapter,
-  PublicClient,
-  TransactionRequest,
-} from 'core-kit/types'
+// code from https://github.com/Synthetixio/erc7412
 
-import { parseError } from './parse-error'
+import type { Hex } from 'viem'
+import type { usePublicClient } from 'wagmi'
+
+import { IERC7412Abi, ITrustedMulticallForwarderAbi } from 'core-kit/abi'
+import { AddressZero, CHAIN_NATIVE_TOKENS } from 'core-kit/const'
+import type { Address, OracleAdapter, TransactionRequest } from 'core-kit/types'
+import { parseError } from 'core-kit/utils/synthetix-v3/parse-error'
 import {
   decodeErrorResult,
   encodeFunctionData,
   hexToString,
   trim,
-} from '../web3'
+} from 'core-kit/utils/web3'
 
-// we do a looser checkSupport for TrustedMulticallForwarderBatcher batcher; not necessary to do the on-chain read requests;
-// modified from: https://github.com/Synthetixio/erc7412/pull/10
-export class Eip7412 {
-  oracleAdapters: Map<string, OracleAdapter>
-  batcher: Batcher
+const TRUSTED_MULTICALL_FORWARDER_ADDRESS: Address =
+  '0xE2C5658cC5C448B48141168f3e475dF8f65A1e3e'
 
-  constructor(oracleAdapters: OracleAdapter[], batcher: Batcher) {
-    this.oracleAdapters = new Map(
-      oracleAdapters?.map((adapter) => [adapter.getOracleId(), adapter]),
-    )
-    this.batcher = batcher
+export const LEGACY_ODR_ERROR = [
+  {
+    type: 'error',
+    name: 'OracleDataRequired',
+    inputs: [{ type: 'address' }, { type: 'bytes' }],
+  },
+]
+
+export const makeTrustedForwarderMulticall = (
+  transactions: TransactionRequest[],
+) => {
+  const totalValue = transactions.reduce((val, txn) => {
+    return val + (txn.value ?? BigInt(0))
+  }, BigInt(0))
+
+  return {
+    from: transactions[transactions.length - 1]?.from ?? AddressZero,
+    to: TRUSTED_MULTICALL_FORWARDER_ADDRESS,
+    value: totalValue,
+    data: encodeFunctionData({
+      abi: ITrustedMulticallForwarderAbi,
+      functionName: 'aggregate3Value',
+      args: [
+        transactions.map((txn) => ({
+          target: txn.to ?? AddressZero,
+          callData: txn.data ?? '0x',
+          value: txn.value ?? BigInt(0),
+          requireSuccess: true,
+        })),
+      ],
+    }),
   }
+}
 
-  // Returns a list of transactions for submission to a paymaster or otherwise.
-  async buildTransactions(
-    client: PublicClient,
-    transactions: TransactionRequest | TransactionRequest[],
-  ): Promise<TransactionRequest[]> {
-    return await (this.enableERC7412(client, transactions, true) as Promise<
-      TransactionRequest[]
-    >)
-  }
+export function resolveAdapterCalls(
+  origError: unknown,
+  publicClient: NonNullable<ReturnType<typeof usePublicClient>> | undefined,
+): Record<Address, Array<{ query: Hex; fee: bigint }>> {
+  try {
+    let err
+    try {
+      err = decodeErrorResult({
+        abi: IERC7412Abi,
+        data: parseError(origError),
+      })
+    } catch {
+      err = decodeErrorResult({
+        abi: LEGACY_ODR_ERROR,
+        data: parseError(origError),
+      })
+    }
+    if (err.errorName === 'Errors') {
+      const errorsList = err.args?.[0] as Hex[]
 
-  // Returns a multicall using the best method available for the provided transactions.
-  async buildTransaction(
-    client: PublicClient,
-    transactions: TransactionRequest | TransactionRequest[],
-  ): Promise<TransactionRequest> {
-    return await (this.enableERC7412(
-      client,
-      transactions,
-      false,
-    ) as Promise<TransactionRequest>)
-  }
+      const adapterCalls: Record<
+        Address,
+        Array<{ query: Hex; fee: bigint }>
+      > = {}
+      for (const error of errorsList) {
+        const subAdapterCalls = resolveAdapterCalls(error, publicClient)
 
-  async batch(
-    _client: PublicClient,
-    transactions: TransactionRequest[],
-  ): Promise<TransactionRequest> {
-    return this.batcher.batch(transactions)
-  }
-
-  async enableERC7412(
-    client: PublicClient,
-    tx: TransactionRequest | TransactionRequest[],
-    returnList?: boolean,
-  ): Promise<TransactionRequest | TransactionRequest[]> {
-    const multicallCalls: TransactionRequest[] = Array.isArray(tx) ? tx : [tx]
-
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      try {
-        if (multicallCalls.length === 1 && multicallCalls[0]) {
-          await client.call(multicallCalls[0])
-          return multicallCalls[0]
-        } else {
-          const multicallTxn = await this.batch(client, multicallCalls)
-          await client.call(multicallTxn)
-          return returnList ? multicallCalls : multicallTxn
-        }
-      } catch (error) {
-        const err = decodeErrorResult({
-          abi: IERC7412Abi,
-          data: parseError(error as CallExecutionError),
-        })
-        if (err.errorName === 'OracleDataRequired') {
-          const oracleQuery = err.args![1] as Hex
-          const oracleAddress = err.args![0] as Address
-
-          const oracleId = hexToString(
-            trim(
-              (await client.readContract({
-                abi: IERC7412Abi,
-                address: oracleAddress,
-                functionName: 'oracleId',
-                args: [],
-              })) as Hex,
-              { dir: 'right' },
-            ),
-          )
-
-          const adapter = this.oracleAdapters.get(oracleId)
-          if (adapter === undefined) {
-            throw new Error(
-              `oracle ${oracleId} not supported (supported oracles: ${Array.from(
-                this.oracleAdapters.keys(),
-              ).join(',')})`,
-            )
+        for (const a in subAdapterCalls) {
+          if (adapterCalls[a as Address] === undefined) {
+            adapterCalls[a as Address] = []
           }
 
-          const signedRequiredData = await adapter.fetchOffchainData(
-            client,
-            oracleAddress,
-            oracleQuery,
+          adapterCalls[a as Address]?.push(
+            ...(subAdapterCalls[a as Address] ?? []),
           )
-
-          multicallCalls.splice(multicallCalls.length - 1, 0, {
-            from:
-              multicallCalls[multicallCalls.length - 1]?.from ?? AddressZero,
-            to: err.args![0] as Address,
-            data: encodeFunctionData({
-              abi: IERC7412Abi,
-              functionName: 'fulfillOracleQuery',
-              args: [signedRequiredData],
-            }),
-          })
-        } else if (err.errorName === 'FeeRequired') {
-          const requiredFee = err.args![0] as bigint
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          multicallCalls[multicallCalls.length - 2].value = requiredFee
-        } else {
-          throw error
         }
       }
+
+      return adapterCalls
+    } else if (err.errorName === 'OracleDataRequired') {
+      const oracleQuery = err.args?.[1] as Hex
+      const oracleAddress = err.args?.[0] as Address
+      const fee = err.args?.[2] as bigint
+
+      return { [oracleAddress]: [{ query: oracleQuery, fee }] }
+    }
+  } catch (err) {
+    console.error(err)
+  }
+
+  // if we get to this point then we cant parse the error so we should make sure to send the original
+  throw new Error(
+    `could not parse error. can it be decoded elsewhere? ${JSON.stringify(
+      origError,
+    )}`,
+  )
+}
+
+export async function resolvePrependTransaction(
+  origError: unknown,
+  publicClient: NonNullable<ReturnType<typeof usePublicClient>> | undefined,
+  adapters: OracleAdapter[],
+  chainId: number,
+): Promise<TransactionRequest[]> {
+  const adapterCalls = resolveAdapterCalls(origError, publicClient)
+
+  const priceUpdateTxs: TransactionRequest[] = []
+  for (const a in adapterCalls) {
+    const oracleId = hexToString(
+      trim(
+        (await publicClient?.readContract({
+          abi: IERC7412Abi,
+          address: a as Address,
+          functionName: 'oracleId',
+          args: [],
+        })) as Hex,
+        { dir: 'right' },
+      ),
+    )
+
+    const adapter = adapters.find((a) => a.getOracleId() === oracleId)
+    if (adapter === undefined) {
+      throw new Error(
+        `oracle ${oracleId} not supported (supported oracles: ${Array.from(
+          adapters.map((a) => a.getOracleId()),
+        ).join(',')})`,
+      )
+    }
+
+    const offchainDataCalls = await adapter.fetchOffchainData(
+      publicClient,
+      a as Address,
+      adapterCalls[a as Address],
+    )
+
+    for (const call of offchainDataCalls) {
+      priceUpdateTxs.push({
+        from: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
+        to: a as Address,
+        value: call.fee,
+        data: encodeFunctionData({
+          abi: IERC7412Abi,
+          functionName: 'fulfillOracleQuery',
+          args: [call.arg],
+        }),
+      })
     }
   }
+
+  return priceUpdateTxs
 }

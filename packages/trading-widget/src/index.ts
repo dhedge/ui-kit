@@ -11,7 +11,6 @@ export {
   PoolManagerLogicAbi,
   RewardDistributionAbi,
   ITrustedMulticallForwarderAbi,
-  IERC2771ContextAbi,
   IERC7412Abi,
   SynthetixV3CoreAbi,
   SynthetixV3AssetGuard,

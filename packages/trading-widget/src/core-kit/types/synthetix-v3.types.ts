@@ -1,6 +1,5 @@
 import type {
   Address,
-  Client,
   Hex,
   PublicClient,
   TransactionRequest,
@@ -9,10 +8,10 @@ import type {
 export interface OracleAdapter {
   getOracleId: () => string
   fetchOffchainData: (
-    client: Client,
+    client: PublicClient | undefined,
     oracleContract: Address,
-    oracleQuery: Hex,
-  ) => Promise<Hex>
+    oracleQuery: Array<{ query: Hex; fee: bigint }> | undefined,
+  ) => Promise<Array<{ arg: Hex; fee?: bigint }>>
 }
 
 export interface Batcher {

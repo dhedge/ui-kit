@@ -1,29 +1,24 @@
-import type { Hex } from 'core-kit/types'
+import type { Hex } from 'viem'
+import { isHex } from 'viem'
 
-// from https://github.com/Synthetixio/erc7412
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseError(error: any): Hex {
   try {
-    if (error.cause?.data) {
-      return error.cause?.data
+    if (isHex(error)) {
+      return error
     }
-    if (error.cause?.cause?.data) {
-      return error.cause?.cause?.data
+    if (isHex(error.data)) {
+      return error.data
     }
-    if (error.cause?.cause?.cause?.data) {
-      return error.cause?.cause?.cause?.data
+    if (isHex(error.error?.data)) {
+      return error.error.data
     }
-    if (error.cause?.cause?.error?.data) {
-      return error.cause?.cause?.error?.data
-    }
-    if (error.cause?.cause?.cause?.error?.data) {
-      return error.cause?.cause?.cause?.error?.data
+    if (error.cause) {
+      return parseError(error.cause)
     }
   } catch (err) {
-    console.error('Exception in erc7412 error parser:', err)
+    console.error('exception in erc7412 error parser:', err)
   }
-  // rethrow the error (and log it so we can see the original)
-  console.error('Got unknown error in erc7412 parse', error)
   throw error
 }
 
