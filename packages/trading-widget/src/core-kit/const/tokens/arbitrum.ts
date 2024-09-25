@@ -29,3 +29,17 @@ export const WBTC_ARBITRUM: TradingToken = {
   decimals: 8,
   value: '',
 }
+
+export const TBTC_ARBITRUM: TradingToken = {
+  address: '0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40',
+  symbol: 'tBTC',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
+
+export const WSTETH_ARBITRUM: TradingToken = {
+  address: '0x5979D7b546E38E414F7E9822514be443A4800529',
+  symbol: 'wstETH',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}

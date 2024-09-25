@@ -56,3 +56,9 @@ export const DAI_POLYGON: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+export const TBTC_POLYGON: TradingToken = {
+  address: '0x236aa50979d5f3de3bd1eeb40e81137f22ab794b',
+  symbol: 'tBTC',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}

@@ -35,3 +35,10 @@ export const RETH_BASE: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const TBTC_BASE: TradingToken = {
+  address: '0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b',
+  symbol: 'tBTC',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
