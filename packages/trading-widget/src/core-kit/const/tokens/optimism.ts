@@ -70,3 +70,10 @@ export const TBT_OPTIMISM: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const WSTETH_OPTIMISM: TradingToken = {
+  address: '0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb',
+  symbol: 'wstETH',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
