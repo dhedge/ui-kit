@@ -1,18 +1,17 @@
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js'
-import type { Address, Client, Hex } from 'viem'
+
 import { decodeAbiParameters, encodeAbiParameters } from 'viem'
 
-interface Adapter {
-  getOracleId(): string
-  fetchOffchainData(
-    client: Client,
-    oracleContract: Address,
-    oracleQuery: Hex,
-  ): Promise<Hex>
-}
+import type {
+  Address,
+  Hash,
+  Hex,
+  OracleAdapter,
+  PublicClient,
+} from 'core-kit/types'
 
-export class PythAdapter implements Adapter {
-  private connection: EvmPriceServiceConnection
+export class PythAdapter implements OracleAdapter {
+  private readonly connection: EvmPriceServiceConnection
   constructor(endpoint: string) {
     this.connection = new EvmPriceServiceConnection(endpoint)
   }
@@ -22,68 +21,88 @@ export class PythAdapter implements Adapter {
   }
 
   async fetchOffchainData(
-    _client: Client,
-    _requester: Address,
-    data: Hex,
-  ): Promise<Hex> {
-    const [updateType] = decodeAbiParameters(
-      [{ name: 'updateType', type: 'uint8' }],
-      data,
-    )
-
-    if (updateType === 1) {
-      const [updateType, stalenessOrTime, priceIds] = decodeAbiParameters(
-        [
-          { name: 'updateType', type: 'uint8' },
-          { name: 'stalenessTolerance', type: 'uint64' },
-          { name: 'priceIds', type: 'bytes32[]' },
-        ],
-        data,
+    _client: PublicClient | undefined,
+    _oracleContract: Address,
+    oracleQuery: Array<{ query: Hex; fee?: bigint }> | undefined,
+  ): Promise<Array<{ arg: Hex; fee: bigint }>> {
+    // divide by update type
+    const stalePriceIds: Hash[] = []
+    let stalenessTolerance: bigint = BigInt(86400)
+    let staleUpdateFee: bigint = BigInt(0)
+    const vaaUpdatePrices: Array<{ arg: Hex; fee: bigint }> = []
+    for (const query of oracleQuery ?? []) {
+      const [updateType] = decodeAbiParameters(
+        [{ name: 'updateType', type: 'uint8' }],
+        query.query,
       )
+      if (updateType === 1) {
+        const [, stalenessOrTime, priceIds] = decodeAbiParameters(
+          [
+            { name: 'updateType', type: 'uint8' },
+            { name: 'stalenessTolerance', type: 'uint64' },
+            { name: 'priceIds', type: 'bytes32[]' },
+          ],
+          query.query,
+        )
+        stalePriceIds.push(...priceIds)
+        stalenessTolerance =
+          stalenessOrTime < stalenessTolerance
+            ? stalenessOrTime
+            : stalenessTolerance
+        staleUpdateFee = staleUpdateFee + (query.fee ?? BigInt(1))
+      } else if (updateType === 2) {
+        const [, requestedTime, priceId] = decodeAbiParameters(
+          [
+            { name: 'updateType', type: 'uint8' },
+            { name: 'requestedTime', type: 'uint64' },
+            { name: 'priceIds', type: 'bytes32' },
+          ],
+          query.query,
+        )
 
-      const stalenessTolerance = stalenessOrTime
+        const [priceFeedUpdateVaa] = await this.connection.getVaa(
+          priceId as string,
+          Number((requestedTime as unknown as bigint).toString()),
+        )
+
+        const priceFeedUpdate =
+          '0x' + Buffer.from(priceFeedUpdateVaa, 'base64').toString('hex')
+
+        vaaUpdatePrices.push({
+          arg: encodeAbiParameters(
+            [
+              { type: 'uint8', name: 'updateType' },
+              { type: 'uint64', name: 'timestamp' },
+              { type: 'bytes32[]', name: 'priceIds' },
+              { type: 'bytes[]', name: 'updateData' },
+            ],
+            [2, requestedTime, [priceId], [priceFeedUpdate as Address]],
+          ),
+          fee: query.fee ?? BigInt(1),
+        })
+      } else {
+        throw new Error(`update type ${updateType} not supported`)
+      }
+    }
+
+    if (stalePriceIds.length > 0) {
       const updateData = (await this.connection.getPriceFeedsUpdateData(
-        priceIds as string[],
+        stalePriceIds as string[],
       )) as unknown as Address[]
 
-      return encodeAbiParameters(
+      const stalePriceCall = encodeAbiParameters(
         [
           { type: 'uint8', name: 'updateType' },
           { type: 'uint64', name: 'stalenessTolerance' },
           { type: 'bytes32[]', name: 'priceIds' },
           { type: 'bytes[]', name: 'updateData' },
         ],
-        [updateType, stalenessTolerance, priceIds, updateData],
-      )
-    } else if (updateType === 2) {
-      const [updateType, requestedTime, priceId] = decodeAbiParameters(
-        [
-          { name: 'updateType', type: 'uint8' },
-          { name: 'requestedTime', type: 'uint64' },
-          { name: 'priceIds', type: 'bytes32' },
-        ],
-        data,
+        [1, stalenessTolerance, stalePriceIds, updateData],
       )
 
-      const [priceFeedUpdateVaa] = await this.connection.getVaa(
-        priceId as string,
-        Number((requestedTime as unknown as bigint).toString()),
-      )
-
-      const priceFeedUpdate =
-        '0x' + Buffer.from(priceFeedUpdateVaa, 'base64').toString('hex')
-
-      return encodeAbiParameters(
-        [
-          { type: 'uint8', name: 'updateType' },
-          { type: 'uint64', name: 'timestamp' },
-          { type: 'bytes32[]', name: 'priceIds' },
-          { type: 'bytes[]', name: 'updateData' },
-        ],
-        [updateType, requestedTime, [priceId], [priceFeedUpdate as Address]],
-      )
+      return [{ arg: stalePriceCall, fee: staleUpdateFee }, ...vaaUpdatePrices]
     } else {
-      throw new Error(`update type ${updateType} not supported`)
+      return vaaUpdatePrices
     }
   }
 }

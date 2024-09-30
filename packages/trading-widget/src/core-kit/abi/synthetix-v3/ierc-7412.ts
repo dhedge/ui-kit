@@ -16,13 +16,36 @@ export const IERC7412Abi = [
     type: 'function',
     name: 'oracleId',
     inputs: [],
-    outputs: [{ name: '', type: 'bytes32', internalType: 'bytes32' }],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+        internalType: 'bytes32',
+      },
+    ],
     stateMutability: 'view',
   },
   {
     type: 'error',
+    name: 'Errors',
+    inputs: [
+      {
+        name: 'errors',
+        type: 'bytes[]',
+        internalType: 'bytes[]',
+      },
+    ],
+  },
+  {
+    type: 'error',
     name: 'FeeRequired',
-    inputs: [{ name: 'feeAmount', type: 'uint256', internalType: 'uint256' }],
+    inputs: [
+      {
+        name: 'feeAmount',
+        type: 'uint256',
+        internalType: 'uint256',
+      },
+    ],
   },
   {
     type: 'error',
@@ -33,7 +56,16 @@ export const IERC7412Abi = [
         type: 'address',
         internalType: 'address',
       },
-      { name: 'oracleQuery', type: 'bytes', internalType: 'bytes' },
+      {
+        name: 'oracleQuery',
+        type: 'bytes',
+        internalType: 'bytes',
+      },
+      {
+        name: 'feeRequired',
+        type: 'uint256',
+        internalType: 'uint256',
+      },
     ],
   },
 ] as const

@@ -8,7 +8,6 @@ export { PoolManagerLogicAbi } from './pool-manager-logic'
 export { RewardDistributionAbi } from './reward-distribution'
 export {
   ITrustedMulticallForwarderAbi,
-  IERC2771ContextAbi,
   IERC7412Abi,
   SynthetixV3CoreAbi,
   SynthetixV3AssetGuard,

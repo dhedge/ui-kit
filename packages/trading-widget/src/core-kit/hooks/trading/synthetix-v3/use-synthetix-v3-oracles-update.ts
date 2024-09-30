@@ -3,7 +3,6 @@ import { useCallback } from 'react'
 import { usePublicClient } from 'wagmi'
 
 import {
-  AddressZero,
   DEFAULT_RETRIES_NUMBER,
   EXTREMELY_SHORT_POLLING_INTERVAL,
 } from 'core-kit/const'
@@ -14,7 +13,12 @@ import {
 import { useAccount } from 'core-kit/hooks/web3'
 import { isSynthetixV3Vault } from 'core-kit/utils'
 
-import { useOraclesUpdateTransactionData } from './use-oracles-update-transaction-data'
+import { makeTrustedForwarderMulticall } from 'core-kit/utils/synthetix-v3/eip-7412'
+
+import {
+  DEFAULT_ORACLES_DATA_RESPONSE,
+  useOraclesUpdateTransactionData,
+} from './use-oracles-update-transaction-data'
 import { useSendOraclesUpdateTransaction } from './use-send-oracles-update-transaction'
 
 export const useSynthetixV3OraclesUpdate = ({
@@ -30,23 +34,28 @@ export const useSynthetixV3OraclesUpdate = ({
   const { sendTransaction } = useSendOraclesUpdateTransaction({
     chainId,
   })
-  const { data: oraclesUpdateTransactionData, isFetching } =
-    useOraclesUpdateTransactionData(
-      {
-        publicClient,
-        account,
-        chainId,
-        vaultAddress,
-      },
-      {
-        refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
-        retry: DEFAULT_RETRIES_NUMBER,
-        enabled: isSynthetixVault && !disabled,
-      },
-    )
+  const {
+    data: {
+      isOracleDataUpdateNeeded,
+      prependedTxns,
+    } = DEFAULT_ORACLES_DATA_RESPONSE,
+    isFetching,
+  } = useOraclesUpdateTransactionData(
+    {
+      publicClient,
+      account,
+      chainId,
+      vaultAddress,
+    },
+    {
+      refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+      retry: DEFAULT_RETRIES_NUMBER,
+      enabled: isSynthetixVault && !disabled,
+    },
+  )
 
   const updateOracles = useCallback(async () => {
-    if (!oraclesUpdateTransactionData) return
+    if (!prependedTxns.length) return
 
     updateTradingModal({
       isOpen: true,
@@ -58,8 +67,10 @@ export const useSynthetixV3OraclesUpdate = ({
     })
 
     try {
+      const oraclesUpdateTransactionData =
+        makeTrustedForwarderMulticall(prependedTxns)
       return sendTransaction?.({
-        to: oraclesUpdateTransactionData.to ?? AddressZero,
+        to: oraclesUpdateTransactionData.to,
         data: oraclesUpdateTransactionData.data,
         value: oraclesUpdateTransactionData.value,
       })
@@ -72,10 +83,10 @@ export const useSynthetixV3OraclesUpdate = ({
         receiveToken: null,
       })
     }
-  }, [sendTransaction, oraclesUpdateTransactionData, updateTradingModal])
+  }, [prependedTxns, sendTransaction, updateTradingModal])
 
   return {
-    needToBeUpdated: isSynthetixVault && !!oraclesUpdateTransactionData,
+    needToBeUpdated: isSynthetixVault && isOracleDataUpdateNeeded,
     updateOracles,
     isCheckOraclesPending: isFetching,
   }
