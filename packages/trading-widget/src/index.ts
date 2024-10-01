@@ -101,6 +101,13 @@ export {
   WBTC_ARBITRUM,
   TRADING_LOG_EVENT_PARAM,
   TRADING_PANEL_LOG_EVENT,
+  TBTC_OPTIMISM,
+  TBTC_ARBITRUM,
+  TBTC_BASE,
+  TBTC_POLYGON,
+  WSTETH_ARBITRUM,
+  WSTETH_BASE,
+  WSTETH_OPTIMISM,
 } from './core-kit/const'
 export { DefaultSellingParams, EstimationError } from './core-kit/models'
 export type {

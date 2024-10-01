@@ -16,7 +16,7 @@ export const formatToUsd = ({
   compact = false,
   normalize = false,
 }: {
-  value: number
+  value: number | string
   minimumFractionDigits?: number
   maximumFractionDigits?: number
   compact?: boolean
@@ -28,7 +28,7 @@ export const formatToUsd = ({
     notation: compact ? 'compact' : undefined,
     minimumFractionDigits,
     maximumFractionDigits,
-  }).format(normalize ? normalizeNumber(value) : value)
+  }).format(normalize ? normalizeNumber(value) : Number(value))
 
 export const formatNumeratorToPercentage = (
   numerator: number | string,

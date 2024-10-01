@@ -63,3 +63,17 @@ export const LINK_OPTIMISM: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const TBTC_OPTIMISM: TradingToken = {
+  address: '0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40',
+  symbol: 'tBTC',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
+
+export const WSTETH_OPTIMISM: TradingToken = {
+  address: '0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb',
+  symbol: 'wstETH',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
