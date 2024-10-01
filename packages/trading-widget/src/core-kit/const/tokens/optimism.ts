@@ -64,7 +64,7 @@ export const LINK_OPTIMISM: TradingToken = {
   value: '',
 }
 
-export const TBT_OPTIMISM: TradingToken = {
+export const TBTC_OPTIMISM: TradingToken = {
   address: '0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40',
   symbol: 'tBTC',
   decimals: DEFAULT_PRECISION,
