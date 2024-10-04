@@ -1,15 +1,12 @@
 import { WidgetInput } from 'trading-widget/components/widget/widget-input'
-import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 
+import { useWithdrawInputGroup } from 'trading-widget/components/withdraw/unroll-step/input-group/input-group.hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
-
-import { useWithdrawInputGroup } from './input-group.hooks'
 
 export const WithdrawInputGroup = () => {
   const t = useTranslationContext()
-  const { sendToken, receiveToken, minSlippage, autoFocus, onInputChange } =
+  const { sendToken, receiveToken, autoFocus, onInputChange } =
     useWithdrawInputGroup()
-  const type = useGetThemeTypeBySlippage(minSlippage ?? 0)
 
   return (
     <>
@@ -30,7 +27,6 @@ export const WithdrawInputGroup = () => {
         assetSymbol={receiveToken.symbol}
         assetPrice={receiveToken.price ?? ''}
         disabled
-        type={type}
       />
     </>
   )

@@ -5,7 +5,7 @@ import {
 } from 'core-kit/hooks/state'
 import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
 import { useWithdrawLiquidity } from 'core-kit/hooks/trading/synthetix-v3/use-withdraw-liquidity'
-import { useWithdrawAllowance } from 'core-kit/hooks/trading/withdraw'
+import { useWithdrawV2Allowance } from 'core-kit/hooks/trading/withdraw'
 import { isSynthetixV3Vault } from 'core-kit/utils'
 
 import {
@@ -25,7 +25,7 @@ export const useValidWithdrawButton = () => {
     address,
     chainId,
   })
-  const { approve, canSpend } = useWithdrawAllowance()
+  const { approve, canSpend } = useWithdrawV2Allowance()
   const { needToBeUpdated, updateOracles, isCheckOraclesPending } =
     useSynthetixV3OraclesUpdate({
       disabled: !canSpend || cooldownActive,

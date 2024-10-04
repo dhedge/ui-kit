@@ -3,11 +3,10 @@ import BigNumber from 'bignumber.js'
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 
+import { useWithdrawTradingParams } from 'core-kit/hooks/trading/withdraw/v1/use-withdraw-trading-params'
 import type { TradingToken } from 'core-kit/types'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { renderHook } from 'tests/test-utils'
-
-import { useWithdrawTradingParams } from './use-withdraw-trading-params'
 
 vi.mock('core-kit/hooks/state', () => ({
   useIsDepositTradingPanelType: vi.fn(),

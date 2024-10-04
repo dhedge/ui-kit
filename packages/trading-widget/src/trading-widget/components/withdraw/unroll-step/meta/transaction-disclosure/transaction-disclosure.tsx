@@ -11,11 +11,10 @@ import {
 } from 'trading-widget/components/common'
 
 import { ExchangeRate } from 'trading-widget/components/widget/widget-meta'
+import { useWithdrawTransactionDisclosure } from 'trading-widget/components/withdraw/unroll-step/meta/transaction-disclosure/transaction-disclosure.hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 import { THEME_TYPE } from 'trading-widget/types'
-
-import { useWithdrawTransactionDisclosure } from './transaction-disclosure.hooks'
 
 export const WithdrawTransactionOverviewDisclosure = () => {
   const t = useTranslationContext()

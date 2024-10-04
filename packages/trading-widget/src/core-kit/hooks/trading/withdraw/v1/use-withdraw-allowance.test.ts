@@ -3,15 +3,14 @@ import BigNumber from 'bignumber.js'
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 import * as allowanceHooks from 'core-kit/hooks/trading/allowance'
-import * as withdrawHooks from 'core-kit/hooks/trading/withdraw'
+import * as withdrawHooks from 'core-kit/hooks/trading/withdraw/index'
+import { useWithdrawAllowance } from 'core-kit/hooks/trading/withdraw/v1/use-withdraw-allowance'
 import * as web3Hooks from 'core-kit/hooks/web3'
 
 import type { TradingToken } from 'core-kit/types'
 import { getContractAddressById } from 'core-kit/utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { renderHook } from 'tests/test-utils'
-
-import { useWithdrawAllowance } from './use-withdraw-allowance'
 
 vi.mock('core-kit/hooks/state', () => ({
   useSendTokenInput: vi.fn(),

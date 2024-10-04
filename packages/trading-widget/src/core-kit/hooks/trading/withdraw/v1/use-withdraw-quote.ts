@@ -2,9 +2,8 @@ import { useEffect } from 'react'
 
 import { usePoolFees, usePoolTokenPrice } from 'core-kit/hooks/pool'
 import { useReceiveTokenInput, useSendTokenInput } from 'core-kit/hooks/state'
+import { useAssetPrice } from 'core-kit/hooks/trading/use-asset-price'
 import type { PoolConfig } from 'core-kit/types/config.types'
-
-import { useAssetPrice } from '../use-asset-price'
 
 const useSendToken = ({
   address,

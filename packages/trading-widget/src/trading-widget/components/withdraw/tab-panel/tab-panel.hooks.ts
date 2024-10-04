@@ -1,7 +1,9 @@
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import { useWithdrawQuote } from 'core-kit/hooks/trading/withdraw'
+import { useWithdrawV2TrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-v2-tracked-assets'
 
 export const useWithdrawTabPanel = () => {
-  const poolConfig = useTradingPanelPoolConfig()
-  useWithdrawQuote(poolConfig)
+  const { data: assets = [] } = useWithdrawV2TrackedAssets()
+
+  return {
+    isWithdrawUnrollStep: assets.length === 0,
+  }
 }

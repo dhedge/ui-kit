@@ -12,7 +12,10 @@ import {
   useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
-import { useTradingSettleHandler } from 'core-kit/hooks/trading'
+import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw/use-is-multi-asset-withdraw'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw/v1/use-withdraw-slippage'
+import { useWithdrawTradingParams } from 'core-kit/hooks/trading/withdraw/v1/use-withdraw-trading-params'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import { DefaultSellingParams } from 'core-kit/models'
 
@@ -26,10 +29,6 @@ import {
   logTransactionArguments,
 } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
-
-import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
-import { useWithdrawSlippage } from './use-withdraw-slippage'
-import { useWithdrawTradingParams } from './use-withdraw-trading-params'
 
 const action = 'withdraw'
 

@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as stateHooks from 'core-kit/hooks/state'
 import * as tradingWithdrawHooks from 'core-kit/hooks/trading/withdraw'
+import { useWithdraw } from 'core-kit/hooks/trading/withdraw'
 import * as web3Hooks from 'core-kit/hooks/web3'
 import { DefaultSellingParams } from 'core-kit/models'
 
@@ -14,8 +15,6 @@ import {
 } from 'core-kit/utils'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { act, renderHook } from 'tests/test-utils'
-
-import { useWithdraw } from './use-withdraw'
 
 vi.mock('core-kit/hooks/state', () => ({
   useReceiveTokenInput: vi.fn(),
