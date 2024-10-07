@@ -3,9 +3,8 @@ import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
-  useTradingPanelSettings,
 } from 'core-kit/hooks/state'
-import { useAssetPrice } from 'core-kit/hooks/trading'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
@@ -25,21 +24,10 @@ const useSendToken = () => {
   }
 }
 
-const useReceiveToken = () => {
-  const { chainId } = useTradingPanelPoolConfig()
-  const [data] = useReceiveTokenInput()
-  const price = useAssetPrice({ address: data.address, chainId })
-
-  return {
-    ...data,
-    price,
-  }
-}
-
 export const useWithdrawInputGroup = () => {
+  const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const sendToken = useSendToken()
-  const receiveToken = useReceiveToken()
-  const [{ minSlippage }] = useTradingPanelSettings()
+  const [receiveToken] = useReceiveTokenInput()
 
   const handleInputChange = (value: string) => {
     sendToken.updater({ value })
@@ -50,6 +38,6 @@ export const useWithdrawInputGroup = () => {
     receiveToken,
     autoFocus: false,
     onInputChange: handleInputChange,
-    minSlippage,
+    isMultiAssetWithdraw,
   }
 }

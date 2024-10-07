@@ -1,11 +1,8 @@
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
-import isNumber from 'lodash.isnumber'
 import { useMemo } from 'react'
 
 import type { TransactionDisclosureItemProps } from 'trading-widget/components/common'
 import {
-  IconButton,
   Spinner,
   TransactionOverviewDisclosure,
 } from 'trading-widget/components/common'
@@ -22,15 +19,11 @@ export const WithdrawTransactionOverviewDisclosure = () => {
     slippageTooltipText,
     slippagePlaceholder,
     isMaxSlippageLoading,
-    minReceive,
     isAutoSlippage,
-    minSlippage,
-    showApplyMinSlippageButton,
-    handleMinTradingSlippage,
     allowanceRequired,
     sendTokenSymbol,
     tokenAllowance,
-    isMultiAssetsWithdraw,
+    // isMultiAssetsWithdraw,
     exitFee,
   } = useWithdrawTransactionDisclosure()
 
@@ -58,30 +51,31 @@ export const WithdrawTransactionOverviewDisclosure = () => {
           </div>
         ),
       },
-      {
-        tooltipText: t.minReceiveAmount,
-        label: t.minReceived,
-        value: minReceive,
-      },
+      // {
+      //   tooltipText: t.minReceiveAmount,
+      //   label: t.minReceived,
+      //   value: minReceive,
+      // },
       { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
     ]
 
-    if (!isAutoSlippage && !isMultiAssetsWithdraw) {
-      items.push({
-        tooltipText: t.minSlippageWarning,
-        label: t.recommendedMinSlippage,
-        value: isNumber(minSlippage) ? `${minSlippage}%` : '-',
-        children: showApplyMinSlippageButton ? (
-          <IconButton
-            Icon={CheckCircleIcon}
-            className={classNames(
-              'dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)] dtw-animate-pulse',
-            )}
-            onClick={handleMinTradingSlippage}
-          />
-        ) : null,
-      })
-    }
+
+    // if (!isAutoSlippage && !isMultiAssetsWithdraw) {
+    //   items.push({
+    //     tooltipText: t.minSlippageWarning,
+    //     label: t.recommendedMinSlippage,
+    //     value: isNumber(minSlippage) ? `${minSlippage}%` : '-',
+    //     children: showApplyMinSlippageButton ? (
+    //       <IconButton
+    //         Icon={CheckCircleIcon}
+    //         className={classNames(
+    //           'dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)] dtw-animate-pulse',
+    //         )}
+    //         onClick={handleMinTradingSlippage}
+    //       />
+    //     ) : null,
+    //   })
+    // }
 
     if (allowanceRequired) {
       items.push({
@@ -98,10 +92,6 @@ export const WithdrawTransactionOverviewDisclosure = () => {
     isAutoSlippage,
     slippagePlaceholder,
     isMaxSlippageLoading,
-    minReceive,
-    minSlippage,
-    showApplyMinSlippageButton,
-    handleMinTradingSlippage,
     allowanceRequired,
     sendTokenSymbol,
     tokenAllowance,

@@ -4,7 +4,6 @@ import type { FC } from 'react'
 import { MaxBalanceButton, Spinner } from 'trading-widget/components/common'
 import { THEME_TYPE } from 'trading-widget/types'
 
-import { AssetCompositionTable } from './asset-composition-table/asset-composition-table'
 import { TokenSelector } from './token-selector/token-selector'
 
 import type { WidgetInputProps } from './widget-input.hooks'
@@ -87,28 +86,24 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
       </div>
       <div className="dtw-flex dtw-items-center dtw-gap-x-2">
         <div className="transparent-scrollbar dtw-flex-1 dtw-overflow-x-auto">
-          {assetSymbol === 'all' ? (
-            <AssetCompositionTable iconSize="sm" />
-          ) : (
-            <input
-              className={classNames(
-                'dtw-appearance-none dtw-bg-transparent dtw-text-[color:var(--panel-input-content-color,var(--panel-content-color))] placeholder:dtw-text-[color:var(--panel-input-placeholder-color,var(--panel-secondary-content-color))] dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-font-weight,var(--panel-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--panel-input-font-size-lg,var(--panel-font-size-lg))] lg:dtw-leading-[var(--panel-input-line-height-lg,var(--panel-line-height-lg))] dtw-w-full',
-                textColorClassNames,
-              )}
-              ref={inputRef}
-              autoFocus={autoFocus}
-              type="number"
-              min={0}
-              value={value}
-              onChange={onInputChange}
-              onFocus={onInputFocus}
-              placeholder="0"
-              disabled={disabled}
-              onWheelCapture={disableScrollForNumberInput}
-            />
-          )}
+          <input
+            className={classNames(
+              'dtw-appearance-none dtw-bg-transparent dtw-text-[color:var(--panel-input-content-color,var(--panel-content-color))] placeholder:dtw-text-[color:var(--panel-input-placeholder-color,var(--panel-secondary-content-color))] dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-font-weight,var(--panel-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--panel-input-font-size-lg,var(--panel-font-size-lg))] lg:dtw-leading-[var(--panel-input-line-height-lg,var(--panel-line-height-lg))] dtw-w-full',
+              textColorClassNames,
+            )}
+            ref={inputRef}
+            autoFocus={autoFocus}
+            type="number"
+            min={0}
+            value={value}
+            onChange={onInputChange}
+            onFocus={onInputFocus}
+            placeholder="0"
+            disabled={disabled}
+            onWheelCapture={disableScrollForNumberInput}
+          />
         </div>
-        <TokenSelector symbol={assetSymbol} />
+        <TokenSelector symbol={assetSymbol}/>
       </div>
     </div>
   )

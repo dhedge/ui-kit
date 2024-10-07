@@ -1,12 +1,18 @@
 import { WidgetInput } from 'trading-widget/components/widget/widget-input'
 
 import { useWithdrawInputGroup } from 'trading-widget/components/withdraw/unroll-step/input-group/input-group.hooks'
+import { WithdrawSection } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/withdraw-section'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 export const WithdrawInputGroup = () => {
   const t = useTranslationContext()
-  const { sendToken, receiveToken, autoFocus, onInputChange } =
-    useWithdrawInputGroup()
+  const {
+    sendToken,
+    receiveToken,
+    autoFocus,
+    onInputChange,
+    isMultiAssetWithdraw,
+  } = useWithdrawInputGroup()
 
   return (
     <>
@@ -21,12 +27,9 @@ export const WithdrawInputGroup = () => {
         maxBalance={sendToken.balance}
         displayCalculatedValue
       />
-      <WidgetInput
-        label={t.receiveEstimated}
-        assetInput={receiveToken.value}
+      <WithdrawSection
+        isMultiAssetWithdraw={isMultiAssetWithdraw}
         assetSymbol={receiveToken.symbol}
-        assetPrice={receiveToken.price ?? ''}
-        disabled
       />
     </>
   )

@@ -13,9 +13,9 @@ import {
 } from 'core-kit/utils'
 import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
-import type { AssetCompositionTableProps } from './asset-composition-table.hooks'
-import { useAssetCompositionTable } from './asset-composition-table.hooks'
-import { WithdrawExplanationTip } from './withdraw-explanation-tip'
+import type { AssetCompositionTableProps } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/asset-composition-table/asset-composition-table.hooks'
+import { useAssetCompositionTable } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/asset-composition-table/asset-composition-table.hooks'
+import { WithdrawExplanationTip } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/asset-composition-table/withdraw-explanation-tip'
 
 export const AssetCompositionTable = ({
   className,

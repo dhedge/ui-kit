@@ -1,9 +1,9 @@
-import { useWithdrawV2TrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-v2-tracked-assets'
+import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw/v2/use-is-withdraw-swap-step'
 
 export const useWithdrawTabPanel = () => {
-  const { data: assets = [] } = useWithdrawV2TrackedAssets()
+  const isWithdrawUnrollStep = !useIsWithdrawSwapStep()
 
   return {
-    isWithdrawUnrollStep: assets.length === 0,
+    isWithdrawUnrollStep,
   }
 }

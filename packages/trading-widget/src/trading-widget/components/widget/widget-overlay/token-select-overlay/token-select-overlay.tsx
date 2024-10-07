@@ -22,7 +22,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
     tokenList,
     activeTokens,
     onSelect,
-    isMultiAssetWithdrawalEnabled,
+    showMultiAssetWithdrawalOption,
     onClose,
   } = useTokenSelectOverlay({ type, searchQuery })
 
@@ -59,7 +59,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
             </li>
           )
         })}
-        {isMultiAssetWithdrawalEnabled && (
+        {showMultiAssetWithdrawalOption && (
           <li className="dtw-cursor-pointer dtw-rounded-xl dtw-p-0.5 even:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group">
             <MultiTokenSelectItem
               token={MULTI_ASSET_TOKEN}

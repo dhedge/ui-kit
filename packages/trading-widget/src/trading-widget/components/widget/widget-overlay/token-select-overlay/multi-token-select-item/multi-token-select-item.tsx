@@ -5,7 +5,7 @@ import { TokenBadge } from 'trading-widget/components/common'
 import type { MultiTokenSelectItemProps } from './multi-token-select-item.hooks'
 import { useMultiTokenSelectItem } from './multi-token-select-item.hooks'
 
-import { AssetCompositionTable } from '../../../widget-input/asset-composition-table/asset-composition-table'
+import { AssetCompositionTable } from '../../../../withdraw/unroll-step/input-group/withdraw-section/asset-composition-table/asset-composition-table'
 
 export const MultiTokenSelectItem = ({
   token,
