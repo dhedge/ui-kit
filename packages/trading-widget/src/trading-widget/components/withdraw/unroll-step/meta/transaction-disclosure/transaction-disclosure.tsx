@@ -8,12 +8,12 @@ import {
 } from 'trading-widget/components/common'
 
 import { ExchangeRate } from 'trading-widget/components/widget/widget-meta'
-import { useWithdrawTransactionDisclosure } from 'trading-widget/components/withdraw/unroll-step/meta/transaction-disclosure/transaction-disclosure.hooks'
+import { useWithdrawUnrollTransactionDisclosure } from 'trading-widget/components/withdraw/unroll-step/meta/transaction-disclosure/transaction-disclosure.hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 import { THEME_TYPE } from 'trading-widget/types'
 
-export const WithdrawTransactionOverviewDisclosure = () => {
+export const WithdrawUnrollTransactionOverviewDisclosure = () => {
   const t = useTranslationContext()
   const {
     slippageTooltipText,
@@ -25,7 +25,7 @@ export const WithdrawTransactionOverviewDisclosure = () => {
     tokenAllowance,
     // isMultiAssetsWithdraw,
     exitFee,
-  } = useWithdrawTransactionDisclosure()
+  } = useWithdrawUnrollTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
     const items: TransactionDisclosureItemProps[] = [
@@ -58,7 +58,6 @@ export const WithdrawTransactionOverviewDisclosure = () => {
       // },
       { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
     ]
-
 
     // if (!isAutoSlippage && !isMultiAssetsWithdraw) {
     //   items.push({

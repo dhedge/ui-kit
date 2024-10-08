@@ -1,7 +1,7 @@
-import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw/v2/use-is-withdraw-swap-step'
+import { useIsWithdrawV2SwapStep } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-is-withdraw-v2-swap-step'
 
 export const useWithdrawTabPanel = () => {
-  const isWithdrawUnrollStep = !useIsWithdrawSwapStep()
+  const isWithdrawUnrollStep = !useIsWithdrawV2SwapStep()
 
   return {
     isWithdrawUnrollStep,

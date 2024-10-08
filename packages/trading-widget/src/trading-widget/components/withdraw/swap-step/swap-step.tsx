@@ -1,21 +1,26 @@
 import type { FC } from 'react'
 
+import { useSwapQuote } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swap-quote'
 import { Layout } from 'trading-widget/components/common'
 
-import { Balance } from 'trading-widget/components/withdraw/swap-step/balance/balance'
+import { WithdrawBalance } from 'trading-widget/components/withdraw/swap-step/balance/withdrawBalance'
 import { InputGroup } from 'trading-widget/components/withdraw/swap-step/input-group/input-group'
-import { Meta } from 'trading-widget/components/withdraw/swap-step/meta/meta'
+import { WithdrawSwapMeta } from 'trading-widget/components/withdraw/swap-step/meta/meta'
+import { SwapTradeButton } from 'trading-widget/components/withdraw/swap-step/trade-button/swap-trade-button'
 
 export const SwapStep: FC = () => {
+  useSwapQuote()
   return (
     <>
       <Layout.Balance>
-        <Balance></Balance>
+        <WithdrawBalance />
       </Layout.Balance>
       <Layout.InputGroup>
         <InputGroup />
       </Layout.InputGroup>
-      <Meta></Meta>
+      <WithdrawSwapMeta>
+        <SwapTradeButton />
+      </WithdrawSwapMeta>
     </>
   )
 }

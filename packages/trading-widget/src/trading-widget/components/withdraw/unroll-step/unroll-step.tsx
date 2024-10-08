@@ -4,7 +4,7 @@ import { WithdrawBalance } from 'trading-widget/components/withdraw/unroll-step/
 import { WithdrawTradeButton } from 'trading-widget/components/withdraw/unroll-step/button/trade-button/trade-button'
 import { ValidWithdrawButton } from 'trading-widget/components/withdraw/unroll-step/button/valid-withdraw-button/valid-withdraw-button'
 import { WithdrawInputGroup } from 'trading-widget/components/withdraw/unroll-step/input-group/input-group'
-import { WithdrawMeta } from 'trading-widget/components/withdraw/unroll-step/meta/meta'
+import { WithdrawUnrollMeta } from 'trading-widget/components/withdraw/unroll-step/meta/meta'
 
 export const UnrollStep = () => (
   <>
@@ -14,12 +14,12 @@ export const UnrollStep = () => (
     <Layout.InputGroup>
       <WithdrawInputGroup />
     </Layout.InputGroup>
-    <WithdrawMeta>
+    <WithdrawUnrollMeta>
       <ValidNetworkButton>
         <ValidWithdrawButton>
           <WithdrawTradeButton />
         </ValidWithdrawButton>
       </ValidNetworkButton>
-    </WithdrawMeta>
+    </WithdrawUnrollMeta>
   </>
 )

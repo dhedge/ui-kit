@@ -3,6 +3,8 @@ import BigNumber from 'bignumber.js'
 import type { Address } from 'viem'
 import { stringToHex } from 'viem'
 
+import type { useSwapData } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swap-data'
+import type { useTrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-tracked-assets'
 import type { TxArgs } from 'core-kit/types/trading.types'
 
 import { shiftBy } from './number'
@@ -89,4 +91,43 @@ export const buildZapDepositTransactionArguments = ({
   const srcData = [sendTokenAddress, sendTokenAmount, aggregatorData]
   const destData = [vaultDepositTokenAddress, minDestinationAmount]
   return [vaultAddress, [srcData, destData], minVaultTokensReceivedAmount]
+}
+
+export const buildSwapWithdrawTransactionData = ({
+  receiveAssetAddress,
+  slippage,
+  assets,
+  swapData,
+}: {
+  receiveAssetAddress: Address
+  slippage: number
+  assets: ReturnType<typeof useTrackedAssets>['data']
+  swapData: ReturnType<typeof useSwapData>['data']
+}) => {
+  const { srcData, destAmount } = assets?.reduce(
+    (acc, asset) => {
+      const assetSwapData = swapData?.[asset.address]
+
+      if (!assetSwapData) {
+        return acc
+      }
+
+      const aggregatorData = [
+        stringToHex(assetSwapData.routerKey, { size: 32 }),
+        assetSwapData.txData,
+      ]
+      const srcData = [asset.address, asset.rawBalance, aggregatorData]
+      const destAmount = new BigNumber(assetSwapData.destinationAmount)
+        .times(1 - slippage / 100)
+        .toFixed(0)
+
+      return {
+        srcData: [...acc.srcData, srcData],
+        destAmount: acc.destAmount.plus(destAmount),
+      }
+    },
+    { srcData: [] as unknown[], destAmount: new BigNumber('0') },
+  ) ?? { srcData: [], destAmount: new BigNumber('0') }
+
+  return [srcData, [receiveAssetAddress, destAmount.toFixed(0)]]
 }

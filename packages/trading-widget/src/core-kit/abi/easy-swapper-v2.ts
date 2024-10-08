@@ -141,6 +141,23 @@ export const EasySwapperV2Abi = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
+    name: 'getTrackedAssets',
+    outputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'balance', type: 'uint256' },
+        ],
+        internalType: 'struct IWithdrawalVault.TrackedAsset[]',
+        name: 'trackedAssets',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       { internalType: 'address', name: '_dHedgeVault', type: 'address' },
       { internalType: 'uint256', name: '_amountIn', type: 'uint256' },
@@ -177,6 +194,23 @@ export const EasySwapperV2Abi = [
     name: 'nativeDepositWithCustomCooldown',
     outputs: [],
     stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: '_portion', type: 'uint256' },
+      { internalType: 'address', name: '_to', type: 'address' },
+    ],
+    name: 'partialWithdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'swapper',
+    outputs: [{ internalType: 'contract ISwapper', name: '', type: 'address' }],
+    stateMutability: 'view',
     type: 'function',
   },
   {

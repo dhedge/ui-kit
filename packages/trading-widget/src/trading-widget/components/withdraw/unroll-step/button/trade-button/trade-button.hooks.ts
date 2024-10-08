@@ -1,12 +1,12 @@
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import { useHandleTrade } from 'core-kit/hooks/trading'
-import { useWithdrawV2 } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-v2'
+import { useWithdrawV2InitialTransaction } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-v2-initial-transaction'
 import { isFlatMoneyEarlyDepositorAddress } from 'core-kit/utils'
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
 
 export const useWithdrawTradeButton = () => {
-  const withdraw = useWithdrawV2()
+  const withdraw = useWithdrawV2InitialTransaction()
   // TODO consider transforming label into param for mapping
   const { disabled, label, handleTrade } = useHandleTrade(withdraw)
   const dispatch = useOverlayDispatchContext()

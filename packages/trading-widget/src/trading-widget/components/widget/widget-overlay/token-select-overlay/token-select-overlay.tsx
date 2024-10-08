@@ -55,6 +55,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
                 token={token}
                 onSelect={onSelect}
                 isActive={isActive}
+                onClose={onClose}
               />
             </li>
           )

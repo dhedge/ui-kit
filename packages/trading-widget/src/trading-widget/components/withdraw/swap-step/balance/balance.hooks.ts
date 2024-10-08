@@ -1,7 +1,10 @@
-import { useWithdrawV2TrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-v2-tracked-assets'
+import { useSwappedUsdValue } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swapped-usd-value'
+import { useTrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-tracked-assets'
+import { formatToUsd } from 'core-kit/utils'
 
-export const useBalance = () => {
-  const { data: assets = [] } = useWithdrawV2TrackedAssets()
+export const useWithdrawBalance = () => {
+  const { data: assets = [] } = useTrackedAssets()
+  const usdAmount = useSwappedUsdValue()
 
-  return { assets }
+  return { assets, usdAmount: formatToUsd({ value: usdAmount }) }
 }

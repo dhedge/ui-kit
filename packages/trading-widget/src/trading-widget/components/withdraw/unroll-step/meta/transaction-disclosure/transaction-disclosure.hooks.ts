@@ -17,7 +17,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 import { THEME_TYPE } from 'trading-widget/types'
 
-export const useWithdrawTransactionDisclosure = () => {
+export const useWithdrawUnrollTransactionDisclosure = () => {
   const t = useTranslationContext()
   const { address, chainId } = useTradingPanelPoolConfig()
   const [approvingStatus] = useTradingPanelApprovingStatus()
