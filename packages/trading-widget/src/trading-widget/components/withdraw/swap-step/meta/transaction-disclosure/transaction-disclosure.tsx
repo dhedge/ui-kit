@@ -9,7 +9,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const WithdrawSwapTransactionOverviewDisclosure = () => {
   const t = useTranslationContext()
-  const { slippageTooltipText, slippagePlaceholder } =
+  const { slippageTooltipText, slippagePlaceholder, minReceive } =
     useWithdrawSwapTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -19,15 +19,22 @@ export const WithdrawSwapTransactionOverviewDisclosure = () => {
         label: t.maxSlippage,
         value: <span>{slippagePlaceholder}%</span>,
       },
-      // {
-      //   tooltipText: t.minReceiveAmount,
-      //   label: t.minReceived,
-      //   value: minReceive,
-      // },
+      {
+        tooltipText: t.minReceiveAmount,
+        label: t.minReceived,
+        value: minReceive,
+      },
     ]
 
     return items
-  }, [slippagePlaceholder, slippageTooltipText, t.maxSlippage])
+  }, [
+    minReceive,
+    slippagePlaceholder,
+    slippageTooltipText,
+    t.maxSlippage,
+    t.minReceiveAmount,
+    t.minReceived,
+  ])
 
   return (
     <TransactionOverviewDisclosure

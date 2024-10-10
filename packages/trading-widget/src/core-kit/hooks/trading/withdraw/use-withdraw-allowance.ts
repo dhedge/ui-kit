@@ -15,15 +15,15 @@ import { getContractAddressById } from 'core-kit/utils'
 
 export const useWithdrawAllowance = () => {
   const { account } = useAccount()
+  const { chainId } = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
   const [, updateApprovingStatus] = useTradingPanelApprovingStatus()
-  const { chainId } = useTradingPanelPoolConfig()
   const withdrawProductRawAmount = new BigNumber(sendToken.value || '0')
     .shiftedBy(sendToken.decimals)
     .toFixed(0, BigNumber.ROUND_UP)
 
-  const spenderAddress = getContractAddressById('easySwapper', chainId)
+  const spenderAddress = getContractAddressById('easySwapperV2', chainId)
   const canSpend = useCanSpend({
     tokenAddress: sendToken.address,
     ownerAddress: account ?? AddressZero,

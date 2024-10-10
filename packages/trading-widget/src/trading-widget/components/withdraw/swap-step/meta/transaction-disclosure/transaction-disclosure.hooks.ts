@@ -1,17 +1,21 @@
-import { DEFAULT_WITHDRAW_SLIPPAGE } from 'core-kit/const'
-import { useTradingPanelSettings } from 'core-kit/hooks/state'
-
+import { useReceiveTokenInput } from 'core-kit/hooks/state'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
+import { useExpectedReceiveSwapAmount } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { formatNumberToLimitedDecimals, formatUnits } from 'core-kit/utils'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 import { THEME_TYPE } from 'trading-widget/types'
 
 export const useWithdrawSwapTransactionDisclosure = () => {
   const t = useTranslationContext()
-  const [{ slippage }] = useTradingPanelSettings()
+  const { stablePrecision } = useConfigContextParams()
 
-  const withdrawSlippage =
-    slippage === 'auto' ? DEFAULT_WITHDRAW_SLIPPAGE : slippage
+  const [receiveToken] = useReceiveTokenInput()
+
+  const withdrawSlippage = useWithdrawSlippage()
+  const { minExpectedReceiveAmount } = useExpectedReceiveSwapAmount()
 
   const themeType = useGetThemeTypeBySlippage(withdrawSlippage)
 
@@ -20,29 +24,13 @@ export const useWithdrawSwapTransactionDisclosure = () => {
       ? t.withdrawSlippageWarning
       : t.highSlippageWarning
 
-  // const getMinReceiveText = () => {
-  //   if (receiveToken.symbol === 'all') {
-  //     return t.estimatedMultiAssetFractions
-  //   }
-  //
-  //   const receiveBalance = new BigNumber(receiveToken.value ?? 0)
-  //   const isAutoSlippageWithMinValue = isAutoSlippage && isMinSlippageNumber
-  //   const slippageValue = isAutoSlippage
-  //     ? defaultWithdrawSlippageScale[defaultWithdrawSlippageScale.length - 1]
-  //     : isAutoSlippageWithMinValue
-  //       ? minSlippage
-  //       : slippage
-  //   const receiveValueAfterSlippage =
-  //     receiveToken.value && receiveBalance.isFinite() && slippageValue
-  //       ? receiveBalance.times(1 - slippageValue / 100).toFixed(4)
-  //       : '0'
-  //
-  //   return `${receiveValueAfterSlippage} ${receiveToken.symbol.toUpperCase()}`
-  // }
-
   return {
     themeType,
     slippageTooltipText,
     slippagePlaceholder: withdrawSlippage.toString(),
+    minReceive: `${formatNumberToLimitedDecimals(
+      formatUnits(BigInt(minExpectedReceiveAmount), receiveToken.decimals),
+      stablePrecision,
+    )} ${receiveToken.symbol}`,
   }
 }

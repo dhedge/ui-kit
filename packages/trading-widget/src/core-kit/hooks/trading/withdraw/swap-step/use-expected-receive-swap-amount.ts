@@ -6,16 +6,16 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useRawAssetPrice } from 'core-kit/hooks/trading/use-raw-asset-price'
-import { useSwappedUsdValue } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swapped-usd-value'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-slippage'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
+import { useWithdrawSwapUsdValue } from 'core-kit/hooks/trading/withdraw/swap-step'
 
-export const useExpectedReceiveTokenAmount = () => {
+export const useExpectedReceiveSwapAmount = () => {
   const { chainId } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
   const price = useRawAssetPrice({ address: receiveToken.address, chainId })
   const slippage = useWithdrawSlippage()
 
-  const totalUsdAmountToBeSwapped = useSwappedUsdValue()
+  const totalUsdAmountToBeSwapped = useWithdrawSwapUsdValue()
 
   const expectedReceiveAmount = new BigNumber(totalUsdAmountToBeSwapped)
     .shiftedBy(DEFAULT_PRECISION)

@@ -22,7 +22,7 @@ import { getSlippageToleranceForWithdrawSafe } from 'core-kit/utils'
 
 const action = 'withdraw'
 
-export const useWithdrawV2InitialTransaction = (): ContractActionFunc => {
+export const useWithdrawTransaction = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
@@ -83,6 +83,5 @@ export const useWithdrawV2InitialTransaction = (): ContractActionFunc => {
     functionName,
     poolConfig.symbol,
     poolConfig.chainId,
-    action,
   ])
 }

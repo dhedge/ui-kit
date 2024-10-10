@@ -19,12 +19,11 @@ export const WithdrawUnrollTransactionOverviewDisclosure = () => {
     slippageTooltipText,
     slippagePlaceholder,
     isMaxSlippageLoading,
-    isAutoSlippage,
     allowanceRequired,
     sendTokenSymbol,
     tokenAllowance,
-    // isMultiAssetsWithdraw,
     exitFee,
+    minReceivedText,
   } = useWithdrawUnrollTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -46,35 +45,18 @@ export const WithdrawUnrollTransactionOverviewDisclosure = () => {
                   isMaxSlippageLoading,
               })}
             >
-              {slippagePlaceholder}%
+              {slippagePlaceholder}
             </span>
           </div>
         ),
       },
-      // {
-      //   tooltipText: t.minReceiveAmount,
-      //   label: t.minReceived,
-      //   value: minReceive,
-      // },
+      {
+        tooltipText: t.minReceiveAmount,
+        label: t.minReceived,
+        value: minReceivedText,
+      },
       { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
     ]
-
-    // if (!isAutoSlippage && !isMultiAssetsWithdraw) {
-    //   items.push({
-    //     tooltipText: t.minSlippageWarning,
-    //     label: t.recommendedMinSlippage,
-    //     value: isNumber(minSlippage) ? `${minSlippage}%` : '-',
-    //     children: showApplyMinSlippageButton ? (
-    //       <IconButton
-    //         Icon={CheckCircleIcon}
-    //         className={classNames(
-    //           'dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)] dtw-animate-pulse',
-    //         )}
-    //         onClick={handleMinTradingSlippage}
-    //       />
-    //     ) : null,
-    //   })
-    // }
 
     if (allowanceRequired) {
       items.push({
@@ -86,11 +68,18 @@ export const WithdrawUnrollTransactionOverviewDisclosure = () => {
 
     return items
   }, [
-    t,
     slippageTooltipText,
-    isAutoSlippage,
-    slippagePlaceholder,
+    t.maxSlippage,
+    t.minReceiveAmount,
+    t.minReceived,
+    t.exitFee,
+    t.exitFeeExplanation,
+    t.amountToBeApproved,
+    t.tokenAllowance,
     isMaxSlippageLoading,
+    slippagePlaceholder,
+    minReceivedText,
+    exitFee,
     allowanceRequired,
     sendTokenSymbol,
     tokenAllowance,

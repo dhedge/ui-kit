@@ -2,7 +2,6 @@ import type { PoolComposition } from 'core-kit/types/pool.types'
 import type {
   ApyCurrency,
   TradingToken,
-  WithdrawTradingToken,
 } from 'core-kit/types/trading-panel.types'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
@@ -15,7 +14,7 @@ export interface PoolConfig {
     defaultDepositTokenSymbol?: string
   }
   withdrawParams: {
-    customTokens: WithdrawTradingToken[]
+    customTokens: TradingToken[]
   }
   deprecated?: boolean
 }

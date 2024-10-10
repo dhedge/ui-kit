@@ -35,8 +35,8 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
       status: 'Wallet',
       action: isDeposit ? 'deposit' : 'withdraw',
       link: '',
-      sendToken,
-      receiveToken,
+      sendTokens: [sendToken],
+      receiveToken: isDeposit ? receiveToken : null,
     })
 
     try {
@@ -54,7 +54,7 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
         isOpen: false,
         status: 'None',
         link: '',
-        sendToken: null,
+        sendTokens: null,
         receiveToken: null,
       })
       updatePendingTransactions({ type: 'remove', status: 'fail' })

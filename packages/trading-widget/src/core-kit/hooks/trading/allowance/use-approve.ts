@@ -47,12 +47,14 @@ export const useApprove = ({
       status: 'Wallet',
       link: '',
       action: 'approve',
-      sendToken: {
-        symbol: token.symbol,
-        address: token.address,
-        decimals: token.decimals,
-        value: '',
-      },
+      sendTokens: [
+        {
+          symbol: token.symbol,
+          address: token.address,
+          decimals: token.decimals,
+          value: '',
+        },
+      ],
       receiveToken: null,
     })
     updatePendingTransactions({

@@ -40,7 +40,7 @@ const getContracts = ({
     },
   ])
 
-export const useTrackedAssets = () => {
+export const useWithdrawTrackedAssets = () => {
   const { account = AddressZero } = useAccount()
   const { chainId } = useTradingPanelPoolConfig()
 

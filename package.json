@@ -18,7 +18,6 @@
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "lodash.chunk": "^4.2.0",
-    "lodash.debounce": "^4.0.8",
     "lodash.isnumber": "^3.0.3",
     "lodash.uniqby": "^4.7.0",
     "react-popper-tooltip": "^4.4.2"

@@ -6,13 +6,8 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const WithdrawInputGroup = () => {
   const t = useTranslationContext()
-  const {
-    sendToken,
-    receiveToken,
-    autoFocus,
-    onInputChange,
-    isMultiAssetWithdraw,
-  } = useWithdrawInputGroup()
+  const { sendToken, receiveToken, onInputChange, isMultiAssetWithdraw } =
+    useWithdrawInputGroup()
 
   return (
     <>
@@ -20,7 +15,6 @@ export const WithdrawInputGroup = () => {
         label={t.sell}
         assetInput={sendToken.value}
         onInputChange={onInputChange}
-        autoFocus={autoFocus}
         assetSymbol={sendToken.symbol}
         assetPrice={sendToken.price ?? ''}
         displayMax

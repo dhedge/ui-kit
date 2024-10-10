@@ -36,7 +36,6 @@ export const useWithdrawInputGroup = () => {
   return {
     sendToken,
     receiveToken,
-    autoFocus: false,
     onInputChange: handleInputChange,
     isMultiAssetWithdraw,
   }

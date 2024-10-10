@@ -1,10 +1,10 @@
-import { useHandleSwap } from 'core-kit/hooks/trading/withdraw/use-handle-swap'
-import { useSwapTransaction } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swap-transaction'
+import { useWithdrawSwapTransaction } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { useHandleWithdrawSwap } from 'core-kit/hooks/trading/withdraw/use-handle-withdraw-swap'
 
 export const useSwapTradeButton = () => {
-  const swap = useSwapTransaction()
+  const swap = useWithdrawSwapTransaction()
   // TODO consider transforming label into param for mapping
-  const { disabled, label, handleTrade } = useHandleSwap(swap)
+  const { disabled, label, handleTrade } = useHandleWithdrawSwap(swap)
 
   return {
     disabled,

@@ -77,7 +77,7 @@ export const getDefaultTradingPanelState = (
       isOpen: false,
       status: 'None',
       receiveToken: null,
-      sendToken: null,
+      sendTokens: null,
       ...config?.modal,
     },
     transactions: config?.transactions ?? [],

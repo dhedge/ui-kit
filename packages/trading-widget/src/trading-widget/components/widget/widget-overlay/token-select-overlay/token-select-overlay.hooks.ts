@@ -8,7 +8,7 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
-import { useIsWithdrawV2SwapStep } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-is-withdraw-v2-swap-step'
+import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw/swap-step'
 import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
 import type { TradingPanelActionsState, TradingToken } from 'core-kit/types'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
@@ -54,7 +54,7 @@ export const useTokenSelectOverlay = ({
   type,
 }: TokenSelectOverlayProps) => {
   const [{ isMultiAssetWithdrawalEnabled }] = useTradingPanelSettings()
-  const isWithdrawSwapState = useIsWithdrawV2SwapStep()
+  const isWithdrawSwapState = useIsWithdrawSwapStep()
   // TODO: Remove the isPoolManagerAccount duplicate check in useWithdrawTypeHandler during trading widget build
   const isPoolManagerAccount = useIsPoolManagerAccount()
   const [tradingType] = useTradingPanelType()

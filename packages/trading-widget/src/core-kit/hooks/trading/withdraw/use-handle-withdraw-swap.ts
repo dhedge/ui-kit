@@ -10,7 +10,7 @@ import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
 
-export const useHandleSwap = (trade: ContractActionFunc) => {
+export const useHandleWithdrawSwap = (trade: ContractActionFunc) => {
   const { account } = useAccount()
   const poolConfig = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
@@ -27,7 +27,7 @@ export const useHandleSwap = (trade: ContractActionFunc) => {
       status: 'Wallet',
       action: 'withdraw',
       link: '',
-      sendToken,
+      sendTokens: [sendToken],
       receiveToken,
     })
 
@@ -46,7 +46,7 @@ export const useHandleSwap = (trade: ContractActionFunc) => {
         isOpen: false,
         status: 'None',
         link: '',
-        sendToken: null,
+        sendTokens: null,
         receiveToken: null,
       })
       updatePendingTransactions({ type: 'remove', status: 'fail' })

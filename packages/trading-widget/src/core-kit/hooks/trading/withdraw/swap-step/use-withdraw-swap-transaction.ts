@@ -7,24 +7,29 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
-import { useExpectedReceiveTokenAmount } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-expected-receive-token-amount'
-import { useSwapData } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swap-data'
-import { useTrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-tracked-assets'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw/v2/use-withdraw-slippage'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
+import {
+  useExpectedReceiveSwapAmount,
+  useWithdrawSwapData,
+  useWithdrawTrackedAssets,
+} from 'core-kit/hooks/trading/withdraw/swap-step'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
-import { buildSwapWithdrawTransactionData } from 'core-kit/utils'
+import {
+  buildSwapWithdrawTransactionData,
+  isEqualAddress,
+} from 'core-kit/utils'
 
-const action = 'withdraw'
+const action = 'swap'
 const functionName = EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD
 
-export const useSwapTransaction = (): ContractActionFunc => {
+export const useWithdrawSwapTransaction = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
-  const { data: assets = [] } = useTrackedAssets()
-  const { data: swapData } = useSwapData()
+  const { data: assets = [] } = useWithdrawTrackedAssets()
+  const { data: swapData } = useWithdrawSwapData()
   const [receiveToken] = useReceiveTokenInput()
-  const { minExpectedReceiveAmount } = useExpectedReceiveTokenAmount()
+  const { minExpectedReceiveAmount } = useExpectedReceiveSwapAmount()
   const slippage = useWithdrawSlippage()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
@@ -38,6 +43,15 @@ export const useSwapTransaction = (): ContractActionFunc => {
   })
 
   const txArgs = useMemo(() => {
+    // check if requires swaps
+    if (
+      assets.every(({ address }) =>
+        isEqualAddress(address, receiveToken.address),
+      )
+    ) {
+      return []
+    }
+
     const transactionSwapData = buildSwapWithdrawTransactionData({
       assets,
       swapData,
@@ -48,8 +62,6 @@ export const useSwapTransaction = (): ContractActionFunc => {
   }, [
     assets,
     receiveToken.address,
-    receiveToken.decimals,
-    receiveToken.value,
     swapData,
     minExpectedReceiveAmount,
     slippage,

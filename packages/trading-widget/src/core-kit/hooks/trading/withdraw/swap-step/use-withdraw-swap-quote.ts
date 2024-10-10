@@ -2,14 +2,16 @@ import BigNumber from 'bignumber.js'
 import { useEffect } from 'react'
 
 import { useReceiveTokenInput } from 'core-kit/hooks/state'
-import { useSwapData } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-swap-data'
-import { useTrackedAssets } from 'core-kit/hooks/trading/withdraw/v2/swap-step/use-tracked-assets'
+import {
+  useWithdrawSwapData,
+  useWithdrawTrackedAssets,
+} from 'core-kit/hooks/trading/withdraw/swap-step'
 import { formatUnits, isEqualAddress } from 'core-kit/utils'
 
-export const useSwapQuote = () => {
+export const useWithdrawSwapQuote = () => {
   const [receiveAsset, updateReceiveToken] = useReceiveTokenInput()
-  const { data: assets = [] } = useTrackedAssets()
-  const { data: swapData, isFetching, isError } = useSwapData()
+  const { data: assets = [] } = useWithdrawTrackedAssets()
+  const { data: swapData, isFetching, isError } = useWithdrawSwapData()
 
   useEffect(() => {
     updateReceiveToken({ isLoading: isFetching })

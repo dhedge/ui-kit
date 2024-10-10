@@ -33,7 +33,7 @@ export const useTradingSettleHandler = (
           isOpen: false,
           status: 'None',
           link: '',
-          sendToken: null,
+          sendTokens: null,
           receiveToken: null,
         })
 

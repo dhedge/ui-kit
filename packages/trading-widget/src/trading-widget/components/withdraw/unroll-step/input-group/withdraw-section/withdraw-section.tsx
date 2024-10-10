@@ -6,7 +6,8 @@ import type { WithdrawSectionProps } from 'trading-widget/components/withdraw/un
 import { useWithdrawSection } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/widget-section.hooks'
 
 export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
-  const { isMultiAssetWithdraw, label, assetSymbol } = useWithdrawSection(props)
+  const { isMultiAssetWithdraw, label, assetSymbol, vaultSymbol } =
+    useWithdrawSection(props)
 
   return (
     <div className="dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] focus-within:dtw-border-[var(--panel-input-focus-border-color)] focus-within:dtw-bg-[var(--panel-input-focus-bg)] dtw-shadow-md dtw-border-[var(--panel-input-border-color)]">
@@ -18,9 +19,11 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
           {isMultiAssetWithdraw ? (
             <AssetCompositionTable iconSize="sm" />
           ) : (
-            <ul>
-              {assetSymbol} withdraw includes 2 steps
-              <li>1. Withdraw into multi assets</li>
+            <ul className="dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))]">
+              {assetSymbol} withdraw includes 2 transaction
+              <li className="dtw-mt-0.5">
+                1. Unroll {vaultSymbol} tokens into multi assets
+              </li>
               <li>2. Swap multi assets into {assetSymbol}</li>
             </ul>
           )}
