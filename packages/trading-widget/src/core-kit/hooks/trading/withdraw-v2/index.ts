@@ -1,6 +1,5 @@
 export { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 export { useWithdrawTypeHandler } from './use-withdraw-type-handler'
 export { useWithdrawAllowance } from './use-withdraw-allowance'
-export { useHandleWithdrawSwap } from './use-handle-withdraw-swap'
 export { useWithdrawSlippage } from './use-withdraw-slippage'
 export { useWithdrawTransaction } from './use-withdraw-transaction'

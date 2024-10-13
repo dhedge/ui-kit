@@ -14,7 +14,7 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
-import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw/use-is-multi-asset-withdraw'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/use-is-multi-asset-withdraw'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'

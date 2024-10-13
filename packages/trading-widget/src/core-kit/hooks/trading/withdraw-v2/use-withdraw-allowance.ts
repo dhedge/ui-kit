@@ -9,7 +9,7 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useApprove, useCanSpend } from 'core-kit/hooks/trading/allowance'
-import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw/use-is-multi-asset-withdraw'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/use-is-multi-asset-withdraw'
 import { useAccount } from 'core-kit/hooks/web3'
 import { getContractAddressById } from 'core-kit/utils'
 

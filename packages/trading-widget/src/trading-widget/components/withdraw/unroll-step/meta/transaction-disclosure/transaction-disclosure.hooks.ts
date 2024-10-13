@@ -8,7 +8,7 @@ import {
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 

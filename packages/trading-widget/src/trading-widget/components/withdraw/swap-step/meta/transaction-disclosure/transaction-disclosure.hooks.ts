@@ -1,6 +1,6 @@
 import { useReceiveTokenInput } from 'core-kit/hooks/state'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
-import { useExpectedReceiveSwapAmount } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useExpectedReceiveSwapAmount } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { formatNumberToLimitedDecimals, formatUnits } from 'core-kit/utils'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'

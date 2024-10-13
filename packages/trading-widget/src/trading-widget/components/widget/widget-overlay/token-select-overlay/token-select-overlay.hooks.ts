@@ -8,7 +8,7 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
-import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
 import type { TradingPanelActionsState, TradingToken } from 'core-kit/types'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'

@@ -29,7 +29,7 @@ export interface TradingPanelStateModal {
   action?: TransactionAction
   link?: string
   sendTokens: TradingToken[] | null
-  receiveToken: TradingToken | null
+  receiveTokens: TradingToken[] | null
 }
 
 export interface TradingPanelState {

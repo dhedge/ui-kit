@@ -34,7 +34,7 @@ export const useTradingSettleHandler = (
           status: 'None',
           link: '',
           sendTokens: null,
-          receiveToken: null,
+          receiveTokens: null,
         })
 
         updatePendingTransactions({ type: 'remove', status: 'fail' })

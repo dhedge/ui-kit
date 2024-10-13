@@ -1,7 +1,7 @@
 import {
   useWithdrawSwapUsdValue,
   useWithdrawTrackedAssets,
-} from 'core-kit/hooks/trading/withdraw/swap-step'
+} from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { formatToUsd } from 'core-kit/utils'
 
 export const useWithdrawBalance = () => {

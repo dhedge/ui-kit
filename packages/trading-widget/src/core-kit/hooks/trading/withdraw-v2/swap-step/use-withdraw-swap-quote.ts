@@ -5,7 +5,7 @@ import { useReceiveTokenInput } from 'core-kit/hooks/state'
 import {
   useWithdrawSwapData,
   useWithdrawTrackedAssets,
-} from 'core-kit/hooks/trading/withdraw/swap-step'
+} from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { formatUnits, isEqualAddress } from 'core-kit/utils'
 
 export const useWithdrawSwapQuote = () => {

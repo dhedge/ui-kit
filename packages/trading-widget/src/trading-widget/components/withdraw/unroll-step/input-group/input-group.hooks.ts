@@ -4,7 +4,7 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
-import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {

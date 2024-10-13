@@ -6,8 +6,8 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useRawAssetPrice } from 'core-kit/hooks/trading/use-raw-asset-price'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
-import { useWithdrawSwapUsdValue } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useWithdrawSwapUsdValue } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 
 export const useExpectedReceiveSwapAmount = () => {
   const { chainId } = useTradingPanelPoolConfig()

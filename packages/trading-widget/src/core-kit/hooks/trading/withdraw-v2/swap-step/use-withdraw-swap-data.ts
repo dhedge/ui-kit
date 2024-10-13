@@ -6,8 +6,8 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
-import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw/swap-step'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw/use-withdraw-slippage'
+import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-withdraw-slippage'
 import { useAccount } from 'core-kit/hooks/web3'
 import { isEqualAddress } from 'core-kit/utils'
 

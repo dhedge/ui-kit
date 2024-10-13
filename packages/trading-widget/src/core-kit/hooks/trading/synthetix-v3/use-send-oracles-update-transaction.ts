@@ -26,7 +26,7 @@ export const useSendOraclesUpdateTransaction = ({
             status: 'None',
             link: '',
             sendTokens: null,
-            receiveToken: null,
+            receiveTokens: null,
           })
           setTxHash(undefined)
           return
@@ -64,7 +64,7 @@ export const useSendOraclesUpdateTransaction = ({
         status: 'None',
         link: '',
         sendTokens: null,
-        receiveToken: null,
+        receiveTokens: null,
       })
       setTxHash(undefined)
     }

@@ -6,7 +6,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 interface VaultTransactionSummaryProps {
   sendTokens: TradingPanelStateModal['sendTokens']
-  receiveToken: TradingPanelStateModal['receiveToken']
+  receiveTokens: TradingPanelStateModal['receiveTokens']
   action: TradingPanelStateModal['action']
 }
 
@@ -14,11 +14,12 @@ const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 })
 
 export const VaultTransactionSummary: FC<VaultTransactionSummaryProps> = ({
   sendTokens,
-  receiveToken,
+  receiveTokens,
   action,
 }) => {
   const t = useTranslationContext()
   const [sendToken] = sendTokens ?? []
+  const [receiveToken] = receiveTokens ?? []
 
   if (!sendToken) {
     return null

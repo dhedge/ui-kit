@@ -1,4 +1,4 @@
-import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw/swap-step'
+import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 
 export const useWithdrawSwapUsdValue = (): number => {
   const { data: assets = [] } = useWithdrawTrackedAssets()

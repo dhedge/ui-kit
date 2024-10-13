@@ -79,7 +79,7 @@ export const useTradingResultHandling = () => {
         link: '',
         action,
         sendTokens: null,
-        receiveToken: null,
+        receiveTokens: null,
       })
       updatePendingTransactions({ type: 'remove', status: 'fail' })
 

@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js'
 import type { Address } from 'viem'
 import { stringToHex } from 'viem'
 
-import type { useWithdrawSwapData } from 'core-kit/hooks/trading/withdraw/swap-step/use-withdraw-swap-data'
-import type { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw/swap-step/use-withdraw-tracked-assets'
+import type { useWithdrawSwapData } from 'core-kit/hooks/trading/withdraw-v2/swap-step/use-withdraw-swap-data'
+import type { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step/use-withdraw-tracked-assets'
 
 /**
  * Calculates the slippage tolerance for withdrawSafe.

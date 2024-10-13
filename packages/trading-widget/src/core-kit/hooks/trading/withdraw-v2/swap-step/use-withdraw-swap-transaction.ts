@@ -6,13 +6,13 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
-import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw'
+import { useTradingSettleHandler } from 'core-kit/hooks/trading'
+import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import {
   useExpectedReceiveSwapAmount,
   useWithdrawSwapData,
   useWithdrawTrackedAssets,
-} from 'core-kit/hooks/trading/withdraw/swap-step'
+} from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
@@ -24,7 +24,13 @@ import {
 const action = 'swap'
 const functionName = EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD
 
-export const useWithdrawSwapTransaction = (): ContractActionFunc => {
+interface UseWithdrawSwapTransactionProps {
+  executeWithoutSwap?: boolean
+}
+
+export const useWithdrawSwapTransaction = ({
+  executeWithoutSwap,
+}: UseWithdrawSwapTransactionProps | undefined = {}): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const { data: assets = [] } = useWithdrawTrackedAssets()
   const { data: swapData } = useWithdrawSwapData()
@@ -45,6 +51,7 @@ export const useWithdrawSwapTransaction = (): ContractActionFunc => {
   const txArgs = useMemo(() => {
     // check if requires swaps
     if (
+      executeWithoutSwap ||
       assets.every(({ address }) =>
         isEqualAddress(address, receiveToken.address),
       )
@@ -60,11 +67,12 @@ export const useWithdrawSwapTransaction = (): ContractActionFunc => {
     })
     return [transactionSwapData, minExpectedReceiveAmount]
   }, [
+    executeWithoutSwap,
     assets,
-    receiveToken.address,
     swapData,
-    minExpectedReceiveAmount,
     slippage,
+    receiveToken.address,
+    minExpectedReceiveAmount,
   ])
 
   return useCallback(async () => {

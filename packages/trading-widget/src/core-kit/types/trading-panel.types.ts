@@ -40,6 +40,7 @@ export type TransactionAction =
   | 'approve'
   | 'oraclesUpdate'
   | 'swap'
+  | 'claim'
 
 export type SwapEntity = 'token' | 'pool'
 
