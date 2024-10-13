@@ -11,7 +11,7 @@ describe('isNativeToken', () => {
   })
 
   it('should return false when the symbol does not match the native token symbol for the given chainId', () => {
-    const symbol: NativeTokenSymbol = 'POL'
+    const symbol: NativeTokenSymbol = 'ETH'
     expect(isNativeToken(symbol, polygon.id)).toBe(false)
   })
 
