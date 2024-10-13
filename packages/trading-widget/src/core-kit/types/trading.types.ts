@@ -11,7 +11,7 @@ export interface TradingParams {
   receiveAssetAddress: Address
 }
 
-export type NativeTokenSymbol = 'ETH' | 'MATIC'
+export type NativeTokenSymbol = 'ETH' | 'POL'
 
 export type ChainNativeTokenMap = {
   [key in ChainId]?: {
