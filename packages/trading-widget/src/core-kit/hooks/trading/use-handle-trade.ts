@@ -12,8 +12,10 @@ import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
+import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 export const useHandleTrade = (trade: ContractActionFunc) => {
+  const t = useTranslationContext()
   const { account } = useAccount()
   const poolConfig = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
@@ -66,8 +68,8 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
     label: insufficientBalance
       ? 'Insufficient Balance'
       : type === 'deposit'
-        ? 'Buy'
-        : 'Sell',
+        ? t.depositAction
+        : t.withdrawAction,
     handleTrade,
   }
 }

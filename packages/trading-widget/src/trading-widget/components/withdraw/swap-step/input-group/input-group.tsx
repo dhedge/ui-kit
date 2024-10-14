@@ -6,7 +6,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const InputGroup: FC = () => {
   const t = useTranslationContext()
-  const { receiveToken } = useInputGroup()
+  const { receiveToken, swapDiff, themeType } = useInputGroup()
   return (
     <WidgetInput
       label={t.receiveEstimated}
@@ -17,6 +17,8 @@ export const InputGroup: FC = () => {
       assetPrice={receiveToken.price}
       displayCalculatedValue
       isLoading={receiveToken.isLoading}
+      tradingPriceDiff={swapDiff}
+      type={themeType}
     />
   )
 }

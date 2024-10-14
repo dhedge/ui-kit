@@ -5,20 +5,25 @@ import {
   useTradingPanelPoolConfig,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
-import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step/index'
+import {
+  useWithdrawSwapData,
+  useWithdrawTrackedAssets,
+} from 'core-kit/hooks/trading/withdraw-v2/swap-step/index'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
+import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 interface UseHandleWithdrawSwapProps {
   withdraw: ContractActionFunc
-  executeWithoutSwap?: boolean
+  skipSwap?: boolean
 }
 
 export const useHandleWithdrawSwap = ({
   withdraw,
-  executeWithoutSwap,
+  skipSwap,
 }: UseHandleWithdrawSwapProps) => {
+  const t = useTranslationContext()
   const { account } = useAccount()
   const poolConfig = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
@@ -26,6 +31,7 @@ export const useHandleWithdrawSwap = ({
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const onTransactionEstimationError = useOnTransactionEstimationError()
   const { data: assets = [] } = useWithdrawTrackedAssets()
+  const { isFetching } = useWithdrawSwapData()
 
   const handleTrade = async () => {
     const chainId = poolConfig.chainId
@@ -41,12 +47,10 @@ export const useHandleWithdrawSwap = ({
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
-      action: executeWithoutSwap ? 'claim' : 'swap',
+      action: skipSwap ? 'claim' : 'swap',
       link: '',
-      sendTokens: executeWithoutSwap ? null : withdrawalContractTokens,
-      receiveTokens: executeWithoutSwap
-        ? withdrawalContractTokens
-        : [receiveToken],
+      sendTokens: skipSwap ? null : withdrawalContractTokens,
+      receiveTokens: skipSwap ? withdrawalContractTokens : [receiveToken],
     })
 
     try {
@@ -72,8 +76,8 @@ export const useHandleWithdrawSwap = ({
   }
 
   return {
-    disabled: false,
-    label: executeWithoutSwap ? 'Claim Without Swap' : 'Swap',
+    disabled: skipSwap ? false : isFetching,
+    label: skipSwap ? t.claimAction : t.swapAction,
     handleTrade,
   }
 }

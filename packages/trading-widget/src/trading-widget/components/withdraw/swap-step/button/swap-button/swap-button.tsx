@@ -2,12 +2,12 @@ import type { FC } from 'react'
 
 import { ActionButton } from 'trading-widget/components/common'
 
-import { useSwapTradeButton } from 'trading-widget/components/withdraw/swap-step/trade-button/swap-trade-button.hooks'
+import { useSwapButton } from 'trading-widget/components/withdraw/swap-step/button/swap-button/swap-button.hooks'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
 
-export const SwapTradeButton: FC = () => {
+export const SwapButton: FC = () => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { handleTrade, disabled, label } = useSwapTradeButton()
+  const { handleTrade, disabled, label } = useSwapButton()
 
   return (
     <Button onClick={handleTrade} disabled={disabled}>

@@ -1,5 +1,5 @@
 import { useReceiveTokenInput } from 'core-kit/hooks/state'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import { useExpectedReceiveSwapAmount } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { formatNumberToLimitedDecimals, formatUnits } from 'core-kit/utils'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
@@ -14,7 +14,7 @@ export const useWithdrawSwapTransactionDisclosure = () => {
 
   const [receiveToken] = useReceiveTokenInput()
 
-  const withdrawSlippage = useWithdrawSlippage()
+  const withdrawSlippage = useAppliedWithdrawSlippage()
   const { minExpectedReceiveAmount } = useExpectedReceiveSwapAmount()
 
   const themeType = useGetThemeTypeBySlippage(withdrawSlippage)

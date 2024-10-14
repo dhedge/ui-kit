@@ -7,14 +7,14 @@ import {
 } from 'core-kit/hooks/state'
 import { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
 import { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-withdraw-slippage'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useAccount } from 'core-kit/hooks/web3'
 import { isEqualAddress } from 'core-kit/utils'
 
 export const useWithdrawSwapData = () => {
   const { chainId } = useTradingPanelPoolConfig()
   const { account: walletAddress = AddressZero } = useAccount()
-  const slippage = useWithdrawSlippage()
+  const slippage = useAppliedWithdrawSlippage()
 
   const [receiveToken] = useReceiveTokenInput()
   const { data: assets = [] } = useWithdrawTrackedAssets()

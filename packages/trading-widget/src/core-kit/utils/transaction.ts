@@ -68,8 +68,12 @@ export const buildSwapWithdrawTransactionData = ({
   assets: ReturnType<typeof useWithdrawTrackedAssets>['data']
   swapData: ReturnType<typeof useWithdrawSwapData>['data']
 }) => {
-  const { srcData, destAmount } = assets?.reduce(
-    (acc, asset) => {
+  const defaultSwapData = {
+    srcData: [] as unknown[],
+    destAmount: new BigNumber('0'),
+  }
+  const { srcData, destAmount } =
+    assets?.reduce((acc, asset) => {
       const assetSwapData = swapData?.[asset.address]
 
       if (!assetSwapData) {
@@ -83,15 +87,16 @@ export const buildSwapWithdrawTransactionData = ({
       const srcData = [asset.address, asset.rawBalance, aggregatorData]
       const destAmount = new BigNumber(assetSwapData.destinationAmount)
         .times(1 - slippage / 100)
-        .toFixed(0)
+        .toFixed(0, BigNumber.ROUND_DOWN)
 
       return {
         srcData: [...acc.srcData, srcData],
         destAmount: acc.destAmount.plus(destAmount),
       }
-    },
-    { srcData: [] as unknown[], destAmount: new BigNumber('0') },
-  ) ?? { srcData: [], destAmount: new BigNumber('0') }
+    }, defaultSwapData) ?? defaultSwapData
 
-  return [srcData, [receiveAssetAddress, destAmount.toFixed(0)]]
+  return [
+    srcData,
+    [receiveAssetAddress, destAmount.toFixed(0, BigNumber.ROUND_DOWN)],
+  ]
 }

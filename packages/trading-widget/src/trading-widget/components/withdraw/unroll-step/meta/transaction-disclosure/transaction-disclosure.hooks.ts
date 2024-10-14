@@ -8,7 +8,7 @@ import {
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -22,7 +22,7 @@ export const useWithdrawUnrollTransactionDisclosure = () => {
     useTradingPanelSettings()
   const [sendToken] = useSendTokenInput()
   const { exitFee } = usePoolFees({ address, chainId })
-  const slippage = useWithdrawSlippage()
+  const slippage = useAppliedWithdrawSlippage()
 
   const themeType = useGetThemeTypeBySlippage(slippage)
 

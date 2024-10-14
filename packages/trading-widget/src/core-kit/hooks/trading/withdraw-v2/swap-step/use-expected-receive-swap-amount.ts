@@ -6,26 +6,26 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useRawAssetPrice } from 'core-kit/hooks/trading/use-raw-asset-price'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
-import { useWithdrawSwapUsdValue } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useTotalSwapUsdValue } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 
 export const useExpectedReceiveSwapAmount = () => {
   const { chainId } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
   const price = useRawAssetPrice({ address: receiveToken.address, chainId })
-  const slippage = useWithdrawSlippage()
+  const slippage = useAppliedWithdrawSlippage()
 
-  const totalUsdAmountToBeSwapped = useWithdrawSwapUsdValue()
+  const totalUsdAmountToBeSwapped = useTotalSwapUsdValue()
 
   const expectedReceiveAmount = new BigNumber(totalUsdAmountToBeSwapped)
     .shiftedBy(DEFAULT_PRECISION)
-    .div(price?.toString() || '1')
+    .div(price?.toString() ?? '1')
     .shiftedBy(receiveToken.decimals)
-    .toFixed(0)
+    .toFixed(0, BigNumber.ROUND_DOWN)
 
   const minExpectedReceiveAmount = new BigNumber(expectedReceiveAmount)
     .times(1 - slippage / 100)
-    .toFixed(0)
+    .toFixed(0, BigNumber.ROUND_DOWN)
 
   return { expectedReceiveAmount, minExpectedReceiveAmount }
 }

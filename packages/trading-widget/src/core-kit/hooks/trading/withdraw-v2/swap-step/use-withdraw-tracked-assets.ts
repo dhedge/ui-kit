@@ -39,6 +39,7 @@ const getContracts = ({
       args: [token],
     },
   ])
+const contractCallsAmount = 3
 
 export const useWithdrawTrackedAssets = () => {
   const { account = AddressZero } = useAccount()
@@ -56,7 +57,7 @@ export const useWithdrawTrackedAssets = () => {
   const select = useCallback(
     (data: MulticallReturnType<ReturnType<typeof getContracts>>) =>
       assets.map(({ token, balance: rawBalance }, index) => {
-        const symbolIndex = index * 3
+        const symbolIndex = index * contractCallsAmount
         const decimalsIndex = symbolIndex + 1
         const priceIndex = decimalsIndex + 1
         const decimals = Number(

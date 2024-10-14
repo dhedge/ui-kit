@@ -7,7 +7,7 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
-import { useWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import {
   useExpectedReceiveSwapAmount,
   useWithdrawSwapData,
@@ -21,25 +21,25 @@ import {
   isEqualAddress,
 } from 'core-kit/utils'
 
-const action = 'swap'
 const functionName = EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD
 
 interface UseWithdrawSwapTransactionProps {
-  executeWithoutSwap?: boolean
+  skipSwap?: boolean
 }
 
 export const useWithdrawSwapTransaction = ({
-  executeWithoutSwap,
+  skipSwap,
 }: UseWithdrawSwapTransactionProps | undefined = {}): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const { data: assets = [] } = useWithdrawTrackedAssets()
   const { data: swapData } = useWithdrawSwapData()
   const [receiveToken] = useReceiveTokenInput()
   const { minExpectedReceiveAmount } = useExpectedReceiveSwapAmount()
-  const slippage = useWithdrawSlippage()
+  const slippage = useAppliedWithdrawSlippage()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
 
+  const action = skipSwap ? 'claim' : 'swap'
   const onSettled = useTradingSettleHandler(action)
 
   const { send } = useContractFunction({
@@ -49,13 +49,10 @@ export const useWithdrawSwapTransaction = ({
   })
 
   const txArgs = useMemo(() => {
-    // check if requires swaps
-    if (
-      executeWithoutSwap ||
-      assets.every(({ address }) =>
-        isEqualAddress(address, receiveToken.address),
-      )
-    ) {
+    const hasNoAssetsToBeSwapped = assets.every(({ address }) =>
+      isEqualAddress(address, receiveToken.address),
+    )
+    if (skipSwap || hasNoAssetsToBeSwapped) {
       return []
     }
 
@@ -67,7 +64,7 @@ export const useWithdrawSwapTransaction = ({
     })
     return [transactionSwapData, minExpectedReceiveAmount]
   }, [
-    executeWithoutSwap,
+    skipSwap,
     assets,
     swapData,
     slippage,
@@ -88,6 +85,7 @@ export const useWithdrawSwapTransaction = ({
 
     return send(...txArgs)
   }, [
+    action,
     poolConfig.chainId,
     poolConfig.symbol,
     send,

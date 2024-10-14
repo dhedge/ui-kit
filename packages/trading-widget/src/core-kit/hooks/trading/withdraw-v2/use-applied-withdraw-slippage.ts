@@ -1,10 +1,10 @@
 import { useTradingPanelSettings } from 'core-kit/hooks/state'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
-export const useWithdrawSlippage = () => {
+export const useAppliedWithdrawSlippage = () => {
   const { defaultWithdrawSlippage } = useConfigContextParams()
 
-  const [{ slippage }] = useTradingPanelSettings()
+  const [{ slippage, minSlippage }] = useTradingPanelSettings()
 
-  return slippage === 'auto' ? defaultWithdrawSlippage : slippage
+  return slippage === 'auto' ? minSlippage ?? defaultWithdrawSlippage : slippage
 }

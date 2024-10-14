@@ -6,10 +6,12 @@ import {
   formatUnits,
 } from 'core-kit/utils'
 import { TokenBadge } from 'trading-widget/components/common'
-import { useWithdrawBalance } from 'trading-widget/components/withdraw/swap-step/balance/balance.hooks'
 import { ClaimButton } from 'trading-widget/components/withdraw/swap-step/balance/claim-button'
+import { useWithdrawBalance } from 'trading-widget/components/withdraw/swap-step/balance/withdraw-balance.hooks'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const WithdrawBalance: FC = () => {
+  const { stablePrecision } = useConfigContextParams()
   const { assets, usdAmount } = useWithdrawBalance()
 
   return (
@@ -40,13 +42,12 @@ export const WithdrawBalance: FC = () => {
                         <p className="dtw-truncate">
                           {formatNumberToLimitedDecimals(
                             formatUnits(rawBalance, decimals),
-                            3,
+                            stablePrecision,
                           )}
                         </p>
                         <p className="dtw-truncate dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
                           {formatToUsd({
                             value: balance * price,
-                            maximumFractionDigits: 3,
                           })}
                         </p>
                       </td>

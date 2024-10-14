@@ -503,6 +503,11 @@ path: `component.meta[name]`
 > | `multiAssetFractions`            | string | multi asset fractions                                                                                                                                                                 |             |
 > | `explorer`                       | string | Explorer                                                                                                                                                                              |             |
 > | `as`                             | string | As                                                                                                                                                                                    |             |
+> | `switchNetwork`                  | string | Switch Network                                                                                                                                                                        |             |
+> | `depositAction`                  | string | Buy                                                                                                                                                                                   |             |
+> | `withdrawAction`                 | string | Sell                                                                                                                                                                                  |             |
+> | `swapAction`                     | string | Swap                                                                                                                                                                                  |             |
+> | `claimAction`                    | string | Claim Without Swap                                                                                                                                                                    |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

@@ -98,4 +98,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   explorer: 'Explorer',
   as: 'As',
   switchNetwork: 'Switch Network',
+  depositAction: 'Buy',
+  withdrawAction: 'Sell',
+  swapAction: 'Swap',
+  claimAction: 'Claim Without Swap',
 }

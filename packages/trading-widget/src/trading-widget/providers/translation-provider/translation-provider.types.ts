@@ -77,6 +77,10 @@ export type TranslationMap = {
   explorer: string
   as: string
   switchNetwork: string
+  depositAction: string
+  withdrawAction: string
+  swapAction: string
+  claimAction: string
   [key: string]: string
 }
 

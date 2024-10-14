@@ -3,11 +3,13 @@ import {
   useWithdrawSwapTransaction,
 } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 
+const skipSwap = true
+
 export const useClaimButton = () => {
-  const withdraw = useWithdrawSwapTransaction({ executeWithoutSwap: true })
+  const withdraw = useWithdrawSwapTransaction({ skipSwap })
   const { disabled, label, handleTrade } = useHandleWithdrawSwap({
     withdraw,
-    executeWithoutSwap: true,
+    skipSwap,
   })
 
   return { disabled, label, handleTrade }
