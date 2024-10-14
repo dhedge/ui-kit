@@ -12,14 +12,14 @@ import { useTotalSwapUsdValue } from 'core-kit/hooks/trading/withdraw-v2/swap-st
 export const useExpectedReceiveSwapAmount = () => {
   const { chainId } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
-  const price = useRawAssetPrice({ address: receiveToken.address, chainId })
+  const rawPrice = useRawAssetPrice({ address: receiveToken.address, chainId })
   const slippage = useAppliedWithdrawSlippage()
 
   const totalUsdAmountToBeSwapped = useTotalSwapUsdValue()
 
   const expectedReceiveAmount = new BigNumber(totalUsdAmountToBeSwapped)
     .shiftedBy(DEFAULT_PRECISION)
-    .div(price?.toString() ?? '1')
+    .div(rawPrice?.toString() ?? '1')
     .shiftedBy(receiveToken.decimals)
     .toFixed(0, BigNumber.ROUND_DOWN)
 

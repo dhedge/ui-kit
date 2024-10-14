@@ -4,16 +4,15 @@ import { useCallback, useMemo } from 'react'
 import {
   DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
   DEFAULT_PRECISION,
-  DEFAULT_WITHDRAW_SLIPPAGE,
   EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
 } from 'core-kit/const'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
-  useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
+import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/use-is-multi-asset-withdraw'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
@@ -27,7 +26,7 @@ export const useWithdrawTransaction = (): ContractActionFunc => {
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
 
-  const [{ slippage: tradingSlippage }] = useTradingPanelSettings()
+  const slippage = useAppliedWithdrawSlippage()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
 
   const onSettled = useTradingSettleHandler(action)
@@ -48,21 +47,14 @@ export const useWithdrawTransaction = (): ContractActionFunc => {
     const withdrawAmount = new BigNumber(sendToken.value || '0')
       .shiftedBy(DEFAULT_PRECISION)
       .toFixed(0, BigNumber.ROUND_DOWN)
-    const slippageTolerance = getSlippageToleranceForWithdrawSafe(
-      tradingSlippage === 'auto' ? DEFAULT_WITHDRAW_SLIPPAGE : tradingSlippage,
-    )
+    const slippageTolerance = getSlippageToleranceForWithdrawSafe(slippage)
 
     if (isMultiAssetsWithdraw) {
       return [withdrawAmount, slippageTolerance]
     }
 
     return [poolConfig.address, withdrawAmount, slippageTolerance]
-  }, [
-    isMultiAssetsWithdraw,
-    sendToken.value,
-    tradingSlippage,
-    poolConfig.address,
-  ])
+  }, [sendToken.value, slippage, isMultiAssetsWithdraw, poolConfig.address])
 
   return useCallback(async () => {
     updatePendingTransactions({

@@ -14,7 +14,7 @@ export const ClaimButton: FC = () => {
       onClick={handleTrade}
       disabled={disabled}
       highlighted={false}
-      className="!dtw-py-0.5 !dtw-px-1 dtw-text-[length:var(--panel-input-button-font-size,var(--panel-font-size-xs))]"
+      className="!dtw-py-0.5 dtw-text-[length:var(--panel-input-button-font-size,var(--panel-font-size-xs))]"
     >
       {label}
     </Button>

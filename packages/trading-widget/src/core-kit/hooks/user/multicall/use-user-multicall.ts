@@ -1,8 +1,5 @@
 import { EasySwapperV2Abi, PoolFactoryAbi } from 'core-kit/abi'
-import {
-  useContractReadErrorLogging,
-  useReadContracts,
-} from 'core-kit/hooks/web3'
+import { useReadContracts } from 'core-kit/hooks/web3'
 import type {
   MulticallReturnType,
   PoolContractCallParams,
@@ -36,16 +33,11 @@ const selector = (data: Data) => ({
 export const useUserMulticall = ({
   address,
   chainId,
-}: PoolContractCallParams) => {
-  const result = useReadContracts({
+}: PoolContractCallParams) =>
+  useReadContracts({
     contracts: getContracts({ address, chainId }),
     query: {
       enabled: !isZeroAddress(address),
       select: selector,
     },
   })
-
-  useContractReadErrorLogging({ error: result.error, status: result.status })
-
-  return result
-}

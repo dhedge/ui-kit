@@ -8,7 +8,7 @@ import {
 import {
   useWithdrawSwapData,
   useWithdrawTrackedAssets,
-} from 'core-kit/hooks/trading/withdraw-v2/swap-step/index'
+} from 'core-kit/hooks/trading/withdraw-v2/swap-step'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
@@ -31,7 +31,7 @@ export const useHandleWithdrawSwap = ({
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const onTransactionEstimationError = useOnTransactionEstimationError()
   const { data: assets = [] } = useWithdrawTrackedAssets()
-  const { isFetching } = useWithdrawSwapData()
+  const { isFetching: isAssetsFetching } = useWithdrawSwapData()
 
   const handleTrade = async () => {
     const chainId = poolConfig.chainId
@@ -76,7 +76,7 @@ export const useHandleWithdrawSwap = ({
   }
 
   return {
-    disabled: skipSwap ? false : isFetching,
+    disabled: skipSwap ? false : isAssetsFetching,
     label: skipSwap ? t.claimAction : t.swapAction,
     handleTrade,
   }

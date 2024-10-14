@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 
+import { TokenIcon } from 'trading-widget/components/common'
 import { TokenSelector } from 'trading-widget/components/widget/widget-input/token-selector/token-selector'
 import { AssetCompositionTable } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/asset-composition-table/asset-composition-table'
 import type { WithdrawSectionProps } from 'trading-widget/components/withdraw/unroll-step/input-group/withdraw-section/widget-section.hooks'
@@ -19,13 +20,22 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
           {isMultiAssetWithdraw ? (
             <AssetCompositionTable iconSize="sm" />
           ) : (
-            <ul className="dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))]">
-              {assetSymbol} withdraw includes 2 transaction
-              <li className="dtw-mt-0.5">
-                1. Unroll {vaultSymbol} tokens into multi assets
-              </li>
-              <li>2. Swap multi assets into {assetSymbol}</li>
-            </ul>
+            <div className="dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))]">
+              <div className="dtw-flex dtw-gap-1">
+                <TokenIcon symbols={[assetSymbol]} size="sm" /> {assetSymbol}{' '}
+                withdraw includes 2 transactions
+              </div>
+              <ul>
+                <li className="dtw-mt-1 dtw-flex dtw-gap-1">
+                  1. Unroll <TokenIcon symbols={[vaultSymbol]} size="sm" />{' '}
+                  {vaultSymbol} tokens into multi assets
+                </li>
+                <li className="dtw-mt-1 dtw-flex dtw-gap-1">
+                  2. Swap multi assets into{' '}
+                  <TokenIcon symbols={[assetSymbol]} size="sm" /> {assetSymbol}
+                </li>
+              </ul>
+            </div>
           )}
         </div>
         <TokenSelector symbol={assetSymbol} />

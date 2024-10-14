@@ -55,7 +55,6 @@ export const useTokenSelectOverlay = ({
 }: TokenSelectOverlayProps) => {
   const [{ isMultiAssetWithdrawalEnabled }] = useTradingPanelSettings()
   const isWithdrawSwapState = useIsWithdrawSwapStep()
-  // TODO: Remove the isPoolManagerAccount duplicate check in useWithdrawTypeHandler during trading widget build
   const isPoolManagerAccount = useIsPoolManagerAccount()
   const [tradingType] = useTradingPanelType()
   const { handleReject } = useOverlayHandlers({ type })
