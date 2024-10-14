@@ -13,8 +13,8 @@ export const CHAIN_MAP = {
 
 export const CHAIN_NATIVE_TOKENS: ChainNativeTokenMap = {
   [polygon.id]: {
-    nativeTokenSymbol: 'MATIC',
-    wrappedNativeTokenName: 'WMATIC',
+    nativeTokenSymbol: 'POL',
+    wrappedNativeTokenName: 'WPOL',
     address: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
     decimals: DEFAULT_PRECISION,
   },

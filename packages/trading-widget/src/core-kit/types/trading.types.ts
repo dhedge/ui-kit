@@ -1,6 +1,6 @@
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
-export type NativeTokenSymbol = 'ETH' | 'MATIC'
+export type NativeTokenSymbol = 'ETH' | 'POL'
 
 export type ChainNativeTokenMap = {
   [key in ChainId]?: {

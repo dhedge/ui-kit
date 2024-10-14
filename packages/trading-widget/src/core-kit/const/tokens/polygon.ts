@@ -37,9 +37,9 @@ export const WBTC_POLYGON: TradingToken = {
   value: '',
 }
 
-export const WMATIC_POLYGON: TradingToken = {
+export const WPOL_POLYGON: TradingToken = {
   address: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
-  symbol: 'WMATIC',
+  symbol: 'WPOL',
   decimals: 8,
   value: '',
 }
