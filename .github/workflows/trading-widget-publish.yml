@@ -37,6 +37,6 @@ jobs:
           CI: true
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm build
-      - run: pnpx nx publish core-ui-kit
+      - run: pnpx nx publish trading-widget --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
