@@ -22,7 +22,7 @@ import {
   USDT_POLYGON,
   WBTC_POLYGON,
   WETH_POLYGON,
-  WMATIC_POLYGON,
+  WPOL_POLYGON,
 } from './polygon'
 import { DEFAULT_PRECISION } from '../default-data'
 import { arbitrum, base, optimism, polygon } from '../network'
@@ -66,7 +66,7 @@ export const FALLBACK_ASSETS_MAP: Record<
     DAI: DAI_OPTIMISM,
   },
   [polygon.id]: {
-    WMATIC: WMATIC_POLYGON,
+    WMATIC: WPOL_POLYGON,
     WETH: WETH_POLYGON,
     USDC: USDC_POLYGON,
     WBTC: WBTC_POLYGON,
