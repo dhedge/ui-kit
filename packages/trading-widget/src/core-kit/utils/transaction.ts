@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js'
 import type { Address } from 'viem'
 import { stringToHex } from 'viem'
 
-import type { useWithdrawSwapData } from 'core-kit/hooks/trading/withdraw-v2/swap-step/use-withdraw-swap-data'
-import type { useWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/swap-step/use-withdraw-tracked-assets'
+import type { useCompleteWithdrawSwapData } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-swap-data'
+import type { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-tracked-assets'
 
 /**
  * Calculates the slippage tolerance for withdrawSafe.
@@ -65,8 +65,8 @@ export const buildSwapWithdrawTransactionData = ({
 }: {
   receiveAssetAddress: Address
   slippage: number
-  assets: ReturnType<typeof useWithdrawTrackedAssets>['data']
-  swapData: ReturnType<typeof useWithdrawSwapData>['data']
+  assets: ReturnType<typeof useCompleteWithdrawTrackedAssets>['data']
+  swapData: ReturnType<typeof useCompleteWithdrawSwapData>['data']
 }) => {
   const defaultSwapData = {
     srcData: [] as unknown[],

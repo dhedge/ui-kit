@@ -1,14 +1,14 @@
 import { useTradingPanelSettings } from 'core-kit/hooks/state'
-import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
+import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useAppliedWithdrawSlippage = () => {
   const { defaultWithdrawSlippage } = useConfigContextParams()
-  const isSwapStep = useIsWithdrawSwapStep()
+  const isCompleteWithdrawStep = useIsCompleteWithdrawStep()
 
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
 
-  const autoSlippage = isSwapStep
+  const autoSlippage = isCompleteWithdrawStep
     ? minSlippage ?? defaultWithdrawSlippage
     : defaultWithdrawSlippage
 

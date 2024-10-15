@@ -8,7 +8,7 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
-import { useIsWithdrawSwapStep } from 'core-kit/hooks/trading/withdraw-v2/swap-step'
+import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
 import type { TradingPanelActionsState, TradingToken } from 'core-kit/types'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
@@ -54,7 +54,7 @@ export const useTokenSelectOverlay = ({
   type,
 }: TokenSelectOverlayProps) => {
   const [{ isMultiAssetWithdrawalEnabled }] = useTradingPanelSettings()
-  const isWithdrawSwapState = useIsWithdrawSwapStep()
+  const isCompleteWithdrawStep = useIsCompleteWithdrawStep()
   const isPoolManagerAccount = useIsPoolManagerAccount()
   const [tradingType] = useTradingPanelType()
   const { handleReject } = useOverlayHandlers({ type })
@@ -88,6 +88,6 @@ export const useTokenSelectOverlay = ({
       isMultiAssetWithdrawalEnabled &&
       tradingType === 'withdraw' &&
       !isPoolManagerAccount &&
-      !isWithdrawSwapState,
+      !isCompleteWithdrawStep,
   }
 }
