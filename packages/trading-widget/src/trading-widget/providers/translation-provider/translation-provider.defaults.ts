@@ -102,4 +102,12 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   withdrawAction: 'Sell',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
+  claimLabel: 'Claim',
+  swapOf: 'Swap of',
+  to: 'to',
+  initWithdrawDescription:
+    'Unroll {vaultSymbol} tokens into convertible tokens',
+  initWithdrawTooltip:
+    'Convertible tokens are basic ERC20 tokens which can be swapped on any DEXs',
+  completeWithdrawDescription: 'Swap convertible tokens into {assetSymbol}',
 }

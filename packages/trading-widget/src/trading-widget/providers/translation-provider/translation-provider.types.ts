@@ -81,6 +81,12 @@ export type TranslationMap = {
   withdrawAction: string
   swapAction: string
   claimAction: string
+  claimLabel: string
+  swapOf: string
+  to: string
+  initWithdrawDescription: string
+  initWithdrawTooltip: string
+  completeWithdrawDescription: string
   [key: string]: string
 }
 

@@ -4,7 +4,7 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 
 export const useAppliedWithdrawSlippage = () => {
   const { defaultWithdrawSlippage } = useConfigContextParams()
-  const isCompleteWithdrawStep = useIsCompleteWithdrawStep()
+  const { isCompleteWithdrawStep } = useIsCompleteWithdrawStep()
 
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
 

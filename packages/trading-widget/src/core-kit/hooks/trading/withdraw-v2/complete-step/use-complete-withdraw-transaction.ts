@@ -24,11 +24,11 @@ import {
 const functionName = EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD
 
 interface UseWithdrawSwapTransactionProps {
-  skipSwap?: boolean
+  isClaim?: boolean
 }
 
 export const useCompleteWithdrawTransaction = ({
-  skipSwap,
+  isClaim,
 }: UseWithdrawSwapTransactionProps | undefined = {}): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
@@ -39,7 +39,7 @@ export const useCompleteWithdrawTransaction = ({
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
 
-  const action = skipSwap ? 'claim' : 'swap'
+  const action = isClaim ? 'claim' : 'swap'
   const onSettled = useTradingSettleHandler(action)
 
   const { send } = useContractFunction({
@@ -49,10 +49,12 @@ export const useCompleteWithdrawTransaction = ({
   })
 
   const txArgs = useMemo(() => {
-    const hasNoAssetsToBeSwapped = assets.every(({ address }) =>
-      isEqualAddress(address, receiveToken.address),
-    )
-    if (skipSwap || hasNoAssetsToBeSwapped) {
+    const hasNoAssetsToBeSwapped =
+      assets.length > 0 &&
+      assets.some(
+        ({ address }) => !isEqualAddress(address, receiveToken.address),
+      )
+    if (isClaim || hasNoAssetsToBeSwapped) {
       return []
     }
 
@@ -64,7 +66,7 @@ export const useCompleteWithdrawTransaction = ({
     })
     return [transactionSwapData, minExpectedReceiveAmount]
   }, [
-    skipSwap,
+    isClaim,
     assets,
     swapData,
     slippage,

@@ -508,6 +508,12 @@ path: `component.meta[name]`
 > | `withdrawAction`                 | string | Sell                                                                                                                                                                                  |             |
 > | `swapAction`                     | string | Swap                                                                                                                                                                                  |             |
 > | `claimAction`                    | string | Claim Without Swap                                                                                                                                                                    |             |
+> | `claimLabel`                     | string | Claim                                                                                                                                                                                 |             |
+> | `swapOf`                         | string | Swap of                                                                                                                                                                               |             |
+> | `to`                             | string | to                                                                                                                                                                                    |             |
+> | `initWithdrawDescription`        | string | Unroll {vaultSymbol} tokens into multi assets                                                                                                                                         |             |
+> | `initWithdrawTooltip`            | string | Convertible tokens are basic ERC20 tokens which can be swapped on any DEXs                                                                                                            |             |
+> | `completeWithdrawDescription`    | string | Swap multi assets into {assetSymbol}                                                                                                                                                  |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

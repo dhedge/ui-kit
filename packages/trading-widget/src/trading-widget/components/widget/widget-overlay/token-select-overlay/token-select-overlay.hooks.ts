@@ -54,7 +54,7 @@ export const useTokenSelectOverlay = ({
   type,
 }: TokenSelectOverlayProps) => {
   const [{ isMultiAssetWithdrawalEnabled }] = useTradingPanelSettings()
-  const isCompleteWithdrawStep = useIsCompleteWithdrawStep()
+  const { isCompleteWithdrawStep } = useIsCompleteWithdrawStep()
   const isPoolManagerAccount = useIsPoolManagerAccount()
   const [tradingType] = useTradingPanelType()
   const { handleReject } = useOverlayHandlers({ type })

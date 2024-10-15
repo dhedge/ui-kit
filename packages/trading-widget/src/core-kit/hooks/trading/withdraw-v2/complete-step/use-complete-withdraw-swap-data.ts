@@ -20,9 +20,7 @@ export const useCompleteWithdrawSwapData = () => {
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
   const swapDataRequired =
     assets.length > 0 &&
-    !assets.every(({ address }) =>
-      isEqualAddress(address, receiveToken.address),
-    )
+    assets.some(({ address }) => !isEqualAddress(address, receiveToken.address))
 
   const swapDataAssets = useMemo(
     () =>

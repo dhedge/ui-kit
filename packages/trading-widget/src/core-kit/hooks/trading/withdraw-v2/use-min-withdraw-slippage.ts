@@ -15,14 +15,15 @@ export const useMinWithdrawSlippage = () => {
   const { defaultWithdrawSlippage, defaultSwapTransactionSlippage } =
     useConfigContextParams()
   const isWithdraw = !useIsDepositTradingPanelType()
-  const isCompleteWithdrawStep = useIsCompleteWithdrawStep()
+  const { isCompleteWithdrawStep, isFetching: isWithdrawStepFetching } =
+    useIsCompleteWithdrawStep()
   const [receivedToken] = useReceiveTokenInput()
 
   const [, updateSettings] = useTradingPanelSettings()
   const swapDiff = useCompleteWithdrawReceiveDiff()
 
   useEffect(() => {
-    if (!isWithdraw || receivedToken.isLoading) {
+    if (!isWithdraw || receivedToken.isLoading || isWithdrawStepFetching) {
       return
     }
 
@@ -45,5 +46,6 @@ export const useMinWithdrawSlippage = () => {
     isCompleteWithdrawStep,
     defaultWithdrawSlippage,
     defaultSwapTransactionSlippage,
+    isWithdrawStepFetching,
   ])
 }

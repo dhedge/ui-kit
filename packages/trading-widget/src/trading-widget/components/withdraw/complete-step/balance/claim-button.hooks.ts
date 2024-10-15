@@ -3,13 +3,13 @@ import {
   useHandleCompleteWithdraw,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 
-const skipSwap = true
+const isClaim = true
 
 export const useClaimButton = () => {
-  const withdraw = useCompleteWithdrawTransaction({ skipSwap })
+  const withdraw = useCompleteWithdrawTransaction({ isClaim })
   const { disabled, label, handleTrade } = useHandleCompleteWithdraw({
     withdraw,
-    skipSwap,
+    isClaim,
   })
 
   return { disabled, label, handleTrade }

@@ -11,7 +11,7 @@ export const useCompleteWithdrawInputGroup = () => {
   const [receiveToken] = useReceiveTokenInput()
   const price = useAssetPrice({ address: receiveToken.address, chainId })
   const swapDiff = useCompleteWithdrawReceiveDiff()
-  const themeType = useGetThemeTypeBySlippage(swapDiff < 0 ? swapDiff : 0)
+  const themeType = useGetThemeTypeBySlippage(Math.min(0, swapDiff))
 
   return {
     receiveToken: {

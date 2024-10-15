@@ -1,4 +1,5 @@
 import { useSendTokenInput } from 'core-kit/hooks/state'
+import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 export interface WithdrawSectionProps {
   isMultiAssetWithdraw: boolean
@@ -9,8 +10,9 @@ export const useWithdrawSection = ({
   isMultiAssetWithdraw,
   assetSymbol,
 }: WithdrawSectionProps) => {
+  const t = useTranslationContext()
   const [sendToken] = useSendTokenInput()
-  const label = isMultiAssetWithdraw ? 'Receive(estimated)' : ''
+  const label = isMultiAssetWithdraw ? t.receiveEstimated : ''
   return {
     isMultiAssetWithdraw,
     label,

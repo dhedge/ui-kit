@@ -16,12 +16,12 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 interface UseHandleWithdrawSwapProps {
   withdraw: ContractActionFunc
-  skipSwap?: boolean
+  isClaim?: boolean
 }
 
 export const useHandleCompleteWithdraw = ({
   withdraw,
-  skipSwap,
+  isClaim,
 }: UseHandleWithdrawSwapProps) => {
   const t = useTranslationContext()
   const { account } = useAccount()
@@ -47,10 +47,10 @@ export const useHandleCompleteWithdraw = ({
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
-      action: skipSwap ? 'claim' : 'swap',
+      action: isClaim ? 'claim' : 'swap',
       link: '',
-      sendTokens: skipSwap ? null : withdrawalContractTokens,
-      receiveTokens: skipSwap ? withdrawalContractTokens : [receiveToken],
+      sendTokens: isClaim ? null : withdrawalContractTokens,
+      receiveTokens: isClaim ? withdrawalContractTokens : [receiveToken],
     })
 
     try {
@@ -76,8 +76,8 @@ export const useHandleCompleteWithdraw = ({
   }
 
   return {
-    disabled: skipSwap ? false : isAssetsFetching,
-    label: skipSwap ? t.claimAction : t.swapAction,
+    disabled: isClaim ? false : isAssetsFetching,
+    label: isClaim ? t.claimAction : t.swapAction,
     handleTrade,
   }
 }
