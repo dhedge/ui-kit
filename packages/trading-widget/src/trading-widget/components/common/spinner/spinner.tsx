@@ -2,26 +2,17 @@ import classNames from 'classnames'
 import type { FC } from 'react'
 
 import type { ThemeType } from 'trading-widget/types'
-import { THEME_TYPE } from 'trading-widget/types'
 
 interface SpinnerProps {
   type?: ThemeType
   className?: string
 }
 
-export const Spinner: FC<SpinnerProps> = ({
-  type = THEME_TYPE.SUCCESS,
-  className,
-}) => {
+export const Spinner: FC<SpinnerProps> = ({ className }) => {
   return (
     <svg
       className={classNames(
-        'dtw-animate-spin',
-        {
-          'dtw-stroke-themeGreen': type === THEME_TYPE.SUCCESS,
-          'dtw-stroke-[color:var(--panel-accent-content-color)]':
-            type === THEME_TYPE.DEFAULT,
-        },
+        'dtw-animate-spin dtw-stroke-[color:var(--panel-accent-content-color)]',
         className,
       )}
       viewBox="0 0 24 24"

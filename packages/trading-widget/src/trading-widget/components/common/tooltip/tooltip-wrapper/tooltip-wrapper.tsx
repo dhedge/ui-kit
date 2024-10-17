@@ -38,7 +38,7 @@ export const TooltipWrapper: FC<TooltipWrapperProps> = ({
           ref={setTooltipRef}
           {...getTooltipProps({
             className:
-              'tooltip-container dtw-z-50 dtw-bg-[color:var(--panel-tooltip-bg)] dtw-text-white dtw-px-2 dtw-py-1.5 dtw-rounded-md dtw-text-xs dtw-text-center dtw-block dtw-whitespace-normal',
+              'tooltip-container dtw-z-50 dtw-bg-[color:var(--panel-tooltip-bg)] dtw-text-[color:var(--panel-tooltip-color)] dtw-px-2 dtw-py-1.5 dtw-rounded-md dtw-text-xs dtw-text-center dtw-block dtw-whitespace-normal',
           })}
         >
           {tooltipContent}

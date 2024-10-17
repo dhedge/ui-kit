@@ -31,7 +31,9 @@ export const TabButton: FC<TabProps> = ({ tradingType }) => {
         <>
           <span>{name}</span>
           {selected ? (
-            <div className="dtw-absolute dtw-bottom-0 dtw-left-0 dtw-right-0 dtw-h-full dtw-rounded-[var(--panel-radius-secondary)] dtw-bg-[var(--panel-tab-bg,var(--panel-neutral-color))] dtw-shadow-md dtw-pointer-events-none" />
+            <div className="dtw-flex dtw-items-center dtw-justify-center dtw-absolute dtw-bottom-0 dtw-left-0 dtw-right-0 dtw-h-full dtw-rounded-[var(--panel-radius-secondary)] dtw-bg-[var(--panel-tab-bg,var(--panel-neutral-color))] dtw-shadow-md dtw-pointer-events-none">
+              <span>{name}</span>
+            </div>
           ) : null}
         </>
       )}
