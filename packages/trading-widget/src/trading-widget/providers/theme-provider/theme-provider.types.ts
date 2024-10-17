@@ -207,6 +207,7 @@ export interface ThemeProviderConfigProps {
     tooltip?: {
       color?: {
         colorBg?: string
+        colorText?: string
       }
       size?: object
       style?: object
