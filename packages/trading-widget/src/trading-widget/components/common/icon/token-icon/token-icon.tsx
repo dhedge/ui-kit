@@ -28,32 +28,32 @@ export const getSizeClasses = (size: TokenIconSize) => {
   switch (size) {
     case 'xs':
       return {
-        height: 'dtw-h-3 sm:dtw-h-4 ',
-        width: 'dtw-w-3 sm:dtw-w-4',
+        height: '!dtw-h-3 sm:!dtw-h-4 ',
+        width: '!dtw-w-3 sm:!dtw-w-4',
         diameter: 16,
       }
     case 'sm':
       return {
-        height: 'dtw-h-4 sm:dtw-h-5 ',
-        width: 'dtw-w-4 sm:dtw-w-5',
+        height: '!dtw-h-4 sm:!dtw-h-5 ',
+        width: '!dtw-w-4 sm:!dtw-w-5',
         diameter: 20,
       }
     case 'm':
       return {
-        height: 'dtw-h-5 sm:dtw-h-6 ',
-        width: 'dtw-w-5 sm:dtw-w-6',
+        height: '!dtw-h-5 sm:!dtw-h-6 ',
+        width: '!dtw-w-5 sm:!dtw-w-6',
         diameter: 24,
       }
     case 'lg':
       return {
-        height: 'dtw-h-7 sm:dtw-h-8 ',
-        width: 'dtw-w-7 sm:dtw-w-8',
+        height: '!dtw-h-7 sm:!dtw-h-8 ',
+        width: '!dtw-w-7 sm:!dtw-w-8',
         diameter: 32,
       }
     case 'xl':
       return {
-        height: 'dtw-h-9 sm:dtw-h-10 ',
-        width: 'dtw-w-9 sm:dtw-w-10',
+        height: '!dtw-h-9 sm:!dtw-h-10 ',
+        width: '!dtw-w-9 sm:!dtw-w-10',
         diameter: 36,
       }
   }

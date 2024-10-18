@@ -9,11 +9,14 @@ import { useTokenSelectItem } from './token-select-item.hooks'
 export const TokenSelectItem = ({
   token,
   onSelect,
+  onClose,
   isActive = false,
 }: TokenSelectItemProps) => {
   const { onClick, formattedBalance } = useTokenSelectItem({
     token,
     onSelect,
+    onClose,
+    isActive,
   })
 
   return (

@@ -7,12 +7,15 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 export interface TokenSelectItemProps {
   token: TradingToken
   onSelect: (token: TradingToken) => void
+  onClose: () => void
   isActive?: boolean
 }
 
 export const useTokenSelectItem = ({
   token,
   onSelect,
+  isActive,
+  onClose,
 }: TokenSelectItemProps) => {
   const balance = useUserTokenBalance({
     symbol: token.symbol,
@@ -25,6 +28,10 @@ export const useTokenSelectItem = ({
   )
 
   const handleOptionSelect = () => {
+    if (isActive) {
+      onClose()
+      return
+    }
     onSelect(token)
   }
 

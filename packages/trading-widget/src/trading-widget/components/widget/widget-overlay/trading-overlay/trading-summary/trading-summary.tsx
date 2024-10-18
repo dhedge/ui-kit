@@ -1,54 +1,36 @@
 import type { FC } from 'react'
 
 import { useTradingPanelModal } from 'core-kit/hooks/state'
-import { TokenIcon } from 'trading-widget/components/common'
-import { useTranslationContext } from 'trading-widget/providers/translation-provider'
-
-const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 })
+import { ApproveSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/approve-summary'
+import { ClaimSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/claim-summary'
+import { OraclesUpdateSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/oracles-update-summary'
+import { SwapSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/swap-summary'
+import { VaultTransactionSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/vault-transaction-summary'
 
 export const TradingSummary: FC = () => {
-  const t = useTranslationContext()
-  const [{ action, receiveToken, sendToken }] = useTradingPanelModal()
+  const [{ action, receiveTokens, sendTokens }] = useTradingPanelModal()
 
   if (action === 'oraclesUpdate') {
-    return (
-      <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1 dtw-flex-wrap dtw-overflow-hidden">
-        {t.updateSynthetixOracles}
-      </div>
-    )
+    return <OraclesUpdateSummary />
   }
 
-  if (action === 'approve' && sendToken) {
-    return (
-      <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1 dtw-flex-wrap dtw-overflow-hidden">
-        <span>{t.approveSpending}</span>
-        <TokenIcon size="sm" symbols={[sendToken.symbol]} />
-        <span>{sendToken.symbol}</span>
-      </div>
-    )
+  if (action === 'approve') {
+    return <ApproveSummary sendTokens={sendTokens} />
   }
 
-  if (!sendToken || !receiveToken) return null
+  if (action === 'swap') {
+    return <SwapSummary sendTokens={sendTokens} receiveTokens={receiveTokens} />
+  }
+
+  if (action === 'claim') {
+    return <ClaimSummary receiveTokens={receiveTokens} />
+  }
 
   return (
-    <div className="dtw-flex dtw-flex-wrap dtw-items-center dtw-justify-center dtw-gap-1">
-      {action === 'deposit' ? t.pay : t.sell}
-      <div className="dtw-flex dtw-items-center dtw-gap-1">
-        {formatter.format(+sendToken.value)}{' '}
-        <TokenIcon size="sm" symbols={[sendToken.symbol]} /> {sendToken.symbol}
-      </div>{' '}
-      to receive
-      <div className="dtw-flex dtw-items-center dtw-gap-1">
-        {receiveToken.symbol === 'all' ? (
-          t.multiAssetFractions
-        ) : (
-          <>
-            {formatter.format(+receiveToken.value)}{' '}
-            <TokenIcon size="sm" symbols={[receiveToken.symbol]} />{' '}
-            {receiveToken.symbol}
-          </>
-        )}
-      </div>
-    </div>
+    <VaultTransactionSummary
+      action={action}
+      sendTokens={sendTokens}
+      receiveTokens={receiveTokens}
+    />
   )
 }

@@ -3,7 +3,6 @@ import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 import {
   AaveLendingPoolAbi,
   DHedgeStakingV2Abi,
-  DhedgeEasySwapperAbi,
   EasySwapperV2Abi,
   FlatcoinPointsModuleAbi,
   PoolFactoryAbi,
@@ -21,10 +20,6 @@ import {
   AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
   AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
   AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
-  EASY_SWAPPER_ADDRESS_ARBITRUM,
-  EASY_SWAPPER_ADDRESS_BASE,
-  EASY_SWAPPER_ADDRESS_OPTIMISM,
-  EASY_SWAPPER_ADDRESS_POLYGON,
   EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
   EASY_SWAPPER_V2_ADDRESS_BASE,
   EASY_SWAPPER_V2_ADDRESS_OPTIMISM,
@@ -42,7 +37,6 @@ import {
 
 export type ContractId =
   | 'factory'
-  | 'easySwapper'
   | 'rewardDistribution'
   | 'aaveLendingPoolV2'
   | 'aaveLendingPoolV3'
@@ -62,14 +56,12 @@ type ContractsAddressesMap = Readonly<
 export const contractsAddressesMap: ContractsAddressesMap = {
   [polygon.id]: {
     factory: FACTORY_ADDRESS_POLYGON,
-    easySwapper: EASY_SWAPPER_ADDRESS_POLYGON,
     aaveLendingPoolV2: AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_POLYGON,
   },
   [optimism.id]: {
     factory: FACTORY_ADDRESS_OPTIMISM,
-    easySwapper: EASY_SWAPPER_ADDRESS_OPTIMISM,
     rewardDistribution: REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
     stakingV2: STAKING_V2_ADDRESS_OPTIMISM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
@@ -77,7 +69,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
   },
   [arbitrum.id]: {
     factory: FACTORY_ADDRESS_ARBITRUM,
-    easySwapper: EASY_SWAPPER_ADDRESS_ARBITRUM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
     synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_ARBITRUM,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
@@ -86,7 +77,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     factory: FACTORY_ADDRESS_BASE,
     synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_BASE,
     flatcoinPointsModule: FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
-    easySwapper: EASY_SWAPPER_ADDRESS_BASE,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_BASE,
   },
 }
@@ -94,7 +84,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const contractsAbisMap: { [id in ContractId]: any } = {
   factory: PoolFactoryAbi,
-  easySwapper: DhedgeEasySwapperAbi,
   aaveLendingPoolV2: AaveLendingPoolAbi,
   aaveLendingPoolV3: AaveLendingPoolAbi,
   rewardDistribution: RewardDistributionAbi,

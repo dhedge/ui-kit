@@ -1,4 +1,4 @@
-import { EasySwapperV2Abi, PoolFactoryAbi, PoolLogicAbi } from 'core-kit/abi'
+import { EasySwapperV2Abi, PoolLogicAbi } from 'core-kit/abi'
 import { AddressZero } from 'core-kit/const'
 import {
   useContractReadErrorLogging,
@@ -12,13 +12,6 @@ import { getContractAddressById, isZeroAddress } from 'core-kit/utils'
 
 const getContracts = ({ address, chainId }: PoolContractCallParams) =>
   [
-    {
-      address: getContractAddressById('factory', chainId),
-      abi: PoolFactoryAbi,
-      functionName: 'isPool',
-      chainId,
-      args: [address],
-    },
     {
       address: address ?? AddressZero,
       abi: PoolLogicAbi,
@@ -44,10 +37,9 @@ const getContracts = ({ address, chainId }: PoolContractCallParams) =>
 type Data = MulticallReturnType<ReturnType<typeof getContracts>>
 
 const selector = (data: Data) => ({
-  isPool: data[0].result,
-  poolManagerLogic: data[1].result,
-  isCustomCooldownDepositAllowed: data[2].result,
-  customCooldown: data[3].result,
+  poolManagerLogic: data[0].result,
+  isCustomCooldownDepositAllowed: data[1].result,
+  customCooldown: data[2].result,
 })
 
 export const usePoolStatic = ({ address, chainId }: PoolContractCallParams) => {

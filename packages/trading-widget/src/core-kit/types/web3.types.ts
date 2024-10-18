@@ -26,22 +26,13 @@ export type TransactionRequest = Pick<
   'to' | 'data' | 'value' | 'from'
 >
 
-export type ContractActionFunc = () => Promise<void | unknown> // TODO: check
+export type ContractActionFunc = () => Promise<void | unknown>
 
 export interface EstimatedGas {
   value: bigint
   error: string
 }
 export type EstimateCall = (...args: unknown[]) => Promise<EstimatedGas>
-
-export interface SendEstimationResult {
-  argsToUse: unknown[]
-  gas: bigint
-}
-
-export interface ContractCallArgs<T extends string | undefined | void> {
-  getOrderedArgs: (extraArg: T) => string[]
-}
 
 export interface SimulateTransactionParams {
   chainId: ChainId

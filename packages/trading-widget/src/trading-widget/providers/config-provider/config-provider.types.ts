@@ -5,7 +5,7 @@ export interface ConfigProviderParams {
   isSanctioned: boolean
   depositQuoteDiffWarningThreshold: number
   depositQuoteDiffErrorThreshold: number
-  defaultWithdrawSlippageScale: number[]
+  defaultWithdrawSlippage: number
   defaultSwapTransactionSlippage: number
   defaultNoSwapMinDepositAmountGap: number
   defaultLockTime: string

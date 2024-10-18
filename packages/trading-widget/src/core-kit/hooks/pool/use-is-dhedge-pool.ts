@@ -1,5 +1,5 @@
 import { AddressZero } from 'core-kit/const'
-import { usePoolStatic } from 'core-kit/hooks/pool/multicall'
+import { useUserMulticall } from 'core-kit/hooks/user/multicall/use-user-multicall'
 import type { Address, ChainId } from 'core-kit/types'
 
 export const useIsDhedgePool = ({
@@ -9,7 +9,10 @@ export const useIsDhedgePool = ({
   address?: Address
   chainId: ChainId
 }) => {
-  const { data: { isPool } = {} } = usePoolStatic({ address, chainId })
+  const { data: { isUserDhedgePool } = {} } = useUserMulticall({
+    address,
+    chainId,
+  })
 
-  return !!isPool
+  return !!isUserDhedgePool
 }

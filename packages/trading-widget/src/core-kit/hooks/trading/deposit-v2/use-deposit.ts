@@ -41,7 +41,15 @@ export const useDeposit = (): ContractActionFunc => {
       chainId,
     })
 
+    console.log('Function Name:', depositMethod)
     console.log('Transaction Arguments:', txArgs)
     return send(...txArgs)
-  }, [updatePendingTransactions, chainId, receiveToken.symbol, send, txArgs])
+  }, [
+    updatePendingTransactions,
+    chainId,
+    receiveToken.symbol,
+    send,
+    txArgs,
+    depositMethod,
+  ])
 }

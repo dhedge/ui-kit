@@ -1,34 +1,34 @@
 import { optimism } from 'core-kit/const'
-import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
+import { useUserMulticall } from 'core-kit/hooks/user/multicall/use-user-multicall'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { renderHook } from 'tests/test-utils'
 
 import { useIsDhedgePool } from './use-is-dhedge-pool'
 
-vi.mock('core-kit/hooks/pool/multicall', () => ({
-  usePoolStatic: vi.fn(),
+vi.mock('core-kit/hooks/user/multicall/use-user-multicall', () => ({
+  useUserMulticall: vi.fn(),
 }))
 
 describe('useIsDhedgePool', () => {
   it('should return isPool from PoolStatic data', async () => {
-    const isPool = true
+    const isUserDhedgePool = true
 
-    vi.mocked(poolMulticallHooks.usePoolStatic).mockImplementation(
+    vi.mocked(useUserMulticall).mockImplementation(
       () =>
         ({
-          data: { isPool },
-        }) as ReturnType<typeof poolMulticallHooks.usePoolStatic>,
+          data: { isUserDhedgePool },
+        }) as ReturnType<typeof useUserMulticall>,
     )
 
     const { result } = renderHook(() =>
       useIsDhedgePool({ address: TEST_ADDRESS, chainId: optimism.id }),
     )
 
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledTimes(1)
-    expect(vi.mocked(poolMulticallHooks.usePoolStatic)).toHaveBeenCalledWith({
+    expect(vi.mocked(useUserMulticall)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(useUserMulticall)).toHaveBeenCalledWith({
       address: TEST_ADDRESS,
       chainId: optimism.id,
     })
-    expect(result.current).toBe(isPool)
+    expect(result.current).toBe(isUserDhedgePool)
   })
 })

@@ -77,6 +77,16 @@ export type TranslationMap = {
   explorer: string
   as: string
   switchNetwork: string
+  depositAction: string
+  withdrawAction: string
+  swapAction: string
+  claimAction: string
+  claimLabel: string
+  swapOf: string
+  to: string
+  initWithdrawDescription: string
+  initWithdrawTooltip: string
+  completeWithdrawDescription: string
   [key: string]: string
 }
 

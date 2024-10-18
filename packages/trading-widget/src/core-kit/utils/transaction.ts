@@ -3,42 +3,8 @@ import BigNumber from 'bignumber.js'
 import type { Address } from 'viem'
 import { stringToHex } from 'viem'
 
-import type { TxArgs } from 'core-kit/types/trading.types'
-
-import { shiftBy } from './number'
-
-export const calcMinReturnAmount = (
-  txWithSlippageArgs: TxArgs,
-  slippage: number,
-): string => {
-  const minOutMultiplier = new BigNumber(1).minus(
-    new BigNumber(slippage).dividedBy(100),
-  )
-  const minReturnAmount = new BigNumber(
-    txWithSlippageArgs.receiveAssetInputValue,
-  ).times(minOutMultiplier)
-  if ('decimalsReceiveToken' in txWithSlippageArgs) {
-    return shiftBy(minReturnAmount, txWithSlippageArgs.decimalsReceiveToken)
-  }
-
-  return shiftBy(minReturnAmount)
-}
-
-export const getOrderedTxArgs = (txArgs: TxArgs, slippage: number) => {
-  const minReturnAmount = calcMinReturnAmount(txArgs, slippage)
-  return txArgs.getOrderedArgs(minReturnAmount)
-}
-
-export const logTransactionArguments = (txArgs: TxArgs) =>
-  console.table(
-    Object.entries(txArgs).reduce<Record<string, unknown>>(
-      (acc, [key, value]) => {
-        acc[key] = BigNumber.isBigNumber(value) ? value.toNumber() : value
-        return acc
-      },
-      {},
-    ),
-  )
+import type { useCompleteWithdrawSwapData } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-swap-data'
+import type { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-tracked-assets'
 
 /**
  * Calculates the slippage tolerance for withdrawSafe.
@@ -89,4 +55,48 @@ export const buildZapDepositTransactionArguments = ({
   const srcData = [sendTokenAddress, sendTokenAmount, aggregatorData]
   const destData = [vaultDepositTokenAddress, minDestinationAmount]
   return [vaultAddress, [srcData, destData], minVaultTokensReceivedAmount]
+}
+
+export const buildSwapWithdrawTransactionData = ({
+  receiveAssetAddress,
+  slippage,
+  assets,
+  swapData,
+}: {
+  receiveAssetAddress: Address
+  slippage: number
+  assets: ReturnType<typeof useCompleteWithdrawTrackedAssets>['data']
+  swapData: ReturnType<typeof useCompleteWithdrawSwapData>['data']
+}) => {
+  const defaultSwapData = {
+    srcData: [] as unknown[],
+    destAmount: new BigNumber('0'),
+  }
+  const { srcData, destAmount } =
+    assets?.reduce((acc, asset) => {
+      const assetSwapData = swapData?.[asset.address]
+
+      if (!assetSwapData) {
+        return acc
+      }
+
+      const aggregatorData = [
+        stringToHex(assetSwapData.routerKey, { size: 32 }),
+        assetSwapData.txData,
+      ]
+      const srcData = [asset.address, asset.rawBalance, aggregatorData]
+
+      return {
+        srcData: [...acc.srcData, srcData],
+        destAmount: acc.destAmount.plus(assetSwapData.destinationAmount),
+      }
+    }, defaultSwapData) ?? defaultSwapData
+
+  return [
+    srcData,
+    [
+      receiveAssetAddress,
+      destAmount.times(1 - slippage / 100).toFixed(0, BigNumber.ROUND_DOWN),
+    ],
+  ]
 }

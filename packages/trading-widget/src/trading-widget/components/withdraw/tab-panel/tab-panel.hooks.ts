@@ -1,7 +1,15 @@
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import { useWithdrawQuote } from 'core-kit/hooks/trading/withdraw'
+import { useMinWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 
 export const useWithdrawTabPanel = () => {
-  const poolConfig = useTradingPanelPoolConfig()
-  useWithdrawQuote(poolConfig)
+  useMinWithdrawSlippage()
+  const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
+  const { isCompleteWithdrawStep } = useIsCompleteWithdrawStep()
+
+  return {
+    isCompleteWithdrawStep,
+    isMultiAssetWithdraw,
+    isStep1Active: !isCompleteWithdrawStep,
+  }
 }

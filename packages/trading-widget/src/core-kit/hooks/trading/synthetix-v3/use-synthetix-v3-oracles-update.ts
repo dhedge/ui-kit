@@ -62,8 +62,8 @@ export const useSynthetixV3OraclesUpdate = ({
       status: 'Wallet',
       action: 'oraclesUpdate',
       link: '',
-      sendToken: null,
-      receiveToken: null,
+      sendTokens: null,
+      receiveTokens: null,
     })
 
     try {
@@ -79,8 +79,8 @@ export const useSynthetixV3OraclesUpdate = ({
         isOpen: false,
         status: 'None',
         link: '',
-        sendToken: null,
-        receiveToken: null,
+        sendTokens: null,
+        receiveTokens: null,
       })
     }
   }, [prependedTxns, sendTransaction, updateTradingModal])
