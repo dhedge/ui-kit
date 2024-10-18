@@ -1,11 +1,14 @@
 import BigNumber from 'bignumber.js'
 import { useCallback } from 'react'
-import { useReadContract, useReadContracts } from 'wagmi'
 
 import { EasySwapperV2Abi, PoolFactoryAbi, erc20Abi } from 'core-kit/abi'
 import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import { useAccount } from 'core-kit/hooks/web3'
+import {
+  useAccount,
+  useReadContract,
+  useReadContracts,
+} from 'core-kit/hooks/web3'
 import type { Address, MulticallReturnType } from 'core-kit/types/web3.types'
 import { getContractAddressById, isZeroAddress } from 'core-kit/utils'
 

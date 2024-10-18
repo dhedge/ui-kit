@@ -32,7 +32,7 @@ export const useCompleteWithdrawTransaction = ({
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
   const { data: swapData } = useCompleteWithdrawSwapData()
   const [receiveToken] = useReceiveTokenInput()
-  const { minExpectedReceiveAmountD18 } = useCompleteWithdrawExpectedAmount()
+  const { minExpectedReceiveAmount } = useCompleteWithdrawExpectedAmount()
   const slippage = useAppliedWithdrawSlippage()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
@@ -62,14 +62,14 @@ export const useCompleteWithdrawTransaction = ({
       slippage,
       receiveAssetAddress: receiveToken.address,
     })
-    return [transactionSwapData, minExpectedReceiveAmountD18]
+    return [transactionSwapData, minExpectedReceiveAmount]
   }, [
     isClaim,
     assets,
     swapData,
     slippage,
     receiveToken.address,
-    minExpectedReceiveAmountD18,
+    minExpectedReceiveAmount,
   ])
 
   return useCallback(async () => {
