@@ -15,7 +15,7 @@ export const useCompleteWithdrawTransactionDisclosure = () => {
   const [receiveToken] = useReceiveTokenInput()
 
   const withdrawSlippage = useAppliedWithdrawSlippage()
-  const { minExpectedReceiveAmount } = useCompleteWithdrawExpectedAmount()
+  const { minExpectedReceiveAmountD18 } = useCompleteWithdrawExpectedAmount()
 
   const themeType = useGetThemeTypeBySlippage(withdrawSlippage)
 
@@ -29,7 +29,7 @@ export const useCompleteWithdrawTransactionDisclosure = () => {
     slippageTooltipText,
     slippagePlaceholder: withdrawSlippage.toString(),
     minReceive: `${formatNumberToLimitedDecimals(
-      formatUnits(BigInt(minExpectedReceiveAmount), receiveToken.decimals),
+      formatUnits(BigInt(minExpectedReceiveAmountD18), receiveToken.decimals),
       stablePrecision,
     )} ${receiveToken.symbol}`,
   }

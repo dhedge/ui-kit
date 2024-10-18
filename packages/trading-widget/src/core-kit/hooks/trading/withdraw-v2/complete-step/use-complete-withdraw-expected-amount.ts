@@ -17,15 +17,15 @@ export const useCompleteWithdrawExpectedAmount = () => {
 
   const totalUsdAmountToBeSwapped = useCompleteWithdrawTotalUsdValue()
 
-  const expectedReceiveAmount = new BigNumber(totalUsdAmountToBeSwapped)
+  const expectedReceiveAmountD18 = new BigNumber(totalUsdAmountToBeSwapped)
     .shiftedBy(DEFAULT_PRECISION)
     .div(rawPrice?.toString() ?? '1')
     .shiftedBy(receiveToken.decimals)
     .toFixed(0, BigNumber.ROUND_DOWN)
 
-  const minExpectedReceiveAmount = new BigNumber(expectedReceiveAmount)
+  const minExpectedReceiveAmountD18 = new BigNumber(expectedReceiveAmountD18)
     .times(1 - slippage / 100)
     .toFixed(0, BigNumber.ROUND_DOWN)
 
-  return { expectedReceiveAmount, minExpectedReceiveAmount }
+  return { expectedReceiveAmountD18, minExpectedReceiveAmountD18 }
 }

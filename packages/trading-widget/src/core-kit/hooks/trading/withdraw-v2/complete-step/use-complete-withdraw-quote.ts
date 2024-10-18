@@ -21,7 +21,7 @@ export const useCompleteWithdrawQuote = () => {
     if (assets.length === 0 || isFetching || isError) {
       return
     }
-    const totalReceivedValue = assets.reduce((acc, asset) => {
+    const totalReceivedAmount = assets.reduce((acc, asset) => {
       if (isEqualAddress(asset.address, receiveAsset.address)) {
         return acc.plus(asset.rawBalance.toString())
       }
@@ -32,7 +32,7 @@ export const useCompleteWithdrawQuote = () => {
 
     updateReceiveToken({
       value: formatUnits(
-        BigInt(totalReceivedValue.toFixed()),
+        BigInt(totalReceivedAmount.toFixed()),
         receiveAsset.decimals,
       ),
     })

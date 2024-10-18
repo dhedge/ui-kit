@@ -64,7 +64,6 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
       chainId: poolConfig.chainId,
     })
 
-    console.log('Function', functionName)
     console.log('Arguments', txArgs)
 
     return send(...txArgs)
@@ -72,7 +71,6 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     updatePendingTransactions,
     send,
     txArgs,
-    functionName,
     poolConfig.symbol,
     poolConfig.chainId,
   ])

@@ -21,8 +21,6 @@ import {
   isEqualAddress,
 } from 'core-kit/utils'
 
-const functionName = EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD
-
 interface UseWithdrawSwapTransactionProps {
   isClaim?: boolean
 }
@@ -34,7 +32,7 @@ export const useCompleteWithdrawTransaction = ({
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
   const { data: swapData } = useCompleteWithdrawSwapData()
   const [receiveToken] = useReceiveTokenInput()
-  const { minExpectedReceiveAmount } = useCompleteWithdrawExpectedAmount()
+  const { minExpectedReceiveAmountD18 } = useCompleteWithdrawExpectedAmount()
   const slippage = useAppliedWithdrawSlippage()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
@@ -44,7 +42,7 @@ export const useCompleteWithdrawTransaction = ({
 
   const { send } = useContractFunction({
     contractId: 'easySwapperV2',
-    functionName,
+    functionName: EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD,
     onSettled,
   })
 
@@ -64,14 +62,14 @@ export const useCompleteWithdrawTransaction = ({
       slippage,
       receiveAssetAddress: receiveToken.address,
     })
-    return [transactionSwapData, minExpectedReceiveAmount]
+    return [transactionSwapData, minExpectedReceiveAmountD18]
   }, [
     isClaim,
     assets,
     swapData,
     slippage,
     receiveToken.address,
-    minExpectedReceiveAmount,
+    minExpectedReceiveAmountD18,
   ])
 
   return useCallback(async () => {
@@ -82,7 +80,6 @@ export const useCompleteWithdrawTransaction = ({
       chainId: poolConfig.chainId,
     })
 
-    console.log('Function', functionName)
     console.log('Arguments', txArgs)
 
     return send(...txArgs)

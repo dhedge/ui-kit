@@ -85,18 +85,18 @@ export const buildSwapWithdrawTransactionData = ({
         assetSwapData.txData,
       ]
       const srcData = [asset.address, asset.rawBalance, aggregatorData]
-      const destAmount = new BigNumber(assetSwapData.destinationAmount)
-        .times(1 - slippage / 100)
-        .toFixed(0, BigNumber.ROUND_DOWN)
 
       return {
         srcData: [...acc.srcData, srcData],
-        destAmount: acc.destAmount.plus(destAmount),
+        destAmount: acc.destAmount.plus(assetSwapData.destinationAmount),
       }
     }, defaultSwapData) ?? defaultSwapData
 
   return [
     srcData,
-    [receiveAssetAddress, destAmount.toFixed(0, BigNumber.ROUND_DOWN)],
+    [
+      receiveAssetAddress,
+      destAmount.times(1 - slippage / 100).toFixed(0, BigNumber.ROUND_DOWN),
+    ],
   ]
 }

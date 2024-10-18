@@ -105,9 +105,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   claimLabel: 'Claim',
   swapOf: 'Swap of',
   to: 'to',
-  initWithdrawDescription:
-    'Unroll {vaultSymbol} tokens into convertible tokens',
+  initWithdrawDescription: 'Unroll {vaultSymbol} tokens into swappable assets',
   initWithdrawTooltip:
-    'Convertible tokens are basic ERC20 tokens which can be swapped on any DEXs',
+    'Swappable assets are basic ERC20 tokens which can be converted on various platforms, including decentralized exchanges (DEXs), swap aggregators, and centralized exchanges (CEXs).',
   completeWithdrawDescription: 'Swap convertible tokens into {assetSymbol}',
 }
