@@ -8,6 +8,7 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import { useIsTradingEnabled } from 'core-kit/hooks/trading'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
@@ -24,6 +25,7 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
   const updateTradingModal = useTradingPanelModal()[1]
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const onTransactionEstimationError = useOnTransactionEstimationError()
+  const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
 
   const tradingEnabled = useIsTradingEnabled()
   const insufficientBalance = useIsInsufficientBalance()
@@ -69,7 +71,9 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
       ? 'Insufficient Balance'
       : type === 'deposit'
         ? t.depositAction
-        : t.withdrawAction,
+        : isMultiAssetWithdraw
+          ? t.withdrawAction
+          : t.unrollAction,
     handleTrade,
   }
 }

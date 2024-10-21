@@ -32,6 +32,10 @@ vi.mock('core-kit/hooks/web3', () => ({
   useAccount: vi.fn(),
 }))
 
+vi.mock('core-kit/hooks/trading/withdraw-v2/init-step', () => ({
+  useIsMultiAssetWithdraw: vi.fn(),
+}))
+
 describe('useHandleTrade::handleTrade', () => {
   it('should call updateTradingModal', async () => {
     const tradeMock = vi.fn()

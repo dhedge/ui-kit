@@ -4,7 +4,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   depositSlippageWarning:
     'Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.',
   withdrawSlippageWarning:
-    'Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.',
+    'Slippage occurs in both single asset withdrawals and withdrawals from vaults with Aave debt positions. However, for vaults with Aave debt, slippage is only applied to the portion of the withdrawal that corresponds to the Aave position.',
   minSlippageWarning:
     'Flexible min slippage value that is likely enough to process the transaction.',
   highSlippageWarning:
@@ -38,8 +38,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   toggleTokenApprovalAmount:
     'Toggle between exact and infinite token approval.',
   auto: 'Auto',
-  autoSlippageDescription:
-    "App is testing different slippage ranges, starting low and increasing until it's likely to pass",
   reduceLockup: 'Reduce lockup to {customLockTime} by paying 0.1% fee',
   deposit: 'Buy',
   withdraw: 'Sell',
@@ -100,6 +98,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   switchNetwork: 'Switch Network',
   depositAction: 'Buy',
   withdrawAction: 'Sell',
+  unrollAction: 'Unroll',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
@@ -108,5 +107,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   initWithdrawDescription: 'Unroll {vaultSymbol} tokens into swappable assets',
   initWithdrawTooltip:
     'Swappable assets are basic ERC20 tokens which can be converted on various platforms, including decentralized exchanges (DEXs), swap aggregators, and centralized exchanges (CEXs).',
-  completeWithdrawDescription: 'Swap convertible tokens into {assetSymbol}',
+  completeWithdrawDescription: 'Swap assets into {assetSymbol}',
+  completeWithdrawTooltip:
+    'The swap step can be skipped, and all swappable assets can be claimed directly.',
 }
