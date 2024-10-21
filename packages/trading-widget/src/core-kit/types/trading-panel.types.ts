@@ -11,15 +11,16 @@ export interface DynamicTradingToken extends TradingToken {
   isLoading?: boolean
 }
 
-export interface WithdrawTradingToken extends TradingToken {
-  method?: WithdrawMethodName
-  intermediateToken?: TradingToken
-}
-
 export type TradingModalStatus = 'Success' | 'None' | 'Mining' | 'Wallet'
 
 export interface PendingTransaction {
-  action: 'deposit' | 'withdraw' | 'approve'
+  action:
+    | 'deposit'
+    | 'withdraw'
+    | 'approve'
+    | 'oraclesUpdate'
+    | 'swap'
+    | 'claim'
   symbol: string
   chainId: ChainId
   txHash?: Address
@@ -44,8 +45,8 @@ export type TransactionAction =
   | 'withdraw'
   | 'approve'
   | 'oraclesUpdate'
-
-export type WithdrawMethodName = 'withdraw' | 'withdrawSUSD' | 'withdrawSafe'
+  | 'swap'
+  | 'claim'
 
 export type SwapEntity = 'token' | 'pool'
 

@@ -97,8 +97,8 @@ describe('useHandleTrade::handleTrade', () => {
       status: 'Wallet',
       action: 'deposit',
       link: '',
-      sendToken,
-      receiveToken,
+      sendTokens: [sendToken],
+      receiveTokens: [receiveToken],
     })
   })
 
@@ -228,15 +228,15 @@ describe('useHandleTrade::handleTrade', () => {
       status: 'Wallet',
       action: 'deposit',
       link: '',
-      sendToken,
-      receiveToken,
+      sendTokens: [sendToken],
+      receiveTokens: [receiveToken],
     })
     expect(updateTradingModalMock).toHaveBeenCalledWith({
       isOpen: false,
       status: 'None',
       link: '',
-      sendToken: null,
-      receiveToken: null,
+      sendTokens: null,
+      receiveTokens: null,
     })
     expect(updatePendingTransactionsMock).toHaveBeenCalledTimes(1)
     expect(updatePendingTransactionsMock).toHaveBeenCalledWith({

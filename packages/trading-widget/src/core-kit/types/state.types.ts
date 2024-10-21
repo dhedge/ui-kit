@@ -28,8 +28,8 @@ export interface TradingPanelStateModal {
   status: TradingModalStatus
   action?: TransactionAction
   link?: string
-  sendToken: TradingToken | null
-  receiveToken: TradingToken | null
+  sendTokens: TradingToken[] | null
+  receiveTokens: TradingToken[] | null
 }
 
 export interface TradingPanelState {

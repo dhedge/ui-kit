@@ -54,6 +54,7 @@ export const PoolSelectOverlay: FC<PoolSelectOverlayProps> = ({
                   }}
                   onSelect={onSelect}
                   isActive={isActive}
+                  onClose={onClose}
                 />
               </div>
             ))}
