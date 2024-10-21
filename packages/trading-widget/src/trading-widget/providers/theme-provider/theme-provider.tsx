@@ -504,6 +504,9 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--panel-tooltip-bg': `${
           config?.component?.tooltip?.color?.colorBg ?? COLORS.DARK['700']
         }`,
+        '--panel-tooltip-color': `${
+          config?.component?.tooltip?.color?.colorText ?? COLORS.WHITE.DEFAULT
+        }`,
 
         //switch
         //switch-color
