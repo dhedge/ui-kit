@@ -47,12 +47,12 @@ export const useCompleteWithdrawTransaction = ({
   })
 
   const txArgs = useMemo(() => {
-    const hasNoAssetsToBeSwapped =
+    const hasAssetsToBeSwapped =
       assets.length > 0 &&
       assets.some(
         ({ address }) => !isEqualAddress(address, receiveToken.address),
       )
-    if (isClaim || hasNoAssetsToBeSwapped) {
+    if (isClaim || !hasAssetsToBeSwapped) {
       return []
     }
 
