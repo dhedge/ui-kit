@@ -18,7 +18,7 @@ export const WithdrawTabPanel: FC = () => {
       {isCompleteWithdrawStep ? <CompleteStep /> : <InitStep />}
       {!isMultiAssetWithdraw && (
         <Stepper
-          step1={t.withdraw}
+          step1={t.unrollAction}
           step2={t.swapAction}
           isStep1Active={isStep1Active}
           className="dtw-mt-1"

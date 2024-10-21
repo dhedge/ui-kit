@@ -28,7 +28,7 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
                 size="sm"
                 className="!dtw-inline-block dtw-mb-0.5"
               />{' '}
-              {assetSymbol} withdraw includes 2 transactions
+              Withdrawing into {assetSymbol} includes 2 transactions
               <ul>
                 <li className="dtw-mt-1">
                   1.{' '}

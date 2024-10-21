@@ -100,6 +100,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   switchNetwork: 'Switch Network',
   depositAction: 'Buy',
   withdrawAction: 'Sell',
+  unrollAction: 'Unroll',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
@@ -108,5 +109,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   initWithdrawDescription: 'Unroll {vaultSymbol} tokens into swappable assets',
   initWithdrawTooltip:
     'Swappable assets are basic ERC20 tokens which can be converted on various platforms, including decentralized exchanges (DEXs), swap aggregators, and centralized exchanges (CEXs).',
-  completeWithdrawDescription: 'Swap convertible tokens into {assetSymbol}',
+  completeWithdrawDescription: 'Swap assets into {assetSymbol}',
 }

@@ -79,6 +79,7 @@ export type TranslationMap = {
   switchNetwork: string
   depositAction: string
   withdrawAction: string
+  unrollAction: string
   swapAction: string
   claimAction: string
   claimLabel: string
