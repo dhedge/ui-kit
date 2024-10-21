@@ -28,7 +28,6 @@ export type TranslationMap = {
   reduceLockupTime: string
   toggleTokenApprovalAmount: string
   auto: string
-  autoSlippageDescription: string
   reduceLockup: string
   deposit: string
   withdraw: string
@@ -88,6 +87,7 @@ export type TranslationMap = {
   initWithdrawDescription: string
   initWithdrawTooltip: string
   completeWithdrawDescription: string
+  completeWithdrawTooltip: string
   [key: string]: string
 }
 

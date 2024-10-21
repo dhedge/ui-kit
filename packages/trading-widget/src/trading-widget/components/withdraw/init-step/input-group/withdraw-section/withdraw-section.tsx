@@ -23,12 +23,13 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
             <AssetCompositionTable iconSize="sm" />
           ) : (
             <div className="dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))]">
+              Withdrawing into{' '}
               <TokenIcon
                 symbols={[assetSymbol]}
                 size="sm"
                 className="!dtw-inline-block dtw-mb-0.5"
               />{' '}
-              Withdrawing into {assetSymbol} includes 2 transactions
+              {assetSymbol} involves 2 transactions:
               <ul>
                 <li className="dtw-mt-1">
                   1.{' '}
@@ -46,7 +47,11 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
                   {t.completeWithdrawDescription.replace(
                     '{assetSymbol}',
                     assetSymbol,
-                  )}
+                  )}{' '}
+                  <TooltipIcon
+                    text={t.completeWithdrawTooltip}
+                    iconClassName="!dtw-inline"
+                  />
                 </li>
               </ul>
             </div>

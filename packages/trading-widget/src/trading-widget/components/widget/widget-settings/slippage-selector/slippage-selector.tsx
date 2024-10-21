@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import type { FC, ReactNode } from 'react'
 
-import { InfoTooltip } from 'trading-widget/components/common'
 import { useGetSlippagePlaceholder } from 'trading-widget/hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -65,7 +64,7 @@ export const SlippageSelector: FC = () => {
         className="dtw-w-14"
         onClick={onDefaultSlippageSelect}
       >
-        <InfoTooltip text={t.autoSlippageDescription}>{t.auto}</InfoTooltip>
+        {t.auto}
       </SelectorContainer>
 
       <div className="dtw-flex dtw-items-center dtw-space-x-1">

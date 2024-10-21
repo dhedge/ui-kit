@@ -456,7 +456,6 @@ path: `component.meta[name]`
 > | `bypassEntryFee`                 | string | Bypass Entry Fee                                                                                                                                                                      |             |
 > | `tokenAmountToApprove`           | string | Amount of tokens to be approved.                                                                                                                                                      |             |
 > | `auto`                           | string | Auto                                                                                                                                                                                  |             |
-> | `autoSlippageDescription`        | string | App is testing different slippage ranges, starting low and increasing until it's likely to pass                                                                                       |             |
 > | `lengthenLockup`                 | string | Lengthen lockup to remove entry fee                                                                                                                                                   |             |
 > | `deposit`                        | string | Buy                                                                                                                                                                                   |             |
 > | `withdraw`                       | string | Sell                                                                                                                                                                                  |             |
@@ -516,6 +515,7 @@ path: `component.meta[name]`
 > | `initWithdrawDescription`        | string | Unroll {vaultSymbol} tokens into multi assets                                                                                                                                         |             |
 > | `initWithdrawTooltip`            | string | Convertible tokens are basic ERC20 tokens which can be swapped on any DEXs                                                                                                            |             |
 > | `completeWithdrawDescription`    | string | Swap multi assets into {assetSymbol}                                                                                                                                                  |             |
+> | `completeWithdrawTooltip`        | string | The swap step can be skipped, and all swappable assets can be claimed directly.                                                                                                       |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
