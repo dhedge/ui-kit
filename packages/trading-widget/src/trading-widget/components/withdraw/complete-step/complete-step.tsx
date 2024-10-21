@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { useCompleteWithdrawQuote } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { Layout } from 'trading-widget/components/common'
 
+import { ValidNetworkButton } from 'trading-widget/components/widget/widget-buttons'
 import { CompleteWithdrawBalance } from 'trading-widget/components/withdraw/complete-step/balance/complete-withdraw-balance'
 import { SwapButton } from 'trading-widget/components/withdraw/complete-step/button/swap-button/swap-button'
 import { ValidSwapButton } from 'trading-widget/components/withdraw/complete-step/button/valid-swap-button/valid-swap-button'
@@ -20,9 +21,11 @@ export const CompleteStep: FC = () => {
         <CompleteWithdrawInputGroup />
       </Layout.InputGroup>
       <CompleteWithdrawMeta>
-        <ValidSwapButton>
-          <SwapButton />
-        </ValidSwapButton>
+        <ValidNetworkButton>
+          <ValidSwapButton>
+            <SwapButton />
+          </ValidSwapButton>
+        </ValidNetworkButton>
       </CompleteWithdrawMeta>
     </>
   )
