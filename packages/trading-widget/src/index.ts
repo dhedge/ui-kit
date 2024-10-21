@@ -269,6 +269,11 @@ export {
   useDepositLockTime,
 } from './core-kit/hooks/trading/deposit-v2'
 export {
+  useIsCompleteWithdrawStep,
+  useCompleteWithdrawSwapData,
+  useCompleteWithdrawTrackedAssets,
+} from './core-kit/hooks/trading/withdraw-v2/complete-step'
+export {
   useIsInsufficientBalance,
   useUserTokenBalance,
   useIsPoolManagerAccount,
