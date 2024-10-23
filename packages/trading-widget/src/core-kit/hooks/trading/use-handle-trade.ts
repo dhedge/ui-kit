@@ -37,7 +37,11 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
-      action: isDeposit ? 'deposit' : 'withdraw',
+      action: isDeposit
+        ? 'deposit'
+        : isMultiAssetWithdraw
+          ? 'multi_withdraw'
+          : 'single_withdraw',
       link: '',
       sendTokens: [sendToken],
       receiveTokens: isDeposit ? [receiveToken] : null,

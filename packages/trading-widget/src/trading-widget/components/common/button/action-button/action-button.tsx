@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { Spinner } from 'trading-widget/components/common/spinner/spinner'
 import { THEME_TYPE } from 'trading-widget/types'
 
-interface ActionButtonProps {
+export interface ActionButtonProps {
   onClick?: () => void
   highlighted?: boolean
   disabled?: boolean
