@@ -63,7 +63,7 @@ describe('useInitWithdrawTransaction', () => {
 
     expect(mockUpdatePendingTransactions).toHaveBeenCalledWith({
       type: 'add',
-      action: 'withdraw',
+      action: 'single_withdraw',
       symbol: 'ETH',
       chainId: 10,
     })
@@ -109,7 +109,7 @@ describe('useInitWithdrawTransaction', () => {
 
     expect(mockUpdatePendingTransactions).toHaveBeenCalledWith({
       type: 'add',
-      action: 'withdraw',
+      action: 'multi_withdraw',
       symbol: 'ETH',
       chainId: 10,
     })

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { TokenIcon, TooltipIcon } from 'trading-widget/components/common'
+import { TooltipIcon } from 'trading-widget/components/common'
 import { TokenSelector } from 'trading-widget/components/widget/widget-input/token-selector/token-selector'
 import { AssetCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/asset-composition-table/asset-composition-table'
 import type { WithdrawSectionProps } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/withdraw-section.hooks'
@@ -23,13 +23,7 @@ export const WithdrawSection: FC<WithdrawSectionProps> = (props) => {
             <AssetCompositionTable iconSize="sm" />
           ) : (
             <div className="dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))]">
-              Withdrawing into{' '}
-              <TokenIcon
-                symbols={[assetSymbol]}
-                size="sm"
-                className="!dtw-inline-block dtw-mb-0.5"
-              />{' '}
-              {assetSymbol} involves 2 transactions:
+              {t.withdrawDescriptionTitle.replace('{assetSymbol}', assetSymbol)}
               <ul>
                 <li className="dtw-mt-1">
                   1.{' '}

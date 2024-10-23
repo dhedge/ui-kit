@@ -27,7 +27,11 @@ export const VaultTransactionSummary: FC<VaultTransactionSummaryProps> = ({
 
   return (
     <div className="dtw-flex dtw-flex-wrap dtw-items-center dtw-justify-center dtw-gap-1">
-      {action === 'deposit' ? t.pay : t.sell}
+      {action === 'deposit'
+        ? t.pay
+        : action === 'multi_withdraw'
+          ? t.sell
+          : t.unrollAction}
       <div className="dtw-flex dtw-items-center dtw-gap-1">
         {formatter.format(+sendToken.value)}{' '}
         <TokenIcon size="sm" symbols={[sendToken.symbol]} /> {sendToken.symbol}
@@ -35,7 +39,11 @@ export const VaultTransactionSummary: FC<VaultTransactionSummaryProps> = ({
       to receive
       <div className="dtw-flex dtw-items-center dtw-gap-1">
         {!receiveToken ? (
-          t.multiAssetFractions
+          <>
+            {action === 'multi_withdraw'
+              ? t.multiAssetFractions
+              : t.swappableAssets}
+          </>
         ) : (
           <>
             {formatter.format(+receiveToken.value)}{' '}

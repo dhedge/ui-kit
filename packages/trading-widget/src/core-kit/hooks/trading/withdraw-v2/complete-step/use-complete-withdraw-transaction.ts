@@ -12,14 +12,12 @@ import {
   useCompleteWithdrawExpectedAmount,
   useCompleteWithdrawSwapData,
   useCompleteWithdrawTrackedAssets,
+  useHasSwappableAssets,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
-import {
-  buildSwapWithdrawTransactionData,
-  isEqualAddress,
-} from 'core-kit/utils'
+import { buildSwapWithdrawTransactionData } from 'core-kit/utils'
 
 interface UseWithdrawSwapTransactionProps {
   isClaim?: boolean
@@ -45,14 +43,10 @@ export const useCompleteWithdrawTransaction = ({
     functionName: EASY_SWAPPER_V2_COMPLETE_WITHDRAW_METHOD,
     onSettled,
   })
+  const hasSwappableAssets = useHasSwappableAssets()
 
   const txArgs = useMemo(() => {
-    const hasAssetsToBeSwapped =
-      assets.length > 0 &&
-      assets.some(
-        ({ address }) => !isEqualAddress(address, receiveToken.address),
-      )
-    if (isClaim || !hasAssetsToBeSwapped) {
+    if (isClaim || !hasSwappableAssets) {
       return []
     }
 
@@ -64,6 +58,7 @@ export const useCompleteWithdrawTransaction = ({
     })
     return [transactionSwapData, minExpectedReceiveAmount]
   }, [
+    hasSwappableAssets,
     isClaim,
     assets,
     swapData,

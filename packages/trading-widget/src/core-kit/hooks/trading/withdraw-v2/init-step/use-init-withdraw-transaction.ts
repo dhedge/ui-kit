@@ -19,8 +19,6 @@ import { useContractFunction } from 'core-kit/hooks/web3'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
 import { getSlippageToleranceForWithdrawSafe } from 'core-kit/utils'
 
-const action = 'withdraw'
-
 export const useInitWithdrawTransaction = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
@@ -28,6 +26,7 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
 
   const slippage = useAppliedWithdrawSlippage()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
+  const action = isMultiAssetsWithdraw ? 'multi_withdraw' : 'single_withdraw'
 
   const onSettled = useTradingSettleHandler(action)
 
@@ -69,9 +68,10 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     return send(...txArgs)
   }, [
     updatePendingTransactions,
-    send,
-    txArgs,
+    action,
     poolConfig.symbol,
     poolConfig.chainId,
+    txArgs,
+    send,
   ])
 }

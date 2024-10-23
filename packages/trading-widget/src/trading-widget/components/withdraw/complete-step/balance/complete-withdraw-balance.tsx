@@ -6,13 +6,13 @@ import {
   formatUnits,
 } from 'core-kit/utils'
 import { TokenBadge } from 'trading-widget/components/common'
-import { ClaimButton } from 'trading-widget/components/withdraw/complete-step/balance/claim-button'
 import { useCompleteWithdrawBalance } from 'trading-widget/components/withdraw/complete-step/balance/complete-withdraw-balance.hooks'
+import { ClaimButton } from 'trading-widget/components/withdraw/complete-step/button/claim-button/claim-button'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const CompleteWithdrawBalance: FC = () => {
   const { stablePrecision } = useConfigContextParams()
-  const { assets, usdAmount } = useCompleteWithdrawBalance()
+  const { assets, usdAmount, showClaimButton } = useCompleteWithdrawBalance()
 
   return (
     <>
@@ -58,9 +58,14 @@ export const CompleteWithdrawBalance: FC = () => {
             </tbody>
           </table>
         </div>
-        <div className="dtw-self-start">
-          <ClaimButton />
-        </div>
+        {showClaimButton && (
+          <div className="dtw-self-start">
+            <ClaimButton
+              highlighted={false}
+              className="!dtw-py-0.5 dtw-text-[length:var(--panel-input-button-font-size,var(--panel-font-size-xs))]"
+            />
+          </div>
+        )}
       </div>
     </>
   )

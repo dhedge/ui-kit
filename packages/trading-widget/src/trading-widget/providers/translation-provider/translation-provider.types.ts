@@ -73,6 +73,7 @@ export type TranslationMap = {
   approveSpending: string
   pay: string
   multiAssetFractions: string
+  swappableAssets: string
   explorer: string
   as: string
   switchNetwork: string
@@ -84,6 +85,7 @@ export type TranslationMap = {
   claimLabel: string
   swapOf: string
   to: string
+  withdrawDescriptionTitle: string
   initWithdrawDescription: string
   initWithdrawTooltip: string
   completeWithdrawDescription: string

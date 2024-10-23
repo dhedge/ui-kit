@@ -3,7 +3,10 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
-import { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
+import {
+  useCompleteWithdrawTrackedAssets,
+  useHasSwappableAssets,
+} from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useAccount } from 'core-kit/hooks/web3'
 import { isEqualAddress } from 'core-kit/utils'
@@ -38,6 +41,7 @@ describe('useCompleteWithdrawSwapData', () => {
   })
 
   it('should return swap data when assets are present and not equal to receive token', () => {
+    vi.mocked(useHasSwappableAssets).mockReturnValue(true)
     renderHook(() => useCompleteWithdrawSwapData())
 
     expect(useSwapsDataQuery).toHaveBeenCalledWith(
@@ -56,6 +60,7 @@ describe('useCompleteWithdrawSwapData', () => {
   })
 
   it('should not return swap data when assets are empty', () => {
+    vi.mocked(useHasSwappableAssets).mockReturnValue(false)
     vi.mocked(useCompleteWithdrawTrackedAssets).mockReturnValue({
       data: [],
     } as unknown as ReturnType<typeof useCompleteWithdrawTrackedAssets>)
@@ -69,6 +74,7 @@ describe('useCompleteWithdrawSwapData', () => {
   })
 
   it('should not return swap data when all assets are equal to receive token', () => {
+    vi.mocked(useHasSwappableAssets).mockReturnValue(false)
     vi.mocked(useCompleteWithdrawTrackedAssets).mockReturnValue({
       data: [{ address: '0x456', rawBalance: BigInt(1000) }],
     } as unknown as ReturnType<typeof useCompleteWithdrawTrackedAssets>)

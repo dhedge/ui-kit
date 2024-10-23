@@ -2,7 +2,11 @@ import BigNumber from 'bignumber.js'
 import { useCallback } from 'react'
 
 import { EasySwapperV2Abi, PoolFactoryAbi, erc20Abi } from 'core-kit/abi'
-import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
+import {
+  AddressZero,
+  BRIDGED_TOKENS_SYMBOLS,
+  DEFAULT_PRECISION,
+} from 'core-kit/const'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import {
   useAccount,
@@ -66,9 +70,13 @@ export const useCompleteWithdrawTrackedAssets = () => {
         const decimals = Number(
           data[decimalsIndex]?.result ?? DEFAULT_PRECISION,
         )
+        const symbol =
+          BRIDGED_TOKENS_SYMBOLS[token.toLowerCase()] ??
+          data[symbolIndex]?.result?.toString() ??
+          ''
         return {
           address: token,
-          symbol: data[symbolIndex]?.result?.toString() ?? '',
+          symbol,
           decimals,
           rawBalance,
           balance: new BigNumber(rawBalance.toString())

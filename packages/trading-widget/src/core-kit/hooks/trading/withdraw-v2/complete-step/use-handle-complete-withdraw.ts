@@ -12,6 +12,7 @@ import {
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
+import { isEqualAddress } from 'core-kit/utils'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 interface UseHandleWithdrawSwapProps {
@@ -43,13 +44,18 @@ export const useHandleCompleteWithdraw = ({
         value: balance.toString(),
       }),
     )
+    const sendTokens = isClaim
+      ? null
+      : withdrawalContractTokens.filter(
+          (token) => !isEqualAddress(token.address, receiveToken.address),
+        )
 
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
       action: isClaim ? 'claim' : 'swap',
       link: '',
-      sendTokens: isClaim ? null : withdrawalContractTokens,
+      sendTokens,
       receiveTokens: isClaim ? withdrawalContractTokens : [receiveToken],
     })
 
