@@ -40,7 +40,7 @@ export const WBTC_POLYGON: TradingToken = {
 export const WPOL_POLYGON: TradingToken = {
   address: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
   symbol: 'WPOL',
-  decimals: 8,
+  decimals: DEFAULT_PRECISION,
   value: '',
 }
 
