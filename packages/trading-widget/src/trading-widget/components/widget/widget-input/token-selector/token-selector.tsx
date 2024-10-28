@@ -1,4 +1,5 @@
 import { ChevronDownIcon, CircleStackIcon } from '@heroicons/react/20/solid'
+import classNames from 'classnames'
 import type { FC } from 'react'
 
 import { TokenBadge } from 'trading-widget/components/common'
@@ -9,13 +10,17 @@ import type { TokenSelectorProps } from './token-selector.hooks'
 import { useTokenSelector } from './token-selector.hooks'
 
 export const TokenSelector: FC<TokenSelectorProps> = ({ symbol }) => {
-  const { isAllSymbol, onClick } = useTokenSelector({ symbol })
+  const { isAllSymbol, onClick, disabled } = useTokenSelector({ symbol })
   const t = useTranslationContext()
 
   return (
     <button
-      className="dtw-flex dtw-items-center dtw-gap-1 dtw-rounded-[var(--panel-input-button-radius,var(--panel-radius))] dtw-border dtw-border-[var(--panel-input-button-border-color,var(--panel-accent-to-color))] !dtw-bg-[var(--panel-input-button-bg,var(--panel-secondary-color))] dtw-px-[var(--panel-input-button-px)] dtw-py-[var(--panel-input-button-py)] hover:dtw-opacity-[var(--panel-action-hover-opacity)] dtw-opacity-[var(--panel-action-opacity)]"
+      className={classNames(
+        'dtw-flex dtw-items-center dtw-gap-1 dtw-rounded-[var(--panel-input-button-radius,var(--panel-radius))] dtw-border dtw-border-[var(--panel-input-button-border-color,var(--panel-accent-to-color))] !dtw-bg-[var(--panel-input-button-bg,var(--panel-secondary-color))] dtw-px-[var(--panel-input-button-px)] dtw-py-[var(--panel-input-button-py)] hover:dtw-opacity-[var(--panel-action-hover-opacity)] dtw-opacity-[var(--panel-action-opacity)]',
+        { 'dtw-pr-3 dtw-pointer-events-none': disabled },
+      )}
       onClick={onClick}
+      disabled={disabled}
     >
       <TokenBadge
         symbol={symbol}
@@ -28,10 +33,12 @@ export const TokenSelector: FC<TokenSelectorProps> = ({ symbol }) => {
         }
         customTitle={isAllSymbol ? t.all : undefined}
       />
-      <ChevronDownIcon
-        className="dtw-flex-shrink-0 dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))] dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]"
-        aria-hidden="true"
-      />
+      {!disabled && (
+        <ChevronDownIcon
+          className="dtw-flex-shrink-0 dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))] dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]"
+          aria-hidden="true"
+        />
+      )}
     </button>
   )
 }
