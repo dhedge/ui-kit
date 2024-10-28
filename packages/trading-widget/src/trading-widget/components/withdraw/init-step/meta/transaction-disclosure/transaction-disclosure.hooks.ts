@@ -9,6 +9,7 @@ import {
 } from 'core-kit/hooks/state'
 
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
+import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -23,6 +24,7 @@ export const useInitWithdrawTransactionDisclosure = () => {
   const [sendToken] = useSendTokenInput()
   const { exitFee } = usePoolFees({ address, chainId })
   const slippage = useAppliedWithdrawSlippage()
+  const showMinReceivedText = useIsMultiAssetWithdraw()
 
   const themeType = useGetThemeTypeBySlippage(slippage)
 
@@ -44,5 +46,6 @@ export const useInitWithdrawTransactionDisclosure = () => {
     sendTokenSymbol: sendToken.symbol,
     exitFee,
     minReceivedText: t.estimatedMultiAssetFractions,
+    showMinReceivedText,
   }
 }
