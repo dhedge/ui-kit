@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import type { FC } from 'react'
 
 import { MULTI_ASSET_TOKEN } from 'core-kit/const'
@@ -44,12 +43,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
           return (
             <li
               key={`${token.address}_${token.symbol}`}
-              className={classNames(
-                'dtw-rounded-xl dtw-drop-shadow-md even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group',
-                {
-                  'dtw-cursor-pointer ': !isActive,
-                },
-              )}
+              className="dtw-cursor-pointer dtw-rounded-xl dtw-drop-shadow-md even:odd:dtw-bg-[color:var(--panel-popup-list-item-bg-even)] odd:dtw-bg-[color:var(--panel-popup-list-item-bg-odd)] dtw-group"
             >
               <TokenSelectItem
                 token={token}
