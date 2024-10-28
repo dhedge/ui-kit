@@ -19,7 +19,7 @@ export const TradingSummary: FC = () => {
   }
 
   if (action === 'swap') {
-    return <SwapSummary sendTokens={sendTokens} receiveTokens={receiveTokens} />
+    return <SwapSummary receiveTokens={receiveTokens} />
   }
 
   if (action === 'claim') {
