@@ -103,7 +103,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
             onWheelCapture={disableScrollForNumberInput}
           />
         </div>
-        <TokenSelector symbol={assetSymbol}/>
+        <TokenSelector symbol={assetSymbol} />
       </div>
     </div>
   )

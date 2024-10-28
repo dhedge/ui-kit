@@ -24,6 +24,7 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     tokenAllowance,
     exitFee,
     minReceivedText,
+    showMinReceivedText,
   } = useInitWithdrawTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -50,13 +51,16 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
           </div>
         ),
       },
-      {
+      { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
+    ]
+
+    if (showMinReceivedText) {
+      items.push({
         tooltipText: t.minReceiveAmount,
         label: t.minReceived,
         value: minReceivedText,
-      },
-      { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
-    ]
+      })
+    }
 
     if (allowanceRequired) {
       items.push({
@@ -70,17 +74,18 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
   }, [
     slippageTooltipText,
     t.maxSlippage,
-    t.minReceiveAmount,
-    t.minReceived,
     t.exitFee,
     t.exitFeeExplanation,
+    t.minReceiveAmount,
+    t.minReceived,
     t.amountToBeApproved,
     t.tokenAllowance,
     isMaxSlippageLoading,
     slippagePlaceholder,
-    minReceivedText,
     exitFee,
+    showMinReceivedText,
     allowanceRequired,
+    minReceivedText,
     sendTokenSymbol,
     tokenAllowance,
   ])

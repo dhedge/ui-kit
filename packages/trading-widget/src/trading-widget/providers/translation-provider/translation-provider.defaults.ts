@@ -103,8 +103,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
-  swapOf: 'Swap of',
-  to: 'to',
+  swapAndClaimTo: 'Swap and claim assets to',
   withdrawDescriptionTitle: 'Withdrawing into {assetSymbol} involves 2 steps:',
   initWithdrawDescription: 'Unroll {vaultSymbol} tokens into swappable assets',
   initWithdrawTooltip:
