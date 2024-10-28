@@ -19,6 +19,7 @@ export const useTokenSelector = ({ symbol }: TokenSelectorProps) => {
   const isAllSymbol = symbol === 'all'
   const onTokenSelector = useOnTokenSelector()
   const disabled = isProduct && poolConfigs.length === 1
+  const hideTokenIcon = standalone && isProduct
 
   const handleTokenClick = () => {
     onTokenSelector?.({ isOpen: true, entity: isProduct ? 'pool' : 'token' })
@@ -38,5 +39,6 @@ export const useTokenSelector = ({ symbol }: TokenSelectorProps) => {
     isAllSymbol,
     onClick: handleTokenClick,
     disabled,
+    hideTokenIcon,
   }
 }
