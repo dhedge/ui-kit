@@ -216,7 +216,7 @@ export const useContractFunction = ({
           message:
             error === DEFAULT_SIMULATION_ERROR
               ? gasEstimateError
-              : error ?? gasEstimateError,
+              : (error ?? gasEstimateError),
           link: data?.link,
           txArgs: args,
           account,

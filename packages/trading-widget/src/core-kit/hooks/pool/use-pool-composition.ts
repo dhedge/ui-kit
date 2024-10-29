@@ -11,5 +11,5 @@ export const usePoolComposition = ({
   const poolComposition = useContractPoolComposition({ address, chainId })
   return poolComposition.length
     ? poolComposition
-    : poolData.poolCompositions ?? []
+    : (poolData.poolCompositions ?? [])
 }
