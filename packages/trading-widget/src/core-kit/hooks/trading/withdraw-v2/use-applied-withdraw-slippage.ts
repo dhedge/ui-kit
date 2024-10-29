@@ -9,7 +9,7 @@ export const useAppliedWithdrawSlippage = () => {
   const [{ slippage, minSlippage }] = useTradingPanelSettings()
 
   const autoSlippage = isCompleteWithdrawStep
-    ? minSlippage ?? defaultWithdrawSlippage
+    ? (minSlippage ?? defaultWithdrawSlippage)
     : defaultWithdrawSlippage
 
   return slippage === 'auto' ? autoSlippage : slippage

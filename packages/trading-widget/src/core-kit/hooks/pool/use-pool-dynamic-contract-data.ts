@@ -47,7 +47,7 @@ export const usePoolDynamicContractData = ({
     cooldownEndsInTime,
     ...dynamicPoolData,
     totalValue: isSynthetixVault
-      ? totalFundValueMutable ?? dynamicPoolData?.totalValue
+      ? (totalFundValueMutable ?? dynamicPoolData?.totalValue)
       : dynamicPoolData?.totalValue,
     isFetched,
   }

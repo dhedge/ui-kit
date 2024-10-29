@@ -48,7 +48,7 @@ export const useDepositTransactionDisclosure = () => {
     : ''
 
   const themeType = useGetThemeTypeBySlippage(
-    isAutoSlippage ? minSlippage ?? 0 : slippage,
+    isAutoSlippage ? (minSlippage ?? 0) : slippage,
   )
   const slippagePlaceholder = useGetSlippagePlaceholder({
     tradingType: 'deposit',

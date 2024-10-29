@@ -116,11 +116,11 @@ export const useContractPoolComposition = ({
         amount:
           isSynthetixAsset && synthetixV3AssetBalance
             ? synthetixV3AssetBalance
-            : assetsBalances?.[i]?.toString() ?? '0',
+            : (assetsBalances?.[i]?.toString() ?? '0'),
         tokenName,
         precision: decimals?.result
           ? Number(decimals.result)
-          : fallbackAssetMap?.[tokenAddress]?.precision ?? DEFAULT_PRECISION,
+          : (fallbackAssetMap?.[tokenAddress]?.precision ?? DEFAULT_PRECISION),
         asset: {
           iconSymbols: fallbackAssetMap?.[tokenAddress]?.asset.iconSymbols ?? [
             tokenName,
