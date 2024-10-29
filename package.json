@@ -16,7 +16,7 @@
     "@pythnetwork/pyth-evm-js": "^1.36.0",
     "bignumber.js": "^9.1.2",
     "classnames": "^2.5.1",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "lodash.chunk": "^4.2.0",
     "lodash.isnumber": "^3.0.3",
     "lodash.uniqby": "^4.7.0",
