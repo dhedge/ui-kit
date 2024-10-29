@@ -54,6 +54,10 @@ type GetFundSummary = ContractFunctionReturnType<
 
 type PoolsMap = Record<Address, DynamicPoolContractData>
 
+type UsePoolsDynamicParams = {
+  account?: Address
+}
+
 const getContracts = (pools: PoolContractAccountCallParams[]) =>
   pools.flatMap(getPoolContracts)
 
@@ -63,16 +67,21 @@ const POOL_CHUNK_SIZE = getPoolContracts({
   address: AddressZero,
 }).length
 
-export const usePoolsDynamic = (): UseReadContractsReturnType<
+export const usePoolsDynamic = ({
+  account,
+}: UsePoolsDynamicParams = {}): UseReadContractsReturnType<
   ReturnType<typeof getPoolContracts>,
   true,
   PoolsMap
 > => {
-  const { account = AddressZero } = useAccount()
+  const { account: connectedAccount } = useAccount()
   const pools = useTradingPanelPoolConfigs()
+  const accountAddress = account ?? connectedAccount ?? AddressZero
 
   const result = useReadContracts({
-    contracts: getContracts(pools.map((pool) => ({ ...pool, account }))),
+    contracts: getContracts(
+      pools.map((pool) => ({ ...pool, account: accountAddress })),
+    ),
     query: {
       select: (data) =>
         chunk(data, POOL_CHUNK_SIZE).reduce<PoolsMap>(
