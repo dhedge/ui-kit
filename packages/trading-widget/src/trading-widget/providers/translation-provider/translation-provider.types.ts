@@ -39,6 +39,7 @@ export type TranslationMap = {
   buyEstimated: string
   sell: string
   receiveEstimated: string
+  receiveSwappableAssetsEstimated: string
   confirmInWallet: string
   pending: string
   approve: string
@@ -84,11 +85,11 @@ export type TranslationMap = {
   claimAction: string
   claimLabel: string
   swapAndClaimTo: string
-  withdrawDescriptionTitle: string
   initWithdrawDescription: string
   initWithdrawTooltip: string
   completeWithdrawDescription: string
   completeWithdrawTooltip: string
+  total: string
   [key: string]: string
 }
 

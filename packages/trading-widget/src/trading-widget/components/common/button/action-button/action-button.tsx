@@ -2,7 +2,6 @@ import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
 
 import { Spinner } from 'trading-widget/components/common/spinner/spinner'
-import { THEME_TYPE } from 'trading-widget/types'
 
 export interface ActionButtonProps {
   onClick?: () => void
@@ -64,9 +63,7 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
     disabled={disabled || loading}
     type={type}
   >
-    {loading && (
-      <Spinner type={THEME_TYPE.DEFAULT} className="dtw-h-4 dtw-w-4" />
-    )}
+    {loading && <Spinner className="dtw-h-4 dtw-w-4" />}
     {children}
   </button>
 )

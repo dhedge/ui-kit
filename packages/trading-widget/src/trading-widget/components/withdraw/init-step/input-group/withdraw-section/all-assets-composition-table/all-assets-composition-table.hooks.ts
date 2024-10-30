@@ -8,13 +8,13 @@ import {
 import { isEqualAddress } from 'core-kit/utils'
 import type { TokenIconSize } from 'trading-widget/types'
 
-export interface AssetCompositionTableProps {
+export interface AllAssetsCompositionTableProps {
   className?: string
   showFraction?: boolean
   iconSize?: TokenIconSize
 }
 
-export const useAssetCompositionTable = () => {
+export const useAllAssetsCompositionTable = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const [{ value }] = useSendTokenInput()
   const poolComposition = usePoolCompositionWithFraction({

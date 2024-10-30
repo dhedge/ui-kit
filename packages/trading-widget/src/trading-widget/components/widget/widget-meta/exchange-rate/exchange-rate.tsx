@@ -4,7 +4,6 @@ import type { FC } from 'react'
 import { useExchangeRate } from 'core-kit/hooks/trading'
 
 import { Spinner } from 'trading-widget/components/common/spinner/spinner'
-import { THEME_TYPE } from 'trading-widget/types'
 
 interface ExchangeRateProps {
   className?: string
@@ -21,10 +20,7 @@ export const ExchangeRate: FC<ExchangeRateProps> = ({ className }) => {
       )}
     >
       {isLoading && (
-        <Spinner
-          type={THEME_TYPE.CUSTOM}
-          className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]"
-        />
+        <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
       )}
       <p
         className={classNames(

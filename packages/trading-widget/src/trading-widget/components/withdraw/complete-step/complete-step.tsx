@@ -10,27 +10,34 @@ import { ValidSwapButton } from 'trading-widget/components/withdraw/complete-ste
 import { useCompleteStep } from 'trading-widget/components/withdraw/complete-step/complete-step.hooks'
 import { CompleteWithdrawInputGroup } from 'trading-widget/components/withdraw/complete-step/input-group/complete-withdraw-input-group'
 import { CompleteWithdrawMeta } from 'trading-widget/components/withdraw/complete-step/meta/meta'
+import { WithdrawStepper } from 'trading-widget/components/withdraw/stepper/withdraw-stepper'
 
 export const CompleteStep: FC = () => {
   const { hasSwappableAssets } = useCompleteStep()
   return (
     <>
-      <Layout.Balance>
-        <CompleteWithdrawBalance />
-      </Layout.Balance>
       <Layout.InputGroup>
+        <CompleteWithdrawBalance />
         <CompleteWithdrawInputGroup />
       </Layout.InputGroup>
       <CompleteWithdrawMeta>
-        <ValidNetworkButton>
-          {hasSwappableAssets ? (
-            <ValidSwapButton>
-              <SwapButton />
-            </ValidSwapButton>
-          ) : (
-            <ClaimButton />
-          )}
-        </ValidNetworkButton>
+        <WithdrawStepper>
+          <ValidNetworkButton>
+            {hasSwappableAssets ? (
+              <>
+                <ValidSwapButton>
+                  <SwapButton />
+                </ValidSwapButton>
+                <ClaimButton
+                  highlighted={false}
+                  className="dtw-mt-1.5 !dtw-py-1 dtw-text-[length:var(--panel-input-button-font-size,var(--panel-font-size-xs))]"
+                />
+              </>
+            ) : (
+              <ClaimButton />
+            )}
+          </ValidNetworkButton>
+        </WithdrawStepper>
       </CompleteWithdrawMeta>
     </>
   )

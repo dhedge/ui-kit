@@ -13,17 +13,17 @@ import {
 } from 'core-kit/utils'
 import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
-import type { AssetCompositionTableProps } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/asset-composition-table/asset-composition-table.hooks'
-import { useAssetCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/asset-composition-table/asset-composition-table.hooks'
-import { WithdrawExplanationTip } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/asset-composition-table/withdraw-explanation-tip'
+import type { AllAssetsCompositionTableProps } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/all-assets-composition-table.hooks'
+import { useAllAssetsCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/all-assets-composition-table.hooks'
+import { WithdrawExplanationTip } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/withdraw-explanation-tip'
 
-export const AssetCompositionTable = ({
+export const AllAssetsCompositionTable = ({
   className,
   showFraction = true,
   iconSize,
-}: AssetCompositionTableProps) => {
+}: AllAssetsCompositionTableProps) => {
   const { poolComposition, chainId, showUnitWithdrawalTip, address } =
-    useAssetCompositionTable()
+    useAllAssetsCompositionTable()
 
   return (
     <div className={classNames('dtw-text-sm dtw-font-light', className)}>

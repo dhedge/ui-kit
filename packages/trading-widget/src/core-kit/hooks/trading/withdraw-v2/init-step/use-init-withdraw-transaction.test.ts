@@ -69,8 +69,8 @@ describe('useInitWithdrawTransaction', () => {
     })
     expect(mockSend).toHaveBeenCalledWith(
       '0x123',
-      '100000000000000000000',
-      getSlippageToleranceForWithdrawSafe(mockSlippage),
+      BigInt('100000000000000000000'),
+      BigInt(getSlippageToleranceForWithdrawSafe(mockSlippage)),
     )
   })
 
@@ -114,8 +114,8 @@ describe('useInitWithdrawTransaction', () => {
       chainId: 10,
     })
     expect(mockSend).toHaveBeenCalledWith(
-      '100000000000000000000',
-      getSlippageToleranceForWithdrawSafe(mockSlippage),
+      BigInt('100000000000000000000'),
+      BigInt(getSlippageToleranceForWithdrawSafe(mockSlippage)),
     )
   })
 })
