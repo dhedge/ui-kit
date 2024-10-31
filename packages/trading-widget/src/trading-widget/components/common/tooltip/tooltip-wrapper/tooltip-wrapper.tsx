@@ -16,19 +16,14 @@ export const TooltipWrapper: FC<TooltipWrapperProps> = ({
   interactive = true,
   delayHide = 50,
 }) => {
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip({
-    interactive,
-    delayHide,
-    offset: [0, 12],
-    placement,
-    trigger,
-  })
+  const { getTooltipProps, setTooltipRef, setTriggerRef, visible } =
+    usePopperTooltip({
+      interactive,
+      delayHide,
+      offset: [0, 12],
+      placement,
+      trigger,
+    })
 
   return (
     <>
@@ -42,7 +37,6 @@ export const TooltipWrapper: FC<TooltipWrapperProps> = ({
           })}
         >
           {tooltipContent}
-          <span {...getArrowProps({ className: 'tooltip-arrow' })} />
         </span>
       )}
     </>
