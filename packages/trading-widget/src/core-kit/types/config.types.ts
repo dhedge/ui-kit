@@ -17,6 +17,7 @@ export interface PoolConfig {
     customTokens: TradingToken[]
   }
   deprecated?: boolean
+  isCustomCooldownDeposit?: boolean
 }
 
 export interface PoolFallbackData {

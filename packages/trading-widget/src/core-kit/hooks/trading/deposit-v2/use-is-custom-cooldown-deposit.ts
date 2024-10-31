@@ -1,15 +1,21 @@
-import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
+import { usePoolFees } from 'core-kit/hooks/pool'
 import { usePoolStatic } from 'core-kit/hooks/pool/multicall'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 
 export const useIsCustomCooldownDeposit = () => {
-  const { chainId, address } = useTradingPanelPoolConfig()
+  const { chainId, address, isCustomCooldownDeposit } =
+    useTradingPanelPoolConfig()
   const { data: { isCustomCooldownDepositAllowed = false } = {} } =
     usePoolStatic({
       address,
       chainId,
     })
-  const { entryFee = '0' } = usePoolDynamicContractData({ address, chainId })
-  const entryFeeEnabled = +entryFee > 0
+  const { entryFeeNumber } = usePoolFees({ address, chainId })
+  const entryFeeEnabled = entryFeeNumber > 0
+
+  if (isCustomCooldownDeposit) {
+    return true
+  }
+
   return entryFeeEnabled && isCustomCooldownDepositAllowed
 }

@@ -48,6 +48,7 @@ export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
       ),
       exitFee: formatNumeratorToPercentage(exitFee, MANAGER_FEE_DENOMINATOR, 2),
       exitFeeNumber: getPercent(+exitFee, MANAGER_FEE_DENOMINATOR),
+      entryFeeNumber: getPercent(+entryFee, MANAGER_FEE_DENOMINATOR),
     }),
     [
       performanceFee,

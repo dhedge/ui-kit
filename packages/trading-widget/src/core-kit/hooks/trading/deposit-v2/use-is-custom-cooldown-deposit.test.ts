@@ -5,11 +5,11 @@ import { TEST_ADDRESS } from 'tests/mocks'
 import { renderHook } from 'tests/test-utils'
 
 import { useIsCustomCooldownDeposit } from './use-is-custom-cooldown-deposit'
-import { usePoolDynamicContractData } from '../../pool'
+import { usePoolFees } from '../../pool'
 import { usePoolStatic } from '../../pool/multicall'
 
 vi.mock('core-kit/hooks/pool', () => ({
-  usePoolDynamicContractData: vi.fn(),
+  usePoolFees: vi.fn(),
 }))
 vi.mock('core-kit/hooks/pool/multicall', () => ({
   usePoolStatic: vi.fn(),
@@ -36,9 +36,9 @@ describe('useIsCustomCooldownDeposit', () => {
     vi.mocked(usePoolStatic).mockReturnValueOnce({
       data: { isCustomCooldownDepositAllowed: false },
     } as ReturnType<typeof usePoolStatic>)
-    vi.mocked(usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolFees).mockReturnValueOnce({
+      entryFeeNumber: 0,
+    } as ReturnType<typeof usePoolFees>)
 
     const { result, rerender } = renderHook(() => useIsCustomCooldownDeposit())
 
@@ -47,9 +47,9 @@ describe('useIsCustomCooldownDeposit', () => {
     vi.mocked(usePoolStatic).mockReturnValueOnce({
       data: { isCustomCooldownDepositAllowed: true },
     } as ReturnType<typeof usePoolStatic>)
-    vi.mocked(usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolFees).mockReturnValueOnce({
+      entryFeeNumber: 0,
+    } as ReturnType<typeof usePoolFees>)
 
     act(() => {
       rerender()
@@ -59,9 +59,9 @@ describe('useIsCustomCooldownDeposit', () => {
     vi.mocked(usePoolStatic).mockReturnValueOnce({
       data: { isCustomCooldownDepositAllowed: false },
     } as ReturnType<typeof usePoolStatic>)
-    vi.mocked(usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '100',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolFees).mockReturnValueOnce({
+      entryFeeNumber: 0.1,
+    } as ReturnType<typeof usePoolFees>)
 
     act(() => {
       rerender()
@@ -73,9 +73,30 @@ describe('useIsCustomCooldownDeposit', () => {
     vi.mocked(usePoolStatic).mockReturnValueOnce({
       data: { isCustomCooldownDepositAllowed: true },
     } as ReturnType<typeof usePoolStatic>)
-    vi.mocked(usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '100',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolFees).mockReturnValueOnce({
+      entryFeeNumber: 0.11,
+    } as ReturnType<typeof usePoolFees>)
+
+    const { result } = renderHook(() => useIsCustomCooldownDeposit())
+
+    expect(result.current).toBe(true)
+  })
+
+  it('should return true when useCustomCooldownDeposit was set to true in vault config', () => {
+    vi.mocked(usePoolStatic).mockReturnValueOnce({
+      data: { isCustomCooldownDepositAllowed: false },
+    } as ReturnType<typeof usePoolStatic>)
+    vi.mocked(usePoolFees).mockReturnValueOnce({
+      entryFeeNumber: 0,
+    } as ReturnType<typeof usePoolFees>)
+    vi.mocked(useTradingPanelPoolConfig).mockImplementation(
+      () =>
+        ({
+          chainId: 10,
+          address: TEST_ADDRESS,
+          isCustomCooldownDeposit: true,
+        }) as ReturnType<typeof useTradingPanelPoolConfig>,
+    )
 
     const { result } = renderHook(() => useIsCustomCooldownDeposit())
 
