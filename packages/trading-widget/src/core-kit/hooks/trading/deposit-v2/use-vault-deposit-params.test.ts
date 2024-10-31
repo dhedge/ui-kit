@@ -96,7 +96,13 @@ describe('useVaultDepositParams', () => {
   })
 
   it('should return deposit params for custom token deposit when deposit token is presented in vault composition', () => {
-    const poolComposition = [{ tokenName: USDC_BASE.symbol, isDeposit: true }]
+    const poolComposition = [
+      {
+        tokenName: USDC_BASE.symbol,
+        isDeposit: true,
+        tokenAddress: USDC_BASE.address,
+      },
+    ]
     vi.mocked(useSendTokenInput).mockReturnValue([
       USDC_BASE,
     ] as unknown as ReturnType<typeof useSendTokenInput>)
@@ -118,7 +124,13 @@ describe('useVaultDepositParams', () => {
   })
 
   it('should return deposit params for custom token deposit when deposit token is not presented in vault composition', () => {
-    const poolComposition = [{ tokenName: WETH_BASE.symbol, isDeposit: true }]
+    const poolComposition = [
+      {
+        tokenName: WETH_BASE.symbol,
+        isDeposit: true,
+        tokenAddress: WETH_BASE.address,
+      },
+    ]
     vi.mocked(useSendTokenInput).mockReturnValue([
       USDC_BASE,
     ] as unknown as ReturnType<typeof useSendTokenInput>)
