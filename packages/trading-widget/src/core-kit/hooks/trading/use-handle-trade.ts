@@ -8,7 +8,10 @@ import {
   useTradingPanelType,
 } from 'core-kit/hooks/state'
 import { useIsTradingEnabled } from 'core-kit/hooks/trading'
-import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
+import {
+  useIsMultiAssetWithdraw,
+  useIsUnrollAndClaimTransaction,
+} from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
@@ -26,25 +29,31 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const onTransactionEstimationError = useOnTransactionEstimationError()
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
+  const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
+  const isDeposit = type === 'deposit'
 
   const tradingEnabled = useIsTradingEnabled()
   const insufficientBalance = useIsInsufficientBalance()
 
+  const action = isDeposit
+    ? 'deposit'
+    : isMultiAssetWithdraw
+      ? 'multi_withdraw'
+      : isUnrollAndClaimTransaction
+        ? 'single_withdraw_and_claim'
+        : 'single_withdraw'
+
   const handleTrade = async () => {
-    const isDeposit = type === 'deposit'
     const chainId = poolConfig.chainId
 
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
-      action: isDeposit
-        ? 'deposit'
-        : isMultiAssetWithdraw
-          ? 'multi_withdraw'
-          : 'single_withdraw',
+      action,
       link: '',
       sendTokens: [sendToken],
-      receiveTokens: isDeposit ? [receiveToken] : null,
+      receiveTokens:
+        isDeposit || isUnrollAndClaimTransaction ? [receiveToken] : null,
     })
 
     try {
@@ -73,11 +82,13 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
     disabled: !tradingEnabled || insufficientBalance,
     label: insufficientBalance
       ? 'Insufficient Balance'
-      : type === 'deposit'
+      : isDeposit
         ? t.depositAction
         : isMultiAssetWithdraw
           ? t.withdrawAction
-          : t.unrollAction,
+          : isUnrollAndClaimTransaction
+            ? t.unrollAndClaimAction
+            : t.unrollAction,
     handleTrade,
   }
 }

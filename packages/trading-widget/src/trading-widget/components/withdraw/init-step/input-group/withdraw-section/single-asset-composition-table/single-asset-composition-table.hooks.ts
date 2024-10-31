@@ -1,17 +1,21 @@
-import { useInitWithdrawEstimatedReceiveAssets } from 'core-kit/hooks/trading/withdraw-v2/init-step'
-import { formatToUsd } from 'core-kit/utils'
+import { useSendTokenInput } from 'core-kit/hooks/state'
+import type { useInitWithdrawEstimatedReceiveAssets } from 'core-kit/hooks/trading/withdraw-v2/init-step'
+import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 
-export const useSingleAssetCompositionTable = () => {
-  const { data: assets = [], isLoading } =
-    useInitWithdrawEstimatedReceiveAssets()
-  const usdAmount = assets.reduce(
-    (acc, { balance, price }) => acc + balance * price,
-    0,
-  )
+export interface SingleAssetCompositionTableProps {
+  assets: ReturnType<typeof useInitWithdrawEstimatedReceiveAssets>['data']
+  isLoading: boolean
+}
+
+export const useSingleAssetCompositionTable = ({
+  assets,
+}: Pick<SingleAssetCompositionTableProps, 'assets'>) => {
+  const [sendToken] = useSendTokenInput()
+  const showSingleTokenAmount = useIsUnrollAndClaimTransaction()
 
   return {
-    assets,
-    isLoading,
-    usdAmount: formatToUsd({ value: usdAmount }),
+    showReceivedResults: !!sendToken.value && sendToken.value !== '0',
+    showSingleTokenAmount,
+    singleTokenBalance: assets?.[0]?.balance,
   }
 }

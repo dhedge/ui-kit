@@ -5,9 +5,14 @@ import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/co
 import {
   useInitWithdrawAllowance,
   useIsMultiAssetWithdraw,
+  useIsUnrollAndClaimTransaction,
 } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { TooltipIcon } from 'trading-widget/components/common'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
+
+const APPROVE_STEP_INDEX = 0
+const INIT_STEP_INDEX = 1
+const COMPLETE_STEP_INDEX = 2
 
 export const useWithdrawStepper = () => {
   const t = useTranslationContext()
@@ -19,55 +24,67 @@ export const useWithdrawStepper = () => {
   const { isCompleteWithdrawStep } = useIsCompleteWithdrawStep()
   const { canSpend } = useInitWithdrawAllowance()
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
+  const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
 
-  const steps = useMemo(
-    () => ({
-      APPROVE: {
-        index: 0,
+  const steps = useMemo(() => {
+    const steps = [
+      {
+        index: APPROVE_STEP_INDEX,
         description: (
           <>
             {t.approve} {vaultSymbol}{' '}
           </>
         ),
       },
-      INIT: {
-        index: 1,
-        description: t.initWithdrawDescription.replace(
-          '{vaultSymbol}',
-          vaultSymbol,
-        ),
-      },
-      COMPLETE: {
-        index: 2,
-        description: (
+      {
+        index: INIT_STEP_INDEX,
+        description: isUnrollAndClaimTransaction ? (
+          t.unrollAndClaimDescription
+            .replace('{vaultSymbol}', vaultSymbol)
+            .replace('{assetSymbol}', assetSymbol)
+        ) : (
           <>
-            {t.completeWithdrawDescription.replace(
-              '{assetSymbol}',
-              assetSymbol,
-            )}{' '}
+            {t.initWithdrawDescription.replace('{vaultSymbol}', vaultSymbol)}{' '}
             <TooltipIcon
-              text={t.completeWithdrawTooltip}
+              text={t.initWithdrawTooltip}
               iconClassName="!dtw-inline"
             />
           </>
         ),
       },
-    }),
-    [
-      t.approve,
-      t.initWithdrawDescription,
-      t.completeWithdrawDescription,
-      t.completeWithdrawTooltip,
-      vaultSymbol,
-      assetSymbol,
-    ],
-  )
+    ]
+
+    const completeStep = {
+      index: COMPLETE_STEP_INDEX,
+      description: (
+        <>
+          {t.completeWithdrawDescription.replace('{assetSymbol}', assetSymbol)}{' '}
+          <TooltipIcon
+            text={t.completeWithdrawTooltip}
+            iconClassName="!dtw-inline"
+          />
+        </>
+      ),
+    }
+
+    return [...steps, ...(isUnrollAndClaimTransaction ? [] : [completeStep])]
+  }, [
+    t.approve,
+    t.unrollAndClaimDescription,
+    t.initWithdrawDescription,
+    t.initWithdrawTooltip,
+    t.completeWithdrawDescription,
+    t.completeWithdrawTooltip,
+    vaultSymbol,
+    isUnrollAndClaimTransaction,
+    assetSymbol,
+  ])
 
   const activeStepIndex = isCompleteWithdrawStep
-    ? steps.COMPLETE.index
+    ? COMPLETE_STEP_INDEX
     : canSpend
-      ? steps.INIT.index
-      : steps.APPROVE.index
+      ? INIT_STEP_INDEX
+      : APPROVE_STEP_INDEX
 
   return { hideStepper: isMultiAssetWithdraw, activeStepIndex, steps }
 }

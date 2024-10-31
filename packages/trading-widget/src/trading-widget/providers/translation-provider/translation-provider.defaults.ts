@@ -49,7 +49,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   buyEstimated: 'Buy (estimated)',
   sell: 'Sell',
   receiveEstimated: 'Receive (estimated)',
-  receiveSwappableAssetsEstimated: 'Swappable Assets (estimated)',
   confirmInWallet: 'Please confirm in wallet',
   pending: 'Pending...',
   approve: 'Approve',
@@ -101,6 +100,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   depositAction: 'Buy',
   withdrawAction: 'Sell',
   unrollAction: 'Unroll',
+  unrollAndClaimAction: 'Unroll and Claim',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
@@ -111,5 +111,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   completeWithdrawDescription: 'Swap assets into {assetSymbol}',
   completeWithdrawTooltip:
     'All swappable assets can be claimed directly without swap.',
+  unrollAndClaimDescription:
+    'Unroll {vaultSymbol} tokens and claim {assetSymbol}',
   total: 'Total:',
 }

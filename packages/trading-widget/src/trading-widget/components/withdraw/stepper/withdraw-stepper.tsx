@@ -16,7 +16,7 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
 
   return (
     <div className="dtw-mt-1">
-      {Object.values(steps).map((step) => {
+      {steps.map((step) => {
         const completed = step.index < activeStepIndex
         const isActive = step.index === activeStepIndex
         return (

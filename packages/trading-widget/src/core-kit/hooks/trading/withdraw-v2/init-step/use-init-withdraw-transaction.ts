@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import {
   DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
   EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
+  EASY_SWAPPER_V2_UNROLL_AND_CLAIM_METHOD,
 } from 'core-kit/const'
 import {
   useTradingPanelPoolConfig,
@@ -11,6 +12,7 @@ import {
 import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
 import { useInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
+import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
@@ -18,6 +20,7 @@ import type { ContractActionFunc } from 'core-kit/types/web3.types'
 export const useInitWithdrawTransaction = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
+  const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const action = isMultiAssetsWithdraw ? 'multi_withdraw' : 'single_withdraw'
@@ -27,7 +30,9 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
 
   const functionName = isMultiAssetsWithdraw
     ? DEFAULT_MULTI_ASSET_WITHDRAW_METHOD
-    : EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD
+    : isUnrollAndClaimTransaction
+      ? EASY_SWAPPER_V2_UNROLL_AND_CLAIM_METHOD
+      : EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD
   const { send } = useContractFunction({
     contractId: isMultiAssetsWithdraw ? 'poolLogic' : 'easySwapperV2',
     dynamicContractAddress: isMultiAssetsWithdraw
