@@ -22,7 +22,7 @@ export const WithdrawSection: FC<WithdrawSectionProps> = ({
         <span>{t.receiveEstimated}</span>
         {!isMultiAssetWithdraw && <span>{usdAmount}</span>}
       </div>
-      <div className="dtw-flex dtw-items-center dtw-gap-x-2">
+      <div className="dtw-flex dtw-items-start dtw-gap-x-2">
         <div className="transparent-scrollbar dtw-flex-1 dtw-overflow-x-auto">
           {isMultiAssetWithdraw ? (
             <AllAssetsCompositionTable iconSize="sm" />

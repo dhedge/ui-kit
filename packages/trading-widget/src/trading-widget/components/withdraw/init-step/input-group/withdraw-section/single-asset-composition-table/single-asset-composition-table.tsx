@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { Spinner } from 'trading-widget/components/common'
-import { AssetsCompositionTable } from 'trading-widget/components/common/balance/assets-composition-table'
+import { WithdrawAssetsCompositionTable } from 'trading-widget/components/common/balance/withdraw-assets-composition-table'
 import type { SingleAssetCompositionTableProps } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/single-asset-composition-table/single-asset-composition-table.hooks'
 import { useSingleAssetCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/single-asset-composition-table/single-asset-composition-table.hooks'
 
@@ -24,7 +24,7 @@ export const SingleAssetCompositionTable: FC<
       {showSingleTokenAmount ? (
         <div>{singleTokenBalance}</div>
       ) : (
-        <AssetsCompositionTable assets={assets} />
+        <WithdrawAssetsCompositionTable assets={assets} />
       )}
     </div>
   )

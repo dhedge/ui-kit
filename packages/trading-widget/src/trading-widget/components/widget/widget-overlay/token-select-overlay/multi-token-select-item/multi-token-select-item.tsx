@@ -27,7 +27,11 @@ export const MultiTokenSelectItem = ({
         }
         symbolClasses="dtw-text-sm dtw-font-medium group-hover:dtw-opacity-100 dtw-opacity-100 sm:dtw-opacity-80"
       />
-      <AllAssetsCompositionTable className="dtw-pt-2" showFraction={false} />
+      <AllAssetsCompositionTable
+        className="dtw-pt-2"
+        showFraction={false}
+        showAllAsset
+      />
     </div>
   )
 }

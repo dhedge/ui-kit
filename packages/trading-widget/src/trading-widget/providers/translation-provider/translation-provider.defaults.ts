@@ -114,4 +114,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   unrollAndClaimDescription:
     'Unroll {vaultSymbol} tokens and claim {assetSymbol}',
   total: 'Total:',
+  showAll: 'Show all',
+  hide: 'Hide',
 }

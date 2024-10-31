@@ -91,6 +91,8 @@ export type TranslationMap = {
   completeWithdrawTooltip: string
   unrollAndClaimDescription: string
   total: string
+  showAll: string
+  hide: string
   [key: string]: string
 }
 

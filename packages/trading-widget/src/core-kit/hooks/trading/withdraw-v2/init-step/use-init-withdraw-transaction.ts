@@ -23,7 +23,11 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
-  const action = isMultiAssetsWithdraw ? 'multi_withdraw' : 'single_withdraw'
+  const action = isMultiAssetsWithdraw
+    ? 'multi_withdraw'
+    : isUnrollAndClaimTransaction
+      ? 'single_withdraw_and_claim'
+      : 'single_withdraw'
   const txArgs = useInitWithdrawTransactionArguments()
 
   const onSettled = useTradingSettleHandler(action)

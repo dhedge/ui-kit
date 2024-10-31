@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { ExternalLinkButton } from 'trading-widget/components/common'
-import { AssetsCompositionTable } from 'trading-widget/components/common/balance/assets-composition-table'
+import { WithdrawAssetsCompositionTable } from 'trading-widget/components/common/balance/withdraw-assets-composition-table'
 import { useCompleteWithdrawBalance } from 'trading-widget/components/withdraw/complete-step/balance/complete-withdraw-balance.hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -26,7 +26,7 @@ export const CompleteWithdrawBalance: FC = () => {
         </ExternalLinkButton>
       </div>
       <div className="dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] dtw-shadow-md dtw-border-[var(--panel-input-border-color)]">
-        <AssetsCompositionTable assets={assets} />
+        <WithdrawAssetsCompositionTable assets={assets} />
       </div>
     </>
   )

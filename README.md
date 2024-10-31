@@ -519,6 +519,8 @@ path: `component.meta[name]`
 > | `completeWithdrawTooltip`        | string | All swappable assets can be claimed directly without swap.                                                                                                                            |             |
 > | `unrollAndClaimDescription`      | string | Unroll {vaultSymbol} tokens and claim {assetSymbol}                                                                                                                                   |             |
 > | `total`                          | string | Total:                                                                                                                                                                                |             |
+> | `showAll`                        | string | Show All                                                                                                                                                                              |             |
+> | `hide`                           | string | Hide                                                                                                                                                                                  |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
