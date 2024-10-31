@@ -27,13 +27,10 @@ const getVaultDepositTokenAddress = (
   if (!availableDepositOptions.length) {
     return null
   }
-  const fallbackToken = availableDepositOptions.find(
-    ({ tokenName, tokenAddress }) =>
-      Object.values(FALLBACK_ASSETS_MAP[chainId] ?? {}).some(
-        (fallbackToken) =>
-          fallbackToken.symbol === tokenName ||
-          isEqualAddress(fallbackToken.address, tokenAddress),
-      ),
+  const fallbackToken = availableDepositOptions.find(({ tokenAddress }) =>
+    Object.values(FALLBACK_ASSETS_MAP[chainId] ?? {}).some((fallbackToken) =>
+      isEqualAddress(fallbackToken.address, tokenAddress),
+    ),
   )
 
   return fallbackToken?.tokenAddress ?? availableDepositOptions[0]?.tokenAddress
@@ -80,9 +77,7 @@ export const useVaultDepositParams = (): VaultDepositParams => {
     }
 
     const depositTokenPresentedInVault = availableDepositOptions.find(
-      ({ tokenName, tokenAddress }) =>
-        tokenName === sendToken.symbol ||
-        isEqualAddress(tokenAddress, sendToken.address),
+      ({ tokenAddress }) => isEqualAddress(tokenAddress, sendToken.address),
     )
 
     // Step 2: Check if the token is presented in the vault
