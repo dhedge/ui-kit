@@ -58,7 +58,12 @@ export const useWithdrawStepper = () => {
       index: COMPLETE_STEP_INDEX,
       description: (
         <>
-          {t.completeWithdrawDescription.replace('{assetSymbol}', assetSymbol)}{' '}
+          <span>
+            {t.completeWithdrawDescription.replace(
+              '{assetSymbol}',
+              assetSymbol,
+            )}
+          </span>
           <TooltipIcon
             text={t.completeWithdrawTooltip}
             iconClassName="!dtw-inline"
