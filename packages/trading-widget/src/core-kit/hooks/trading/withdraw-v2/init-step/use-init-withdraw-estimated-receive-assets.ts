@@ -14,6 +14,13 @@ import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import type { Address } from 'core-kit/types'
 import { getContractAddressById } from 'core-kit/utils'
 
+const checkSimulateArgumentsType = (
+  args: ReturnType<typeof useInitWithdrawTransactionArguments>,
+): args is [Address, bigint, bigint] =>
+  typeof args[0] === 'string' &&
+  typeof args[1] === 'bigint' &&
+  typeof args[2] === 'bigint'
+
 export const useInitWithdrawEstimatedReceiveAssets = () => {
   const poolConfig = useTradingPanelPoolConfig()
   const isInsufficientBalance = useIsInsufficientBalance()
@@ -27,7 +34,7 @@ export const useInitWithdrawEstimatedReceiveAssets = () => {
     abi: EasySwapperV2Abi,
     address: getContractAddressById('easySwapperV2', poolConfig.chainId),
     functionName: EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
-    args: txArgs as [Address, bigint, bigint],
+    args: checkSimulateArgumentsType(txArgs) ? txArgs : undefined,
     query: {
       enabled: txArgs[1] !== BigInt(0) && !isInsufficientBalance && canSpend,
       placeholderData: keepPreviousData,

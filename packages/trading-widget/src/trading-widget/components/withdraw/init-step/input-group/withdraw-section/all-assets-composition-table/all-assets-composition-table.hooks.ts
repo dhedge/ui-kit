@@ -8,7 +8,7 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 
-import { isEqualAddress } from 'core-kit/utils'
+import { isEqualAddress, sliceByIndex } from 'core-kit/utils'
 import type { TokenIconSize } from 'trading-widget/types'
 
 export interface AllAssetsCompositionTableProps {
@@ -38,8 +38,10 @@ export const useAllAssetsCompositionTable = (
       amount !== '0',
   )
 
-  const visibleAssets = poolComposition.slice(0, visibleAssetsLimit)
-  const hiddenAssets = poolComposition.slice(visibleAssetsLimit)
+  const { firstPart: visibleAssets, secondPart: hiddenAssets } = sliceByIndex(
+    poolComposition,
+    visibleAssetsLimit,
+  )
 
   return {
     visibleAssets,

@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useCallback } from 'react'
 
 import { DEFAULT_VISIBLE_ASSETS_LIMIT } from 'core-kit/const'
 import type { useWithdrawAssetsInfo } from 'core-kit/hooks/trading/withdraw-v2/use-withdraw-assets-info'
@@ -6,6 +7,7 @@ import {
   formatNumberToLimitedDecimals,
   formatToUsd,
   formatUnits,
+  sliceByIndex,
 } from 'core-kit/utils'
 import { TokenBadge } from 'trading-widget/components/common/index'
 import {
@@ -26,41 +28,38 @@ export const WithdrawAssetsCompositionTable: FC<
   WithdrawAssetsCompositionTableProps
 > = ({ assets = [] }) => {
   const { stablePrecision } = useConfigContextParams()
+  const { firstPart: visibleAssets, secondPart: hiddenAssets } = sliceByIndex(
+    assets,
+    DEFAULT_VISIBLE_ASSETS_LIMIT,
+  )
 
-  const visibleAssets = assets.slice(0, DEFAULT_VISIBLE_ASSETS_LIMIT)
-  const hiddenAssets = assets.slice(DEFAULT_VISIBLE_ASSETS_LIMIT)
-
-  const renderRow = ({
-    symbol,
-    address,
-    rawBalance,
-    decimals,
-    price,
-    balance,
-  }: AssetItem) => (
-    <tr key={address}>
-      <td>
-        <TokenBadge
-          symbol={symbol}
-          iconSymbols={[symbol]}
-          symbolClasses="dtw-text-xs dtw-font-bold"
-          size="sm"
-        />
-        <p className="dtw-truncate dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
-          {formatToUsd({
-            value: balance * price,
-          })}
-        </p>
-      </td>
-      <td className="dtw-text-right">
-        <p className="dtw-truncate">
-          {formatNumberToLimitedDecimals(
-            formatUnits(rawBalance, decimals),
-            stablePrecision,
-          )}
-        </p>
-      </td>
-    </tr>
+  const renderRow = useCallback(
+    ({ symbol, address, rawBalance, decimals, price, balance }: AssetItem) => (
+      <tr key={address}>
+        <td>
+          <TokenBadge
+            symbol={symbol}
+            iconSymbols={[symbol]}
+            symbolClasses="dtw-text-xs dtw-font-bold"
+            size="sm"
+          />
+          <p className="dtw-truncate dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
+            {formatToUsd({
+              value: balance * price,
+            })}
+          </p>
+        </td>
+        <td className="dtw-text-right">
+          <p className="dtw-truncate">
+            {formatNumberToLimitedDecimals(
+              formatUnits(rawBalance, decimals),
+              stablePrecision,
+            )}
+          </p>
+        </td>
+      </tr>
+    ),
+    [stablePrecision],
   )
 
   return (
