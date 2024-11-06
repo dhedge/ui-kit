@@ -18,7 +18,7 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
   }
 
   return (
-    <div className="dtw-mt-1 dtw-grid dtw-gap-1 dtw-grid-cols-[auto_1fr]">
+    <div className="dtw-mt-1 dtw-grid dtw-gap-1 dtw-grid-cols-[auto_1fr] dtw-auto-rows-min">
       {steps.map((step, index) => {
         const isCompleted = step.index < activeStepIndex
         const isActive = step.index === activeStepIndex
