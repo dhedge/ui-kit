@@ -13,7 +13,7 @@ import { CompleteWithdrawMeta } from 'trading-widget/components/withdraw/complet
 import { WithdrawStepper } from 'trading-widget/components/withdraw/stepper/withdraw-stepper'
 
 export const CompleteStep: FC = () => {
-  const { hasSwappableAssets } = useCompleteStep()
+  const { showSwapButton } = useCompleteStep()
   return (
     <>
       <Layout.InputGroup>
@@ -23,7 +23,7 @@ export const CompleteStep: FC = () => {
       <CompleteWithdrawMeta>
         <WithdrawStepper>
           <ValidNetworkButton>
-            {hasSwappableAssets ? (
+            {showSwapButton ? (
               <>
                 <ValidSwapButton>
                   <SwapButton />
