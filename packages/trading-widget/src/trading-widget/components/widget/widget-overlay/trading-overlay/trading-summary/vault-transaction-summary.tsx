@@ -46,7 +46,7 @@ export const VaultTransactionSummary: FC<VaultTransactionSummaryProps> = ({
           </>
         ) : (
           <>
-            {formatter.format(+receiveToken.value)}{' '}
+            {receiveToken.value ? formatter.format(+receiveToken.value) : null}{' '}
             <TokenIcon size="sm" symbols={[receiveToken.symbol]} />{' '}
             {receiveToken.symbol}
           </>

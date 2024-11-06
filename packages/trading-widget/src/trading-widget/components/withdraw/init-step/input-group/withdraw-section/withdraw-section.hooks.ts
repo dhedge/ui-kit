@@ -1,22 +1,20 @@
-import { useSendTokenInput } from 'core-kit/hooks/state'
-import { useTranslationContext } from 'trading-widget/providers/translation-provider'
+import { useReceiveTokenInput } from 'core-kit/hooks/state'
+import { useInitWithdrawEstimatedReceiveAssets } from 'core-kit/hooks/trading/withdraw-v2/init-step'
+import { formatToUsd } from 'core-kit/utils'
 
-export interface WithdrawSectionProps {
-  isMultiAssetWithdraw: boolean
-  assetSymbol: string
-}
+export const useWithdrawSection = () => {
+  const [receiveToken] = useReceiveTokenInput()
+  const { data: assets = [], isLoading } =
+    useInitWithdrawEstimatedReceiveAssets()
+  const usdAmount = assets.reduce(
+    (acc, { balance, price }) => acc + balance * price,
+    0,
+  )
 
-export const useWithdrawSection = ({
-  isMultiAssetWithdraw,
-  assetSymbol,
-}: WithdrawSectionProps) => {
-  const t = useTranslationContext()
-  const [sendToken] = useSendTokenInput()
-  const label = isMultiAssetWithdraw ? t.receiveEstimated : ''
   return {
-    isMultiAssetWithdraw,
-    label,
-    assetSymbol,
-    vaultSymbol: sendToken.symbol,
+    assets,
+    isLoading,
+    usdAmount: formatToUsd({ value: usdAmount }),
+    assetSymbol: receiveToken.symbol,
   }
 }

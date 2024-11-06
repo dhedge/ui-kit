@@ -80,15 +80,19 @@ export type TranslationMap = {
   depositAction: string
   withdrawAction: string
   unrollAction: string
+  unrollAndClaimAction: string
   swapAction: string
   claimAction: string
   claimLabel: string
   swapAndClaimTo: string
-  withdrawDescriptionTitle: string
   initWithdrawDescription: string
   initWithdrawTooltip: string
   completeWithdrawDescription: string
   completeWithdrawTooltip: string
+  unrollAndClaimDescription: string
+  total: string
+  showAll: string
+  hide: string
   [key: string]: string
 }
 

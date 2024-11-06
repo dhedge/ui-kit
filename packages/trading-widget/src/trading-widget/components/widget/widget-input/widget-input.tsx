@@ -60,10 +60,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
             <>
               {isLoading ? (
                 <div className="dtw-ml-auto dtw-h-[22px]">
-                  <Spinner
-                    type={THEME_TYPE.CUSTOM}
-                    className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]"
-                  />
+                  <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
                 </div>
               ) : (
                 <input

@@ -1,20 +1,26 @@
-import { FLATMONEY_UNIT_ADDRESS_MAP } from 'core-kit/const'
+import {
+  DEFAULT_VISIBLE_ASSETS_LIMIT,
+  FLATMONEY_UNIT_ADDRESS_MAP,
+} from 'core-kit/const'
 import { usePoolCompositionWithFraction } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 
-import { isEqualAddress } from 'core-kit/utils'
+import { isEqualAddress, sliceByIndex } from 'core-kit/utils'
 import type { TokenIconSize } from 'trading-widget/types'
 
-export interface AssetCompositionTableProps {
+export interface AllAssetsCompositionTableProps {
   className?: string
   showFraction?: boolean
   iconSize?: TokenIconSize
+  showAllAsset?: boolean
 }
 
-export const useAssetCompositionTable = () => {
+export const useAllAssetsCompositionTable = (
+  showAllAsset: AllAssetsCompositionTableProps['showAllAsset'],
+) => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const [{ value }] = useSendTokenInput()
   const poolComposition = usePoolCompositionWithFraction({
@@ -22,11 +28,26 @@ export const useAssetCompositionTable = () => {
     address,
     chainId,
   })
+  const visibleAssetsLimit = showAllAsset
+    ? poolComposition.length
+    : DEFAULT_VISIBLE_ASSETS_LIMIT
+
   const showUnitWithdrawalTip = poolComposition.some(
     ({ tokenAddress, amount }) =>
       isEqualAddress(tokenAddress, FLATMONEY_UNIT_ADDRESS_MAP[chainId] ?? '') &&
       amount !== '0',
   )
 
-  return { poolComposition, chainId, showUnitWithdrawalTip, address }
+  const { firstPart: visibleAssets, secondPart: hiddenAssets } = sliceByIndex(
+    poolComposition,
+    visibleAssetsLimit,
+  )
+
+  return {
+    visibleAssets,
+    hiddenAssets,
+    chainId,
+    showUnitWithdrawalTip,
+    address,
+  }
 }

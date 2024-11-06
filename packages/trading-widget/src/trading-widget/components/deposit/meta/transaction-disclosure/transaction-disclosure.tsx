@@ -10,8 +10,6 @@ import {
 import { ExchangeRate } from 'trading-widget/components/widget/widget-meta'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
-import { THEME_TYPE } from 'trading-widget/types'
-
 import { useDepositTransactionDisclosure } from './transaction-disclosure.hooks'
 
 export const DepositTransactionOverviewDisclosure = () => {
@@ -58,10 +56,7 @@ export const DepositTransactionOverviewDisclosure = () => {
         value: (
           <div className="dtw-flex dtw-gap-1">
             {isMaxSlippageLoading && (
-              <Spinner
-                type={THEME_TYPE.CUSTOM}
-                className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]"
-              />
+              <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
             )}
             <span
               className={classNames({

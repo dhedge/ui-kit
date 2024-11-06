@@ -1,6 +1,5 @@
 import { usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
-  useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
@@ -27,7 +26,6 @@ const useSendToken = () => {
 export const useInitWithdrawInputGroup = () => {
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const sendToken = useSendToken()
-  const [receiveToken] = useReceiveTokenInput()
 
   const handleInputChange = (value: string) => {
     sendToken.updater({ value })
@@ -35,7 +33,6 @@ export const useInitWithdrawInputGroup = () => {
 
   return {
     sendToken,
-    receiveToken,
     onInputChange: handleInputChange,
     isMultiAssetWithdraw,
   }

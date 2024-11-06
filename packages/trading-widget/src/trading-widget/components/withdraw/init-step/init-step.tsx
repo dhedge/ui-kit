@@ -5,6 +5,7 @@ import { InitWithdrawButton } from 'trading-widget/components/withdraw/init-step
 import { ValidInitWithdrawButton } from 'trading-widget/components/withdraw/init-step/button/valid-init-withdraw-button/valid-init-withdraw-button'
 import { InitWithdrawInputGroup } from 'trading-widget/components/withdraw/init-step/input-group/init-withdraw-input-group'
 import { InitWithdrawMeta } from 'trading-widget/components/withdraw/init-step/meta/meta'
+import { WithdrawStepper } from 'trading-widget/components/withdraw/stepper/withdraw-stepper'
 
 export const InitStep = () => (
   <>
@@ -15,11 +16,13 @@ export const InitStep = () => (
       <InitWithdrawInputGroup />
     </Layout.InputGroup>
     <InitWithdrawMeta>
-      <ValidNetworkButton>
-        <ValidInitWithdrawButton>
-          <InitWithdrawButton />
-        </ValidInitWithdrawButton>
-      </ValidNetworkButton>
+      <WithdrawStepper>
+        <ValidNetworkButton>
+          <ValidInitWithdrawButton>
+            <InitWithdrawButton />
+          </ValidInitWithdrawButton>
+        </ValidNetworkButton>
+      </WithdrawStepper>
     </InitWithdrawMeta>
   </>
 )

@@ -4,7 +4,6 @@ import type { FC } from 'react'
 
 import type { TradingToken } from 'core-kit/types'
 import { Spinner, TokenBadge } from 'trading-widget/components/common'
-import { THEME_TYPE } from 'trading-widget/types'
 import type { Balance } from 'trading-widget/types'
 
 type PoolListItem = Pick<TradingToken, 'symbol'> &
@@ -42,10 +41,7 @@ export const NetworkTable: FC<NetworkTableProps> = ({ data }) => {
               {balanceInUsdNumber ? (
                 balanceInUsd
               ) : (
-                <Spinner
-                  type={THEME_TYPE.DEFAULT}
-                  className="dtw-h-4 dtw-w-4"
-                />
+                <Spinner className="dtw-h-4 dtw-w-4" />
               )}
             </td>
             <td

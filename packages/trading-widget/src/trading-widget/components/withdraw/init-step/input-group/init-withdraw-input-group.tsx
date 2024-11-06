@@ -6,7 +6,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const InitWithdrawInputGroup = () => {
   const t = useTranslationContext()
-  const { sendToken, receiveToken, onInputChange, isMultiAssetWithdraw } =
+  const { sendToken, onInputChange, isMultiAssetWithdraw } =
     useInitWithdrawInputGroup()
 
   return (
@@ -21,10 +21,7 @@ export const InitWithdrawInputGroup = () => {
         maxBalance={sendToken.balance}
         displayCalculatedValue
       />
-      <WithdrawSection
-        isMultiAssetWithdraw={isMultiAssetWithdraw}
-        assetSymbol={receiveToken.symbol}
-      />
+      <WithdrawSection isMultiAssetWithdraw={isMultiAssetWithdraw} />
     </>
   )
 }

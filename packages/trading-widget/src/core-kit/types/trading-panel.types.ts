@@ -42,6 +42,7 @@ export type TransactionAction =
   | 'oraclesUpdate'
   | 'swap'
   | 'claim'
+  | 'single_withdraw_and_claim'
 
 export type SwapEntity = 'token' | 'pool'
 

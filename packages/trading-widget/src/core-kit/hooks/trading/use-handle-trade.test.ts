@@ -34,6 +34,7 @@ vi.mock('core-kit/hooks/web3', () => ({
 
 vi.mock('core-kit/hooks/trading/withdraw-v2/init-step', () => ({
   useIsMultiAssetWithdraw: vi.fn(),
+  useIsUnrollAndClaimTransaction: vi.fn(),
 }))
 
 describe('useHandleTrade::handleTrade', () => {

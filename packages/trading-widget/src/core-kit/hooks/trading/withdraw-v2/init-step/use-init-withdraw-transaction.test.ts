@@ -1,3 +1,10 @@
+import { expect } from 'vitest'
+
+import {
+  DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
+  EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
+  EASY_SWAPPER_V2_UNROLL_AND_CLAIM_METHOD,
+} from 'core-kit/const'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
@@ -7,6 +14,7 @@ import {
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
 
+import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction'
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
@@ -22,6 +30,9 @@ vi.mock(
 vi.mock('core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage')
 vi.mock('core-kit/hooks/web3')
 vi.mock('core-kit/hooks/trading')
+vi.mock(
+  'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction',
+)
 
 describe('useInitWithdrawTransaction', () => {
   beforeEach(() => {
@@ -67,10 +78,67 @@ describe('useInitWithdrawTransaction', () => {
       symbol: 'ETH',
       chainId: 10,
     })
+    expect(useContractFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        functionName: EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
+      }),
+    )
     expect(mockSend).toHaveBeenCalledWith(
       '0x123',
-      '100000000000000000000',
-      getSlippageToleranceForWithdrawSafe(mockSlippage),
+      BigInt('100000000000000000000'),
+      BigInt(getSlippageToleranceForWithdrawSafe(mockSlippage)),
+    )
+  })
+
+  it('should initialize withdraw and claim transaction with single asset', async () => {
+    const mockSendTokenInput = [{ value: '100' }]
+    const mockPoolConfig = { address: '0x123', symbol: 'ETH', chainId: 10 }
+    const mockUpdatePendingTransactions = vi.fn()
+    const mockSend = vi.fn().mockResolvedValue('txHash')
+    const mockIsMultiAssetWithdraw = false
+    const mockSlippage = 0.01
+    const mockOnSettled = vi.fn()
+
+    vi.mocked(useSendTokenInput).mockReturnValue(
+      mockSendTokenInput as ReturnType<typeof useSendTokenInput>,
+    )
+    vi.mocked(useTradingPanelPoolConfig).mockReturnValue(
+      mockPoolConfig as ReturnType<typeof useTradingPanelPoolConfig>,
+    )
+    vi.mocked(useTradingPanelTransactions).mockReturnValue([
+      [],
+      mockUpdatePendingTransactions,
+    ])
+    vi.mocked(useIsMultiAssetWithdraw).mockReturnValue(mockIsMultiAssetWithdraw)
+    vi.mocked(useAppliedWithdrawSlippage).mockReturnValue(mockSlippage)
+    vi.mocked(useContractFunction).mockReturnValue({
+      send: mockSend,
+    } as unknown as ReturnType<typeof useContractFunction>)
+    vi.mocked(useTradingSettleHandler).mockReturnValue(mockOnSettled)
+    vi.mocked(useIsUnrollAndClaimTransaction).mockReturnValue(true)
+
+    const { result } = renderHook(() => useInitWithdrawTransaction())
+
+    await act(async () => {
+      const txHash = await result.current()
+      expect(txHash).toBe('txHash')
+    })
+
+    expect(mockUpdatePendingTransactions).toHaveBeenCalledWith({
+      type: 'add',
+      action: 'single_withdraw_and_claim',
+      symbol: 'ETH',
+      chainId: 10,
+    })
+    expect(useContractFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        functionName: EASY_SWAPPER_V2_UNROLL_AND_CLAIM_METHOD,
+      }),
+    )
+    expect(mockSend).toHaveBeenCalledWith(
+      '0x123',
+      BigInt('100000000000000000000'),
+      BigInt(getSlippageToleranceForWithdrawSafe(mockSlippage)),
     )
   })
 
@@ -113,9 +181,14 @@ describe('useInitWithdrawTransaction', () => {
       symbol: 'ETH',
       chainId: 10,
     })
+    expect(useContractFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        functionName: DEFAULT_MULTI_ASSET_WITHDRAW_METHOD,
+      }),
+    )
     expect(mockSend).toHaveBeenCalledWith(
-      '100000000000000000000',
-      getSlippageToleranceForWithdrawSafe(mockSlippage),
+      BigInt('100000000000000000000'),
+      BigInt(getSlippageToleranceForWithdrawSafe(mockSlippage)),
     )
   })
 })

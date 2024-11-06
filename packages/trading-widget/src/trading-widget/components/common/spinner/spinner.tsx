@@ -1,10 +1,7 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
 
-import type { ThemeType } from 'trading-widget/types'
-
 interface SpinnerProps {
-  type?: ThemeType
   className?: string
 }
 
