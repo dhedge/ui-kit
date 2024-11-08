@@ -1,4 +1,3 @@
-import { keepPreviousData } from '@tanstack/react-query'
 import { useSimulateContract } from 'wagmi'
 
 import { EasySwapperV2Abi } from 'core-kit/abi'
@@ -37,7 +36,6 @@ export const useInitWithdrawEstimatedReceiveAssets = () => {
     args: checkSimulateArgumentsType(txArgs) ? txArgs : undefined,
     query: {
       enabled: txArgs[1] !== BigInt(0) && !isInsufficientBalance && canSpend,
-      placeholderData: keepPreviousData,
     },
   })
 

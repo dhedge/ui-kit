@@ -20,9 +20,9 @@ import {
   AssetsCompositionDisclosure,
   AssetsCompositionTable,
 } from 'trading-widget/components/common/meta/assets-composition-disclosure/assets-composition-disclosure'
-import type { AllAssetsCompositionTableProps } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/all-assets-composition-table.hooks'
-import { useAllAssetsCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/all-assets-composition-table.hooks'
-import { WithdrawExplanationTip } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/withdraw-explanation-tip'
+import type { AllAssetsCompositionTableProps } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/all-assets-composition-table.hooks'
+import { useAllAssetsCompositionTable } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/all-assets-composition-table.hooks'
+import { WithdrawExplanationTip } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/withdraw-explanation-tip'
 
 export const AllAssetsCompositionTable = ({
   className,
