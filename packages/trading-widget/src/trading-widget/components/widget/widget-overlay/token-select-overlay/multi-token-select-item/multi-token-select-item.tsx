@@ -2,7 +2,7 @@ import { CircleStackIcon } from '@heroicons/react/20/solid'
 
 import { TokenBadge } from 'trading-widget/components/common'
 
-import { AllAssetsCompositionTable } from 'trading-widget/components/withdraw/init-step/input-group/withdraw-section/all-assets-composition-table/all-assets-composition-table'
+import { AllAssetsCompositionTable } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/all-assets-composition-table'
 
 import type { MultiTokenSelectItemProps } from './multi-token-select-item.hooks'
 import { useMultiTokenSelectItem } from './multi-token-select-item.hooks'
