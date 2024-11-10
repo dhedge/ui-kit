@@ -30,6 +30,9 @@ export interface TradingPanelStateModal {
   link?: string
   sendTokens: TradingToken[] | null
   receiveTokens: TradingToken[] | null
+  meta?: {
+    withdrawPercentage?: number
+  }
 }
 
 export interface TradingPanelState {

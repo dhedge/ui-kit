@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js'
+
 import {
   useOnTransactionEstimationError,
   useReceiveTokenInput,
@@ -12,7 +14,10 @@ import {
   useIsMultiAssetWithdraw,
   useIsUnrollAndClaimTransaction,
 } from 'core-kit/hooks/trading/withdraw-v2/init-step'
-import { useIsInsufficientBalance } from 'core-kit/hooks/user'
+import {
+  useIsInsufficientBalance,
+  useUserTokenBalance,
+} from 'core-kit/hooks/user'
 import { useAccount } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
@@ -30,6 +35,10 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
   const onTransactionEstimationError = useOnTransactionEstimationError()
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
+  const sendTokenBalance = useUserTokenBalance({
+    symbol: sendToken.symbol,
+    address: sendToken.address,
+  })
   const isDeposit = type === 'deposit'
 
   const tradingEnabled = useIsTradingEnabled()
@@ -54,6 +63,16 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
       sendTokens: [sendToken],
       receiveTokens:
         isDeposit || isUnrollAndClaimTransaction ? [receiveToken] : null,
+      meta: isDeposit
+        ? {}
+        : {
+            withdrawPercentage:
+              sendToken.value && sendTokenBalance
+                ? new BigNumber(sendToken.value)
+                    .div(sendTokenBalance)
+                    .toNumber()
+                : 0,
+          },
     })
 
     try {
@@ -73,6 +92,7 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
         link: '',
         sendTokens: null,
         receiveTokens: null,
+        meta: {},
       })
       updatePendingTransactions({ type: 'remove', status: 'fail' })
     }

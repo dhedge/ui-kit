@@ -27,6 +27,7 @@ export const useSendOraclesUpdateTransaction = ({
             link: '',
             sendTokens: null,
             receiveTokens: null,
+            meta: {},
           })
           setTxHash(undefined)
           return

@@ -26,6 +26,7 @@ vi.mock('./use-is-trading-enabled', () => ({
 
 vi.mock('core-kit/hooks/user', () => ({
   useIsInsufficientBalance: vi.fn(),
+  useUserTokenBalance: vi.fn(),
 }))
 
 vi.mock('core-kit/hooks/web3', () => ({
@@ -104,6 +105,7 @@ describe('useHandleTrade::handleTrade', () => {
       link: '',
       sendTokens: [sendToken],
       receiveTokens: [receiveToken],
+      meta: {},
     })
   })
 
@@ -235,6 +237,7 @@ describe('useHandleTrade::handleTrade', () => {
       link: '',
       sendTokens: [sendToken],
       receiveTokens: [receiveToken],
+      meta: {},
     })
     expect(updateTradingModalMock).toHaveBeenCalledWith({
       isOpen: false,
@@ -242,6 +245,7 @@ describe('useHandleTrade::handleTrade', () => {
       link: '',
       sendTokens: null,
       receiveTokens: null,
+      meta: {},
     })
     expect(updatePendingTransactionsMock).toHaveBeenCalledTimes(1)
     expect(updatePendingTransactionsMock).toHaveBeenCalledWith({
