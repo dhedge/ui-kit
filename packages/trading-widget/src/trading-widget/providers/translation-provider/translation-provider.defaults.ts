@@ -105,12 +105,11 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
   swapAndClaimTo: 'Swap and claim assets to',
-  initWithdrawDescription: 'Unroll {vaultSymbol} tokens into swappable assets',
-  initWithdrawTooltip:
-    'Swappable assets are basic ERC20 tokens which can be converted on various platforms, including decentralized exchanges (DEXs), swap aggregators, and centralized exchanges (CEXs).',
-  completeWithdrawDescription: 'Swap assets into {assetSymbol}',
+  initWithdrawDescription: 'Unroll',
+  initWithdrawTooltip: 'Unroll prepares assets for single asset withdrawal.',
+  completeWithdrawDescription: 'Claim',
   completeWithdrawTooltip:
-    'All swappable assets can be claimed directly without swap.',
+    'This final step swaps all assets to a single asset and sends it to your wallet.',
   unrollAndClaimDescription:
     'Unroll {vaultSymbol} tokens and claim {assetSymbol}',
   total: 'Total:',

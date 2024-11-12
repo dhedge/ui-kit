@@ -30,11 +30,7 @@ export const useWithdrawStepper = () => {
     const steps = [
       {
         index: APPROVE_STEP_INDEX,
-        description: (
-          <>
-            {t.approve} {vaultSymbol}{' '}
-          </>
-        ),
+        description: <>{t.approve}</>,
       },
       {
         index: INIT_STEP_INDEX,
@@ -44,7 +40,7 @@ export const useWithdrawStepper = () => {
             .replace('{assetSymbol}', assetSymbol)
         ) : (
           <>
-            {t.initWithdrawDescription.replace('{vaultSymbol}', vaultSymbol)}{' '}
+            {t.initWithdrawDescription}{' '}
             <TooltipIcon
               text={t.initWithdrawTooltip}
               iconClassName="!dtw-inline"
@@ -58,12 +54,7 @@ export const useWithdrawStepper = () => {
       index: COMPLETE_STEP_INDEX,
       description: (
         <>
-          <span>
-            {t.completeWithdrawDescription.replace(
-              '{assetSymbol}',
-              assetSymbol,
-            )}
-          </span>
+          <span>{t.completeWithdrawDescription}</span>
           <TooltipIcon
             text={t.completeWithdrawTooltip}
             iconClassName="!dtw-inline"
