@@ -32,6 +32,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   stakingChainId: optimism.id,
   termsOfUseAccepted: true,
   standalone: true,
+  isAllAssetsWithdrawOptionDefault: false,
   chainConfig: {
     [arbitrum.id]: {
       name: 'Arbitrum',

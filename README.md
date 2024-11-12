@@ -112,7 +112,7 @@ UI configuration provider. Manages params to configure custom styling, component
 ##### params
 
 > | name                               | type                                                           | default value                | description                                                                                                                                        |
-> | ---------------------------------- | -------------------------------------------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+> | ---------------------------------- | -------------------------------------------------------------- | ---------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
 > | `isGeoBlocked`                     | `boolean`                                                      | `false`                      | Restricts depositing action button and conditionally renders GeoBlockAlert component                                                               |
 > | `isSanctioned`                     | `boolean`                                                      | `false`                      | Restricts depositing action button and conditionally renders SanctionedAlert component                                                             |
 > | `depositQuoteDiffWarningThreshold` | `number`                                                       | `1`                          | Deposit slippage absolute percent value warning threshold, Affects styling to warn user                                                            |
@@ -127,6 +127,7 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `stakingChainId`                   | `number`                                                       | `10` (Optimism)              | ChainId to be used in staking logic                                                                                                                |
 > | `termsOfUseAccepted`               | `boolean`                                                      | `true`                       | Requires user to confirm terms of use by rendering DepositTermsOfUse component before deposit action                                               |
 > | `standalone`                       | `boolean`                                                      | `true`                       | Handles token selection in SPA mode                                                                                                                |
+> | `isAllAssetsWithdrawOptionDefault` | `boolean`                                                      | `false`                      | Sets "All Assets" withdraw option by default                                                                                                       |
 > | `chainConfig`                      | `Partial<Record<ChainId, { name: string; iconPath: string }>>` | `{}`                         | Sets map of chain `name` and `iconPath`                                                                                                            |
 
 ##### actions
