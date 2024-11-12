@@ -5,7 +5,6 @@ import {
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useAssetPrice } from 'core-kit/hooks/trading'
-import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
@@ -38,7 +37,6 @@ const useReceiveToken = () => {
 }
 
 export const useInitWithdrawInputGroup = () => {
-  const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const sendToken = useSendToken()
   const receiveToken = useReceiveToken()
 
@@ -49,7 +47,6 @@ export const useInitWithdrawInputGroup = () => {
   return {
     sendToken,
     onInputChange: handleInputChange,
-    isMultiAssetWithdraw,
     receiveToken,
   }
 }

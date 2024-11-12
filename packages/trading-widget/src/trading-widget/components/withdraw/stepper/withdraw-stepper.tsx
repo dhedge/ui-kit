@@ -1,8 +1,4 @@
-import {
-  ArrowRightCircleIcon,
-  CheckCircleIcon,
-  LockClosedIcon,
-} from '@heroicons/react/24/outline'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
 
@@ -23,11 +19,6 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
         const isCompleted = step.index < activeStepIndex
         const isActive = step.index === activeStepIndex
         const isLast = index === steps.length - 1
-        const Icon = isCompleted
-          ? CheckCircleIcon
-          : isActive
-            ? ArrowRightCircleIcon
-            : LockClosedIcon
         return (
           <>
             <div
@@ -41,7 +32,13 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
                 },
               )}
             >
-              <Icon className={classNames('dtw-w-4')} />
+              {isCompleted ? (
+                <CheckCircleIcon className="dtw-w-[18px]" />
+              ) : (
+                <span className="dtw-text-center dtw-text-sm">
+                  {index + 1}.
+                </span>
+              )}
               {!isLast && (
                 <div className="dtw-h-full dtw-min-h-1">
                   <div
@@ -58,7 +55,7 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
             >
               <div
                 className={classNames(
-                  'dtw-flex dtw-gap-1 dtw-leading-none dtw-items-center',
+                  'dtw-mt-0.5 dtw-flex dtw-gap-1 dtw-leading-none dtw-items-center',
                   {
                     'dtw-text-[color:var(--panel-secondary-content-color)]':
                       !isCompleted && !isActive,
