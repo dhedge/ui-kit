@@ -1,6 +1,7 @@
 // code from https://github.com/Synthetixio/erc7412
 
-import type { Hex } from 'viem'
+import type { CallExecutionError, Hex } from 'viem'
+import { decodeAbiParameters } from 'viem'
 import type { usePublicClient } from 'wagmi'
 
 import { IERC7412Abi, ITrustedMulticallForwarderAbi } from 'core-kit/abi'
@@ -56,26 +57,22 @@ export function resolveAdapterCalls(
   publicClient: NonNullable<ReturnType<typeof usePublicClient>> | undefined,
 ): Record<Address, Array<{ query: Hex; fee: bigint }>> {
   try {
-    let err
-    try {
-      err = decodeErrorResult({
-        abi: IERC7412Abi,
-        data: parseError(origError),
-      })
-    } catch {
-      err = decodeErrorResult({
-        abi: LEGACY_ODR_ERROR,
-        data: parseError(origError),
-      })
-    }
-    if (err.errorName === 'Errors') {
-      const errorsList = err.args?.[0] as Hex[]
+    const parsedError = parseError(origError as CallExecutionError) as string
+    // Errors
+    if (parsedError.startsWith('0x0b42fd17')) {
+      const splitHexStrs = parsedError.split('0b42fd17')
+      // some nested Errors error messed it up, so just got the last one to work with;
+      const data = `0x${splitHexStrs.at(-1)}`
+      const errorsList = decodeAbiParameters(
+        IERC7412Abi.filter((x) => x.name === 'Errors')?.[0]?.inputs ?? [],
+        data as Hex,
+      )
 
       const adapterCalls: Record<
         Address,
         Array<{ query: Hex; fee: bigint }>
       > = {}
-      for (const error of errorsList) {
+      for (const error of errorsList[0] as Hex[]) {
         const subAdapterCalls = resolveAdapterCalls(error, publicClient)
 
         for (const a in subAdapterCalls) {
@@ -90,18 +87,24 @@ export function resolveAdapterCalls(
       }
 
       return adapterCalls
-    } else if (err.errorName === 'OracleDataRequired') {
-      const oracleQuery = err.args?.[1] as Hex
-      const oracleAddress = err.args?.[0] as Address
-      const fee = err.args?.[2] as bigint
+    } else {
+      const err = decodeErrorResult({
+        abi: [...IERC7412Abi, ...LEGACY_ODR_ERROR],
+        data: parseError(origError as CallExecutionError),
+      })
+      if (err.errorName === 'OracleDataRequired') {
+        const oracleQuery = err.args?.[1] as Hex
+        const oracleAddress = err.args?.[0] as Address
+        const fee = err.args?.[2] as bigint
 
-      return { [oracleAddress]: [{ query: oracleQuery, fee }] }
+        return { [oracleAddress]: [{ query: oracleQuery, fee }] }
+      }
     }
   } catch (err) {
     console.error(err)
   }
 
-  // if we get to this point then we cant parse the error so we should make sure to send the original
+  // if we get to this point then we cant parse the error, so we should make sure to send the original
   throw new Error(
     `could not parse error. can it be decoded elsewhere? ${JSON.stringify(
       origError,
