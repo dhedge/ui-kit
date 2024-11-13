@@ -153,7 +153,6 @@ describe('useHandleCompleteWithdraw', () => {
       receiveTokens: null,
       sendTokens: null,
       status: 'None',
-      meta: {},
     })
   })
 })
