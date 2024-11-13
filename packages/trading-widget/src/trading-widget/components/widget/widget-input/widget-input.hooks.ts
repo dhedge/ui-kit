@@ -39,10 +39,10 @@ export const useWidgetInput = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const usdAmount = useMemo<string>(() => {
-    if (!displayCalculatedValue) {
+    const amount = Number(assetInput || 0) * Number(assetPrice || 0)
+    if (!displayCalculatedValue || isNaN(amount)) {
       return ''
     }
-    const amount = Number(assetInput || 0) * Number(assetPrice || 0)
     const amountInUsd = formatToUsd({
       value: amount,
       maximumFractionDigits: getConventionalTokenPriceDecimals(amount),
