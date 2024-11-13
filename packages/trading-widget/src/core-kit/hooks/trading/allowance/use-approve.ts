@@ -56,6 +56,7 @@ export const useApprove = ({
         },
       ],
       receiveTokens: null,
+      meta: {},
     })
     updatePendingTransactions({
       type: 'add',

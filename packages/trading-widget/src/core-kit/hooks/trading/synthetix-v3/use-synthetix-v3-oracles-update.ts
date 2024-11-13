@@ -64,6 +64,7 @@ export const useSynthetixV3OraclesUpdate = ({
       link: '',
       sendTokens: null,
       receiveTokens: null,
+      meta: {},
     })
 
     try {

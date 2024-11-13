@@ -76,7 +76,6 @@ export const useHandleCompleteWithdraw = ({
         link: '',
         sendTokens: null,
         receiveTokens: null,
-        meta: {},
       })
       updatePendingTransactions({ type: 'remove', status: 'fail' })
     }
