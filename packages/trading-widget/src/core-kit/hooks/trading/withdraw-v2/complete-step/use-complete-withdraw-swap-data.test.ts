@@ -1,13 +1,14 @@
+import { DEFAULT_SWAP_TRANSACTION_SLIPPAGE } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
+  useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 import { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
 import {
   useCompleteWithdrawTrackedAssets,
   useHasSwappableAssets,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
-import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useAccount } from 'core-kit/hooks/web3'
 import { isEqualAddress } from 'core-kit/utils'
 
@@ -18,7 +19,6 @@ import { useCompleteWithdrawSwapData } from './use-complete-withdraw-swap-data'
 vi.mock('core-kit/hooks/state')
 vi.mock('core-kit/hooks/trading/use-swaps-data-query')
 vi.mock('core-kit/hooks/trading/withdraw-v2/complete-step')
-vi.mock('core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage')
 vi.mock('core-kit/hooks/web3')
 vi.mock('core-kit/utils')
 
@@ -30,7 +30,9 @@ describe('useCompleteWithdrawSwapData', () => {
     vi.mocked(useAccount).mockReturnValue({
       account: '0x123',
     } as unknown as ReturnType<typeof useAccount>)
-    vi.mocked(useAppliedWithdrawSlippage).mockReturnValue(0.5)
+    vi.mocked(useTradingPanelSettings).mockReturnValue([
+      { slippage: 'auto' },
+    ] as unknown as ReturnType<typeof useTradingPanelSettings>)
     vi.mocked(useReceiveTokenInput).mockReturnValue([
       { address: '0x456', decimals: 18 },
     ] as unknown as ReturnType<typeof useReceiveTokenInput>)
@@ -40,7 +42,29 @@ describe('useCompleteWithdrawSwapData', () => {
     vi.mocked(isEqualAddress).mockImplementation((a, b) => a === b)
   })
 
-  it('should return swap data when assets are present and not equal to receive token', () => {
+  it('should return swap data when assets are present and not equal to receive token with auto', () => {
+    vi.mocked(useHasSwappableAssets).mockReturnValue(true)
+    vi.mocked(useTradingPanelSettings).mockReturnValue([
+      { slippage: 1 },
+    ] as unknown as ReturnType<typeof useTradingPanelSettings>)
+    renderHook(() => useCompleteWithdrawSwapData())
+
+    expect(useSwapsDataQuery).toHaveBeenCalledWith(
+      [
+        {
+          amount: '1000',
+          chainId: 10,
+          destinationAddress: '0x456',
+          slippage: '1',
+          sourceAddress: '0x789',
+          walletAddress: '0x123',
+        },
+      ],
+      { enabled: true },
+    )
+  })
+
+  it('should return swap data when assets are present and not equal to receive token with custom slippage', () => {
     vi.mocked(useHasSwappableAssets).mockReturnValue(true)
     renderHook(() => useCompleteWithdrawSwapData())
 
@@ -50,7 +74,7 @@ describe('useCompleteWithdrawSwapData', () => {
           amount: '1000',
           chainId: 10,
           destinationAddress: '0x456',
-          slippage: '0.5',
+          slippage: DEFAULT_SWAP_TRANSACTION_SLIPPAGE.toString(),
           sourceAddress: '0x789',
           walletAddress: '0x123',
         },
