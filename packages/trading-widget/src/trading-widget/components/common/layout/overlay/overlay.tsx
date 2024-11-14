@@ -19,7 +19,6 @@ export const Overlay: FC<PropsWithChildren<OverlayProps>> = ({
   centered = true,
   onClose,
 }) => {
-
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {

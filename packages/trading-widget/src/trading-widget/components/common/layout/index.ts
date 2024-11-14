@@ -1,6 +1,7 @@
 import { Balance } from './balance/balance'
 import { InputGroup } from './input-group/input-group'
 import { Meta } from './meta/meta'
+import { Notification } from './notification/notification'
 import { Overlay } from './overlay/overlay'
 import { Panel } from './panel/panel'
 import { Settings } from './settings/settings'
@@ -12,6 +13,7 @@ type LayoutCompoundedComponent = {
   Settings: typeof Settings
   Panel: typeof Panel
   Overlay: typeof Overlay
+  Notification: typeof Notification
 }
 
 export const Layout: LayoutCompoundedComponent = {
@@ -21,4 +23,5 @@ export const Layout: LayoutCompoundedComponent = {
   Settings,
   Panel,
   Overlay,
+  Notification,
 }

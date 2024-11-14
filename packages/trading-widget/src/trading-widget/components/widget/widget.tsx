@@ -9,6 +9,7 @@ import { OVERLAY } from 'trading-widget/types'
 import {
   FmedWithdrawalOverlay,
   HighSlippageOverlay,
+  NotificationOverlay,
   OverlaySwitch,
   PendingApprovalOverlay,
   PoolSelectOverlay,
@@ -43,6 +44,7 @@ export const Widget: FC = () => {
         <TokenSelectOverlay type={OVERLAY.TOKEN_SELECT} searchQuery="" />
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
         <TradingOverlay type={OVERLAY.TRADING} />
+        <NotificationOverlay type={OVERLAY.NOTIFICATION} />
       </OverlaySwitch>
       <PendingApprovalOverlay />
     </div>

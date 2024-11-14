@@ -8,6 +8,7 @@ export interface ConfigProviderParams {
   defaultWithdrawSlippage: number
   defaultSwapTransactionSlippage: number
   defaultNoSwapMinDepositAmountGap: number
+  defaultNotificationDuration: number
   defaultLockTime: string
   stablePrecision: number
   defaultPrecision: number
