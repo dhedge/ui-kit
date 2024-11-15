@@ -429,7 +429,7 @@ path: `component.meta[name]`
 </summary>|
 
 > | name                             | type   | default value                                                                                                                                                                         | description |
-> | -------------------------------- | ------ |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ----------- |
+> | -------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 > | `depositSlippageWarning`         | string | Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.                                                                                            |             |
 > | `withdrawSlippageWarning`        | string | Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.                                                                            |             |
 > | `minSlippageWarning`             | string | Flexible min slippage value that is likely enough to process the transaction.                                                                                                         |             |
@@ -522,6 +522,7 @@ path: `component.meta[name]`
 > | `total`                          | string | Total:                                                                                                                                                                                |             |
 > | `showAll`                        | string | Show All                                                                                                                                                                              |             |
 > | `hide`                           | string | Hide                                                                                                                                                                                  |             |
+> | `refreshSwapQuoteTooltip`        | string | Refresh swap quote                                                                                                                                                                    |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
