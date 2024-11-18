@@ -7,7 +7,7 @@ import { TABS } from 'trading-widget/constants/tab'
 import { OVERLAY } from 'trading-widget/types'
 
 import {
-  FmedWithdrawalOverlay,
+  FmpWithdrawalOverlay,
   HighSlippageOverlay,
   OverlaySwitch,
   PendingApprovalOverlay,
@@ -39,7 +39,7 @@ export const Widget: FC = () => {
       <OverlaySwitch>
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
         <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />
-        <FmedWithdrawalOverlay type={OVERLAY.FMED_WITHDRAWAL} />
+        <FmpWithdrawalOverlay type={OVERLAY.FMP_WITHDRAWAL} />
         <TokenSelectOverlay type={OVERLAY.TOKEN_SELECT} searchQuery="" />
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
         <TradingOverlay type={OVERLAY.TRADING} />

@@ -1,43 +1,41 @@
 import { FlatcoinPointsModuleAbi } from 'core-kit/abi'
 import { base } from 'core-kit/const'
 
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import {
-  useContractReadErrorLogging,
-  useReadContracts,
-} from 'core-kit/hooks/web3'
+import { useReadContracts } from 'core-kit/hooks/web3'
+import type { Address } from 'core-kit/types'
 import { getContractAddressById } from 'core-kit/utils'
 
-const FMED_CHAIN_ID = base.id
+const FLAT_MONEY_CHAIN_ID = base.id
 
 interface UseFmedVestedPointsProps {
   enabled?: boolean
+  address: Address
 }
 
 const getContracts = (vaultAddress: string) => {
   const pointsContractAddress = getContractAddressById(
     'flatcoinPointsModule',
-    FMED_CHAIN_ID,
+    FLAT_MONEY_CHAIN_ID,
   )
 
   return [
     {
       address: pointsContractAddress,
-      chainId: FMED_CHAIN_ID,
+      chainId: FLAT_MONEY_CHAIN_ID,
       abi: FlatcoinPointsModuleAbi,
       functionName: 'lockedBalance',
       args: [vaultAddress],
     },
     {
       address: pointsContractAddress,
-      chainId: FMED_CHAIN_ID,
+      chainId: FLAT_MONEY_CHAIN_ID,
       abi: FlatcoinPointsModuleAbi,
       functionName: 'getUnlockTax',
       args: [vaultAddress],
     },
     {
       address: pointsContractAddress,
-      chainId: FMED_CHAIN_ID,
+      chainId: FLAT_MONEY_CHAIN_ID,
       abi: FlatcoinPointsModuleAbi,
       functionName: 'unlockTime',
       args: [vaultAddress],
@@ -45,12 +43,12 @@ const getContracts = (vaultAddress: string) => {
   ]
 }
 
-export const useFmedVestedPoints = ({
+export const useVaultVestedPoints = ({
   enabled,
-}: UseFmedVestedPointsProps | undefined = {}) => {
-  const { address: vaultAddress } = useTradingPanelPoolConfig()
-  const result = useReadContracts({
-    contracts: getContracts(vaultAddress),
+  address,
+}: UseFmedVestedPointsProps) =>
+  useReadContracts({
+    contracts: getContracts(address),
     query: {
       enabled,
       select: (data) => {
@@ -64,7 +62,3 @@ export const useFmedVestedPoints = ({
       },
     },
   })
-  useContractReadErrorLogging(result)
-
-  return result
-}

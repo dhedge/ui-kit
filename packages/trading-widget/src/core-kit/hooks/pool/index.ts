@@ -12,4 +12,4 @@ export { useSynthetixV3AssetBalance } from './synthetixV3/use-synthetix-v3-asset
 export { useTotalFundValueMutable } from './synthetixV3/use-total-funds-value-mutable'
 export { useInvalidatePoolContractData } from './use-invalidate-pool-contract-data'
 export { usePoolsDynamic } from './multicall'
-export { useFmedVestedPoints } from './use-fmed-vested-points'
+export { useVaultVestedPoints } from './use-vault-vested-points'
