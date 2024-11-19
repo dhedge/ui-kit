@@ -1,4 +1,7 @@
-import { DEFAULT_SWAP_TRANSACTION_SLIPPAGE } from 'core-kit/const'
+import {
+  DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
+  SWAP_QUOTE_REFRESH_INTERVAL_MS,
+} from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
@@ -60,7 +63,7 @@ describe('useCompleteWithdrawSwapData', () => {
           walletAddress: '0x123',
         },
       ],
-      { enabled: true },
+      { enabled: true, refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS },
     )
   })
 
@@ -79,7 +82,7 @@ describe('useCompleteWithdrawSwapData', () => {
           walletAddress: '0x123',
         },
       ],
-      { enabled: true },
+      { enabled: true, refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS },
     )
   })
 
@@ -93,7 +96,7 @@ describe('useCompleteWithdrawSwapData', () => {
 
     expect(useSwapsDataQuery).toHaveBeenCalledWith(
       expect.objectContaining([]),
-      { enabled: false },
+      { enabled: false, refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS },
     )
   })
 
@@ -107,7 +110,7 @@ describe('useCompleteWithdrawSwapData', () => {
 
     expect(useSwapsDataQuery).toHaveBeenCalledWith(
       expect.objectContaining([]),
-      { enabled: false },
+      { enabled: false, refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS },
     )
   })
 })

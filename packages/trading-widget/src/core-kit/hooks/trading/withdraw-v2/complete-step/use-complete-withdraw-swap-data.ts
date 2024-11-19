@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { AddressZero } from 'core-kit/const'
+import { AddressZero, SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
@@ -53,5 +53,6 @@ export const useCompleteWithdrawSwapData = () => {
 
   return useSwapsDataQuery(swapDataAssets, {
     enabled: swapDataRequired,
+    refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS,
   })
 }
