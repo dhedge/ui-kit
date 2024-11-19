@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { SWAP_QUOTE_REFRESH_INTERVAL } from 'core-kit/const'
+import { SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
 
 export interface ReloadButtonProps {
   onClick: () => void
@@ -25,7 +25,7 @@ export const useReloadButton = ({
 
     const timer = setTimeout(() => {
       setDisabledByTimer(false)
-    }, SWAP_QUOTE_REFRESH_INTERVAL)
+    }, SWAP_QUOTE_REFRESH_INTERVAL_MS)
 
     return () => clearTimeout(timer)
   }, [disabledByTimer])
