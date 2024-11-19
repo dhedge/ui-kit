@@ -9,6 +9,9 @@ import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
 import type { FC, PropsWithChildren } from 'react'
 
+import { TRADING_PANEL_LOG_EVENT } from 'core-kit/const'
+import { useTradingPanelLogger } from 'core-kit/hooks/state'
+
 interface SettingsPopoverProps {
   className?: string
   iconClassName?: string
@@ -21,9 +24,16 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
   onClick,
   children,
 }) => {
+  const log = useTradingPanelLogger()
+
+  const handleClick = () => {
+    onClick?.()
+    log?.(TRADING_PANEL_LOG_EVENT.TRADING_SETTINGS_OPENED)
+  }
+
   return (
     <Popover className={classNames('dtw-flex dtw-items-center', className)}>
-      <PopoverButton onClick={onClick}>
+      <PopoverButton onClick={handleClick}>
         <Cog6ToothIcon
           className={classNames(
             'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] hover:dtw-opacity-80',
