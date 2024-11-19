@@ -1,11 +1,16 @@
 export const TRADING_PANEL_LOG_EVENT = {
   INVEST_INPUT_FOCUS: 'invest_input_focus',
   APPROVED_TOKEN: 'approved_token',
+  UPDATE_ORACLES: 'update_oracles',
   DEPOSIT: 'deposit',
+  MULTI_ASSET_WITHDRAW: 'multi_asset_withdraw',
+  SINGLE_ASSET_WITHDRAW: 'single_asset_unroll',
+  SINGLE_ASSET_WITHDRAW_AND_CLAIM: 'single_asset_unroll_and_claim',
+  CLAIM: 'claim_unrolled_assets',
+  SWAP: 'swap_unrolled_assets',
   WITHDRAWAL: 'withdrawal',
   TRADING_SETTINGS_OPENED: 'trading_settings_opened',
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
-  MULTI_ASSET_WITHDRAWAL_CHANGE: 'multi_asset_withdrawal_change',
 }
 
 /**
@@ -16,7 +21,6 @@ export const TRADING_PANEL_LOG_EVENT = {
  */
 export const TRADING_LOG_EVENT_PARAM = {
   IS_INFINITE: { NAME: 'is_infinite', TYPE: 'number' },
-  IS_MULTI_ASSET: { NAME: 'is_multi_asset', TYPE: 'number' },
   SYMBOL: { NAME: 'symbol', TYPE: 'string' },
   CHAIN_ID: { NAME: 'chain_id', TYPE: 'number' },
   ADDRESS: { NAME: 'address', TYPE: 'string' },
