@@ -1,23 +1,28 @@
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 import type { FC } from 'react'
 
-import { useFlatmoneyPointsUserBalances } from 'core-kit/hooks/user'
-import { commify, formatNumberToLimitedDecimals } from 'core-kit/utils'
 import {
   ActionButton,
   Layout,
   PendingOverlay,
 } from 'trading-widget/components/common'
 
+import { useFmpWithdrawalOverlay } from 'trading-widget/components/widget/widget-overlay/fmp-withdrawal-overlay/fmp-withdrawal-overlay.hooks'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
-import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import type { OverlayProps } from 'trading-widget/types'
 
-export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
+export const FmpWithdrawalOverlay: FC<OverlayProps> = (props) => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { handleReject, handleConfirm } = useOverlayHandlers({ type })
-  const { unlockTaxAmount, unlockDate, unlockTimestamp, isLoading } =
-    useFlatmoneyPointsUserBalances()
+
+  const {
+    isLoading,
+    showUnlockTaxTip,
+    showUnlockTaxAmount,
+    unlockDate,
+    unlockTaxAmount,
+    handleReject,
+    handleConfirm,
+  } = useFmpWithdrawalOverlay(props)
 
   return isLoading ? (
     <PendingOverlay />
@@ -27,7 +32,7 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
         <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
         <p>Withdraw Alert</p>
       </div>
-      {unlockTimestamp && Date.now() < unlockTimestamp ? (
+      {showUnlockTaxTip ? (
         <p className="dtw-text-sm">
           By proceeding with this trade, you acknowledge and accept the
           possibility of losing a part of your rewards (FMP).
@@ -37,11 +42,11 @@ export const FmedWithdrawalOverlay: FC<OverlayProps> = ({ type }) => {
         Please consider the following before confirming:
       </p>
       <ul className="dtw-self-start dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-max-h-28 dtw-overflow-y-scroll">
-        {!!unlockTaxAmount && unlockTaxAmount !== '0' && (
+        {showUnlockTaxAmount && (
           <>
             <li className="dtw-text-warning">
-              If you withdraw now, you will incur a penalty of{' '}
-              {commify(formatNumberToLimitedDecimals(unlockTaxAmount, 0))} FMP
+              If you withdraw now, you will incur a penalty of {unlockTaxAmount}{' '}
+              FMP
             </li>
             <li className="dtw-text-warning">
               Wait until {unlockDate} for locked points vesting to complete

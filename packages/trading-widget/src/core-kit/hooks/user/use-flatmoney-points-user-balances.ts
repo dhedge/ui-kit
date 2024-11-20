@@ -5,16 +5,13 @@ import { useMemo } from 'react'
 
 import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
 import {
-  useFmedVestedPoints,
   usePoolDynamicContractData,
+  useVaultVestedPoints,
 } from 'core-kit/hooks/pool'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import { useAccount } from 'core-kit/hooks/web3'
 
-import {
-  isEqualAddress,
-  isFlatMoneyEarlyDepositorAddress,
-} from 'core-kit/utils'
+import { isEqualAddress, isFmpAirdropVaultAddress } from 'core-kit/utils'
 
 import { useUserTokenBalance } from './use-user-token-balance'
 
@@ -41,14 +38,17 @@ export const useFlatmoneyPointsUserBalances =
       chainId,
     })
 
-    const isFmedVault = isFlatMoneyEarlyDepositorAddress(vaultAddress)
+    const isFmpAirdropVault = isFmpAirdropVaultAddress(vaultAddress)
     const fetchUserPointsBalances =
-      isFmedVault && !isEqualAddress(account, AddressZero)
+      isFmpAirdropVault && !isEqualAddress(account, AddressZero)
 
     const {
       data: { lockedVaultPointsBalance, unlockTaxInPercents, unlockTime } = {},
       isLoading,
-    } = useFmedVestedPoints({ enabled: fetchUserPointsBalances })
+    } = useVaultVestedPoints({
+      enabled: fetchUserPointsBalances,
+      address: vaultAddress,
+    })
 
     return useMemo(() => {
       const userVaultPortionInPercents = totalSupply

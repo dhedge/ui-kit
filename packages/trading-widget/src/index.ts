@@ -201,6 +201,7 @@ export {
   hexToString,
   encodeFunctionData,
   transformAddressForAnalytics,
+  isFmpAirdropVaultAddress,
 } from './core-kit/utils'
 
 export {
@@ -218,7 +219,7 @@ export {
   useManagerLogicAddress,
   usePoolsDynamic,
   usePoolTokenPrice,
-  useFmedVestedPoints,
+  useVaultVestedPoints,
 } from './core-kit/hooks/pool'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {
