@@ -530,3 +530,29 @@ path: `component.meta[name]`
 ###### Default values: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.defaults.ts`
 
 </details>
+
+## Local Development
+
+Follow the steps below to set up the project for local development:
+
+1. **Install Dependencies**:
+   Use `pnpm` to install all required dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Update Alchemy API Key**: Replace the placeholder Alchemy API key in the file:
+
+   ```bash
+    packages/trading-widget/src/core-kit/providers/wagmi-provider.tsx
+   ```
+
+3. **Implement** getSwapData in:
+   ```bash
+   packages/trading-widget/src/core-kit/providers/wagmi-provider.tsx
+   ```
+4. **Run Storybook**
+   ```bash
+   pnpm storybook
+   ```
