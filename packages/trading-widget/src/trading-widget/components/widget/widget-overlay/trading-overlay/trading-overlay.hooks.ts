@@ -18,6 +18,7 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
     () => ({
       Wallet: t.sendingOrderToWallet,
       None: t.settingUpTx,
+      Mining: t.miningTx,
     }),
     [t],
   )

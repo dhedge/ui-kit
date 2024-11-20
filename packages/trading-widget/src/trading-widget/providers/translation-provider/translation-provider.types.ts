@@ -69,6 +69,7 @@ export type TranslationMap = {
   selectToken: string
   sendingOrderToWallet: string
   settingUpTx: string
+  miningTx: string
   updateSynthetixOracles: string
   approveSpending: string
   pay: string
