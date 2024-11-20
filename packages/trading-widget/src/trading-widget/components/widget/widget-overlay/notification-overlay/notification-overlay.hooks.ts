@@ -9,7 +9,8 @@ const parseErrorMessage = (error: string | undefined) => {
   const [, reason = ''] = error.split(':').map((s) => s.trim())
 
   return (
-    TRANSACTION_ERRORS[reason] ?? { title: 'Transaction failed', hint: error }
+    TRANSACTION_ERRORS[reason] ??
+    TRANSACTION_ERRORS[error] ?? { title: 'Transaction failed', hint: error }
   )
 }
 

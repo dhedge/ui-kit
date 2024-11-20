@@ -36,7 +36,7 @@ export const useHandleCompleteWithdraw = ({
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const onTransactionEstimationError = useOnTransactionEstimationError()
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
-  const { isFetching: isAssetsFetching } = useCompleteWithdrawSwapData()
+  const { isFetching: isSwapDataFetching } = useCompleteWithdrawSwapData()
 
   const handleTrade = async () => {
     const chainId = poolConfig.chainId
@@ -97,7 +97,7 @@ export const useHandleCompleteWithdraw = ({
   }
 
   return {
-    disabled: isClaim ? false : isAssetsFetching,
+    disabled: isClaim ? false : isSwapDataFetching,
     label: isClaim ? t.claimAction : t.swapAction,
     handleTrade,
   }
