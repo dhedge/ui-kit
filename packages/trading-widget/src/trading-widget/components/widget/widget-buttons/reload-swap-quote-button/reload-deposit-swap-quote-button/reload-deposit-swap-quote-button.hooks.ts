@@ -22,7 +22,7 @@ export const useReloadDepositSwapQuoteButton =
   (): UseReloadDepositSwapQuoteButtonReturn => {
     const { depositMethod } = useVaultDepositParams()
     const showButton = DEPOSIT_METHODS_WITH_SWAP.includes(depositMethod)
-    const { refetch, data: swapData } = useSwapDataBasedOnSendToken()
+    const { refetch, isFetched } = useSwapDataBasedOnSendToken()
 
-    return { showButton, refetch, disabled: !swapData }
+    return { showButton, refetch, disabled: !isFetched }
   }

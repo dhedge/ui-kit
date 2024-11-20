@@ -8,7 +8,8 @@ import { injected } from 'wagmi/connectors'
 
 import { ALCHEMY_RPC_URL_MAP, DEFAULT_POLLING_INTERVAL } from 'core-kit/const'
 
-const API_KEY = 'FUOJ0LrUAEKMhyyVAeUAr3_rV7cvGIWQ'
+// Alchemy API key for local development
+const API_KEY = ''
 
 const config = createConfig({
   chains: [optimism, polygon, arbitrum, base],

@@ -120,6 +120,7 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `defaultWithdrawSlippage`          | `number`                                                       | `[0.1, 0.3, 0.5, 1, 1.5, 3]` | Initial withdraw slippage absolute percent. Further adjustments are available in panel settings                                                    |
 > | `defaultSwapTransactionSlippage`   | `number`                                                       | `0.3`                        | Default slippage (%) applied to swap transaction.                                                                                                  |
 > | `defaultNoSwapMinDepositAmountGap` | `number`                                                       | `0.1`                        | Default gap (%) for min received vault tokens during no swap deposits.                                                                             |
+> | `defaultNotificationDuration`      | `number`                                                       | `10000`                      | Notification duration in ms                                                                                                                        |
 > | `defaultLockTime`                  | `string`                                                       | `'24 hours'`                 | Formatted default deposit lock time to be displayed in panel (Long lockup period is used to bypass entry fee and can be managed in panel settings) |
 > | `customLockTime`                   | `string`                                                       | `'15 minutes'`               | Formatted custom deposit lock time alternative to be displayed in panel                                                                            |
 > | `stablePrecision`                  | `number`                                                       | `3`                          | Number of decimals to be displayed in stables (e.g USDC balance)                                                                                   |
@@ -530,3 +531,29 @@ path: `component.meta[name]`
 ###### Default values: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.defaults.ts`
 
 </details>
+
+## Local Development
+
+Follow the steps below to set up the project for local development:
+
+1. **Install Dependencies**:
+   Use `pnpm` to install all required dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Update Alchemy API Key**: Replace the placeholder Alchemy API key in the file:
+
+   ```bash
+    packages/trading-widget/src/core-kit/providers/wagmi-provider.tsx
+   ```
+
+3. **Implement** getSwapData in:
+   ```bash
+   packages/trading-widget/src/core-kit/providers/wagmi-provider.tsx
+   ```
+4. **Run Storybook**
+   ```bash
+   pnpm storybook
+   ```

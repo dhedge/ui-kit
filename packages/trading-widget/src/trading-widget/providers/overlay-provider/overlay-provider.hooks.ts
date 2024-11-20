@@ -23,6 +23,7 @@ const reducer = (
           isPending: action.payload.isPending ?? false,
           onConfirm:
             action.payload.onConfirm ?? state[action.payload.type].onConfirm,
+          meta: action.payload.meta ?? state[action.payload.type].meta,
         },
       }
 
@@ -79,7 +80,7 @@ export const useOverlayHandlers = ({ type }: OverlayProps) => {
     })
   }
 
-  const { onConfirm, isPending } = state[type]
+  const { onConfirm, isPending, meta } = state[type]
 
   const setPendingState = (isPending: boolean) => {
     dispatch({
@@ -97,5 +98,6 @@ export const useOverlayHandlers = ({ type }: OverlayProps) => {
     handleReject: handleClose,
     handleConfirm,
     isPending,
+    meta,
   }
 }

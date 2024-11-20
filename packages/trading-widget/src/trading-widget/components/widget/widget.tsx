@@ -10,6 +10,7 @@ import { OVERLAY } from 'trading-widget/types'
 import {
   FmpWithdrawalOverlay,
   HighSlippageOverlay,
+  NotificationOverlay,
   OverlaySwitch,
   PendingApprovalOverlay,
   PoolSelectOverlay,
@@ -41,6 +42,7 @@ export const Widget: FC = () => {
         </TabPanels>
       </TabGroup>
       <OverlaySwitch>
+        <NotificationOverlay type={OVERLAY.NOTIFICATION} />
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
         <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />
         <FmpWithdrawalOverlay type={OVERLAY.FMP_WITHDRAWAL} />

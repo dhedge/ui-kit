@@ -1,5 +1,9 @@
+import { DEPOSIT_SWAP_DATA_ERROR } from 'core-kit/const'
 import { useHandleTrade } from 'core-kit/hooks/trading'
-import { useDeposit } from 'core-kit/hooks/trading/deposit-v2'
+import {
+  useDeposit,
+  useSwapDataBasedOnSendToken,
+} from 'core-kit/hooks/trading/deposit-v2'
 
 import {
   useConfigContextActions,
@@ -10,14 +14,29 @@ import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-prov
 import { OVERLAY } from 'trading-widget/types'
 
 export const useDepositTradeButton = () => {
+  const dispatch = useOverlayDispatchContext()
   const { onAcceptTermsOfUse } = useConfigContextActions()
   const { termsOfUseAccepted } = useConfigContextParams()
   const deposit = useDeposit()
   // TODO consider transforming label into param for mapping
   const { disabled, label, handleTrade } = useHandleTrade(deposit)
-  const dispatch = useOverlayDispatchContext()
+  const { isError: isSwapDataFetchingError } = useSwapDataBasedOnSendToken()
 
   const handleClick = () => {
+    if (isSwapDataFetchingError) {
+      dispatch({
+        type: 'MERGE_OVERLAY',
+        payload: {
+          type: OVERLAY.NOTIFICATION,
+          isOpen: true,
+          meta: {
+            error: DEPOSIT_SWAP_DATA_ERROR,
+          },
+        },
+      })
+      return
+    }
+
     if (termsOfUseAccepted) {
       handleTrade()
     } else {

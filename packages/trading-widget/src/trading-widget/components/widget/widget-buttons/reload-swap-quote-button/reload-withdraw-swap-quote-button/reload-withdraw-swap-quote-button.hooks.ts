@@ -12,7 +12,7 @@ interface UseReloadWithdrawSwapQuoteButtonReturn {
 export const useReloadWithdrawSwapQuoteButton =
   (): UseReloadWithdrawSwapQuoteButtonReturn => {
     const showButton = useHasSwappableAssets()
-    const { refetch, data: swapData } = useCompleteWithdrawSwapData()
+    const { refetch, isFetched } = useCompleteWithdrawSwapData()
 
-    return { showButton, refetch, disabled: !swapData }
+    return { showButton, refetch, disabled: !isFetched }
   }
