@@ -93,6 +93,7 @@ export type TranslationMap = {
   total: string
   showAll: string
   hide: string
+  refreshSwapQuoteTooltip: string
   [key: string]: string
 }
 

@@ -100,7 +100,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   depositAction: 'Buy',
   withdrawAction: 'Sell',
   unrollAction: 'Unroll',
-  unrollAndClaimAction: 'Unroll and Claim',
+  unrollAndClaimAction: 'Claim',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim',
@@ -110,9 +110,9 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   completeWithdrawDescription: 'Claim',
   completeWithdrawTooltip:
     'This final step swaps all assets to a single asset and sends it to your wallet.',
-  unrollAndClaimDescription:
-    'Unroll {vaultSymbol} tokens and claim {assetSymbol}',
+  unrollAndClaimDescription: 'Claim',
   total: 'Total:',
   showAll: 'Show all',
   hide: 'Hide',
+  refreshSwapQuoteTooltip: 'Refresh swap quote',
 }

@@ -2,12 +2,7 @@ import type { FC, PropsWithChildren } from 'react'
 
 import { createContext, useCallback, useMemo, useReducer } from 'react'
 
-import {
-  AddressZero,
-  DEFAULT_PRECISION,
-  TRADING_LOG_EVENT_PARAM,
-  TRADING_PANEL_LOG_EVENT,
-} from 'core-kit/const'
+import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
 import type { PoolFallbackData } from 'core-kit/types/config.types'
 import type {
   TradingPanelAction,
@@ -19,6 +14,7 @@ import type {
   TradingToken,
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
+import { logTransactionByActionType } from 'core-kit/utils'
 
 function noop() {
   return
@@ -188,22 +184,13 @@ const createReducerWithLogger =
               )
               if (action.payload.status === 'success') {
                 if (transaction) {
-                  if (transaction.action === 'approve') {
-                    log?.(TRADING_PANEL_LOG_EVENT.APPROVED_TOKEN, {
-                      [TRADING_LOG_EVENT_PARAM.SYMBOL.NAME]: transaction.symbol,
-                    })
-                  } else {
-                    const eventName =
-                      transaction.action === 'deposit'
-                        ? TRADING_PANEL_LOG_EVENT.DEPOSIT
-                        : TRADING_PANEL_LOG_EVENT.WITHDRAWAL
-                    log?.(eventName, {
-                      [TRADING_LOG_EVENT_PARAM.SYMBOL.NAME]: transaction.symbol,
-                      [TRADING_LOG_EVENT_PARAM.CHAIN_ID.NAME]:
-                        transaction.chainId,
-                      [TRADING_LOG_EVENT_PARAM.ADDRESS.NAME]: state.poolAddress,
-                    })
-                  }
+                  logTransactionByActionType({
+                    action: transaction.action,
+                    log,
+                    symbol: transaction.symbol,
+                    chainId: transaction.chainId,
+                    vaultAddress: state.poolAddress,
+                  })
                 }
               }
 

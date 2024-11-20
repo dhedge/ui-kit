@@ -2,6 +2,7 @@ import 'styles/index.css'
 import { TabGroup, TabPanels } from '@headlessui/react'
 import type { FC } from 'react'
 
+import { ReloadSwapQuoteButton } from 'trading-widget/components/widget/widget-buttons'
 import { TABS } from 'trading-widget/constants/tab'
 
 import { OVERLAY } from 'trading-widget/types'
@@ -30,7 +31,10 @@ export const Widget: FC = () => {
     <div className="trading-widget dtw-relative dtw-pt-3 dtw-bg-[var(--panel-background-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)] dtw-overflow-hidden">
       <TabGroup selectedIndex={TABS.indexOf(type)} onChange={onTabChange}>
         <WidgetTabs>
-          <WidgetSettings tradingType={type} />
+          <div className="dtw-flex dtw-gap-1 dtw-items-center">
+            <ReloadSwapQuoteButton />
+            <WidgetSettings tradingType={type} />
+          </div>
         </WidgetTabs>
         <TabPanels>
           <DepositTabPanel />

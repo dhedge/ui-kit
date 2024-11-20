@@ -200,6 +200,7 @@ export {
   decodeErrorResult,
   hexToString,
   encodeFunctionData,
+  transformAddressForAnalytics,
 } from './core-kit/utils'
 
 export {

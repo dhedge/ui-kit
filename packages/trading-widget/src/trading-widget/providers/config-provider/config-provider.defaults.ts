@@ -3,7 +3,7 @@ import { injected } from 'wagmi/connectors'
 
 import {
   DEFAULT_LOCK_TIME,
-  DEFAULT_NOTIFICATION_DURATION,
+  DEFAULT_NOTIFICATION_DURATION_MS,
   DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP,
   DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
   DEFAULT_WITHDRAW_SLIPPAGE,
@@ -28,7 +28,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   defaultLockTime: DEFAULT_LOCK_TIME,
   defaultNoSwapMinDepositAmountGap: DEFAULT_NO_SWAP_MIN_DEPOSIT_AMOUNT_GAP,
   defaultSwapTransactionSlippage: DEFAULT_SWAP_TRANSACTION_SLIPPAGE,
-  defaultNotificationDuration: DEFAULT_NOTIFICATION_DURATION,
+  defaultNotificationDuration: DEFAULT_NOTIFICATION_DURATION_MS,
   stablePrecision: 3,
   defaultPrecision: 6,
   stakingChainId: optimism.id,

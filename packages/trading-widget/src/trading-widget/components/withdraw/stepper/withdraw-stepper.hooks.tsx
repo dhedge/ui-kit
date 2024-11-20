@@ -36,8 +36,6 @@ export const useWithdrawStepper = () => {
         index: INIT_STEP_INDEX,
         description: isUnrollAndClaimTransaction ? (
           t.unrollAndClaimDescription
-            .replace('{vaultSymbol}', vaultSymbol)
-            .replace('{assetSymbol}', assetSymbol)
         ) : (
           <>
             {t.initWithdrawDescription}{' '}

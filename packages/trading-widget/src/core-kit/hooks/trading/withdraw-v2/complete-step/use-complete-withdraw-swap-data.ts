@@ -1,23 +1,26 @@
 import { useMemo } from 'react'
 
-import { AddressZero } from 'core-kit/const'
+import { AddressZero, SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
+  useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 import { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
 import {
   useCompleteWithdrawTrackedAssets,
   useHasSwappableAssets,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
-import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useAccount } from 'core-kit/hooks/web3'
 import { isEqualAddress } from 'core-kit/utils'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useCompleteWithdrawSwapData = () => {
+  const { defaultSwapTransactionSlippage } = useConfigContextParams()
   const { chainId } = useTradingPanelPoolConfig()
   const { account: walletAddress = AddressZero } = useAccount()
-  const slippage = useAppliedWithdrawSlippage()
+
+  const [{ slippage }] = useTradingPanelSettings()
 
   const [receiveToken] = useReceiveTokenInput()
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
@@ -33,12 +36,23 @@ export const useCompleteWithdrawSwapData = () => {
           destinationAddress: receiveToken.address,
           walletAddress,
           amount: rawBalance.toString(),
-          slippage: slippage.toString(),
+          slippage: (slippage === 'auto'
+            ? defaultSwapTransactionSlippage
+            : slippage
+          ).toString(),
         })),
-    [assets, chainId, receiveToken.address, slippage, walletAddress],
+    [
+      assets,
+      chainId,
+      defaultSwapTransactionSlippage,
+      receiveToken.address,
+      slippage,
+      walletAddress,
+    ],
   )
 
   return useSwapsDataQuery(swapDataAssets, {
     enabled: swapDataRequired,
+    refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS,
   })
 }

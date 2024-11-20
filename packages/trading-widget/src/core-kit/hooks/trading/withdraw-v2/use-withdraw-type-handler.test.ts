@@ -1,10 +1,6 @@
 import { act } from '@testing-library/react'
 
 import {
-  TRADING_LOG_EVENT_PARAM,
-  TRADING_PANEL_LOG_EVENT,
-} from 'core-kit/const'
-import {
   useTradingPanelLogger,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
@@ -55,12 +51,6 @@ describe('useWithdrawTypeHandler', () => {
     expect(setSettings).toHaveBeenCalledWith({
       isMultiAssetWithdrawalEnabled: true,
     })
-    expect(log).toHaveBeenCalledWith(
-      TRADING_PANEL_LOG_EVENT.MULTI_ASSET_WITHDRAWAL_CHANGE,
-      {
-        [TRADING_LOG_EVENT_PARAM.IS_MULTI_ASSET.NAME]: 1,
-      },
-    )
   })
 
   it('should return the correct values', () => {

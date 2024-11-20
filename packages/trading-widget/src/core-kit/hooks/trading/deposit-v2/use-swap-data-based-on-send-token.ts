@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import { AddressZero, EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { AddressZero, SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
@@ -38,7 +38,7 @@ export const useSwapDataBasedOnSendToken = () => {
     },
     {
       enabled: isDepositWithSwapTransaction && !!debouncedSendTokenValue,
-      refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+      refetchInterval: SWAP_QUOTE_REFRESH_INTERVAL_MS,
     },
   )
 }
