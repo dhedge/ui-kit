@@ -10,6 +10,7 @@ import {
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { useDepositPriceDiff } from 'core-kit/hooks/trading/deposit-v2'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
+import { transformAddressForAnalytics } from 'core-kit/utils'
 
 const useSendToken = () => {
   const [data, updater] = useSendTokenInput()
@@ -54,7 +55,7 @@ export const useDepositInputGroup = () => {
   const handleInputFocus = () => {
     log?.(TRADING_PANEL_LOG_EVENT.INVEST_INPUT_FOCUS, {
       symbol: sendToken.symbol,
-      address: sendToken.address,
+      address: transformAddressForAnalytics(sendToken.address),
     })
   }
 

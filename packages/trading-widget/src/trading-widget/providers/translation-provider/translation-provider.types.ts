@@ -69,6 +69,7 @@ export type TranslationMap = {
   selectToken: string
   sendingOrderToWallet: string
   settingUpTx: string
+  miningTx: string
   updateSynthetixOracles: string
   approveSpending: string
   pay: string
@@ -93,6 +94,7 @@ export type TranslationMap = {
   total: string
   showAll: string
   hide: string
+  refreshSwapQuoteTooltip: string
   [key: string]: string
 }
 

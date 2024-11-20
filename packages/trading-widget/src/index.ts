@@ -200,6 +200,7 @@ export {
   decodeErrorResult,
   hexToString,
   encodeFunctionData,
+  transformAddressForAnalytics,
   isFmpAirdropVaultAddress,
 } from './core-kit/utils'
 
