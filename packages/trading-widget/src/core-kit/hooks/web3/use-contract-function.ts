@@ -200,7 +200,7 @@ export const useContractFunction = ({
 
       const { value: gas, error: gasEstimateError } = await estimate(...args)
       if (gasEstimateError) {
-        const { data, error } = await Promise.race<{
+        const { data } = await Promise.race<{
           data: SimulateTransactionResponse | null
           error?: string
         }>([
@@ -214,10 +214,7 @@ export const useContractFunction = ({
         ])
 
         throw new EstimationError({
-          message:
-            error === DEFAULT_SIMULATION_ERROR
-              ? gasEstimateError
-              : (error ?? gasEstimateError),
+          message: gasEstimateError,
           link: data?.link,
           txArgs: args,
           account,
