@@ -88,6 +88,7 @@ export const formatPoolComposition = ({
       }
     })
     .filter(({ amount }) => amount !== '0')
+    .sort((a, b) => b.fractionUsdNumber - a.fractionUsdNumber)
 
 export const usePoolCompositionWithFraction = ({
   address,
