@@ -1,61 +1,120 @@
 const SwapperErrorsAbi = [
   {
-    inputs: [{ internalType: 'address', name: 'target', type: 'address' }],
-    name: 'AddressEmptyCode',
+    inputs: [],
+    name: 'FailedInnerCall',
     type: 'error',
   },
   {
-    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-    name: 'AddressInsufficientBalance',
-    type: 'error',
-  },
-  { inputs: [], name: 'FailedInnerCall', type: 'error' },
-  {
-    inputs: [{ internalType: 'bytes', name: 'returnData', type: 'bytes' }],
+    inputs: [
+      {
+        internalType: 'bytes',
+        name: 'returnData',
+        type: 'bytes',
+      },
+    ],
     name: 'FailedToApproveParaswap',
     type: 'error',
   },
   {
     inputs: [
-      { internalType: 'contract IERC20', name: 'destToken', type: 'address' },
-      { internalType: 'uint256', name: 'receivedAmount', type: 'uint256' },
-      { internalType: 'uint256', name: 'minAmount', type: 'uint256' },
+      {
+        internalType: 'contract IERC20',
+        name: 'destToken',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'receivedAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'minAmount',
+        type: 'uint256',
+      },
     ],
     name: 'InsufficientAmountReceived',
     type: 'error',
   },
   {
-    inputs: [{ internalType: 'bytes32', name: 'routerKey', type: 'bytes32' }],
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'routerKey',
+        type: 'bytes32',
+      },
+    ],
     name: 'InvalidAggregator',
     type: 'error',
   },
-  { inputs: [], name: 'InvalidInitialization', type: 'error' },
-  { inputs: [], name: 'InvalidNativeTokenTransferEncoding', type: 'error' },
-  { inputs: [], name: 'NativeTokenSentWithoutNativeSwap', type: 'error' },
+  {
+    inputs: [],
+    name: 'InvalidNativeTokenTransferEncoding',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NativeTokenSentWithoutNativeSwap',
+    type: 'error',
+  },
   {
     inputs: [
-      { internalType: 'uint256', name: 'expectedAmount', type: 'uint256' },
-      { internalType: 'uint256', name: 'sentAmount', type: 'uint256' },
+      {
+        internalType: 'uint256',
+        name: 'expectedAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'sentAmount',
+        type: 'uint256',
+      },
     ],
     name: 'NotEnoughNativeTokenSent',
     type: 'error',
   },
   {
-    inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+    ],
     name: 'SafeERC20FailedOperation',
     type: 'error',
   },
   {
     inputs: [
-      { internalType: 'address', name: 'router', type: 'address' },
+      {
+        internalType: 'address',
+        name: 'router',
+        type: 'address',
+      },
       {
         components: [
-          { internalType: 'contract IERC20', name: 'token', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          {
+            internalType: 'contract IERC20',
+            name: 'token',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'amount',
+            type: 'uint256',
+          },
           {
             components: [
-              { internalType: 'bytes32', name: 'routerKey', type: 'bytes32' },
-              { internalType: 'bytes', name: 'swapData', type: 'bytes' },
+              {
+                internalType: 'bytes32',
+                name: 'routerKey',
+                type: 'bytes32',
+              },
+              {
+                internalType: 'bytes',
+                name: 'swapData',
+                type: 'bytes',
+              },
             ],
             internalType: 'struct AggregatorData',
             name: 'aggregatorData',
@@ -66,7 +125,11 @@ const SwapperErrorsAbi = [
         name: 'srcTokenSwapDetails',
         type: 'tuple',
       },
-      { internalType: 'bytes', name: 'returnData', type: 'bytes' },
+      {
+        internalType: 'bytes',
+        name: 'returnData',
+        type: 'bytes',
+      },
     ],
     name: 'SwapFailed',
     type: 'error',
@@ -82,7 +145,11 @@ const SwapperErrorsAbi = [
     name: 'UnsupportedPermit2Method',
     type: 'error',
   },
-  { inputs: [], name: 'UnsupportedTokenTransferMethod', type: 'error' },
+  {
+    inputs: [],
+    name: 'UnsupportedTokenTransferMethod',
+    type: 'error',
+  },
 ] as const
 
 export const EasySwapperV2Abi = [
