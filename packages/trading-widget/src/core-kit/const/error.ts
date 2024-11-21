@@ -25,7 +25,7 @@ export const TRANSACTION_ERRORS: Record<
   InsufficientAmountReceived: lowSlippageError,
   SwapFailed: {
     title: 'Swap Failed',
-    hint: 'Please refresh swap quote and try again.',
+    hint: 'Please refresh the swap quote and try again.',
   },
   'assetType not handled': {
     title: 'Single Asset Withdrawal not available',
