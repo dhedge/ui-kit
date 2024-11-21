@@ -22,6 +22,11 @@ export const TRANSACTION_ERRORS: Record<
   'high withdraw slippage': lowSlippageError,
   'high deposit slippage': lowSlippageError,
   'high swap slippage': lowSlippageError,
+  InsufficientAmountReceived: lowSlippageError,
+  SwapFailed: {
+    title: 'Swap Failed',
+    hint: 'Please refresh swap quote and try again.',
+  },
   'assetType not handled': {
     title: 'Single Asset Withdrawal not available',
     hint: 'Please use All Assets option.',
