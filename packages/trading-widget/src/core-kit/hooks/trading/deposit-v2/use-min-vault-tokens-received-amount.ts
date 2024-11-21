@@ -46,7 +46,7 @@ export const useMinVaultTokensReceivedAmount = () => {
     // when slippage is manual use expectedReceivedVaultTokensAmount
     return new BigNumber(
       isAutoSlippage
-        ? receiveToken.value || '0'
+        ? receiveToken.value || expectedReceivedVaultTokensAmount
         : expectedReceivedVaultTokensAmount,
     )
       .shiftedBy(receiveToken.decimals)
