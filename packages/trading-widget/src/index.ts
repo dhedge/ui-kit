@@ -179,7 +179,6 @@ export {
   getContractAddressById,
   formatEther,
   formatUnits,
-  getChainData,
   getExplorerLink,
   getConventionalTokenPriceDecimals,
   getErrorMessage,

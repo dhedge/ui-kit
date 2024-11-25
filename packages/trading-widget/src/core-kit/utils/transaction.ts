@@ -1,10 +1,15 @@
 import BigNumber from 'bignumber.js'
 
-import type { Address } from 'viem'
-import { stringToHex } from 'viem'
+import type { Address, Hex } from 'viem'
+import { encodeAbiParameters, stringToHex } from 'viem'
 
-import type { useCompleteWithdrawSwapData } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-swap-data'
+import {
+  ComplexWithdrawalAssetSrcDataAbiItem,
+  ComplexWithdrawalDataAbiItem,
+} from 'core-kit/abi'
+import type { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
 import type { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-tracked-assets'
+import type { CalculateSwapDataParamsResponse } from 'core-kit/types'
 
 /**
  * Calculates the slippage tolerance for withdrawSafe.
@@ -13,7 +18,7 @@ import type { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/wi
  * @param {string} slippage - The slippage value in % from 0 to 100.
  * @returns {string} - The slippage tolerance.
  */
-export const getSlippageToleranceForWithdrawSafe = (
+export const getSlippageToleranceForContractTransaction = (
   slippage: number,
 ): string => {
   const minSlippageStep = new BigNumber(0.01)
@@ -66,7 +71,7 @@ export const buildSwapWithdrawTransactionData = ({
   receiveAssetAddress: Address
   slippage: number
   assets: ReturnType<typeof useCompleteWithdrawTrackedAssets>['data']
-  swapData: ReturnType<typeof useCompleteWithdrawSwapData>['data']
+  swapData: ReturnType<typeof useSwapsDataQuery>['data']
 }) => {
   const defaultSwapData = {
     srcData: [] as unknown[],
@@ -99,4 +104,59 @@ export const buildSwapWithdrawTransactionData = ({
       destAmount.times(1 - slippage / 100).toFixed(0, BigNumber.ROUND_DOWN),
     ],
   ]
+}
+
+export const buildAaveWithdrawAssetTransactionData = ({
+  assetAddress,
+  swapData,
+  swapParams,
+  slippage,
+}: {
+  assetAddress: Address
+  swapParams: CalculateSwapDataParamsResponse
+  swapData: ReturnType<typeof useSwapsDataQuery>['data']
+  slippage: number
+}) => {
+  const slippageToleranceForContractTransaction = BigInt(
+    getSlippageToleranceForContractTransaction(slippage),
+  )
+  const { srcData, dstData } = swapParams
+  const srcDataToEncode = srcData.map(({ asset, amount }) => {
+    const assetSwapData = swapData?.[asset]
+    return {
+      asset,
+      amount,
+      swapData: {
+        routerKey: stringToHex(assetSwapData?.routerKey ?? '', { size: 32 }),
+        txData: (assetSwapData?.txData ?? '') as Hex,
+      },
+    }
+  })
+
+  const encodedSrcData = encodeAbiParameters(
+    ComplexWithdrawalAssetSrcDataAbiItem,
+    [srcDataToEncode],
+  )
+
+  // const dstAmount = Object.values(swapData ?? {}).reduce(
+  //   (acc, asset) => acc.plus(asset?.destinationAmount ?? '0'),
+  //   new BigNumber(0),
+  // )
+
+  const withdrawData = encodeAbiParameters(ComplexWithdrawalDataAbiItem, [
+    {
+      encodedSrcData,
+      dstData: {
+        dstAddress: dstData.asset,
+        dstAmount: dstData.amount,
+      },
+      slippage: BigInt(slippageToleranceForContractTransaction),
+    },
+  ])
+
+  return {
+    supportedAsset: assetAddress,
+    withdrawData: withdrawData,
+    slippageTolerance: BigInt(slippageToleranceForContractTransaction),
+  }
 }

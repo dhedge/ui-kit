@@ -112,4 +112,29 @@ export const PoolManagerLogicAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'getSupportedAssets',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'asset',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'isDeposit',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct IHasSupportedAsset.Asset[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ] as const

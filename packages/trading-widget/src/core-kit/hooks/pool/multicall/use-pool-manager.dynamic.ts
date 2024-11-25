@@ -1,29 +1,17 @@
-import { PoolLogicAbi, PoolManagerLogicAbi } from 'core-kit/abi'
-import { AddressZero } from 'core-kit/const'
+import { PoolManagerLogicAbi } from 'core-kit/abi'
+import { AddressZero, DEFAULT_POLLING_INTERVAL } from 'core-kit/const'
 import { useManagerLogicAddress } from 'core-kit/hooks/pool/use-manager-logic-address'
-import {
-  useAccount,
-  useContractReadErrorLogging,
-  useReadContracts,
-} from 'core-kit/hooks/web3'
+import { useReadContracts } from 'core-kit/hooks/web3'
 import type {
-  Address,
   MulticallReturnType,
   PoolContractCallParams,
 } from 'core-kit/types'
 import { isZeroAddress } from 'core-kit/utils'
 
-type GetContractsParams = PoolContractCallParams & {
-  managerLogicAddress: Address
-  account: Address
-}
-
 const getContracts = ({
-  address,
   chainId,
-  managerLogicAddress,
-  account,
-}: GetContractsParams) =>
+  address: managerLogicAddress,
+}: PoolContractCallParams) =>
   [
     {
       address: managerLogicAddress,
@@ -32,11 +20,10 @@ const getContracts = ({
       chainId,
     },
     {
-      address,
-      abi: PoolLogicAbi,
-      functionName: 'getExitRemainingCooldown',
+      address: managerLogicAddress,
+      abi: PoolManagerLogicAbi,
+      functionName: 'getSupportedAssets',
       chainId,
-      args: [account],
     },
   ] as const
 
@@ -44,30 +31,24 @@ type Data = MulticallReturnType<ReturnType<typeof getContracts>>
 
 const selector = (data: Data) => ({
   getFundComposition: data[0].result,
-  getExitRemainingCooldown: data[1].result,
+  getSupportedAssets: data[1].result?.map(({ asset }) => asset),
 })
 
 export const usePoolManagerDynamic = ({
   address,
   chainId,
 }: PoolContractCallParams) => {
-  const { account = AddressZero } = useAccount()
   const managerLogicAddress = useManagerLogicAddress({ address, chainId })
 
-  const result = useReadContracts({
+  return useReadContracts({
     contracts: getContracts({
-      address,
+      address: managerLogicAddress ?? AddressZero,
       chainId,
-      managerLogicAddress: managerLogicAddress ?? AddressZero,
-      account,
     }),
     query: {
       enabled: !!managerLogicAddress && !isZeroAddress(managerLogicAddress),
       select: selector,
+      refetchInterval: DEFAULT_POLLING_INTERVAL,
     },
   })
-
-  useContractReadErrorLogging({ error: result.error, status: result.status })
-
-  return result
 }

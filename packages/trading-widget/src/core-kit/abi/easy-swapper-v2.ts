@@ -583,9 +583,26 @@ export const EasySwapperV2Abi = [
           type: 'uint256',
         },
         {
-          internalType: 'uint256',
-          name: '_slippageTolerance',
-          type: 'uint256',
+          components: [
+            {
+              internalType: 'address',
+              name: 'supportedAsset',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'withdrawData',
+              type: 'bytes',
+            },
+            {
+              internalType: 'uint256',
+              name: 'slippageTolerance',
+              type: 'uint256',
+            },
+          ],
+          internalType: 'struct IPoolLogic.ComplexAsset[]',
+          name: '_complexAssetsData',
+          type: 'tuple[]',
         },
       ],
       name: 'initWithdrawal',

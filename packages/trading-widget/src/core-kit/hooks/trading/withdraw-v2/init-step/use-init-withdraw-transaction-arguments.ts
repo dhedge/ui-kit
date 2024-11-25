@@ -6,10 +6,9 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
+import { useInitWithdrawComplexAssetData } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-complex-asset-data'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
-import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useDebounce } from 'core-kit/hooks/utils'
-import { getSlippageToleranceForWithdrawSafe } from 'core-kit/utils'
 
 interface UseInitWithdrawTransactionArguments {
   debounceTime?: number
@@ -22,8 +21,6 @@ export const useInitWithdrawTransactionArguments = ({
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
 
-  const slippage = useAppliedWithdrawSlippage()
-
   const withdrawAmountDebounced = useDebounce(
     new BigNumber(sendToken.value || '0')
       .shiftedBy(DEFAULT_PRECISION)
@@ -31,21 +28,20 @@ export const useInitWithdrawTransactionArguments = ({
     debounceTime ?? 0,
   )
 
+  const { complexAssetData } = useInitWithdrawComplexAssetData()
+
   return useMemo(() => {
     const withdrawAmount = BigInt(withdrawAmountDebounced)
-    const slippageTolerance = BigInt(
-      getSlippageToleranceForWithdrawSafe(slippage),
-    )
 
     if (isMultiAssetsWithdraw) {
-      return [withdrawAmount, slippageTolerance]
+      return [withdrawAmount, complexAssetData]
     }
 
-    return [poolConfig.address, withdrawAmount, slippageTolerance]
+    return [poolConfig.address, withdrawAmount, complexAssetData]
   }, [
     withdrawAmountDebounced,
-    slippage,
     isMultiAssetsWithdraw,
     poolConfig.address,
+    complexAssetData,
   ])
 }

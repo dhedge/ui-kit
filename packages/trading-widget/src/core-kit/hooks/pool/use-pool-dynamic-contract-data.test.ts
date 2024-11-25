@@ -13,7 +13,6 @@ import { usePoolDynamicContractData } from './use-pool-dynamic-contract-data'
 
 vi.mock('core-kit/hooks/pool/multicall', () => ({
   usePoolsDynamic: vi.fn(),
-  usePoolManagerDynamic: vi.fn(),
 }))
 vi.mock('core-kit/hooks/pool', () => ({
   useManagerLogicAddress: vi.fn(),
@@ -21,7 +20,7 @@ vi.mock('core-kit/hooks/pool', () => ({
 }))
 
 describe('usePoolDynamicContractData', () => {
-  it('should call usePoolsDynamic and usePoolManagerDynamic', () => {
+  it('should call usePoolsDynamic', () => {
     const chainId = optimism.id
 
     vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
@@ -29,14 +28,6 @@ describe('usePoolDynamicContractData', () => {
         ({
           data: {},
         }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
-      () =>
-        ({
-          data: {},
-        }) as unknown as ReturnType<
-          typeof poolMulticallHooks.usePoolManagerDynamic
-        >,
     )
 
     renderHook(() =>
@@ -49,16 +40,10 @@ describe('usePoolDynamicContractData', () => {
     expect(vi.mocked(poolMulticallHooks.usePoolsDynamic)).toHaveBeenCalledTimes(
       1,
     )
-    expect(
-      vi.mocked(poolMulticallHooks.usePoolManagerDynamic),
-    ).toHaveBeenCalledTimes(1)
-    expect(
-      vi.mocked(poolMulticallHooks.usePoolManagerDynamic),
-    ).toHaveBeenCalledWith({ address: TEST_ADDRESS, chainId })
   })
 
   it('should resolve positive cooldown data', () => {
-    const exitCooldown = BigInt(1)
+    const exitCooldown = '1'
     const chainId = optimism.id
 
     vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
@@ -75,18 +60,10 @@ describe('usePoolDynamicContractData', () => {
               streamingFee: '6',
               entryFee: '7',
               exitFee: '10',
+              getExitRemainingCooldown: exitCooldown,
             },
           },
         }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-
-    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
-      () =>
-        ({
-          data: { getExitRemainingCooldown: exitCooldown },
-        }) as unknown as ReturnType<
-          typeof poolMulticallHooks.usePoolManagerDynamic
-        >,
     )
 
     const { result } = renderHook(() =>
@@ -116,7 +93,6 @@ describe('usePoolDynamicContractData', () => {
   })
 
   it('should resolve zero cooldown data', () => {
-    const exitCooldown = undefined
     const chainId = optimism.id
 
     vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
@@ -124,15 +100,6 @@ describe('usePoolDynamicContractData', () => {
         ({
           data: {},
         }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-
-    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
-      () =>
-        ({
-          data: { getExitRemainingCooldown: exitCooldown },
-        }) as unknown as ReturnType<
-          typeof poolMulticallHooks.usePoolManagerDynamic
-        >,
     )
 
     const { result } = renderHook(() =>
@@ -174,19 +141,11 @@ describe('usePoolDynamicContractData', () => {
               streamingFee: '6',
               entryFee: '7',
               exitFee: '10',
+              getExitRemainingCooldown: exitCooldown,
             },
           },
+          isFetched: true,
         }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-
-    vi.mocked(poolMulticallHooks.usePoolManagerDynamic).mockImplementation(
-      () =>
-        ({
-          data: { getExitRemainingCooldown: exitCooldown },
-          isFetched,
-        }) as unknown as ReturnType<
-          typeof poolMulticallHooks.usePoolManagerDynamic
-        >,
     )
 
     vi.mocked(poolHooks.useManagerLogicAddress).mockImplementationOnce(

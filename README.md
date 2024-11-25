@@ -525,6 +525,7 @@ path: `component.meta[name]`
 > | `showAll`                        | string | Show All                                                                                                                                                                              |             |
 > | `hide`                           | string | Hide                                                                                                                                                                                  |             |
 > | `refreshSwapQuoteTooltip`        | string | Refresh swap quote                                                                                                                                                                    |             |
+> | `loading`                        | string | Loading...                                                                                                                                                                            |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
