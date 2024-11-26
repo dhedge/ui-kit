@@ -6,7 +6,8 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const ReloadWithdrawSwapQuoteButton: FC = () => {
   const t = useTranslationContext()
-  const { refetch, showButton, disabled } = useReloadWithdrawSwapQuoteButton()
+  const { handleSwapQuoteReload, showButton, disabled } =
+    useReloadWithdrawSwapQuoteButton()
   if (!showButton) {
     return null
   }
@@ -14,7 +15,7 @@ export const ReloadWithdrawSwapQuoteButton: FC = () => {
   return (
     <ReloadButton
       tooltipText={t.refreshSwapQuoteTooltip}
-      onClick={refetch}
+      onClick={handleSwapQuoteReload}
       disabled={disabled}
     />
   )
