@@ -3,6 +3,7 @@ import {
   useSwapDataBasedOnSendToken,
   useVaultDepositParams,
 } from 'core-kit/hooks/trading/deposit-v2'
+import { useInvalidateTradingQueries } from 'core-kit/hooks/web3'
 import type { DepositMethodName } from 'core-kit/types'
 
 const DEPOSIT_METHODS_WITH_SWAP: DepositMethodName[] = [
@@ -14,7 +15,7 @@ const DEPOSIT_METHODS_WITH_SWAP: DepositMethodName[] = [
 
 interface UseReloadDepositSwapQuoteButtonReturn {
   showButton: boolean
-  refetch: ReturnType<typeof useSwapDataBasedOnSendToken>['refetch']
+  handleSwapQuoteReload: () => void
   disabled: boolean
 }
 
@@ -23,6 +24,12 @@ export const useReloadDepositSwapQuoteButton =
     const { depositMethod } = useVaultDepositParams()
     const showButton = DEPOSIT_METHODS_WITH_SWAP.includes(depositMethod)
     const { refetch, isFetched } = useSwapDataBasedOnSendToken()
+    const { invalidateTradingQueries } = useInvalidateTradingQueries()
 
-    return { showButton, refetch, disabled: !isFetched }
+    const handleSwapQuoteReload = () => {
+      invalidateTradingQueries()
+      refetch()
+    }
+
+    return { showButton, handleSwapQuoteReload, disabled: !isFetched }
   }
