@@ -18,6 +18,7 @@ import type { Address, ChainId } from 'core-kit/types/web3.types'
 import {
   AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,
   AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
+  AAVE_LENDING_POOL_V3_ADDRESS_BASE,
   AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
   AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
   EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
@@ -78,6 +79,7 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_BASE,
     flatcoinPointsModule: FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_BASE,
+    aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_BASE,
   },
 }
 
