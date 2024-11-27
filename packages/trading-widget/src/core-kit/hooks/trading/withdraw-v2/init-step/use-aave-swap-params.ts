@@ -7,7 +7,6 @@ import {
   DEFAULT_PRECISION,
   EXTREMELY_SHORT_POLLING_INTERVAL,
 } from 'core-kit/const'
-import { usePoolFees } from 'core-kit/hooks/pool'
 import { usePoolStatic } from 'core-kit/hooks/pool/multicall'
 import { useSendTokenInput } from 'core-kit/hooks/state'
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
@@ -30,12 +29,11 @@ export const useAaveSwapParams = ({
   chainId,
 }: UseAaveSwapParamsProps) => {
   const [sendToken] = useSendTokenInput()
-  const { exitFeeNumber } = usePoolFees({ address, chainId })
 
   const withdrawAmountDebounced = useDebounce(
     new BigNumber(sendToken.value || '0')
       .shiftedBy(DEFAULT_PRECISION)
-      .times((100 - exitFeeNumber) / 100)
+      .times(0.9997) // temporary fix for the issue with amount mismatch
       .toFixed(0, BigNumber.ROUND_DOWN),
     DEFAULT_DEBOUNCE_TIME,
   )

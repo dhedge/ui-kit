@@ -17,6 +17,7 @@ export interface ConfigProviderParams {
   standalone: boolean
   chainConfig: Partial<Record<ChainId, { name: string; iconPath: string }>>
   isAllAssetsWithdrawOptionDefault: boolean
+  aaveOffchainWithdrawChainIds: ChainId[]
 }
 
 export interface ConfigProviderActions {

@@ -130,6 +130,7 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `standalone`                       | `boolean`                                                      | `true`                       | Handles token selection in SPA mode                                                                                                                |
 > | `isAllAssetsWithdrawOptionDefault` | `boolean`                                                      | `false`                      | Sets "All Assets" withdraw option by default                                                                                                       |
 > | `chainConfig`                      | `Partial<Record<ChainId, { name: string; iconPath: string }>>` | `{}`                         | Sets map of chain `name` and `iconPath`                                                                                                            |
+> | `aaveOffchainWithdrawChainIds`     | `ChainId[]`                                                    | `[]`                         | Offchain swap data will be used for Aave withdrawals for selected chains                                                                           |
 
 ##### actions
 

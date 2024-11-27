@@ -11,6 +11,7 @@ import {
   getContractAddressById,
   isEqualAddress,
 } from 'core-kit/utils'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 interface UseInitWithdrawComplexAssetDataReturn {
   isLoading: boolean
@@ -19,31 +20,35 @@ interface UseInitWithdrawComplexAssetDataReturn {
 
 export const useInitWithdrawComplexAssetData =
   (): UseInitWithdrawComplexAssetDataReturn => {
+    const { aaveOffchainWithdrawChainIds } = useConfigContextParams()
     const { address, chainId } = useTradingPanelPoolConfig()
     const slippage = useAppliedWithdrawSlippage()
     const aaveLendingPoolV3Address = getContractAddressById(
       'aaveLendingPoolV3',
       chainId,
     )
-
     const { data: { getSupportedAssets: supportedVaultAssets } = {} } =
       usePoolManagerDynamic({
         address,
         chainId,
       })
+
+    const isOffchainAaveWithdrawSupported =
+      aaveOffchainWithdrawChainIds.includes(chainId)
     const hasAaveAsset = !!supportedVaultAssets?.some((asset) =>
       isEqualAddress(asset, aaveLendingPoolV3Address),
     )
+    const disabled = !isOffchainAaveWithdrawSupported || !hasAaveAsset
 
     const { data: swapParams, isFetching: isSwapParamsFetching } =
       useAaveSwapParams({
         address,
         chainId,
-        disabled: !hasAaveAsset,
+        disabled,
       })
     const { data: swapData, isFetching: isSwapDataFetching } =
       useInitWithdrawAaveSwapData({
-        disabled: !hasAaveAsset,
+        disabled,
       })
 
     return useMemo(

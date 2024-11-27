@@ -53,6 +53,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
       iconPath: '',
     },
   },
+  aaveOffchainWithdrawChainIds: [polygon.id],
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {

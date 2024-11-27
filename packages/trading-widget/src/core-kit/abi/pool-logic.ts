@@ -1133,6 +1133,24 @@ export const PoolLogicAbi = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: '_fundTokenAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_slippageTolerance',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdrawSafe',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: '_recipient',
         type: 'address',

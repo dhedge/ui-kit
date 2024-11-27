@@ -637,6 +637,52 @@ export const EasySwapperV2Abi = [
       inputs: [
         {
           internalType: 'address',
+          name: '_dHedgeVault',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: '_amountIn',
+          type: 'uint256',
+        },
+        {
+          internalType: 'uint256',
+          name: '_slippageTolerance',
+          type: 'uint256',
+        },
+      ],
+      name: 'initWithdrawal',
+      outputs: [
+        {
+          components: [
+            {
+              internalType: 'address',
+              name: 'token',
+              type: 'address',
+            },
+            {
+              internalType: 'uint256',
+              name: 'balance',
+              type: 'uint256',
+            },
+          ],
+          internalType: 'struct IWithdrawalVault.TrackedAsset[]',
+          name: 'trackedAssets',
+          type: 'tuple[]',
+        },
+        {
+          internalType: 'address',
+          name: 'vault',
+          type: 'address',
+        },
+      ],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
           name: '_vaultLogic',
           type: 'address',
         },
