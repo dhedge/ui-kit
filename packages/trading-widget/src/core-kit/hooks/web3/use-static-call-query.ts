@@ -15,6 +15,24 @@ type UseStaticCallVariables = Pick<
   refetchInterval?: number
 }
 
+export const makeStaticCall = async <T>({
+  functionName,
+  address,
+  abi,
+  args,
+  publicClient,
+}: Omit<UseStaticCallVariables, 'disabled' | 'refetchInterval' | 'chainId'> & {
+  publicClient: ReturnType<typeof usePublicClient>
+}): Promise<T | undefined> => {
+  const simulation = await publicClient?.simulateContract({
+    address,
+    abi,
+    functionName,
+    args,
+  })
+  return simulation?.result
+}
+
 export const useStaticCallQuery = <T>({
   disabled,
   functionName,
@@ -30,14 +48,13 @@ export const useStaticCallQuery = <T>({
     queryKey: [{ functionName, address, args, chainId }],
     queryFn: async ({ queryKey: [params] }) => {
       if (params) {
-        const simulation = await publicClient?.simulateContract({
+        return await makeStaticCall<T>({
           address,
           abi,
           functionName: params.functionName,
           args: params.args,
+          publicClient,
         })
-
-        return simulation?.result
       }
     },
     enabled:

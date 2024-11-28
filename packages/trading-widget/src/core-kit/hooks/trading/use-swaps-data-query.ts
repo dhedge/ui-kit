@@ -6,6 +6,32 @@ import { MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS } from 'core-kit/const'
 import { useGetSwapData } from 'core-kit/hooks/state'
 import type { SwapDataRequest, SwapDataResponse } from 'core-kit/types'
 
+export const fetchSwapsData = async ({
+  assets,
+  getSwapData,
+  signal,
+}: {
+  assets: Omit<SwapDataRequest, 'fromAddress'>[]
+  getSwapData: ReturnType<typeof useGetSwapData>
+  signal: AbortSignal
+}): Promise<Record<Address, SwapDataResponse>> =>
+  Promise.all(
+    assets.map((variables) =>
+      getSwapData({
+        signal,
+        variables: {
+          ...variables,
+          fromAddress: MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS,
+        },
+      }),
+    ),
+  ).then((data) =>
+    assets.reduce(
+      (acc, { sourceAddress }, i) => ({ ...acc, [sourceAddress]: data[i] }),
+      {},
+    ),
+  )
+
 export const useSwapsDataQuery = (
   assets: Omit<SwapDataRequest, 'fromAddress'>[],
   options?: Omit<
@@ -23,22 +49,7 @@ export const useSwapsDataQuery = (
   return useQuery({
     queryKey: ['getSwapsData', assets],
     queryFn: async ({ signal, queryKey: [, assets] }) =>
-      Promise.all(
-        assets.map((variables) =>
-          getSwapData({
-            signal,
-            variables: {
-              ...variables,
-              fromAddress: MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS,
-            },
-          }),
-        ),
-      ).then((data) =>
-        assets.reduce(
-          (acc, { sourceAddress }, i) => ({ ...acc, [sourceAddress]: data[i] }),
-          {},
-        ),
-      ),
+      fetchSwapsData({ assets, getSwapData, signal }),
     ...options,
   })
 }

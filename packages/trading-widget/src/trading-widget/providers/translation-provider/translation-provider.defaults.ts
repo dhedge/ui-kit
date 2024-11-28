@@ -116,5 +116,4 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   showAll: 'Show all',
   hide: 'Hide',
   refreshSwapQuoteTooltip: 'Refresh swap quote',
-  loading: 'Loading...',
 }

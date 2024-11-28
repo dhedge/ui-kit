@@ -102,10 +102,3 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
 export const QUERY_KEYS = {
   SYNTHETIX_ORACLES_UPDATE: 'useOraclesUpdateTransactionData',
 }
-
-// export const AAVE_V3_ASSET_ADDRESS_MAP: Record<SupportedChainId, Address> = {
-//   [arbitrum.id]: AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
-//   [polygon.id]: AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
-//   [optimism.id]: AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
-//   [base.id]: AAVE_LENDING_POOL_V3_ADDRESS_BASE,
-// }

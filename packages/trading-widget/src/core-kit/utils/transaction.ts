@@ -113,10 +113,18 @@ export const buildAaveWithdrawAssetTransactionData = ({
   slippage,
 }: {
   assetAddress: Address
-  swapParams: CalculateSwapDataParamsResponse
+  swapParams: CalculateSwapDataParamsResponse | undefined
   swapData: ReturnType<typeof useSwapsDataQuery>['data']
   slippage: number
 }) => {
+  if (!swapParams) {
+    return {
+      supportedAsset: assetAddress,
+      withdrawData: '',
+      slippageTolerance: BigInt(0),
+    }
+  }
+
   const slippageToleranceForContractTransaction = BigInt(
     getSlippageToleranceForContractTransaction(slippage),
   )
@@ -137,11 +145,6 @@ export const buildAaveWithdrawAssetTransactionData = ({
     ComplexWithdrawalAssetSrcDataAbiItem,
     [srcDataToEncode],
   )
-
-  // const dstAmount = Object.values(swapData ?? {}).reduce(
-  //   (acc, asset) => acc.plus(asset?.destinationAmount ?? '0'),
-  //   new BigNumber(0),
-  // )
 
   const withdrawData = encodeAbiParameters(ComplexWithdrawalDataAbiItem, [
     {

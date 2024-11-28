@@ -10,7 +10,7 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
-import { useInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
+import { useGetInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
 import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction'
 import { useContractFunction } from 'core-kit/hooks/web3'
@@ -21,6 +21,8 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
+  const getInitWithdrawTransactionArguments =
+    useGetInitWithdrawTransactionArguments()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const action = isMultiAssetsWithdraw
@@ -28,7 +30,6 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     : isUnrollAndClaimTransaction
       ? 'single_withdraw_and_claim'
       : 'single_withdraw'
-  const txArgs = useInitWithdrawTransactionArguments()
 
   const onSettled = useTradingSettleHandler(action)
 
@@ -54,6 +55,8 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
       chainId: poolConfig.chainId,
     })
 
+    const txArgs = await getInitWithdrawTransactionArguments()
+
     console.log('Arguments', txArgs)
 
     return send(...txArgs)
@@ -62,7 +65,7 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     action,
     poolConfig.symbol,
     poolConfig.chainId,
-    txArgs,
+    getInitWithdrawTransactionArguments,
     send,
   ])
 }

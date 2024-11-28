@@ -95,7 +95,6 @@ export type TranslationMap = {
   showAll: string
   hide: string
   refreshSwapQuoteTooltip: string
-  loading: string
   [key: string]: string
 }
 
