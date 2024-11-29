@@ -12,7 +12,10 @@ import { isNumeric } from 'core-kit/utils'
 
 export const useInitWithdrawQuote = () => {
   const { chainId, address } = useTradingPanelPoolConfig()
-  const { exitFeeNumber } = usePoolFees({ address, chainId })
+  const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
+    address,
+    chainId,
+  })
   const [sendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
   const sendTokenPrice = usePoolTokenPrice({ address, chainId })
@@ -28,7 +31,7 @@ export const useInitWithdrawQuote = () => {
     }
     const sendValue = new BigNumber(sendToken.value)
       .times(sendTokenPrice)
-      .times(1 - exitFeeNumber / 100)
+      .times(1 - (exitFeeNumber + withdrawalFeeNumber) / 100)
     const receiveTokenAmount = sendValue
       .dividedBy(receiveTokenPrice)
       .toFixed(receiveToken.decimals)
@@ -38,6 +41,7 @@ export const useInitWithdrawQuote = () => {
     })
   }, [
     exitFeeNumber,
+    withdrawalFeeNumber,
     receiveToken.decimals,
     receiveTokenPrice,
     sendToken.value,
