@@ -302,13 +302,7 @@ export const EasySwapperV2Abi = [
     {
       inputs: [],
       name: 'DEFAULT_COOLDOWN',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
     },
@@ -323,11 +317,7 @@ export const EasySwapperV2Abi = [
                   name: 'token',
                   type: 'address',
                 },
-                {
-                  internalType: 'uint256',
-                  name: 'amount',
-                  type: 'uint256',
-                },
+                { internalType: 'uint256', name: 'amount', type: 'uint256' },
                 {
                   components: [
                     {
@@ -335,11 +325,7 @@ export const EasySwapperV2Abi = [
                       name: 'routerKey',
                       type: 'bytes32',
                     },
-                    {
-                      internalType: 'bytes',
-                      name: 'swapData',
-                      type: 'bytes',
-                    },
+                    { internalType: 'bytes', name: 'swapData', type: 'bytes' },
                   ],
                   internalType: 'struct ISwapper.AggregatorData',
                   name: 'aggregatorData',
@@ -393,65 +379,33 @@ export const EasySwapperV2Abi = [
     {
       inputs: [],
       name: 'customCooldown',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      inputs: [{ internalType: 'address', name: '', type: 'address' }],
       name: 'customCooldownDepositsWhitelist',
-      outputs: [
-        {
-          internalType: 'bool',
-          name: '',
-          type: 'bool',
-        },
-      ],
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [],
       name: 'dHedgePoolFactory',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           internalType: 'contract IERC20',
           name: '_vaultDepositToken',
           type: 'address',
         },
-        {
-          internalType: 'uint256',
-          name: '_depositAmount',
-          type: 'uint256',
-        },
+        { internalType: 'uint256', name: '_depositAmount', type: 'uint256' },
         {
           internalType: 'uint256',
           name: '_expectedAmountReceived',
@@ -465,21 +419,13 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           internalType: 'address',
           name: '_vaultDepositToken',
           type: 'address',
         },
-        {
-          internalType: 'uint256',
-          name: '_depositAmount',
-          type: 'uint256',
-        },
+        { internalType: 'uint256', name: '_depositAmount', type: 'uint256' },
       ],
       name: 'depositQuote',
       outputs: [
@@ -494,21 +440,13 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           internalType: 'contract IERC20',
           name: '_vaultDepositToken',
           type: 'address',
         },
-        {
-          internalType: 'uint256',
-          name: '_depositAmount',
-          type: 'uint256',
-        },
+        { internalType: 'uint256', name: '_depositAmount', type: 'uint256' },
         {
           internalType: 'uint256',
           name: '_expectedAmountReceived',
@@ -521,46 +459,22 @@ export const EasySwapperV2Abi = [
       type: 'function',
     },
     {
-      inputs: [
-        {
-          internalType: 'uint8',
-          name: '',
-          type: 'uint8',
-        },
-      ],
+      inputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
       name: 'getLogic',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_depositor',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_depositor', type: 'address' },
       ],
       name: 'getTrackedAssets',
       outputs: [
         {
           components: [
-            {
-              internalType: 'address',
-              name: 'token',
-              type: 'address',
-            },
-            {
-              internalType: 'uint256',
-              name: 'balance',
-              type: 'uint256',
-            },
+            { internalType: 'address', name: 'token', type: 'address' },
+            { internalType: 'uint256', name: 'balance', type: 'uint256' },
           ],
           internalType: 'struct IWithdrawalVault.TrackedAsset[]',
           name: 'trackedAssets',
@@ -572,16 +486,8 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: '_amountIn',
-          type: 'uint256',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
+        { internalType: 'uint256', name: '_amountIn', type: 'uint256' },
         {
           components: [
             {
@@ -589,11 +495,7 @@ export const EasySwapperV2Abi = [
               name: 'supportedAsset',
               type: 'address',
             },
-            {
-              internalType: 'bytes',
-              name: 'withdrawData',
-              type: 'bytes',
-            },
+            { internalType: 'bytes', name: 'withdrawData', type: 'bytes' },
             {
               internalType: 'uint256',
               name: 'slippageTolerance',
@@ -609,42 +511,22 @@ export const EasySwapperV2Abi = [
       outputs: [
         {
           components: [
-            {
-              internalType: 'address',
-              name: 'token',
-              type: 'address',
-            },
-            {
-              internalType: 'uint256',
-              name: 'balance',
-              type: 'uint256',
-            },
+            { internalType: 'address', name: 'token', type: 'address' },
+            { internalType: 'uint256', name: 'balance', type: 'uint256' },
           ],
           internalType: 'struct IWithdrawalVault.TrackedAsset[]',
           name: 'trackedAssets',
           type: 'tuple[]',
         },
-        {
-          internalType: 'address',
-          name: 'vault',
-          type: 'address',
-        },
+        { internalType: 'address', name: 'vault', type: 'address' },
       ],
       stateMutability: 'nonpayable',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: '_amountIn',
-          type: 'uint256',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
+        { internalType: 'uint256', name: '_amountIn', type: 'uint256' },
         {
           internalType: 'uint256',
           name: '_slippageTolerance',
@@ -655,42 +537,22 @@ export const EasySwapperV2Abi = [
       outputs: [
         {
           components: [
-            {
-              internalType: 'address',
-              name: 'token',
-              type: 'address',
-            },
-            {
-              internalType: 'uint256',
-              name: 'balance',
-              type: 'uint256',
-            },
+            { internalType: 'address', name: 'token', type: 'address' },
+            { internalType: 'uint256', name: 'balance', type: 'uint256' },
           ],
           internalType: 'struct IWithdrawalVault.TrackedAsset[]',
           name: 'trackedAssets',
           type: 'tuple[]',
         },
-        {
-          internalType: 'address',
-          name: 'vault',
-          type: 'address',
-        },
+        { internalType: 'address', name: 'vault', type: 'address' },
       ],
       stateMutability: 'nonpayable',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_vaultLogic',
-          type: 'address',
-        },
-        {
-          internalType: 'address',
-          name: '_weth',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_vaultLogic', type: 'address' },
+        { internalType: 'address', name: '_weth', type: 'address' },
         {
           internalType: 'contract IWETH',
           name: '_wrappedNativeToken',
@@ -701,11 +563,7 @@ export const EasySwapperV2Abi = [
           name: '_swapper',
           type: 'address',
         },
-        {
-          internalType: 'uint256',
-          name: '_customCooldown',
-          type: 'uint256',
-        },
+        { internalType: 'uint256', name: '_customCooldown', type: 'uint256' },
       ],
       name: 'initialize',
       outputs: [],
@@ -714,30 +572,16 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
       ],
       name: 'isdHedgeVault',
-      outputs: [
-        {
-          internalType: 'bool',
-          name: 'isVault',
-          type: 'bool',
-        },
-      ],
+      outputs: [{ internalType: 'bool', name: 'isVault', type: 'bool' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           internalType: 'uint256',
           name: '_expectedAmountReceived',
@@ -751,11 +595,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           internalType: 'uint256',
           name: '_expectedAmountReceived',
@@ -770,28 +610,14 @@ export const EasySwapperV2Abi = [
     {
       inputs: [],
       name: 'owner',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'uint256',
-          name: '_portion',
-          type: 'uint256',
-        },
-        {
-          internalType: 'address',
-          name: '_to',
-          type: 'address',
-        },
+        { internalType: 'uint256', name: '_portion', type: 'uint256' },
+        { internalType: 'address', name: '_to', type: 'address' },
       ],
       name: 'partialWithdraw',
       outputs: [],
@@ -807,11 +633,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'uint256',
-          name: '_customCooldown',
-          type: 'uint256',
-        },
+        { internalType: 'uint256', name: '_customCooldown', type: 'uint256' },
       ],
       name: 'setCustomCooldown',
       outputs: [],
@@ -822,16 +644,8 @@ export const EasySwapperV2Abi = [
       inputs: [
         {
           components: [
-            {
-              internalType: 'address',
-              name: 'dHedgeVault',
-              type: 'address',
-            },
-            {
-              internalType: 'bool',
-              name: 'whitelisted',
-              type: 'bool',
-            },
+            { internalType: 'address', name: 'dHedgeVault', type: 'address' },
+            { internalType: 'bool', name: 'whitelisted', type: 'bool' },
           ],
           internalType: 'struct EasySwapperV2.CustomCooldownSetting[]',
           name: '_whitelistSettings',
@@ -845,11 +659,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_vaultLogic',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_vaultLogic', type: 'address' },
       ],
       name: 'setLogic',
       outputs: [],
@@ -886,23 +696,13 @@ export const EasySwapperV2Abi = [
       inputs: [],
       name: 'swapper',
       outputs: [
-        {
-          internalType: 'contract ISwapper',
-          name: '',
-          type: 'address',
-        },
+        { internalType: 'contract ISwapper', name: '', type: 'address' },
       ],
       stateMutability: 'view',
       type: 'function',
     },
     {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'newOwner',
-          type: 'address',
-        },
-      ],
+      inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
       name: 'transferOwnership',
       outputs: [],
       stateMutability: 'nonpayable',
@@ -910,16 +710,8 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: '_amountIn',
-          type: 'uint256',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
+        { internalType: 'uint256', name: '_amountIn', type: 'uint256' },
         {
           internalType: 'uint256',
           name: '_slippageTolerance',
@@ -930,16 +722,46 @@ export const EasySwapperV2Abi = [
       outputs: [
         {
           components: [
+            { internalType: 'address', name: 'token', type: 'address' },
+            { internalType: 'uint256', name: 'balance', type: 'uint256' },
+          ],
+          internalType: 'struct IWithdrawalVault.TrackedAsset[]',
+          name: '',
+          type: 'tuple[]',
+        },
+      ],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
+        { internalType: 'uint256', name: '_amountIn', type: 'uint256' },
+        {
+          components: [
             {
               internalType: 'address',
-              name: 'token',
+              name: 'supportedAsset',
               type: 'address',
             },
+            { internalType: 'bytes', name: 'withdrawData', type: 'bytes' },
             {
               internalType: 'uint256',
-              name: 'balance',
+              name: 'slippageTolerance',
               type: 'uint256',
             },
+          ],
+          internalType: 'struct IPoolLogic.ComplexAsset[]',
+          name: '_complexAssetsData',
+          type: 'tuple[]',
+        },
+      ],
+      name: 'unrollAndClaim',
+      outputs: [
+        {
+          components: [
+            { internalType: 'address', name: 'token', type: 'address' },
+            { internalType: 'uint256', name: 'balance', type: 'uint256' },
           ],
           internalType: 'struct IWithdrawalVault.TrackedAsset[]',
           name: '',
@@ -952,55 +774,27 @@ export const EasySwapperV2Abi = [
     {
       inputs: [],
       name: 'weth',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      inputs: [{ internalType: 'address', name: '', type: 'address' }],
       name: 'withdrawalContracts',
-      outputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [],
       name: 'wrappedNativeToken',
-      outputs: [
-        {
-          internalType: 'contract IWETH',
-          name: '',
-          type: 'address',
-        },
-      ],
+      outputs: [{ internalType: 'contract IWETH', name: '', type: 'address' }],
       stateMutability: 'view',
       type: 'function',
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           components: [
             {
@@ -1010,11 +804,7 @@ export const EasySwapperV2Abi = [
                   name: 'token',
                   type: 'address',
                 },
-                {
-                  internalType: 'uint256',
-                  name: 'amount',
-                  type: 'uint256',
-                },
+                { internalType: 'uint256', name: 'amount', type: 'uint256' },
                 {
                   components: [
                     {
@@ -1022,11 +812,7 @@ export const EasySwapperV2Abi = [
                       name: 'routerKey',
                       type: 'bytes32',
                     },
-                    {
-                      internalType: 'bytes',
-                      name: 'swapData',
-                      type: 'bytes',
-                    },
+                    { internalType: 'bytes', name: 'swapData', type: 'bytes' },
                   ],
                   internalType: 'struct ISwapper.AggregatorData',
                   name: 'aggregatorData',
@@ -1072,11 +858,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           components: [
             {
@@ -1086,11 +868,7 @@ export const EasySwapperV2Abi = [
                   name: 'token',
                   type: 'address',
                 },
-                {
-                  internalType: 'uint256',
-                  name: 'amount',
-                  type: 'uint256',
-                },
+                { internalType: 'uint256', name: 'amount', type: 'uint256' },
                 {
                   components: [
                     {
@@ -1098,11 +876,7 @@ export const EasySwapperV2Abi = [
                       name: 'routerKey',
                       type: 'bytes32',
                     },
-                    {
-                      internalType: 'bytes',
-                      name: 'swapData',
-                      type: 'bytes',
-                    },
+                    { internalType: 'bytes', name: 'swapData', type: 'bytes' },
                   ],
                   internalType: 'struct ISwapper.AggregatorData',
                   name: 'aggregatorData',
@@ -1148,11 +922,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           components: [
             {
@@ -1162,11 +932,7 @@ export const EasySwapperV2Abi = [
                   name: 'token',
                   type: 'address',
                 },
-                {
-                  internalType: 'uint256',
-                  name: 'amount',
-                  type: 'uint256',
-                },
+                { internalType: 'uint256', name: 'amount', type: 'uint256' },
                 {
                   components: [
                     {
@@ -1174,11 +940,7 @@ export const EasySwapperV2Abi = [
                       name: 'routerKey',
                       type: 'bytes32',
                     },
-                    {
-                      internalType: 'bytes',
-                      name: 'swapData',
-                      type: 'bytes',
-                    },
+                    { internalType: 'bytes', name: 'swapData', type: 'bytes' },
                   ],
                   internalType: 'struct ISwapper.AggregatorData',
                   name: 'aggregatorData',
@@ -1224,11 +986,7 @@ export const EasySwapperV2Abi = [
     },
     {
       inputs: [
-        {
-          internalType: 'address',
-          name: '_dHedgeVault',
-          type: 'address',
-        },
+        { internalType: 'address', name: '_dHedgeVault', type: 'address' },
         {
           components: [
             {
@@ -1238,11 +996,7 @@ export const EasySwapperV2Abi = [
                   name: 'token',
                   type: 'address',
                 },
-                {
-                  internalType: 'uint256',
-                  name: 'amount',
-                  type: 'uint256',
-                },
+                { internalType: 'uint256', name: 'amount', type: 'uint256' },
                 {
                   components: [
                     {
@@ -1250,11 +1004,7 @@ export const EasySwapperV2Abi = [
                       name: 'routerKey',
                       type: 'bytes32',
                     },
-                    {
-                      internalType: 'bytes',
-                      name: 'swapData',
-                      type: 'bytes',
-                    },
+                    { internalType: 'bytes', name: 'swapData', type: 'bytes' },
                   ],
                   internalType: 'struct ISwapper.AggregatorData',
                   name: 'aggregatorData',
