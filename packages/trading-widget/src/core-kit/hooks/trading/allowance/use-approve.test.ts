@@ -11,7 +11,6 @@ import { act, renderHook } from 'tests/test-utils'
 import { useApprove } from './use-approve'
 
 vi.mock('core-kit/hooks/state', () => ({
-  useTradingPanelApprovingStatus: vi.fn(),
   useTradingPanelModal: vi.fn(),
   useTradingPanelPoolConfig: vi.fn(),
   useTradingPanelSettings: vi.fn(),
@@ -40,7 +39,6 @@ describe('useApprove', () => {
     const settings = { isInfiniteAllowance: true }
     const updatePendingTransactionsMock = vi.fn()
     const updateTradingModalMock = vi.fn()
-    const updateApprovingStatusMock = vi.fn()
     const sendMock = vi.fn()
 
     expect(settings.isInfiniteAllowance).toBe(true)
@@ -60,12 +58,6 @@ describe('useApprove', () => {
       {},
       updateTradingModalMock,
     ] as unknown as ReturnType<typeof stateHooks.useTradingPanelModal>)
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      {},
-      updateApprovingStatusMock,
-    ] as unknown as ReturnType<
-      typeof stateHooks.useTradingPanelApprovingStatus
-    >)
     vi.mocked(web3Hooks.useContractFunction).mockReturnValue({
       send: sendMock,
     } as unknown as ReturnType<typeof web3Hooks.useContractFunction>)
@@ -92,8 +84,6 @@ describe('useApprove', () => {
     expect(sendMock).toHaveBeenCalledTimes(1)
     expect(sendMock).toHaveBeenCalledWith(spenderAddress, MaxUint256)
 
-    expect(updateApprovingStatusMock).toHaveBeenCalledTimes(1)
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith('pending')
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -125,7 +115,6 @@ describe('useApprove', () => {
     const settings = { isInfiniteAllowance: false }
     const updatePendingTransactionsMock = vi.fn()
     const updateTradingModalMock = vi.fn()
-    const updateApprovingStatusMock = vi.fn()
     const sendMock = vi.fn()
 
     expect(settings.isInfiniteAllowance).toBe(false)
@@ -145,12 +134,6 @@ describe('useApprove', () => {
       {},
       updateTradingModalMock,
     ] as unknown as ReturnType<typeof stateHooks.useTradingPanelModal>)
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      {},
-      updateApprovingStatusMock,
-    ] as unknown as ReturnType<
-      typeof stateHooks.useTradingPanelApprovingStatus
-    >)
     vi.mocked(web3Hooks.useContractFunction).mockReturnValue({
       send: sendMock,
     } as unknown as ReturnType<typeof web3Hooks.useContractFunction>)
@@ -177,8 +160,6 @@ describe('useApprove', () => {
     expect(sendMock).toHaveBeenCalledTimes(1)
     expect(sendMock).toHaveBeenCalledWith(spenderAddress, rawTokenAmount)
 
-    expect(updateApprovingStatusMock).toHaveBeenCalledTimes(1)
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith('pending')
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(
       expect.objectContaining({

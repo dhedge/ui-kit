@@ -11,7 +11,6 @@ import { useTradingResultHandling } from './use-trading-result-handling'
 vi.mock('core-kit/hooks/state', () => ({
   useOnTransactionError: vi.fn(),
   useOnTransactionSuccess: vi.fn(),
-  useTradingPanelMeta: vi.fn(),
   useTradingPanelModal: vi.fn(),
   useTradingPanelTransactions: vi.fn(),
 }))
@@ -40,7 +39,6 @@ describe('useTradingResultHandling', () => {
       [pendingTx],
       vi.fn(),
     ])
-    vi.mocked(stateHooks.useTradingPanelMeta).mockReturnValue([{}, vi.fn()])
     vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
       {},
       vi.fn(),

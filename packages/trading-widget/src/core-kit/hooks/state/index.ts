@@ -1,6 +1,5 @@
 export {
   useSetTradingType,
-  useUpdateTradingMeta,
   useUpdateTradingModal,
   useUpdateSendTokenInput,
   useSetPoolAddress,
@@ -25,7 +24,6 @@ export {
 } from './pool'
 export { useSendTokenInput, useReceiveTokenInput } from './input'
 export { useTradingPanelSettings } from './settings'
-export { useTradingPanelMeta, useTradingPanelApprovingStatus } from './meta'
 export { useTradingPanelModal } from './modal'
 export { useTradingPanelType, useIsDepositTradingPanelType } from './type'
 export { useTradingPanelTransactions } from './transaction'

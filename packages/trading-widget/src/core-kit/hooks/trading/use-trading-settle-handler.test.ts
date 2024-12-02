@@ -9,7 +9,6 @@ import { useTradingSettleHandler } from './use-trading-settle-handler'
 
 vi.mock('core-kit/hooks/state', () => ({
   useSendTokenInput: vi.fn(),
-  useTradingPanelApprovingStatus: vi.fn(),
   useTradingPanelModal: vi.fn(),
   useTradingPanelTransactions: vi.fn(),
   useOnTradingSettleError: vi.fn(),
@@ -19,17 +18,12 @@ describe('useTradingSettleHandler', () => {
   it('should handle error on approve action', async () => {
     const action = 'approve'
     const error = new Error('test')
-    const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
     const updatePendingTransactionsMock = vi.fn()
 
     expect(action === 'approve').toBe(true)
     expect(error).toBeInstanceOf(Error)
 
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      setApprovingStatusMock,
-    ])
     vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
       {},
       updateTradingModalMock,
@@ -57,8 +51,6 @@ describe('useTradingSettleHandler', () => {
       ),
     )
 
-    expect(setApprovingStatusMock).toHaveBeenCalledTimes(1)
-    expect(setApprovingStatusMock).toHaveBeenCalledWith(undefined)
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -75,17 +67,12 @@ describe('useTradingSettleHandler', () => {
   it('should handle error on deposit action', async () => {
     const action = 'deposit'
     const error = new Error('test')
-    const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
     const updatePendingTransactionsMock = vi.fn()
 
     expect(action === 'deposit').toBe(true)
     expect(error).toBeInstanceOf(Error)
 
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      setApprovingStatusMock,
-    ])
     vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
       {},
       updateTradingModalMock,
@@ -113,7 +100,6 @@ describe('useTradingSettleHandler', () => {
       ),
     )
 
-    expect(setApprovingStatusMock).not.toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledTimes(1)
     expect(updateTradingModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -130,7 +116,6 @@ describe('useTradingSettleHandler', () => {
   it('should handle deposit action data with txHash', async () => {
     const action = 'deposit'
     const error = null
-    const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
     const updatePendingTransactionsMock = vi.fn()
     const updateSendTokenMock = vi.fn()
@@ -138,10 +123,6 @@ describe('useTradingSettleHandler', () => {
     expect(action === 'deposit').toBe(true)
     expect(error).toBeNull()
 
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      setApprovingStatusMock,
-    ])
     vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
       {},
       updateTradingModalMock,
@@ -188,7 +169,6 @@ describe('useTradingSettleHandler', () => {
   it('should handle approve action data with txHash', async () => {
     const action = 'approve'
     const error = null
-    const setApprovingStatusMock = vi.fn()
     const updateTradingModalMock = vi.fn()
     const updatePendingTransactionsMock = vi.fn()
     const updateSendTokenMock = vi.fn()
@@ -196,10 +176,6 @@ describe('useTradingSettleHandler', () => {
     expect(action === 'approve').toBe(true)
     expect(error).toBeNull()
 
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      setApprovingStatusMock,
-    ])
     vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
       {},
       updateTradingModalMock,

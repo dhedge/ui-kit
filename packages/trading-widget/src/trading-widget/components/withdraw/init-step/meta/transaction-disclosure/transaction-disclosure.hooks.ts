@@ -1,9 +1,5 @@
-import BigNumber from 'bignumber.js'
-
 import { usePoolFees } from 'core-kit/hooks/pool'
 import {
-  useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
@@ -18,10 +14,7 @@ import { THEME_TYPE } from 'trading-widget/types'
 export const useInitWithdrawTransactionDisclosure = () => {
   const t = useTranslationContext()
   const { address, chainId } = useTradingPanelPoolConfig()
-  const [approvingStatus] = useTradingPanelApprovingStatus()
-  const [{ isInfiniteAllowance, isMaxSlippageLoading }] =
-    useTradingPanelSettings()
-  const [sendToken] = useSendTokenInput()
+  const [{ isMaxSlippageLoading }] = useTradingPanelSettings()
   const { exitFee } = usePoolFees({ address, chainId })
   const slippage = useAppliedWithdrawSlippage()
   const showMinReceivedText = useIsMultiAssetWithdraw()
@@ -33,17 +26,10 @@ export const useInitWithdrawTransactionDisclosure = () => {
       ? t.withdrawSlippageWarning
       : t.highSlippageWarning
 
-  const tokenAllowance = isInfiniteAllowance
-    ? t.infinite
-    : `${new BigNumber(sendToken.value || '0').toFixed(4)} ${sendToken.symbol}`
-
   return {
     slippageTooltipText,
     isMaxSlippageLoading,
     slippagePlaceholder: `${slippage}%`,
-    allowanceRequired: !approvingStatus,
-    tokenAllowance,
-    sendTokenSymbol: sendToken.symbol,
     exitFee,
     minReceivedText: t.estimatedMultiAssetFractions,
     showMinReceivedText,

@@ -1,11 +1,8 @@
 import BigNumber from 'bignumber.js'
 
-import { useEffect } from 'react'
-
 import { AddressZero } from 'core-kit/const'
 import {
   useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useApprove, useCanSpend } from 'core-kit/hooks/trading/allowance'
@@ -18,7 +15,6 @@ export const useInitWithdrawAllowance = () => {
   const { chainId } = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
-  const [, updateApprovingStatus] = useTradingPanelApprovingStatus()
   const withdrawProductRawAmount = new BigNumber(sendToken.value || '0')
     .shiftedBy(sendToken.decimals)
     .toFixed(0, BigNumber.ROUND_UP)
@@ -32,10 +28,6 @@ export const useInitWithdrawAllowance = () => {
     chainId,
     skip: isMultiAssetsWithdraw || withdrawProductRawAmount === '0',
   })
-
-  useEffect(() => {
-    updateApprovingStatus(canSpend ? 'success' : undefined)
-  }, [updateApprovingStatus, canSpend])
 
   const approve = useApprove({
     token: sendToken,
