@@ -12,7 +12,7 @@ import {
 } from 'core-kit/hooks/state'
 
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
-import { useInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
+import { useGetInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
 
 import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction'
@@ -51,6 +51,9 @@ describe('useInitWithdrawTransaction', () => {
     const mockSlippage = 0.01
     const mockOnSettled = vi.fn()
     const txArgs = [BigInt('100')]
+    const mockGetInitWithdrawTransactionArguments = vi
+      .fn()
+      .mockReturnValue(txArgs)
 
     vi.mocked(useSendTokenInput).mockReturnValue(
       mockSendTokenInput as ReturnType<typeof useSendTokenInput>,
@@ -68,7 +71,9 @@ describe('useInitWithdrawTransaction', () => {
       send: mockSend,
     } as unknown as ReturnType<typeof useContractFunction>)
     vi.mocked(useTradingSettleHandler).mockReturnValue(mockOnSettled)
-    vi.mocked(useInitWithdrawTransactionArguments).mockReturnValueOnce(txArgs)
+    vi.mocked(useGetInitWithdrawTransactionArguments).mockReturnValueOnce(
+      mockGetInitWithdrawTransactionArguments,
+    )
 
     const { result } = renderHook(() => useInitWithdrawTransaction())
 
@@ -83,6 +88,7 @@ describe('useInitWithdrawTransaction', () => {
       symbol: 'ETH',
       chainId: 10,
     })
+    expect(mockGetInitWithdrawTransactionArguments).toHaveBeenCalled()
     expect(useContractFunction).toHaveBeenCalledWith(
       expect.objectContaining({
         functionName: EASY_SWAPPER_V2_INITIATE_WITHDRAW_METHOD,
@@ -100,8 +106,13 @@ describe('useInitWithdrawTransaction', () => {
     const mockSlippage = 0.01
     const mockOnSettled = vi.fn()
     const txArgs = [BigInt('10000')]
+    const mockGetInitWithdrawTransactionArguments = vi
+      .fn()
+      .mockReturnValue(txArgs)
 
-    vi.mocked(useInitWithdrawTransactionArguments).mockReturnValueOnce(txArgs)
+    vi.mocked(useGetInitWithdrawTransactionArguments).mockReturnValueOnce(
+      mockGetInitWithdrawTransactionArguments,
+    )
     vi.mocked(useSendTokenInput).mockReturnValue(
       mockSendTokenInput as ReturnType<typeof useSendTokenInput>,
     )
@@ -150,8 +161,13 @@ describe('useInitWithdrawTransaction', () => {
     const mockSlippage = 0.2
     const mockOnSettled = vi.fn()
     const txArgs = [BigInt('99000')]
+    const mockGetInitWithdrawTransactionArguments = vi
+      .fn()
+      .mockReturnValue(txArgs)
 
-    vi.mocked(useInitWithdrawTransactionArguments).mockReturnValueOnce(txArgs)
+    vi.mocked(useGetInitWithdrawTransactionArguments).mockReturnValueOnce(
+      mockGetInitWithdrawTransactionArguments,
+    )
 
     vi.mocked(useSendTokenInput).mockReturnValue(
       mockSendTokenInput as ReturnType<typeof useSendTokenInput>,
