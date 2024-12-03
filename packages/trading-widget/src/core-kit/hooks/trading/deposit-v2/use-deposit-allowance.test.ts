@@ -16,7 +16,6 @@ import { useDepositAllowance } from './use-deposit-allowance'
 
 vi.mock('core-kit/hooks/state', () => ({
   useSendTokenInput: vi.fn(),
-  useTradingPanelApprovingStatus: vi.fn(),
   useTradingPanelPoolConfig: vi.fn().mockImplementation(
     () =>
       ({
@@ -42,16 +41,12 @@ describe('useDepositAllowance', () => {
   it('should return approve fn and check send token allowance when token is not native', () => {
     const sendToken = { ...BRIDGED_USDC_OPTIMISM, value: '1', isLoading: false }
     const canSpend = true
-    const updateApprovingStatusMock = vi.fn()
     const approveMock = vi.fn()
 
     vi.mocked(stateHooks.useSendTokenInput).mockImplementationOnce(() => [
       sendToken,
       vi.fn(),
     ])
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockImplementationOnce(
-      () => ['pending', updateApprovingStatusMock],
-    )
     vi.mocked(allowanceHooks.useCanSpend).mockImplementationOnce(() => canSpend)
     vi.mocked(allowanceHooks.useApprove).mockImplementationOnce(
       () => approveMock,
@@ -77,8 +72,6 @@ describe('useDepositAllowance', () => {
       rawTokenAmount: '1000000',
       spenderAddress: contractsAddressesMap[chainId]?.easySwapperV2,
     })
-    expect(updateApprovingStatusMock).toHaveBeenCalledTimes(1)
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith('success')
     expect(result.current.canSpend).toEqual(canSpend)
     act(() => result.current.approve())
     expect(approveMock).toHaveBeenCalledTimes(1)
@@ -93,15 +86,11 @@ describe('useDepositAllowance', () => {
       address: AddressZero,
       decimals: 3,
     }
-    const updateApprovingStatusMock = vi.fn()
 
     vi.mocked(stateHooks.useSendTokenInput).mockImplementationOnce(() => [
       sendToken,
       vi.fn(),
     ])
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockImplementationOnce(
-      () => ['success', updateApprovingStatusMock],
-    )
     vi.mocked(allowanceHooks.useApprove).mockImplementationOnce(() => vi.fn())
 
     renderHook(() => useDepositAllowance())
@@ -115,7 +104,5 @@ describe('useDepositAllowance', () => {
       chainId,
       skip: true,
     })
-    expect(updateApprovingStatusMock).toHaveBeenCalledTimes(1)
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith(undefined)
   })
 })

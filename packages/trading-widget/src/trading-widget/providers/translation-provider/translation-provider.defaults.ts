@@ -28,8 +28,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   exitFee: 'Exit fee',
   entryFeeExplanation: "Entry fee is charged in vault's tokens.",
   exitFeeExplanation: "Exit fee is charged in vault's tokens.",
-  amountToBeApproved:
-    'Amount of {symbol} tokens to be approved. Can be customized in settings.',
   minDepositUsd: 'Minimum deposit in USD.',
   minDeposit: 'Minimum deposit',
   tokensLockTime: 'Purchased tokens will have a {lockTime} lock.',
@@ -104,7 +102,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   unrollAndClaimAction: 'Claim',
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
-  claimLabel: 'Claim',
+  claimLabel: 'Claim Assets',
   swapAndClaimTo: 'Swap and claim assets to',
   initWithdrawDescription: 'Unroll',
   initWithdrawTooltip: 'Unroll prepares assets for single asset withdrawal.',

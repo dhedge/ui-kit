@@ -236,9 +236,7 @@ export {
   useTradingPanelActions,
   useReceiveTokenInput,
   useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelLogger,
-  useTradingPanelMeta,
   useTradingPanelModal,
   useTradingPanelPoolAddress,
   useTradingPanelPoolConfig,
@@ -251,7 +249,6 @@ export {
   useUpdatePoolFallbackData,
   useUpdateReceiveTokenInput,
   useUpdateSendTokenInput,
-  useUpdateTradingMeta,
   useUpdateTradingModal,
   useUpdateTradingSettings,
 } from './core-kit/hooks/state'

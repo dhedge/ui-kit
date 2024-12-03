@@ -16,7 +16,7 @@ export const SwapSummary: FC<SwapSummaryProps> = ({ receiveTokens }) => {
   }
 
   return (
-    <div className="dtw-flex dtw-flex-wrap dtw-items-center dtw-justify-center dtw-gap-1">
+    <div className="dtw-flex dtw-flex-wrap dtw-items-center dtw-gap-1">
       {t.swapAndClaimTo}{' '}
       <div className="dtw-flex dtw-items-center dtw-gap-1">
         <TokenIcon size="sm" symbols={[receiveToken.symbol]} />{' '}

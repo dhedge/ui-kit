@@ -16,7 +16,6 @@ import { useIsMultiAssetWithdraw } from './use-is-multi-asset-withdraw'
 
 vi.mock('core-kit/hooks/state', () => ({
   useSendTokenInput: vi.fn(),
-  useTradingPanelApprovingStatus: vi.fn(),
   useTradingPanelPoolConfig: vi.fn(),
 }))
 
@@ -45,7 +44,6 @@ describe('useWithdrawAllowance', () => {
     }
     const poolConfig = { chainId: optimism.id }
     const canSpend = true
-    const updateApprovingStatusMock = vi.fn()
 
     expect(canSpend).toBe(true)
 
@@ -56,10 +54,6 @@ describe('useWithdrawAllowance', () => {
     vi.mocked(stateHooks.useSendTokenInput).mockReturnValue([
       sendToken,
       vi.fn(),
-    ])
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      updateApprovingStatusMock,
     ])
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockReturnValue(
       poolConfig as unknown as ReturnType<
@@ -87,7 +81,6 @@ describe('useWithdrawAllowance', () => {
         skip: false,
       }),
     )
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith('success')
   })
 
   it('should return negative canSpend flag', () => {
@@ -101,7 +94,6 @@ describe('useWithdrawAllowance', () => {
     }
     const poolConfig = { chainId: optimism.id }
     const canSpend = false
-    const updateApprovingStatusMock = vi.fn()
 
     expect(canSpend).toBe(false)
 
@@ -112,10 +104,6 @@ describe('useWithdrawAllowance', () => {
     vi.mocked(stateHooks.useSendTokenInput).mockReturnValue([
       sendToken,
       vi.fn(),
-    ])
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      updateApprovingStatusMock,
     ])
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockReturnValue(
       poolConfig as unknown as ReturnType<
@@ -143,7 +131,6 @@ describe('useWithdrawAllowance', () => {
         skip: false,
       }),
     )
-    expect(updateApprovingStatusMock).toHaveBeenCalledWith(undefined)
   })
 
   it('should return approve cb', () => {
@@ -157,7 +144,6 @@ describe('useWithdrawAllowance', () => {
     }
     const poolConfig = { chainId: optimism.id }
     const canSpend = true
-    const updateApprovingStatusMock = vi.fn()
     const approveMock = vi.fn(() => Promise.resolve())
 
     vi.mocked(web3Hooks.useAccount).mockReturnValue({
@@ -167,10 +153,6 @@ describe('useWithdrawAllowance', () => {
     vi.mocked(stateHooks.useSendTokenInput).mockReturnValue([
       sendToken,
       vi.fn(),
-    ])
-    vi.mocked(stateHooks.useTradingPanelApprovingStatus).mockReturnValue([
-      undefined,
-      updateApprovingStatusMock,
     ])
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockReturnValue(
       poolConfig as unknown as ReturnType<

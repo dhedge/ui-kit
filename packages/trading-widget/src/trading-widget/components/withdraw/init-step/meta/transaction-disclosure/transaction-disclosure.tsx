@@ -17,9 +17,6 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     slippageTooltipText,
     slippagePlaceholder,
     isMaxSlippageLoading,
-    allowanceRequired,
-    sendTokenSymbol,
-    tokenAllowance,
     exitFee,
     minReceivedText,
     showMinReceivedText,
@@ -57,14 +54,6 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
       })
     }
 
-    if (allowanceRequired) {
-      items.push({
-        tooltipText: t.amountToBeApproved.replace('{symbol}', sendTokenSymbol),
-        label: t.tokenAllowance,
-        value: tokenAllowance,
-      })
-    }
-
     return items
   }, [
     slippageTooltipText,
@@ -73,16 +62,11 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     t.exitFeeExplanation,
     t.minReceiveAmount,
     t.minReceived,
-    t.amountToBeApproved,
-    t.tokenAllowance,
     isMaxSlippageLoading,
     slippagePlaceholder,
     exitFee,
     showMinReceivedText,
-    allowanceRequired,
     minReceivedText,
-    sendTokenSymbol,
-    tokenAllowance,
   ])
 
   return (

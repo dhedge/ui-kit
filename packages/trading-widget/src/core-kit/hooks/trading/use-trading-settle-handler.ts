@@ -3,7 +3,6 @@ import { useCallback } from 'react'
 import {
   useOnTradingSettleError,
   useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelModal,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
@@ -14,7 +13,6 @@ import { getExplorerLink } from 'core-kit/utils'
 export const useTradingSettleHandler = (
   action: PendingTransaction['action'],
 ): Required<Required<UseWriteContractParameters>['mutation']>['onSettled'] => {
-  const [, setApprovingStatus] = useTradingPanelApprovingStatus()
   const [, updateTradingModal] = useTradingPanelModal()
   const [, updatePendingTransactions] = useTradingPanelTransactions()
   const [, updateSendToken] = useSendTokenInput()
@@ -25,10 +23,6 @@ export const useTradingSettleHandler = (
   >(
     (txHash, error, variables) => {
       if (error) {
-        if (action === 'approve') {
-          setApprovingStatus(undefined)
-        }
-
         updateTradingModal({
           isOpen: false,
           status: 'None',
@@ -58,7 +52,6 @@ export const useTradingSettleHandler = (
     },
     [
       action,
-      setApprovingStatus,
       updatePendingTransactions,
       updateSendToken,
       updateTradingModal,
