@@ -16,6 +16,7 @@ const tradingContractCalls = [
   'getFundComposition',
   'withdrawalContracts',
   'getTrackedAssets',
+  'getAssetPrice',
 ]
 const allowanceContractCalls = ['allowance']
 const customQueries = [QUERY_KEYS.SYNTHETIX_ORACLES_UPDATE]

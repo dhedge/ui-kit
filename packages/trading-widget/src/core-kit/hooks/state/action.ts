@@ -13,9 +13,6 @@ export const useUpdateTradingSettings = () =>
 
 export const useSetTradingType = () => useTradingPanelActions().setTradingType
 
-export const useUpdateTradingMeta = () =>
-  useTradingPanelActions().updateTradingMeta
-
 export const useUpdateTradingModal = () =>
   useTradingPanelActions().updateTradingModal
 

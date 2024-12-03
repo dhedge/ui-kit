@@ -2,10 +2,11 @@ import {
   useCompleteWithdrawSwapData,
   useHasSwappableAssets,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
+import { useInvalidateTradingQueries } from 'core-kit/hooks/web3'
 
 interface UseReloadWithdrawSwapQuoteButtonReturn {
   showButton: boolean
-  refetch: ReturnType<typeof useCompleteWithdrawSwapData>['refetch']
+  handleSwapQuoteReload: () => void
   disabled: boolean
 }
 
@@ -13,6 +14,12 @@ export const useReloadWithdrawSwapQuoteButton =
   (): UseReloadWithdrawSwapQuoteButtonReturn => {
     const showButton = useHasSwappableAssets()
     const { refetch, isFetched } = useCompleteWithdrawSwapData()
+    const { invalidateTradingQueries } = useInvalidateTradingQueries()
 
-    return { showButton, refetch, disabled: !isFetched }
+    const handleSwapQuoteReload = () => {
+      invalidateTradingQueries()
+      refetch()
+    }
+
+    return { showButton, handleSwapQuoteReload, disabled: !isFetched }
   }

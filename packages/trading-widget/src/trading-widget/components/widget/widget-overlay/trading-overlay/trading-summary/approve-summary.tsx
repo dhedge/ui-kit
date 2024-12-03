@@ -17,7 +17,7 @@ export const ApproveSummary: FC<ApproveSummaryProps> = ({ sendTokens }) => {
   }
 
   return (
-    <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-1 dtw-flex-wrap dtw-overflow-hidden">
+    <div className="dtw-flex dtw-items-center dtw-gap-1 dtw-flex-wrap dtw-overflow-hidden">
       <span>{t.approveSpending}</span>
       <TokenIcon size="sm" symbols={[approvedToken.symbol]} />
       <span>{approvedToken.symbol}</span>

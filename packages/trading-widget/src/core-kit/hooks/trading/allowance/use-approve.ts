@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 
 import { MaxUint256 } from 'core-kit/const'
 import {
-  useTradingPanelApprovingStatus,
   useTradingPanelModal,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
@@ -29,7 +28,6 @@ export const useApprove = ({
   const [{ isInfiniteAllowance }] = useTradingPanelSettings()
   const updatePendingTransactions = useTradingPanelTransactions()[1]
   const updateTradingModal = useTradingPanelModal()[1]
-  const updateApprovingStatus = useTradingPanelApprovingStatus()[1]
 
   const onSettled = useTradingSettleHandler('approve')
   const { send } = useContractFunction({
@@ -40,8 +38,6 @@ export const useApprove = ({
   })
 
   return useCallback(async () => {
-    updateApprovingStatus('pending')
-
     updateTradingModal({
       isOpen: true,
       status: 'Wallet',
@@ -78,7 +74,6 @@ export const useApprove = ({
     token.address,
     token.decimals,
     token.symbol,
-    updateApprovingStatus,
     updatePendingTransactions,
     updateTradingModal,
   ])

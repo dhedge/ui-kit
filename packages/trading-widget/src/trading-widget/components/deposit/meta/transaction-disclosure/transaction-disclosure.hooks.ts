@@ -4,8 +4,6 @@ import { DEFAULT_PRECISION } from 'core-kit/const'
 import { usePoolFees, usePoolManagerLogicData } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
-  useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
@@ -27,14 +25,12 @@ import { THEME_TYPE } from 'trading-widget/types'
 
 export const useDepositTransactionDisclosure = () => {
   const t = useTranslationContext()
-  const [approvingStatus] = useTradingPanelApprovingStatus()
-  const [{ slippage, minSlippage, isInfiniteAllowance, isMaxSlippageLoading }] =
+  const [{ slippage, minSlippage, isMaxSlippageLoading }] =
     useTradingPanelSettings()
   const isAutoSlippage = slippage === 'auto'
   const minReceivedVaultTokensAmount = useMinVaultTokensReceivedAmount()
 
   const [receiveToken] = useReceiveTokenInput()
-  const [sendToken] = useSendTokenInput()
   const { address, chainId } = useTradingPanelPoolConfig()
 
   const { entryFee } = usePoolFees({ address, chainId })
@@ -60,10 +56,6 @@ export const useDepositTransactionDisclosure = () => {
       ? t.depositSlippageWarning
       : t.highSlippageWarning
 
-  const tokenAllowance = isInfiniteAllowance
-    ? t.infinite
-    : `${new BigNumber(sendToken.value || '0').toFixed(4)} ${sendToken.symbol}`
-
   const minReceivedVaultTokens = formatNumberToLimitedDecimals(
     new BigNumber(minReceivedVaultTokensAmount)
       .shiftedBy(-DEFAULT_PRECISION)
@@ -78,9 +70,6 @@ export const useDepositTransactionDisclosure = () => {
     isMaxSlippageLoading,
     slippagePlaceholder,
     minReceive: `${minReceivedVaultTokens} ${receiveToken.symbol.toUpperCase()}`,
-    allowanceRequired: !approvingStatus,
-    tokenAllowance,
-    sendTokenSymbol: sendToken.symbol,
     entryFee,
     entryFeeTooltipText: t.entryFeeExplanation,
     minDeposit,

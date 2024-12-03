@@ -66,9 +66,6 @@ export const getDefaultTradingPanelState = (
         ...config?.input?.receiveToken,
       },
     },
-    meta: {
-      ...config?.meta,
-    },
     modal: {
       isOpen: false,
       status: 'None',
@@ -96,7 +93,6 @@ export const TradingPanelActionsContext =
     updateSendTokenInput: noop,
     updateReceiveTokenInput: noop,
     updateTradingSettings: noop,
-    updateTradingMeta: noop,
     updateTradingModal: noop,
     updateTransactions: noop,
     updatePoolFallbackData: noop,
@@ -154,15 +150,6 @@ const createReducerWithLogger =
             ...action.payload,
           },
         }
-      case 'UPDATE_TRADING_META': {
-        return {
-          ...state,
-          meta: {
-            ...state.meta,
-            ...action.payload,
-          },
-        }
-      }
       case 'UPDATE_TRADING_MODAL': {
         return {
           ...state,
@@ -253,7 +240,6 @@ export const TradingPanelProvider: FC<
     onUpdateReceiveTokenInput,
     onUpdateTradingSettings,
     onSetTradingType,
-    onUpdateTradingMeta,
     onUpdateTradingModal,
     onUpdateTransactions,
     onTransactionError,
@@ -311,14 +297,6 @@ export const TradingPanelProvider: FC<
     [onSetTradingType],
   )
 
-  const updateTradingMeta = useCallback(
-    (payload: Partial<TradingPanelState['meta']>) => {
-      dispatch({ type: 'UPDATE_TRADING_META', payload })
-      onUpdateTradingMeta?.(payload)
-    },
-    [onUpdateTradingMeta],
-  )
-
   const updateTradingModal = useCallback(
     (payload: Partial<TradingPanelState['modal']>) => {
       dispatch({ type: 'UPDATE_TRADING_MODAL', payload })
@@ -346,7 +324,6 @@ export const TradingPanelProvider: FC<
       updateTradingSettings,
       updateSendTokenInput,
       updateReceiveTokenInput,
-      updateTradingMeta,
       updateTradingModal,
       updateTransactions,
       updatePoolFallbackData,
@@ -365,7 +342,6 @@ export const TradingPanelProvider: FC<
       updateTradingSettings,
       updateSendTokenInput,
       updateReceiveTokenInput,
-      updateTradingMeta,
       updateTradingModal,
       updateTransactions,
       updatePoolFallbackData,

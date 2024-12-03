@@ -12,7 +12,6 @@ import {
   HighSlippageOverlay,
   NotificationOverlay,
   OverlaySwitch,
-  PendingApprovalOverlay,
   PoolSelectOverlay,
   TermsOfUseOverlay,
   TokenSelectOverlay,
@@ -50,7 +49,6 @@ export const Widget: FC = () => {
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
         <TradingOverlay type={OVERLAY.TRADING} />
       </OverlaySwitch>
-      <PendingApprovalOverlay />
     </div>
   )
 }

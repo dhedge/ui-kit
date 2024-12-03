@@ -48,9 +48,6 @@ export interface TradingPanelState {
     sendToken: DynamicTradingToken
     receiveToken: DynamicTradingToken
   }
-  meta: {
-    approvingStatus?: 'pending' | 'success'
-  }
   modal: TradingPanelStateModal
   poolAddress: PoolConfig['address']
   poolConfigMap: Record<PoolConfig['address'], PoolConfig>
@@ -67,7 +64,6 @@ export interface TradingPanelSetters {
     payload: Partial<TradingPanelState['settings']>,
   ) => void
   setTradingType: (payload: TradingPanelState['type']) => void
-  updateTradingMeta: (payload: Partial<TradingPanelState['meta']>) => void
   updateTradingModal: (payload: Partial<TradingPanelState['modal']>) => void
   updateTransactions: (payload: UpdateTransactionsArguments) => void
   updatePoolFallbackData: (payload: PoolFallbackData) => void
@@ -79,7 +75,6 @@ export interface CallbackConfig {
   onUpdateReceiveTokenInput: TradingPanelSetters['updateReceiveTokenInput']
   onUpdateTradingSettings: TradingPanelSetters['updateTradingSettings']
   onSetTradingType: TradingPanelSetters['setTradingType']
-  onUpdateTradingMeta: TradingPanelSetters['updateTradingMeta']
   onUpdateTradingModal: TradingPanelSetters['updateTradingModal']
   onUpdateTransactions: TradingPanelSetters['updateTransactions']
   onTradingSettleError: (error: Error) => void
@@ -131,10 +126,6 @@ export type TradingPanelAction =
   | {
       type: 'UPDATE_TRADING_SETTINGS'
       payload: Partial<TradingPanelState['settings']>
-    }
-  | {
-      type: 'UPDATE_TRADING_META'
-      payload: Partial<TradingPanelState['meta']>
     }
   | {
       type: 'UPDATE_TRADING_MODAL'

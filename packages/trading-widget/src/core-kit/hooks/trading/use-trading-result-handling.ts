@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 
+import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useOnTransactionError,
   useOnTransactionSuccess,
-  useTradingPanelMeta,
   useTradingPanelModal,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
@@ -17,7 +17,6 @@ import { getExplorerLink } from 'core-kit/utils'
 export const useTradingResultHandling = () => {
   const [transactions, updatePendingTransactions] =
     useTradingPanelTransactions()
-  const updateTradingMeta = useTradingPanelMeta()[1]
   const updateTradingModal = useTradingPanelModal()[1]
   const onTransactionError = useOnTransactionError()
   const onTransactionSuccess = useOnTransactionSuccess()
@@ -33,15 +32,11 @@ export const useTradingResultHandling = () => {
   const { data, error } = useWaitForTransactionReceipt({
     hash: txHash,
     chainId,
-    pollingInterval: 15_000,
+    pollingInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
   })
 
   useEffect(() => {
     if (data) {
-      if (isTokenApproveTransaction) {
-        updateTradingMeta({ approvingStatus: 'success' })
-      }
-
       const txHash = data.transactionHash as Address
       if (txHash) {
         const link = getExplorerLink(txHash, 'transaction', chainId)
@@ -62,17 +57,12 @@ export const useTradingResultHandling = () => {
     onTransactionSuccess,
     updatePendingTransactions,
     updateTradingModal,
-    updateTradingMeta,
     invalidateAllowanceQueries,
     invalidateTradingQueries,
   ])
 
   useEffect(() => {
     if (error) {
-      if (isTokenApproveTransaction) {
-        updateTradingMeta({ approvingStatus: undefined })
-      }
-
       updateTradingModal({
         isOpen: false,
         status: 'None',
@@ -91,7 +81,6 @@ export const useTradingResultHandling = () => {
     action,
     chainId,
     txHash,
-    updateTradingMeta,
     updateTradingModal,
     updatePendingTransactions,
     onTransactionError,

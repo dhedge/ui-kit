@@ -106,6 +106,7 @@ export {
   EASY_SWAPPER_V2_ADDRESS_BASE,
   EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
   EASY_SWAPPER_V2_ADDRESS_POLYGON,
+  AAVE_LENDING_POOL_V3_ADDRESS_BASE,
 } from './core-kit/const'
 export { EstimationError } from './core-kit/models'
 export type {
@@ -234,9 +235,7 @@ export {
   useTradingPanelActions,
   useReceiveTokenInput,
   useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelLogger,
-  useTradingPanelMeta,
   useTradingPanelModal,
   useTradingPanelPoolAddress,
   useTradingPanelPoolConfig,
@@ -249,7 +248,6 @@ export {
   useUpdatePoolFallbackData,
   useUpdateReceiveTokenInput,
   useUpdateSendTokenInput,
-  useUpdateTradingMeta,
   useUpdateTradingModal,
   useUpdateTradingSettings,
 } from './core-kit/hooks/state'

@@ -1,11 +1,8 @@
 import BigNumber from 'bignumber.js'
 
-import { useEffect } from 'react'
-
 import { AddressZero } from 'core-kit/const'
 import {
   useSendTokenInput,
-  useTradingPanelApprovingStatus,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import { useApprove, useCanSpend } from 'core-kit/hooks/trading/allowance'
@@ -16,7 +13,6 @@ export const useDepositAllowance = () => {
   const { account = AddressZero } = useAccount()
   const { chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
-  const updateApprovingStatus = useTradingPanelApprovingStatus()[1]
   const spenderAddress = getContractAddressById('easySwapperV2', chainId)
 
   const rawDepositAmount = new BigNumber(sendToken.value || '0')
@@ -36,10 +32,6 @@ export const useDepositAllowance = () => {
     rawTokenAmount: rawDepositAmount,
     spenderAddress,
   })
-
-  useEffect(() => {
-    updateApprovingStatus(canSpend ? 'success' : undefined)
-  }, [updateApprovingStatus, canSpend])
 
   return { approve, canSpend }
 }

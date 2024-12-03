@@ -21,9 +21,6 @@ export const DepositTransactionOverviewDisclosure = () => {
     isMaxSlippageLoading,
     minReceive,
     themeType,
-    allowanceRequired,
-    tokenAllowance,
-    sendTokenSymbol,
     entryFee,
     entryFeeTooltipText,
     minDeposit,
@@ -79,14 +76,6 @@ export const DepositTransactionOverviewDisclosure = () => {
       })
     }
 
-    if (allowanceRequired) {
-      items.push({
-        tooltipText: t.amountToBeApproved.replace('{symbol}', sendTokenSymbol),
-        label: t.tokenAllowance,
-        value: tokenAllowance,
-      })
-    }
-
     items.push({
       tooltipText: entryFeeTooltipText,
       label: t.entryFee,
@@ -104,16 +93,19 @@ export const DepositTransactionOverviewDisclosure = () => {
     return items
   }, [
     slippageTooltipText,
-    t,
+    t.maxSlippage,
+    t.entryFee,
+    t.minReceiveAmount,
+    t.minReceived,
+    t.minDepositUsd,
+    t.minDeposit,
     isMaxSlippageLoading,
     slippagePlaceholder,
-    minReceive,
-    allowanceRequired,
-    sendTokenSymbol,
-    tokenAllowance,
+    showMinimumReceivedAmount,
     entryFeeTooltipText,
     entryFee,
     minDeposit,
+    minReceive,
   ])
 
   return (
