@@ -5,6 +5,7 @@ import {
   useSwapDataBasedOnSendToken,
 } from 'core-kit/hooks/trading/deposit-v2'
 
+import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transaction-loading'
 import {
   useConfigContextActions,
   useConfigContextParams,
@@ -21,6 +22,7 @@ export const useDepositTradeButton = () => {
   // TODO consider transforming label into param for mapping
   const { disabled, label, handleTrade } = useHandleTrade(deposit)
   const { isError: isSwapDataFetchingError } = useSwapDataBasedOnSendToken()
+  const isLoading = useIsTransactionLoading('deposit')
 
   const handleClick = () => {
     if (isSwapDataFetchingError) {
@@ -68,5 +70,6 @@ export const useDepositTradeButton = () => {
     handleClick,
     disabled,
     label,
+    isLoading,
   }
 }
