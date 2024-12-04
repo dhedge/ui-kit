@@ -6,12 +6,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const ReloadDepositSwapQuoteButton: FC = () => {
   const t = useTranslationContext()
-  const { showButton, handleSwapQuoteReload, disabled } =
-    useReloadDepositSwapQuoteButton()
-
-  if (!showButton) {
-    return null
-  }
+  const { handleSwapQuoteReload, disabled } = useReloadDepositSwapQuoteButton()
 
   return (
     <ReloadButton
