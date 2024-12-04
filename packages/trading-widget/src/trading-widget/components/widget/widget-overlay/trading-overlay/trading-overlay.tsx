@@ -29,7 +29,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
           <LogoSpinner className="dtw-h-5 dtw-w-5 " />
         )}
       </div>
-      <div className="dtw-font-light dtw-text-sm dtw-max-h-12 dtw-overflow-y-scroll dtw-break-all">
+      <div className="dtw-font-light dtw-text-sm dtw-max-h-16 dtw-overflow-y-scroll dtw-break-all">
         <TradingSummary />
       </div>
       {link && (

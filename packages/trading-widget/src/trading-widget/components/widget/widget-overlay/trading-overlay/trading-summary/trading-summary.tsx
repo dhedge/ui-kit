@@ -9,7 +9,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 export const TradingSummary: FC = () => {
   const t = useTranslationContext()
-  const [{ action, receiveTokens, sendTokens }] = useTradingPanelModal()
+  const [{ action, receiveTokens, sendTokens, status }] = useTradingPanelModal()
 
   if (action === 'oraclesUpdate') {
     return <OraclesUpdateSummary />
@@ -32,6 +32,7 @@ export const TradingSummary: FC = () => {
       action={action}
       sendTokens={sendTokens}
       receiveTokens={receiveTokens}
+      status={status}
     />
   )
 }
