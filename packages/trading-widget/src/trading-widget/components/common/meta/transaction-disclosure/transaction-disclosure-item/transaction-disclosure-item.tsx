@@ -55,7 +55,7 @@ export const TransactionDisclosureItem = ({
         className,
       )}
     >
-      <div className="dtw-flex dtw-grow dtw-items-center dtw-justify-between">
+      <div className="dtw-flex dtw-grow dtw-items-start dtw-justify-between">
         <div className="dtw-flex dtw-items-center dtw-gap-x-1">
           <TooltipIcon
             text={tooltipText}
