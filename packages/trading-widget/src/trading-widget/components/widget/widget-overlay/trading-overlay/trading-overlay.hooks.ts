@@ -10,9 +10,10 @@ export interface TradingOverlayProps extends OverlayProps {}
 
 export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
   const t = useTranslationContext()
-  const [{ status, link }, updateTradingModal] = useTradingPanelModal()
+  const [{ status, link, action }, updateTradingModal] = useTradingPanelModal()
   const isSuccessTx = status == 'Success'
   const { handleReject } = useOverlayHandlers({ type })
+  const showNextStepTip = action === 'single_withdraw' && isSuccessTx
 
   const statusMap = useMemo<Partial<Record<TradingModalStatus, string>>>(
     () => ({
@@ -33,5 +34,6 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
     isSuccessTx,
     link,
     onClose,
+    showNextStepTip,
   }
 }
