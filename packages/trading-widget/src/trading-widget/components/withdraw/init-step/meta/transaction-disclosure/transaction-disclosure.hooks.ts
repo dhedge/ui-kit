@@ -6,6 +6,7 @@ import {
 
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step'
+import { formatPercentage } from 'core-kit/utils'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -15,7 +16,10 @@ export const useInitWithdrawTransactionDisclosure = () => {
   const t = useTranslationContext()
   const { address, chainId } = useTradingPanelPoolConfig()
   const [{ isMaxSlippageLoading }] = useTradingPanelSettings()
-  const { exitFee } = usePoolFees({ address, chainId })
+  const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
+    address,
+    chainId,
+  })
   const slippage = useAppliedWithdrawSlippage()
   const showMinReceivedText = useIsMultiAssetWithdraw()
 
@@ -30,8 +34,11 @@ export const useInitWithdrawTransactionDisclosure = () => {
     slippageTooltipText,
     isMaxSlippageLoading,
     slippagePlaceholder: `${slippage}%`,
-    exitFee,
+    exitFee: formatPercentage(exitFeeNumber + withdrawalFeeNumber, 2),
     minReceivedText: t.estimatedMultiAssetFractions,
     showMinReceivedText,
+    withdrawalFee: withdrawalFeeNumber
+      ? `*${withdrawalFeeNumber}% fee will go back to the vault holders`
+      : null,
   }
 }
