@@ -15,7 +15,8 @@ import { useTradingOverlay } from './trading-overlay.hooks'
 import { TradingSummary } from './trading-summary/trading-summary'
 
 export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
-  const { link, title, onClose, isSuccessTx } = useTradingOverlay({ type })
+  const { link, title, onClose, isSuccessTx, showNextStepTip } =
+    useTradingOverlay({ type })
   const { LogoSpinner = Spinner } = useComponentContext()
   const t = useTranslationContext()
 
@@ -29,7 +30,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
           <LogoSpinner className="dtw-h-5 dtw-w-5 " />
         )}
       </div>
-      <div className="dtw-font-light dtw-text-sm dtw-max-h-12 dtw-overflow-y-scroll dtw-break-all">
+      <div className="dtw-font-light dtw-text-sm dtw-max-h-16 dtw-overflow-y-scroll dtw-break-all">
         <TradingSummary />
       </div>
       {link && (
@@ -40,6 +41,9 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
         >
           {t.explorer}
         </ExternalLinkButton>
+      )}
+      {showNextStepTip && (
+        <p className="dtw-text-xs">{t.proceedWithNextStep}</p>
       )}
     </Layout.Notification>
   )

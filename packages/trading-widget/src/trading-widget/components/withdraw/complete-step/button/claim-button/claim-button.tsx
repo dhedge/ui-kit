@@ -11,7 +11,8 @@ export const ClaimButton: FC<ActionButtonProps> = ({
 }) => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
 
-  const { handleTrade, disabled, label, isWrongNetwork } = useClaimButton()
+  const { handleTrade, disabled, label, isWrongNetwork, isLoading } =
+    useClaimButton()
 
   if (isWrongNetwork) {
     return null
@@ -23,6 +24,7 @@ export const ClaimButton: FC<ActionButtonProps> = ({
       disabled={disabled}
       highlighted={highlighted}
       className={className}
+      loading={isLoading}
     >
       {label}
     </Button>

@@ -35,6 +35,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     isCheckOraclesPending,
     approve,
     confirmHighSlippage,
+    isUpdateOraclesTransactionLoading,
   } = useValidDepositButton()
 
   if (requiresMinDeposit) {
@@ -68,7 +69,10 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresUpdate || isCheckOraclesPending) {
     return (
-      <Button onClick={updateOracles} loading={isCheckOraclesPending}>
+      <Button
+        onClick={updateOracles}
+        loading={isCheckOraclesPending || isUpdateOraclesTransactionLoading}
+      >
         {isCheckOraclesPending ? t.checkingOracles : t.updateOracles}
       </Button>
     )

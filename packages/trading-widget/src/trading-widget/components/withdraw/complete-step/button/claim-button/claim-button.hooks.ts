@@ -1,3 +1,4 @@
+import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transaction-loading'
 import {
   useCompleteWithdrawTransaction,
   useHandleCompleteWithdraw,
@@ -13,6 +14,7 @@ export const useClaimButton = () => {
     withdraw,
     isClaim,
   })
+  const isLoading = useIsTransactionLoading('claim')
 
-  return { disabled, label, handleTrade, isWrongNetwork }
+  return { disabled, label, handleTrade, isWrongNetwork, isLoading }
 }

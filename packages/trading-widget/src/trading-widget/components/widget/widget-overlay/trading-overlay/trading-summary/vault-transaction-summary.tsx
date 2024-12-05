@@ -4,17 +4,9 @@ import type { TradingPanelStateModal } from 'core-kit/types'
 import { TokenIcon } from 'trading-widget/components/common'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
-interface VaultTransactionSummaryProps {
-  sendTokens: TradingPanelStateModal['sendTokens']
-  receiveTokens: TradingPanelStateModal['receiveTokens']
-  action: TradingPanelStateModal['action']
-}
-
-export const VaultTransactionSummary: FC<VaultTransactionSummaryProps> = ({
-  sendTokens,
-  receiveTokens,
-  action,
-}) => {
+export const VaultTransactionSummary: FC<
+  Pick<TradingPanelStateModal, 'sendTokens' | 'receiveTokens' | 'action'>
+> = ({ sendTokens, receiveTokens, action }) => {
   const t = useTranslationContext()
   const [sendToken] = sendTokens ?? []
   const [receiveToken] = receiveTokens ?? []

@@ -8,10 +8,10 @@ import { useDepositTradeButton } from './trade-button.hooks'
 
 export const DepositTradeButton: FC = () => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { handleClick, label, disabled } = useDepositTradeButton()
+  const { handleClick, label, disabled, isLoading } = useDepositTradeButton()
 
   return (
-    <Button onClick={handleClick} disabled={disabled}>
+    <Button onClick={handleClick} disabled={disabled} loading={isLoading}>
       {label}
     </Button>
   )
