@@ -40,7 +40,7 @@ export const Notification: FC<PropsWithChildren<NotificationProps>> = ({
   }, [defaultNotificationDuration, onClose])
 
   return (
-    <div className="dtw-p-4 dtw-absolute dtw-top-0 dtw-inset-x-0 dtw-rounded-xl dtw-bg-[var(--panel-popup-bg,var(--panel-secondary-color))]">
+    <div className="dtw-p-4 dtw-absolute dtw-top-0 dtw-inset-x-0 dtw-rounded-xl dtw-bg-[var(--panel-notification-bg,var(--panel-secondary-color))]">
       <div className="dtw-flex dtw-justify-between dtw-items-center">
         <div>{children}</div>
         {!!onClose && (

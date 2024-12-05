@@ -56,6 +56,11 @@ export interface ThemeProviderConfigProps {
     }
   }
   component?: {
+    notification?: {
+      color?: {
+        colorBg?: string
+      }
+    }
     popup?: {
       color?: {
         colorText?: string

@@ -153,6 +153,12 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.global?.color?.colorIcon ?? 'var(--panel-content-color)'
         }`,
 
+        //notification
+        '--panel-notification-bg': `${
+          config?.component?.notification?.color?.colorBg ??
+          'var(--panel-secondary-color)'
+        }`,
+
         //popup
         //popup-color
         '--panel-popup-content-color': `${
