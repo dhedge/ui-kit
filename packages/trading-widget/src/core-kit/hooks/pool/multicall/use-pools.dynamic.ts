@@ -6,11 +6,7 @@ import { optimism } from 'wagmi/chains'
 import { PoolLogicAbi } from 'core-kit/abi'
 import { AddressZero } from 'core-kit/const'
 import { useTradingPanelPoolConfigs } from 'core-kit/hooks/state'
-import {
-  useAccount,
-  useContractReadErrorLogging,
-  useReadContracts,
-} from 'core-kit/hooks/web3'
+import { useAccount, useReadContracts } from 'core-kit/hooks/web3'
 import type {
   Address,
   ContractFunctionReturnType,
@@ -43,6 +39,13 @@ const getPoolContracts = ({
       abi: PoolLogicAbi,
       functionName: 'getFundSummary',
       chainId,
+    },
+    {
+      address,
+      abi: PoolLogicAbi,
+      functionName: 'getExitRemainingCooldown',
+      chainId,
+      args: [account ?? AddressZero],
     },
   ] as const
 
@@ -78,14 +81,18 @@ export const usePoolsDynamic = ({
   const pools = useTradingPanelPoolConfigs()
   const accountAddress = account ?? connectedAccount ?? AddressZero
 
-  const result = useReadContracts({
+  return useReadContracts({
     contracts: getContracts(
       pools.map((pool) => ({ ...pool, account: accountAddress })),
     ),
     query: {
       select: (data) =>
         chunk(data, POOL_CHUNK_SIZE).reduce<PoolsMap>(
-          (acc, [balanceOf, tokenPrice, getFundSummary], index) => {
+          (
+            acc,
+            [balanceOf, tokenPrice, getFundSummary, getExitRemainingCooldown],
+            index,
+          ) => {
             const poolAddress = pools?.[index]?.address ?? AddressZero
             const summary = getFundSummary?.result as GetFundSummary
 
@@ -94,6 +101,8 @@ export const usePoolsDynamic = ({
               [poolAddress]: {
                 userBalance: balanceOf?.result?.toString(),
                 tokenPrice: tokenPrice?.result?.toString(),
+                getExitRemainingCooldown:
+                  getExitRemainingCooldown?.result?.toString(),
                 totalValue: summary?.totalFundValue?.toString(),
                 totalSupply: summary?.totalSupply?.toString(),
                 isPrivateVault: summary?.privatePool,
@@ -109,8 +118,4 @@ export const usePoolsDynamic = ({
         ),
     },
   })
-
-  useContractReadErrorLogging({ error: result.error, status: result.status })
-
-  return result
 }

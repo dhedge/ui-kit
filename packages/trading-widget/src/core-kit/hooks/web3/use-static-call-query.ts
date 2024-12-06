@@ -4,61 +4,61 @@ import { useQuery } from '@tanstack/react-query'
 import { usePublicClient } from 'wagmi'
 import type { UseReadContractParameters } from 'wagmi'
 
-import type { ContractId } from 'core-kit/const'
-import { useNetwork } from 'core-kit/hooks/web3'
-import type { Address } from 'core-kit/types'
-
-import {
-  getContractAbiById,
-  getContractAddressById,
-  isZeroAddress,
-} from 'core-kit/utils'
+import { isZeroAddress } from 'core-kit/utils'
 
 type UseStaticCallVariables = Pick<
   Required<UseReadContractParameters>,
-  'chainId' | 'functionName'
+  'functionName' | 'abi' | 'address' | 'chainId'
 > & {
-  contractId: ContractId
   disabled?: boolean
   args: unknown[]
-  dynamicContractAddress?: Address
+  refetchInterval?: number
+}
+
+export const makeStaticCall = async <T>({
+  functionName,
+  address,
+  abi,
+  args,
+  publicClient,
+}: Omit<UseStaticCallVariables, 'disabled' | 'refetchInterval' | 'chainId'> & {
+  publicClient: ReturnType<typeof usePublicClient>
+}): Promise<T | undefined> => {
+  const simulation = await publicClient?.simulateContract({
+    address,
+    abi,
+    functionName,
+    args,
+  })
+  return simulation?.result
 }
 
 export const useStaticCallQuery = <T>({
   disabled,
   functionName,
-  dynamicContractAddress,
-  contractId,
+  address,
+  abi,
   args,
   chainId,
+  refetchInterval,
 }: UseStaticCallVariables): UseQueryResult<T> => {
   const publicClient = usePublicClient({ chainId })
-  const { supportedChainId } = useNetwork()
-
-  const contractAddress =
-    dynamicContractAddress ??
-    getContractAddressById(contractId, chainId ?? supportedChainId)
 
   return useQuery({
-    queryKey: [
-      { functionName, dynamicContractAddress, contractId, args, chainId },
-    ],
+    queryKey: [{ functionName, address, args, chainId }],
     queryFn: async ({ queryKey: [params] }) => {
       if (params) {
-        const simulation = await publicClient?.simulateContract({
-          address: contractAddress,
-          abi: getContractAbiById(params.contractId),
+        return await makeStaticCall<T>({
+          address,
+          abi,
           functionName: params.functionName,
           args: params.args,
+          publicClient,
         })
-
-        return simulation?.result
       }
     },
     enabled:
-      !disabled &&
-      !!chainId &&
-      !isZeroAddress(contractAddress) &&
-      !!functionName,
+      !disabled && !!chainId && !isZeroAddress(address) && !!functionName,
+    refetchInterval,
   })
 }

@@ -4,10 +4,7 @@ import {
   useManagerLogicAddress,
   useTotalFundValueMutable,
 } from 'core-kit/hooks/pool'
-import {
-  usePoolManagerDynamic,
-  usePoolsDynamic,
-} from 'core-kit/hooks/pool/multicall'
+import { usePoolsDynamic } from 'core-kit/hooks/pool/multicall'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 import { isSynthetixV3Vault } from 'core-kit/utils'
 
@@ -21,9 +18,7 @@ export const usePoolDynamicContractData = ({
   chainId,
 }: PoolDynamicContractDataParams) => {
   const isSynthetixVault = isSynthetixV3Vault(address)
-  const { data: { getExitRemainingCooldown: exitCooldown } = {}, isFetched } =
-    usePoolManagerDynamic({ address, chainId })
-  const { data: poolsMap } = usePoolsDynamic()
+  const { data: poolsMap, isFetched } = usePoolsDynamic()
   const dynamicPoolData = poolsMap?.[address]
 
   // logic related to Synthetix V3 vault
@@ -37,7 +32,9 @@ export const usePoolDynamicContractData = ({
     disabled: !isSynthetixVault,
   })
 
-  const cooldown = exitCooldown ? Number(exitCooldown) * 1000 : 0
+  const cooldown = dynamicPoolData?.getExitRemainingCooldown
+    ? Number(dynamicPoolData.getExitRemainingCooldown) * 1000
+    : 0
   const cooldownEndsInTime = formatDuration(
     intervalToDuration({ start: 0, end: cooldown }),
   )

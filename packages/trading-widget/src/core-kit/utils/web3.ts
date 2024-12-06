@@ -1,6 +1,3 @@
-import type { Chain } from 'wagmi/chains'
-import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains'
-
 import type { ContractId } from 'core-kit/const'
 import {
   AddressZero,
@@ -35,19 +32,6 @@ export const shortenAddress = (address: string): string => {
     address.length - 4,
     address.length,
   )}`
-}
-
-export const getChainData = (chainId: number): Chain | undefined => {
-  switch (chainId) {
-    case optimism.id:
-      return optimism
-    case polygon.id:
-      return polygon
-    case mainnet.id:
-      return mainnet
-    case arbitrum.id:
-      return arbitrum
-  }
 }
 
 export const commify = (value: string) =>

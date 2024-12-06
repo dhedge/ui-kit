@@ -1,8 +1,13 @@
 export { erc20Abi } from './erc20'
-export { AaveLendingPoolAbi } from './aave-lending-pool'
+export { AaveLendingPoolAbi } from './aave/aave-lending-pool'
+export { AaveAssetGuardAbi } from './aave/aave-asset-guard'
 export { DHedgeStakingV2Abi } from './dhedge-staking-v2'
 export { PoolFactoryAbi } from './pool-factory'
-export { PoolLogicAbi } from './pool-logic'
+export {
+  PoolLogicAbi,
+  ComplexWithdrawalAssetSrcDataAbiItem,
+  ComplexWithdrawalDataAbiItem,
+} from './pool-logic'
 export { PoolManagerLogicAbi } from './pool-manager-logic'
 export { RewardDistributionAbi } from './reward-distribution'
 export {
