@@ -14,7 +14,7 @@ import { useDebounce } from 'core-kit/hooks/utils'
 import { getSlippageToleranceForContractTransaction } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
-interface UseInitWithdrawTransactionArguments {
+interface UseGetInitWithdrawTransactionArguments {
   debounceTime?: number
 }
 
@@ -35,9 +35,8 @@ export const useGetInitWithdrawTransactionArguments = () => {
         .shiftedBy(DEFAULT_PRECISION)
         .toFixed(0, BigNumber.ROUND_DOWN),
     )
-    const slippageTolerance = BigInt(
-      getSlippageToleranceForContractTransaction(slippage),
-    )
+    const slippageTolerance =
+      getSlippageToleranceForContractTransaction(slippage)
     const complexAssetData = await fetchComplexAssetData({
       withdrawAmount,
       slippage,
@@ -66,7 +65,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
 
 export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
   debounceTime,
-}: UseInitWithdrawTransactionArguments = {}) => {
+}: UseGetInitWithdrawTransactionArguments = {}) => {
   const poolConfig = useTradingPanelPoolConfig()
   const { aaveOffchainWithdrawChainIds } = useConfigContextParams()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
@@ -88,9 +87,8 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
 
   return useMemo(() => {
     const withdrawAmount = BigInt(withdrawAmountDebounced)
-    const slippageTolerance = BigInt(
-      getSlippageToleranceForContractTransaction(slippage),
-    )
+    const slippageTolerance =
+      getSlippageToleranceForContractTransaction(slippage)
     const complexAssetData = (supportedVaultAssets ?? []).map((asset) => ({
       supportedAsset: asset,
       withdrawData: '',

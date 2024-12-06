@@ -220,6 +220,7 @@ export {
   usePoolsDynamic,
   usePoolTokenPrice,
   useVaultVestedPoints,
+  useHasDhedgeVaultInComposition,
 } from './core-kit/hooks/pool'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {

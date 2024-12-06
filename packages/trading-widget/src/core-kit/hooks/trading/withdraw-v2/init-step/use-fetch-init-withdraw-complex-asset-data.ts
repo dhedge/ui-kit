@@ -3,11 +3,12 @@ import { useCallback } from 'react'
 import { usePoolManagerDynamic } from 'core-kit/hooks/pool/multicall'
 import type { FetchAaveSwapParamsProps } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-aave-swap-params'
 import { useFetchAaveSwapParams } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-aave-swap-params'
-import { useFetchInitWithdrawAaveSwapData } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-aave-swap-data'
+import { useFetchInitWithdrawAaveSwapData } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-init-withdraw-aave-swap-data'
 import type { ComplexWithdrawAssetData, PoolConfig } from 'core-kit/types'
 import {
   buildAaveWithdrawAssetTransactionData,
   getContractAddressById,
+  getSlippageToleranceForContractTransaction,
   isEqualAddress,
 } from 'core-kit/utils'
 
@@ -44,6 +45,8 @@ export const useFetchInitWithdrawComplexAssetData = ({
           const isAaveAsset = isEqualAddress(asset, aaveLendingPoolV3Address)
 
           if (isAaveAsset) {
+            const slippageTolerance =
+              getSlippageToleranceForContractTransaction(slippage)
             try {
               const swapParams = await fetchAaveSwapParams({
                 withdrawAmount,
@@ -57,7 +60,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
                 assetAddress: asset,
                 swapData,
                 swapParams,
-                slippage,
+                slippageToleranceForContractTransaction: slippageTolerance,
               })
             } catch (error) {
               console.error(error)
@@ -65,7 +68,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
               return {
                 supportedAsset: asset,
                 withdrawData: '',
-                slippageTolerance: BigInt(0),
+                slippageTolerance,
               }
             }
           }

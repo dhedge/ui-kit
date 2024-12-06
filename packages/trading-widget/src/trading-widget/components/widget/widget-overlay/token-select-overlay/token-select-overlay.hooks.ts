@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
+import { useHasDhedgeVaultInComposition } from 'core-kit/hooks/pool/use-has-dhedge-vault-in-composition'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -18,18 +19,24 @@ export interface TokenSelectOverlayProps extends OverlayProps {
   searchQuery: string
 }
 
+const EMPTY_TOKEN_LIST: TradingToken[] = []
+
 const useTokens = (): {
   tokens: TradingToken[]
   activeTokens: TradingToken[]
   updater: TradingPanelActionsState['updateSendTokenInput']
 } => {
+  const poolConfig = useTradingPanelPoolConfig()
   const [type] = useTradingPanelType()
   const [sendToken, updateSendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
+  const { data: hasDhedgeVaultInComposition } =
+    useHasDhedgeVaultInComposition(poolConfig)
 
-  const poolConfig = useTradingPanelPoolConfig()
   const depositTokens = useVaultDepositTokens()
-  const withdrawTokens = poolConfig.withdrawParams.customTokens
+  const withdrawTokens = hasDhedgeVaultInComposition
+    ? EMPTY_TOKEN_LIST
+    : poolConfig.withdrawParams.customTokens
 
   return useMemo(
     () => ({

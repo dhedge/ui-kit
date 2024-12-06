@@ -6,8 +6,8 @@ import {
   EXTENDED_DEBOUNCE_TIME,
 } from 'core-kit/const'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import { useInitWithdrawTransactionArgumentsForSimulationOnly } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-get-init-withdraw-transaction-arguments'
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-allowance'
-import { useInitWithdrawTransactionArgumentsForSimulationOnly } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
 import { useWithdrawAssetsInfo } from 'core-kit/hooks/trading/withdraw-v2/use-withdraw-assets-info'
 import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import type { Address } from 'core-kit/types'

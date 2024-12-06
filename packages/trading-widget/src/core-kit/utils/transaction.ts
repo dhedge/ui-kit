@@ -20,7 +20,7 @@ import type { CalculateSwapDataParamsResponse } from 'core-kit/types'
  */
 export const getSlippageToleranceForContractTransaction = (
   slippage: number,
-): string => {
+): bigint => {
   const minSlippageStep = new BigNumber(0.01)
   const slippageBN = new BigNumber(slippage)
 
@@ -29,7 +29,7 @@ export const getSlippageToleranceForContractTransaction = (
       ? minSlippageStep
       : slippageBN
 
-  return slippageToUse.multipliedBy(100).toFixed(0)
+  return BigInt(slippageToUse.multipliedBy(100).toFixed(0))
 }
 
 export const buildZapDepositTransactionArguments = ({
@@ -110,12 +110,12 @@ export const buildAaveWithdrawAssetTransactionData = ({
   assetAddress,
   swapData,
   swapParams,
-  slippage,
+  slippageToleranceForContractTransaction,
 }: {
   assetAddress: Address
   swapParams: CalculateSwapDataParamsResponse | undefined
   swapData: ReturnType<typeof useSwapsDataQuery>['data']
-  slippage: number
+  slippageToleranceForContractTransaction: bigint
 }) => {
   if (!swapParams) {
     return {
@@ -125,9 +125,6 @@ export const buildAaveWithdrawAssetTransactionData = ({
     }
   }
 
-  const slippageToleranceForContractTransaction = BigInt(
-    getSlippageToleranceForContractTransaction(slippage),
-  )
   const { srcData, dstData } = swapParams
   const srcDataToEncode = srcData.map(({ asset, amount }) => {
     const assetSwapData = swapData?.[asset]
@@ -153,13 +150,13 @@ export const buildAaveWithdrawAssetTransactionData = ({
         dstAddress: dstData.asset,
         dstAmount: dstData.amount,
       },
-      slippage: BigInt(slippageToleranceForContractTransaction),
+      slippage: slippageToleranceForContractTransaction,
     },
   ])
 
   return {
     supportedAsset: assetAddress,
     withdrawData: withdrawData,
-    slippageTolerance: BigInt(slippageToleranceForContractTransaction),
+    slippageTolerance: slippageToleranceForContractTransaction,
   }
 }
