@@ -20,6 +20,7 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     exitFee,
     minReceivedText,
     showMinReceivedText,
+    withdrawalFee,
   } = useInitWithdrawTransactionDisclosure()
 
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
@@ -43,7 +44,18 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
           </div>
         ),
       },
-      { label: t.exitFee, value: exitFee, tooltipText: t.exitFeeExplanation },
+      {
+        label: t.exitFee,
+        value: withdrawalFee ? (
+          <div className="dtw-flex dtw-flex-col dtw-items-end">
+            <span>{exitFee}*</span>
+            <span>{withdrawalFee}</span>
+          </div>
+        ) : (
+          exitFee
+        ),
+        tooltipText: t.exitFeeExplanation,
+      },
     ]
 
     if (showMinReceivedText) {
@@ -65,6 +77,7 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     isMaxSlippageLoading,
     slippagePlaceholder,
     exitFee,
+    withdrawalFee,
     showMinReceivedText,
     minReceivedText,
   ])

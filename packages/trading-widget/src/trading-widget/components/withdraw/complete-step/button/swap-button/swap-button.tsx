@@ -7,10 +7,10 @@ import { useComponentContext } from 'trading-widget/providers/component-provider
 
 export const SwapButton: FC = () => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { handleClick, disabled, label } = useSwapButton()
+  const { handleClick, disabled, label, isLoading } = useSwapButton()
 
   return (
-    <Button onClick={handleClick} disabled={disabled}>
+    <Button onClick={handleClick} disabled={disabled} loading={isLoading}>
       {label}
     </Button>
   )

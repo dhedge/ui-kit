@@ -15,9 +15,13 @@ import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init
 import { useIsUnrollAndClaimTransaction } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-unroll-and-claim-transaction'
 import { useContractFunction } from 'core-kit/hooks/web3'
 
+import type { TransactionAction } from 'core-kit/types'
 import type { ContractActionFunc } from 'core-kit/types/web3.types'
 
-export const useInitWithdrawTransaction = (): ContractActionFunc => {
+export const useInitWithdrawTransaction = (): {
+  withdraw: ContractActionFunc
+  action: TransactionAction
+} => {
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
@@ -47,7 +51,7 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     onSettled,
   })
 
-  return useCallback(async () => {
+  const withdraw = useCallback(async () => {
     updatePendingTransactions({
       type: 'add',
       action,
@@ -68,4 +72,9 @@ export const useInitWithdrawTransaction = (): ContractActionFunc => {
     getInitWithdrawTransactionArguments,
     send,
   ])
+
+  return {
+    withdraw,
+    action,
+  }
 }

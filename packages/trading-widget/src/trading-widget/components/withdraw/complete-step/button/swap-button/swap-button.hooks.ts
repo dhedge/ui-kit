@@ -1,4 +1,5 @@
 import { WITHDRAW_SWAP_DATA_ERROR } from 'core-kit/const'
+import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transaction-loading'
 import {
   useCompleteWithdrawSwapData,
   useCompleteWithdrawTransaction,
@@ -14,6 +15,7 @@ export const useSwapButton = () => {
   const { disabled, label, handleTrade } = useHandleCompleteWithdraw({
     withdraw,
   })
+  const isLoading = useIsTransactionLoading('swap')
 
   const handleClick = () => {
     if (isSwapDataError) {
@@ -36,5 +38,6 @@ export const useSwapButton = () => {
     disabled,
     label,
     handleClick,
+    isLoading,
   }
 }

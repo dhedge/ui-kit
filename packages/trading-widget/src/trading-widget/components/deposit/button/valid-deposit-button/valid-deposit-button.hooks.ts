@@ -11,6 +11,7 @@ import {
   useDepositAllowance,
   useIsVaultDepositLocked,
 } from 'core-kit/hooks/trading/deposit-v2'
+import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transaction-loading'
 import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
@@ -28,6 +29,8 @@ export const useValidDepositButton = () => {
     useSynthetixV3OraclesUpdate({
       disabled: !canSpend,
     })
+  const isUpdateOraclesTransactionLoading =
+    useIsTransactionLoading('oraclesUpdate')
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
 
@@ -56,5 +59,6 @@ export const useValidDepositButton = () => {
     updateOracles,
     slippageToBeUsed,
     isCheckOraclesPending,
+    isUpdateOraclesTransactionLoading,
   }
 }

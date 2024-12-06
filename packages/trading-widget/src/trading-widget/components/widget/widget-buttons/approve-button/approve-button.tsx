@@ -13,10 +13,10 @@ export const ApproveButton: FC<ApproveButtonProps> = ({
 }) => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
   const t = useTranslationContext()
-  const { disabled } = useApproveButton()
+  const { disabled, isLoading } = useApproveButton()
 
   return (
-    <Button disabled={disabled} onClick={onApprove}>
+    <Button disabled={disabled} onClick={onApprove} loading={isLoading}>
       <span>
         {t.approve} {symbol}
       </span>

@@ -78,7 +78,7 @@ describe('useInitWithdrawTransaction', () => {
     const { result } = renderHook(() => useInitWithdrawTransaction())
 
     await act(async () => {
-      const txHash = await result.current()
+      const txHash = await result.current.withdraw()
       expect(txHash).toBe('txHash')
     })
 
@@ -134,7 +134,7 @@ describe('useInitWithdrawTransaction', () => {
     const { result } = renderHook(() => useInitWithdrawTransaction())
 
     await act(async () => {
-      const txHash = await result.current()
+      const txHash = await result.current.withdraw()
       expect(txHash).toBe('txHash')
     })
 
@@ -189,7 +189,7 @@ describe('useInitWithdrawTransaction', () => {
     const { result } = renderHook(() => useInitWithdrawTransaction())
 
     await act(async () => {
-      const txHash = await result.current()
+      const txHash = await result.current.withdraw()
       expect(txHash).toBe('txHash')
     })
 

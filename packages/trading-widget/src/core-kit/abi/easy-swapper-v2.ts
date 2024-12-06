@@ -1,6 +1,11 @@
 const SwapperErrorsAbi = [
   {
     inputs: [],
+    name: 'EmptyPayload',
+    type: 'error',
+  },
+  {
+    inputs: [],
     name: 'FailedInnerCall',
     type: 'error',
   },

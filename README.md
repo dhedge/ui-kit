@@ -244,6 +244,14 @@ path: `global.style[name]`
 
 ##### component
 
+###### notification
+
+path: `component.notification[name]`
+
+> | name            | type   | default value                                        | description           |
+> | --------------- | ------ | ---------------------------------------------------- | --------------------- |
+> | `color.colorBg` | string | `config?.global?.color?.colorBgSecondary ?? #2B313E` | Notification bg color |
+
 ###### popup
 
 path: `component.popup[name]`
@@ -523,6 +531,7 @@ path: `component.meta[name]`
 > | `showAll`                        | string | Show All                                                                                                                                                                              |             |
 > | `hide`                           | string | Hide                                                                                                                                                                                  |             |
 > | `refreshSwapQuoteTooltip`        | string | Refresh swap quote                                                                                                                                                                    |             |
+> | `proceedWithNextStep`            | string | Please proceed with the next step.                                                                                                                                                    |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
