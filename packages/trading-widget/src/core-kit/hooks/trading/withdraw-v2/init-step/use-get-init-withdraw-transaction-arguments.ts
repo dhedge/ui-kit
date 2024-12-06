@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import { useCallback, useMemo } from 'react'
 
 import { DEFAULT_PRECISION } from 'core-kit/const'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
 import { usePoolManagerDynamic } from 'core-kit/hooks/pool/multicall'
 import {
   useSendTokenInput,
@@ -11,12 +12,19 @@ import { useFetchInitWithdrawComplexAssetData } from 'core-kit/hooks/trading/wit
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useDebounce } from 'core-kit/hooks/utils'
-import { getSlippageToleranceForContractTransaction } from 'core-kit/utils'
+import {
+  formatEther,
+  formatNumberToLimitedDecimals,
+  getSlippageToleranceForContractTransaction,
+} from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 interface UseGetInitWithdrawTransactionArguments {
   debounceTime?: number
 }
+
+const tokenPriceFormatter = (tokenPrice: bigint) =>
+  formatNumberToLimitedDecimals(formatEther(tokenPrice), 2)
 
 export const useGetInitWithdrawTransactionArguments = () => {
   const poolConfig = useTradingPanelPoolConfig()
@@ -28,6 +36,11 @@ export const useGetInitWithdrawTransactionArguments = () => {
   )
   const slippage = useAppliedWithdrawSlippage()
   const fetchComplexAssetData = useFetchInitWithdrawComplexAssetData(poolConfig)
+  const vaultTokenPrice = usePoolTokenPrice({
+    address: poolConfig.address,
+    chainId: poolConfig.chainId,
+    formatter: tokenPriceFormatter,
+  })
 
   return useCallback(async () => {
     const withdrawAmount = BigInt(
@@ -39,6 +52,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
       getSlippageToleranceForContractTransaction(slippage)
     const complexAssetData = await fetchComplexAssetData({
       withdrawAmount,
+      vaultTokenPrice,
       slippage,
       disabled: !isOffchainAaveWithdrawSupported,
     })
@@ -60,6 +74,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
     poolConfig.address,
     sendToken.value,
     slippage,
+    vaultTokenPrice,
   ])
 }
 

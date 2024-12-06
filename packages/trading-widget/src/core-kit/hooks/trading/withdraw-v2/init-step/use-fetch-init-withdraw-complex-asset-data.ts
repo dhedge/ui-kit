@@ -1,5 +1,7 @@
+import BigNumber from 'bignumber.js'
 import { useCallback } from 'react'
 
+import { DEFAULT_PRECISION } from 'core-kit/const'
 import { usePoolManagerDynamic } from 'core-kit/hooks/pool/multicall'
 import type { FetchAaveSwapParamsProps } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-aave-swap-params'
 import { useFetchAaveSwapParams } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-aave-swap-params'
@@ -11,6 +13,7 @@ import {
   getSlippageToleranceForContractTransaction,
   isEqualAddress,
 } from 'core-kit/utils'
+import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
 export const useFetchInitWithdrawComplexAssetData = ({
   address,
@@ -20,6 +23,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
     'aaveLendingPoolV3',
     chainId,
   )
+  const { aaveOffchainWithdrawMinValue } = useConfigContextParams()
   const { data: { getSupportedAssets: supportedVaultAssets } = {} } =
     usePoolManagerDynamic({
       address,
@@ -31,22 +35,31 @@ export const useFetchInitWithdrawComplexAssetData = ({
   return useCallback(
     async ({
       withdrawAmount,
+      vaultTokenPrice,
       slippage,
       disabled,
-    }: FetchAaveSwapParamsProps & { disabled?: boolean }): Promise<
-      ComplexWithdrawAssetData[]
-    > => {
+    }: FetchAaveSwapParamsProps & {
+      disabled?: boolean
+      vaultTokenPrice: string
+    }): Promise<ComplexWithdrawAssetData[]> => {
       if (disabled) {
         return []
       }
+      const isOffchainAaveWithdrawSupported = new BigNumber(
+        withdrawAmount.toString(),
+      )
+        .shiftedBy(-DEFAULT_PRECISION)
+        .times(vaultTokenPrice)
+        .gt(aaveOffchainWithdrawMinValue)
 
       return await Promise.all(
         (supportedVaultAssets ?? []).map(async (asset) => {
           const isAaveAsset = isEqualAddress(asset, aaveLendingPoolV3Address)
+          const slippageTolerance = isAaveAsset
+            ? getSlippageToleranceForContractTransaction(slippage)
+            : BigInt(0)
 
-          if (isAaveAsset) {
-            const slippageTolerance =
-              getSlippageToleranceForContractTransaction(slippage)
+          if (isOffchainAaveWithdrawSupported && isAaveAsset) {
             try {
               const swapParams = await fetchAaveSwapParams({
                 withdrawAmount,
@@ -64,25 +77,20 @@ export const useFetchInitWithdrawComplexAssetData = ({
               })
             } catch (error) {
               console.error(error)
-
-              return {
-                supportedAsset: asset,
-                withdrawData: '',
-                slippageTolerance,
-              }
             }
           }
 
           return {
             supportedAsset: asset,
             withdrawData: '',
-            slippageTolerance: BigInt(0),
+            slippageTolerance,
           }
         }),
       )
     },
     [
       aaveLendingPoolV3Address,
+      aaveOffchainWithdrawMinValue,
       fetchAaveSwapData,
       fetchAaveSwapParams,
       supportedVaultAssets,

@@ -129,6 +129,7 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `isAllAssetsWithdrawOptionDefault` | `boolean`                                                      | `false`                      | Sets "All Assets" withdraw option by default                                                                                                       |
 > | `chainConfig`                      | `Partial<Record<ChainId, { name: string; iconPath: string }>>` | `{}`                         | Sets map of chain `name` and `iconPath`                                                                                                            |
 > | `aaveOffchainWithdrawChainIds`     | `ChainId[]`                                                    | `[]`                         | Offchain swap data will be used for Aave withdrawals for selected chains                                                                           |
+> | `aaveOffchainWithdrawMinValue`     | `number`                                                       | `50`                         | Value in USD when off-chain Aave withdrawal is enabled                                                                                             |
 
 ##### actions
 

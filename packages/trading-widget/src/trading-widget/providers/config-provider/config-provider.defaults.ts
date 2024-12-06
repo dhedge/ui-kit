@@ -54,6 +54,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
     },
   },
   aaveOffchainWithdrawChainIds: [polygon.id],
+  aaveOffchainWithdrawMinValue: 50,
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {
