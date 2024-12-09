@@ -1,5 +1,5 @@
 import { DEFAULT_PRECISION, MULTI_ASSET_TOKEN } from 'core-kit/const'
-import { useHasDhedgeVaultInComposition } from 'core-kit/hooks/pool/use-has-dhedge-vault-in-composition'
+import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -18,8 +18,8 @@ export const useOnTradingTypeChange = () => {
   const { data: completeWithdrawSwappableAsset = [] } =
     useCompleteWithdrawTrackedAssets()
   const isCompleteWithdrawStep = completeWithdrawSwappableAsset.length > 0
-  const { data: hasDhedgeVaultInComposition } =
-    useHasDhedgeVaultInComposition(poolConfig)
+  const { data: hasNestedVaultInComposition } =
+    useHasNestedVaultInComposition(poolConfig)
 
   const setTradingType = useTradingPanelType()[1]
   const updateSendToken = useSendTokenInput()[1]
@@ -44,7 +44,7 @@ export const useOnTradingTypeChange = () => {
       poolConfig.withdrawParams.customTokens
     const withdrawToken = isCompleteWithdrawStep
       ? customWithdrawToken
-      : hasDhedgeVaultInComposition || isAllAssetsWithdrawOptionDefault
+      : hasNestedVaultInComposition || isAllAssetsWithdrawOptionDefault
         ? MULTI_ASSET_TOKEN
         : customWithdrawToken
 

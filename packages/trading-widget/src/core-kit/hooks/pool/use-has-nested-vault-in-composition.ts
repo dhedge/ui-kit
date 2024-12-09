@@ -4,7 +4,7 @@ import { useReadContracts } from 'core-kit/hooks/web3'
 import type { PoolContractCallParams } from 'core-kit/types'
 import { getContractAddressById } from 'core-kit/utils'
 
-export const useHasDhedgeVaultInComposition = ({
+export const useHasNestedVaultInComposition = ({
   address,
   chainId,
 }: PoolContractCallParams) => {

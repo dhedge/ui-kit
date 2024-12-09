@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { useHasDhedgeVaultInComposition } from 'core-kit/hooks/pool/use-has-dhedge-vault-in-composition'
+import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -30,11 +30,11 @@ const useTokens = (): {
   const [type] = useTradingPanelType()
   const [sendToken, updateSendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
-  const { data: hasDhedgeVaultInComposition } =
-    useHasDhedgeVaultInComposition(poolConfig)
+  const { data: hasNestedVaultInComposition } =
+    useHasNestedVaultInComposition(poolConfig)
 
   const depositTokens = useVaultDepositTokens()
-  const withdrawTokens = hasDhedgeVaultInComposition
+  const withdrawTokens = hasNestedVaultInComposition
     ? EMPTY_TOKEN_LIST
     : poolConfig.withdrawParams.customTokens
 
