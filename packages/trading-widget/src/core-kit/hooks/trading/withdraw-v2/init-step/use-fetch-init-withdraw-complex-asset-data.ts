@@ -34,7 +34,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
 
   return useCallback(
     async ({
-      withdrawAmount,
+      withdrawAmountD18,
       vaultTokenPrice,
       slippage,
       disabled,
@@ -46,7 +46,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
         return []
       }
       const isOffchainAaveWithdrawSupported = new BigNumber(
-        withdrawAmount.toString(),
+        withdrawAmountD18.toString(),
       )
         .shiftedBy(-DEFAULT_PRECISION)
         .times(vaultTokenPrice)
@@ -62,7 +62,7 @@ export const useFetchInitWithdrawComplexAssetData = ({
           if (isOffchainAaveWithdrawSupported && isAaveAsset) {
             try {
               const swapParams = await fetchAaveSwapParams({
-                withdrawAmount,
+                withdrawAmountD18,
                 slippage,
               })
               const swapData = await fetchAaveSwapData({

@@ -12,10 +12,11 @@ export const useHasDhedgeVaultInComposition = ({
     address,
     chainId,
   })
+  const poolFactoryAddress = getContractAddressById('factory', chainId)
 
   return useReadContracts({
     contracts: composition.map(({ tokenAddress }) => ({
-      address: getContractAddressById('factory', chainId),
+      address: poolFactoryAddress,
       abi: PoolFactoryAbi,
       functionName: 'isPool',
       chainId,

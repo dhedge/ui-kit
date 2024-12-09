@@ -13,7 +13,7 @@ import type {
 import { getSlippageToleranceForContractTransaction } from 'core-kit/utils'
 
 export interface FetchAaveSwapParamsProps {
-  withdrawAmount: bigint
+  withdrawAmountD18: bigint
   slippage: number
 }
 
@@ -30,7 +30,7 @@ export const useFetchAaveSwapParams = ({
 
   return useCallback(
     async ({
-      withdrawAmount,
+      withdrawAmountD18,
       slippage,
     }: FetchAaveSwapParamsProps): Promise<
       CalculateSwapDataParamsResponse | undefined
@@ -41,7 +41,7 @@ export const useFetchAaveSwapParams = ({
         functionName: 'calculateSwapDataParams',
         args: [
           address,
-          withdrawAmount,
+          withdrawAmountD18,
           getSlippageToleranceForContractTransaction(slippage),
         ],
         publicClient,

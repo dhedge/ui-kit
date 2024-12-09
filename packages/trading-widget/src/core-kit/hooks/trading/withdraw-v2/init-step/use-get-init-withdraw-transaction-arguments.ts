@@ -43,7 +43,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
   })
 
   return useCallback(async () => {
-    const withdrawAmount = BigInt(
+    const withdrawAmountD18 = BigInt(
       new BigNumber(sendToken.value || '0')
         .shiftedBy(DEFAULT_PRECISION)
         .toFixed(0, BigNumber.ROUND_DOWN),
@@ -51,7 +51,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
     const slippageTolerance =
       getSlippageToleranceForContractTransaction(slippage)
     const complexAssetData = await fetchComplexAssetData({
-      withdrawAmount,
+      withdrawAmountD18,
       vaultTokenPrice,
       slippage,
       disabled: !isOffchainAaveWithdrawSupported,
@@ -63,10 +63,10 @@ export const useGetInitWithdrawTransactionArguments = () => {
         : slippageTolerance
 
     if (isMultiAssetsWithdraw) {
-      return [withdrawAmount, lastArg]
+      return [withdrawAmountD18, lastArg]
     }
 
-    return [poolConfig.address, withdrawAmount, lastArg]
+    return [poolConfig.address, withdrawAmountD18, lastArg]
   }, [
     fetchComplexAssetData,
     isMultiAssetsWithdraw,
