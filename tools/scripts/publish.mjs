@@ -10,7 +10,7 @@
 import { execSync } from 'child_process'
 
 import devkit from '@nx/devkit'
-import {copyFileSync, existsSync} from "node:fs";
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs'
 const { readCachedProjectGraph } = devkit
 
 function invariant(condition, message) {
@@ -45,6 +45,25 @@ if (existsSync(readmePath)) {
     copyFileSync(readmePath, `${outputPath}/README.md`)
   } catch (error) {
     console.error('Error copying README.md:', error)
+  }
+}
+
+// Path to the root and library package.json files
+const rootPkgPath = 'package.json'
+const libPkgPath = `${outputPath}/package.json`
+
+// Merge dependencies from root package.json into the library's package.json
+if (existsSync(rootPkgPath) && existsSync(libPkgPath)) {
+  try {
+    const rootPkg = JSON.parse(readFileSync(rootPkgPath, 'utf8'))
+    const libPkg = JSON.parse(readFileSync(libPkgPath, 'utf8'))
+
+    // Merge dependencies, devDependencies, and peerDependencies
+    libPkg.dependencies = rootPkg.dependencies
+    // Write back to the library's package.json
+    writeFileSync(libPkgPath, JSON.stringify(libPkg, null, 2))
+  } catch (error) {
+    console.error('Error writing package.json dependencies:', error)
   }
 }
 
