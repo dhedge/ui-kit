@@ -4,7 +4,7 @@ import { PoolFactoryAbi } from 'core-kit/abi'
 import { DHEDGE_SYNTHETIX_V3_ASSETS_MAP, optimism } from 'core-kit/const'
 import * as web3Hooks from 'core-kit/hooks/web3'
 
-import { getContractAddressById } from 'core-kit/utils'
+import { getContractAbiById, getContractAddressById } from 'core-kit/utils'
 import { renderHook } from 'tests/test-utils'
 
 import { useSynthetixV3AssetBalance } from './use-synthetix-v3-asset-balance'
@@ -70,8 +70,8 @@ describe('useSynthetixV3AssetBalance', () => {
     expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledWith({
       chainId: optimism.id,
-      contractId: 'synthetixV3AssetGuard',
-      dynamicContractAddress: synthetixAssetGuard,
+      abi: getContractAbiById('synthetixV3AssetGuard'),
+      address: synthetixAssetGuard,
       disabled: false,
       functionName: 'getBalanceMutable',
       args: [vaultAddress, DHEDGE_SYNTHETIX_V3_ASSETS_MAP[optimism.id]],

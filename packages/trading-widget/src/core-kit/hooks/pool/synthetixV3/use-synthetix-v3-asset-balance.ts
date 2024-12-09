@@ -36,8 +36,8 @@ export const useSynthetixV3AssetBalance = ({
 
   const { data: mutableBalance, error: mutableBalanceError } =
     useStaticCallQuery<bigint>({
-      contractId: 'synthetixV3AssetGuard',
-      dynamicContractAddress: synthetixV3AssetGuardAddress ?? AddressZero,
+      abi: getContractAbiById('synthetixV3AssetGuard'),
+      address: synthetixV3AssetGuardAddress ?? AddressZero,
       chainId,
       disabled:
         disabled ||

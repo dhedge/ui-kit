@@ -1,4 +1,5 @@
 import { DEFAULT_PRECISION, MULTI_ASSET_TOKEN } from 'core-kit/const'
+import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -14,7 +15,11 @@ export const useOnTradingTypeChange = () => {
   const poolConfig = useTradingPanelPoolConfig()
   const [initialDepositToken] = useVaultDepositTokens()
   const { isAllAssetsWithdrawOptionDefault } = useConfigContextParams()
-  const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
+  const { data: completeWithdrawSwappableAsset = [] } =
+    useCompleteWithdrawTrackedAssets()
+  const isCompleteWithdrawStep = completeWithdrawSwappableAsset.length > 0
+  const { data: hasNestedVaultInComposition } =
+    useHasNestedVaultInComposition(poolConfig)
 
   const setTradingType = useTradingPanelType()[1]
   const updateSendToken = useSendTokenInput()[1]
@@ -37,6 +42,11 @@ export const useOnTradingTypeChange = () => {
   const onWithdrawSwitch = () => {
     const [customWithdrawToken = MULTI_ASSET_TOKEN] =
       poolConfig.withdrawParams.customTokens
+    const withdrawToken = isCompleteWithdrawStep
+      ? customWithdrawToken
+      : hasNestedVaultInComposition || isAllAssetsWithdrawOptionDefault
+        ? MULTI_ASSET_TOKEN
+        : customWithdrawToken
 
     updateSendToken({
       address: poolConfig.address,
@@ -45,9 +55,7 @@ export const useOnTradingTypeChange = () => {
       value: '',
     })
     updateReceiveToken({
-      ...(isAllAssetsWithdrawOptionDefault && assets.length === 0
-        ? MULTI_ASSET_TOKEN
-        : customWithdrawToken),
+      ...withdrawToken,
       value: '',
       isLoading: false,
     })

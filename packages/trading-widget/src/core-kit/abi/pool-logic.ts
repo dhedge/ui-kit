@@ -301,6 +301,41 @@ export const PoolLogicAbi = [
         type: 'uint256',
       },
       {
+        components: [
+          {
+            internalType: 'address',
+            name: 'supportedAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'bytes',
+            name: 'withdrawData',
+            type: 'bytes',
+          },
+          {
+            internalType: 'uint256',
+            name: 'slippageTolerance',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct IPoolLogic.ComplexAsset[]',
+        name: '_complexAssetsData',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'withdrawSafe',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_fundTokenAmount',
+        type: 'uint256',
+      },
+      {
         internalType: 'uint256',
         name: '_slippageTolerance',
         type: 'uint256',
@@ -310,5 +345,65 @@ export const PoolLogicAbi = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+] as const
+
+export const ComplexWithdrawalAssetSrcDataAbiItem = [
+  {
+    type: 'tuple[]',
+    components: [
+      {
+        type: 'address',
+        name: 'asset',
+      },
+      {
+        type: 'uint256',
+        name: 'amount',
+      },
+      {
+        type: 'tuple',
+        name: 'swapData',
+        components: [
+          {
+            type: 'bytes32',
+            name: 'routerKey',
+          },
+          {
+            type: 'bytes',
+            name: 'txData',
+          },
+        ],
+      },
+    ],
+  },
+] as const
+
+export const ComplexWithdrawalDataAbiItem = [
+  {
+    type: 'tuple',
+    components: [
+      {
+        type: 'bytes',
+        name: 'encodedSrcData',
+      },
+      {
+        type: 'tuple',
+        name: 'dstData',
+        components: [
+          {
+            type: 'address',
+            name: 'dstAddress',
+          },
+          {
+            type: 'uint256',
+            name: 'dstAmount',
+          },
+        ],
+      },
+      {
+        type: 'uint256',
+        name: 'slippage',
+      },
+    ],
   },
 ] as const
