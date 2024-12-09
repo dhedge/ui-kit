@@ -15,6 +15,11 @@ export const DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES: Address[] = [
   '0xe9b5260d99d283ff887859c569baf8ad1bd12aac', // Synthetix ETH Yield Arbitrum
 ]
 
+export const DEPRECATED_DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES: Address[] = [
+  '0xc1e02884af4a283ca25ab63c45360d220d69da52', // Synthetix USDC Yield Base
+  '0xc3198eb5102fb3335c0e911ef1da4bc07e403dd1', // Synthetix USD Yield Arbitrum
+]
+
 // Should include symbols for all vaults from DHEDGE_SYNTHETIX_V3_VAULT_ADDRESSES
 export const SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP: Record<
   string,
