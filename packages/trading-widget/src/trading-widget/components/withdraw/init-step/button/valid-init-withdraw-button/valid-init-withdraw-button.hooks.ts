@@ -6,10 +6,7 @@ import {
 import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
 import { useWithdrawLiquidity } from 'core-kit/hooks/trading/synthetix-v3/use-withdraw-liquidity'
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step'
-import {
-  isDeprecatedSynthetixV3Vault,
-  isSynthetixV3Vault,
-} from 'core-kit/utils'
+import { isSynthetixV3Vault } from 'core-kit/utils'
 
 import {
   useHighSlippageCheck,
@@ -49,12 +46,9 @@ export const useValidInitWithdrawButton = () => {
   }
 
   const isSynthetixVault = isSynthetixV3Vault(address)
-  // TODO: remove after these vaults will be fully deprecated
-  const isDeprecatedSynthetixVault = isDeprecatedSynthetixV3Vault(address)
 
   return {
-    requiresWithdrawalWindow:
-      isSynthetixVault && !isDeprecatedSynthetixVault && !isWithdrawal,
+    requiresWithdrawalWindow: isSynthetixVault && !isWithdrawal,
     requiresWithdrawalLiquidity:
       isSynthetixVault && !!sendToken.value && liquidity.noLiquidity,
     requiresEndOfCooldown: cooldownActive,
