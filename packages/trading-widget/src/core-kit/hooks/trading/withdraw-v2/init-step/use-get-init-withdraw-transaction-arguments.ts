@@ -10,6 +10,7 @@ import {
 } from 'core-kit/hooks/state'
 import { useFetchInitWithdrawComplexAssetData } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-fetch-init-withdraw-complex-asset-data'
 import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-multi-asset-withdraw'
+import { useIsOffchainAaveWithdrawSupported } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-is-offchain-aave-withdraw-supported'
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useDebounce } from 'core-kit/hooks/utils'
 import {
@@ -29,11 +30,8 @@ const tokenPriceFormatter = (tokenPrice: bigint) =>
 export const useGetInitWithdrawTransactionArguments = () => {
   const poolConfig = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
-  const { aaveOffchainWithdrawChainIds } = useConfigContextParams()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
-  const isOffchainAaveWithdrawSupported = aaveOffchainWithdrawChainIds.includes(
-    poolConfig.chainId,
-  )
+  const isOffchainAaveWithdrawSupported = useIsOffchainAaveWithdrawSupported()
   const slippage = useAppliedWithdrawSlippage()
   const fetchComplexAssetData = useFetchInitWithdrawComplexAssetData(poolConfig)
   const vaultTokenPrice = usePoolTokenPrice({
@@ -93,7 +91,7 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
 
   const slippage = useAppliedWithdrawSlippage()
 
-  const withdrawAmountDebounced = useDebounce(
+  const withdrawAmountDebouncedD18 = useDebounce(
     new BigNumber(sendToken.value || '0')
       .shiftedBy(DEFAULT_PRECISION)
       .toFixed(0, BigNumber.ROUND_DOWN),
@@ -101,7 +99,7 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
   )
 
   return useMemo(() => {
-    const withdrawAmount = BigInt(withdrawAmountDebounced)
+    const withdrawAmountD18 = BigInt(withdrawAmountDebouncedD18)
     const slippageTolerance =
       getSlippageToleranceForContractTransaction(slippage)
     const complexAssetData = (supportedVaultAssets ?? []).map((asset) => ({
@@ -114,12 +112,12 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
       : slippageTolerance
 
     if (isMultiAssetsWithdraw) {
-      return [withdrawAmount, lastArg]
+      return [withdrawAmountD18, lastArg]
     }
 
-    return [poolConfig.address, withdrawAmount, lastArg]
+    return [poolConfig.address, withdrawAmountD18, lastArg]
   }, [
-    withdrawAmountDebounced,
+    withdrawAmountDebouncedD18,
     slippage,
     supportedVaultAssets,
     isOffchainAaveWithdrawSupported,

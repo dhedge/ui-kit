@@ -1,5 +1,4 @@
 export { useCheckWhitelist } from './use-check-whitelist'
-export { useIsDhedgePool } from './use-is-dhedge-pool'
 export { useManagerLogicAddress } from './use-manager-logic-address'
 export { useContractPoolComposition } from './use-contract-pool-composition'
 export { usePoolComposition } from './use-pool-composition'

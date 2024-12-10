@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { useTradingPanelSettings } from 'core-kit/hooks/state'
-import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
+import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 
 export const useWithdrawTypeHandler = (): [
   boolean,
@@ -10,9 +10,9 @@ export const useWithdrawTypeHandler = (): [
 ] => {
   const [settings, setSettings] = useTradingPanelSettings()
 
-  const disabled = useIsPoolManagerAccount()
+  const disabled = useIsDhedgeVaultConnected()
 
-  // Disable multi asset withdrawal for dHEDGE managers
+  // Disable multi asset withdrawal from dHEDGE vaults
   useEffect(() => {
     if (disabled) {
       setSettings({ isMultiAssetWithdrawalEnabled: false })

@@ -209,7 +209,6 @@ export {
   useInvalidatePoolContractData,
   useContractPoolComposition,
   useTotalFundValueMutable,
-  useIsDhedgePool,
   useSynthetixV3AssetBalance,
   useCheckWhitelist,
   usePoolComposition,
@@ -276,7 +275,7 @@ export {
 export {
   useIsInsufficientBalance,
   useUserTokenBalance,
-  useIsPoolManagerAccount,
+  useIsDhedgeVaultConnected,
   useFlatmoneyPointsUserBalances,
 } from './core-kit/hooks/user'
 export { useDebounce, useBrowserStorage } from './core-kit/hooks/utils'
