@@ -1,5 +1,7 @@
+import { AddressZero } from 'core-kit/const'
 import { useStaticCallQuery } from 'core-kit/hooks/web3'
 import type { Address, ChainId } from 'core-kit/types'
+import { getContractAbiById } from 'core-kit/utils'
 
 interface UseTotalFundsValueMutable {
   vaultManagerLogicAddress: Address | undefined
@@ -13,8 +15,8 @@ export const useTotalFundValueMutable = ({
   disabled,
 }: UseTotalFundsValueMutable) =>
   useStaticCallQuery<bigint>({
-    dynamicContractAddress: vaultManagerLogicAddress,
-    contractId: 'poolManagerLogic',
+    address: vaultManagerLogicAddress ?? AddressZero,
+    abi: getContractAbiById('poolManagerLogic'),
     chainId,
     functionName: 'totalFundValueMutable',
     args: [],

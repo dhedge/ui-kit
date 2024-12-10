@@ -1,0 +1,33 @@
+import { PoolFactoryAbi } from 'core-kit/abi'
+import { usePoolComposition } from 'core-kit/hooks/pool/use-pool-composition'
+import { useReadContracts } from 'core-kit/hooks/web3'
+import type { PoolContractCallParams } from 'core-kit/types'
+import { getContractAddressById } from 'core-kit/utils'
+
+export const useHasNestedVaultInComposition = ({
+  address,
+  chainId,
+}: PoolContractCallParams) => {
+  const composition = usePoolComposition({
+    address,
+    chainId,
+  })
+  const poolFactoryAddress = getContractAddressById('factory', chainId)
+
+  return useReadContracts({
+    contracts: composition.map(({ tokenAddress }) => ({
+      address: poolFactoryAddress,
+      abi: PoolFactoryAbi,
+      functionName: 'isPool',
+      chainId,
+      args: [tokenAddress],
+    })),
+    query: {
+      select: (data) =>
+        composition.some(
+          ({ amount }, index) => !!data[index]?.result && amount !== '0',
+        ),
+      staleTime: Infinity,
+    },
+  })
+}

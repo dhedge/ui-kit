@@ -180,7 +180,6 @@ export {
   getContractAddressById,
   formatEther,
   formatUnits,
-  getChainData,
   getExplorerLink,
   getConventionalTokenPriceDecimals,
   getErrorMessage,
@@ -210,7 +209,6 @@ export {
   useInvalidatePoolContractData,
   useContractPoolComposition,
   useTotalFundValueMutable,
-  useIsDhedgePool,
   useSynthetixV3AssetBalance,
   useCheckWhitelist,
   usePoolComposition,
@@ -221,6 +219,7 @@ export {
   usePoolsDynamic,
   usePoolTokenPrice,
   useVaultVestedPoints,
+  useHasNestedVaultInComposition,
 } from './core-kit/hooks/pool'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {
@@ -276,7 +275,7 @@ export {
 export {
   useIsInsufficientBalance,
   useUserTokenBalance,
-  useIsPoolManagerAccount,
+  useIsDhedgeVaultConnected,
   useFlatmoneyPointsUserBalances,
 } from './core-kit/hooks/user'
 export { useDebounce, useBrowserStorage } from './core-kit/hooks/utils'

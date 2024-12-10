@@ -1,5 +1,6 @@
 import { optimism } from 'core-kit/const'
 import * as web3Hooks from 'core-kit/hooks/web3'
+import { getContractAbiById } from 'core-kit/utils'
 import { renderHook } from 'tests/test-utils'
 
 import { useTotalFundValueMutable } from './use-total-funds-value-mutable'
@@ -29,8 +30,8 @@ describe('useTotalFundValueMutable', () => {
 
     expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useStaticCallQuery).toHaveBeenCalledWith({
-      dynamicContractAddress: managerLogicAddress,
-      contractId: 'poolManagerLogic',
+      address: managerLogicAddress,
+      abi: getContractAbiById('poolManagerLogic'),
       chainId: optimism.id,
       functionName: 'totalFundValueMutable',
       args: [],
