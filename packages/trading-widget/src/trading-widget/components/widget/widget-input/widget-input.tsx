@@ -66,7 +66,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
               ) : (
                 <input
                   className={classNames(
-                    'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1',
+                    'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1 dtw-py-[1px]',
                     {
                       'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
                         isLoading,
