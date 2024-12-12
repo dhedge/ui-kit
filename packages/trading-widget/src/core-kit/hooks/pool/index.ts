@@ -1,5 +1,4 @@
 export { useCheckWhitelist } from './use-check-whitelist'
-export { useIsDhedgePool } from './use-is-dhedge-pool'
 export { useManagerLogicAddress } from './use-manager-logic-address'
 export { useContractPoolComposition } from './use-contract-pool-composition'
 export { usePoolComposition } from './use-pool-composition'
@@ -13,3 +12,4 @@ export { useTotalFundValueMutable } from './synthetixV3/use-total-funds-value-mu
 export { useInvalidatePoolContractData } from './use-invalidate-pool-contract-data'
 export { usePoolsDynamic } from './multicall'
 export { useVaultVestedPoints } from './use-vault-vested-points'
+export { useHasNestedVaultInComposition } from './use-has-nested-vault-in-composition'

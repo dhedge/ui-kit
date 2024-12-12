@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
+import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -9,7 +10,7 @@ import {
 } from 'core-kit/hooks/state'
 import { useVaultDepositTokens } from 'core-kit/hooks/trading/deposit-v2'
 import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
-import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
+import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 import type { TradingPanelActionsState, TradingToken } from 'core-kit/types'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import type { OverlayProps } from 'trading-widget/types'
@@ -18,18 +19,24 @@ export interface TokenSelectOverlayProps extends OverlayProps {
   searchQuery: string
 }
 
+const EMPTY_TOKEN_LIST: TradingToken[] = []
+
 const useTokens = (): {
   tokens: TradingToken[]
   activeTokens: TradingToken[]
   updater: TradingPanelActionsState['updateSendTokenInput']
 } => {
+  const poolConfig = useTradingPanelPoolConfig()
   const [type] = useTradingPanelType()
   const [sendToken, updateSendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
+  const { data: hasNestedVaultInComposition } =
+    useHasNestedVaultInComposition(poolConfig)
 
-  const poolConfig = useTradingPanelPoolConfig()
   const depositTokens = useVaultDepositTokens()
-  const withdrawTokens = poolConfig.withdrawParams.customTokens
+  const withdrawTokens = hasNestedVaultInComposition
+    ? EMPTY_TOKEN_LIST
+    : poolConfig.withdrawParams.customTokens
 
   return useMemo(
     () => ({
@@ -55,7 +62,7 @@ export const useTokenSelectOverlay = ({
 }: TokenSelectOverlayProps) => {
   const [{ isMultiAssetWithdrawalEnabled }] = useTradingPanelSettings()
   const { isCompleteWithdrawStep } = useIsCompleteWithdrawStep()
-  const isPoolManagerAccount = useIsPoolManagerAccount()
+  const isDhedgeVaultConnected = useIsDhedgeVaultConnected()
   const [tradingType] = useTradingPanelType()
   const { handleReject } = useOverlayHandlers({ type })
 
@@ -87,7 +94,7 @@ export const useTokenSelectOverlay = ({
     showMultiAssetWithdrawalOption:
       isMultiAssetWithdrawalEnabled &&
       tradingType === 'withdraw' &&
-      !isPoolManagerAccount &&
+      !isDhedgeVaultConnected &&
       !isCompleteWithdrawStep,
   }
 }

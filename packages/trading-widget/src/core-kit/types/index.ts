@@ -1,4 +1,5 @@
 export * from './config.types'
+export * from './contract.types'
 export * from './pool.types'
 export * from './referral.types'
 export * from './state.types'

@@ -6,15 +6,15 @@ import {
   EXTENDED_DEBOUNCE_TIME,
 } from 'core-kit/const'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import { useInitWithdrawTransactionArgumentsForSimulationOnly } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-get-init-withdraw-transaction-arguments'
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-allowance'
-import { useInitWithdrawTransactionArguments } from 'core-kit/hooks/trading/withdraw-v2/init-step/use-init-withdraw-transaction-arguments'
 import { useWithdrawAssetsInfo } from 'core-kit/hooks/trading/withdraw-v2/use-withdraw-assets-info'
 import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import type { Address } from 'core-kit/types'
 import { getContractAddressById } from 'core-kit/utils'
 
 const checkSimulateArgumentsType = (
-  args: ReturnType<typeof useInitWithdrawTransactionArguments>,
+  args: ReturnType<typeof useInitWithdrawTransactionArgumentsForSimulationOnly>,
 ): args is [Address, bigint, bigint] =>
   typeof args[0] === 'string' &&
   typeof args[1] === 'bigint' &&
@@ -25,7 +25,7 @@ export const useInitWithdrawEstimatedReceiveAssets = () => {
   const isInsufficientBalance = useIsInsufficientBalance()
   const { canSpend } = useInitWithdrawAllowance()
 
-  const txArgs = useInitWithdrawTransactionArguments({
+  const txArgs = useInitWithdrawTransactionArgumentsForSimulationOnly({
     debounceTime: EXTENDED_DEBOUNCE_TIME,
   })
 

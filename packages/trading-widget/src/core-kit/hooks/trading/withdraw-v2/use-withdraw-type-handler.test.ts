@@ -5,7 +5,7 @@ import {
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
 
-import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
+import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 
 import { renderHook } from 'tests/test-utils'
 
@@ -22,7 +22,7 @@ describe('useWithdrawTypeHandler', () => {
       { isMultiAssetWithdrawalEnabled: true },
       setSettings,
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
-    vi.mocked(useIsPoolManagerAccount).mockReturnValue(true)
+    vi.mocked(useIsDhedgeVaultConnected).mockReturnValue(true)
 
     renderHook(() => useWithdrawTypeHandler())
 
@@ -39,7 +39,7 @@ describe('useWithdrawTypeHandler', () => {
       setSettings,
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
     vi.mocked(useTradingPanelLogger).mockReturnValue(log)
-    vi.mocked(useIsPoolManagerAccount).mockReturnValue(false)
+    vi.mocked(useIsDhedgeVaultConnected).mockReturnValue(false)
 
     const { result } = renderHook(() => useWithdrawTypeHandler())
 
@@ -59,7 +59,7 @@ describe('useWithdrawTypeHandler', () => {
       { isMultiAssetWithdrawalEnabled: true },
       setSettings,
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
-    vi.mocked(useIsPoolManagerAccount).mockReturnValue(false)
+    vi.mocked(useIsDhedgeVaultConnected).mockReturnValue(false)
 
     const { result } = renderHook(() => useWithdrawTypeHandler())
     const [isMultiAsset, , disabled] = result.current

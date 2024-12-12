@@ -17,7 +17,7 @@ import { useVaultDepositTokens } from './use-vault-deposit-tokens'
 
 vi.mock('core-kit/hooks/state', () => ({ useTradingPanelPoolConfig: vi.fn() }))
 vi.mock('core-kit/hooks/pool', () => ({ usePoolComposition: vi.fn() }))
-vi.mock('core-kit/hooks/user', () => ({ useIsPoolManagerAccount: vi.fn() }))
+vi.mock('core-kit/hooks/user', () => ({ useIsDhedgeVaultConnected: vi.fn() }))
 vi.mock('core-kit/hooks/web3', () => ({
   useAccount: vi.fn(),
   useReadContracts: vi.fn(),
@@ -51,7 +51,7 @@ describe('useVaultDepositTokens', () => {
       chainId: optimism.id,
     })
     expect(poolHooks.usePoolComposition).toHaveBeenCalledTimes(1)
-    expect(userHooks.useIsPoolManagerAccount).toHaveBeenCalledTimes(1)
+    expect(userHooks.useIsDhedgeVaultConnected).toHaveBeenCalledTimes(1)
     expect(web3Hooks.useReadContracts).toHaveBeenCalledWith(
       expect.objectContaining({
         query: expect.objectContaining({
@@ -91,7 +91,7 @@ describe('useVaultDepositTokens', () => {
         },
       },
     ])
-    vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
       () => isPoolManagerAccount,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
@@ -146,7 +146,7 @@ describe('useVaultDepositTokens', () => {
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
     ])
-    vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
       () => isPoolManagerAccount,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
@@ -237,7 +237,7 @@ describe('useVaultDepositTokens', () => {
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
     ])
-    vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
       () => isPoolManagerAccount,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
@@ -318,7 +318,7 @@ describe('useVaultDepositTokens', () => {
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       depositToken,
     ])
-    vi.mocked(userHooks.useIsPoolManagerAccount).mockImplementation(
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
       () => isPoolManagerAccount,
     )
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(

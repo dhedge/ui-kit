@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom'
 
+import type { Abi } from 'viem'
 import { expect, vi } from 'vitest'
 
 import { usePublicClient } from 'wagmi'
 
 import { optimism } from 'core-kit/const'
-import { useNetwork } from 'core-kit/hooks/web3'
 import { renderHook } from 'tests/test-utils'
 
 import { useStaticCallQuery } from './use-static-call-query'
@@ -43,16 +43,10 @@ vi.mock('wagmi', async () => {
   }
 })
 
-vi.mock('core-kit/hooks/web3', () => ({
-  useNetwork: vi.fn().mockImplementation(() => ({
-    supportedChainId: optimism.id,
-  })),
-}))
-
 describe('useStaticCallQuery', () => {
   it('should return the result when all conditions are met', async () => {
     const mockCallStaticFn = vi.fn()
-    const dynamicContractAddress = '0x123'
+    const address = '0x123'
     const functionName = 'sampleFunctionName'
     const args = ['arg1', 'arg2']
     const expectedResult = '1122334455'
@@ -64,8 +58,8 @@ describe('useStaticCallQuery', () => {
     const { result, rerender } = renderHook(() =>
       useStaticCallQuery({
         disabled: false,
-        contractId: 'synthetixV3AssetGuard',
-        dynamicContractAddress,
+        address,
+        abi: getContractAbiById('synthetixV3AssetGuard'),
         args,
         chainId: optimism.id,
         functionName: functionName,
@@ -76,7 +70,7 @@ describe('useStaticCallQuery', () => {
 
     await waitFor(() => {
       expect(mockCallStaticFn).toHaveBeenCalledWith({
-        address: dynamicContractAddress,
+        address,
         abi: getContractAbiById('synthetixV3AssetGuard'),
         functionName,
         args,
@@ -105,15 +99,12 @@ describe('useStaticCallQuery', () => {
     mocks.wagmi.usePublicClient.mockImplementationOnce(() => ({
       callStatic: mockCallStaticFn,
     }))
-    mocks.utils.getContractAddressById.mockImplementationOnce(
-      () => testContractAddress,
-    )
-    mocks.utils.getContractAbiById.mockImplementationOnce(() => testAbi)
 
     const { result } = renderHook(() =>
       useStaticCallQuery({
         disabled: true,
-        contractId: 'synthetixV3AssetGuard',
+        address: testContractAddress,
+        abi: testAbi as unknown as Abi,
         args: [],
         chainId: optimism.id,
         functionName,
@@ -121,12 +112,6 @@ describe('useStaticCallQuery', () => {
     )
     expect(usePublicClient).toHaveBeenCalledTimes(1)
     expect(usePublicClient).toHaveBeenCalledWith({ chainId: optimism.id })
-    expect(useNetwork).toHaveBeenCalledTimes(1)
-    expect(mocks.utils.getContractAddressById).toHaveBeenCalledTimes(1)
-    expect(mocks.utils.getContractAddressById).toHaveBeenCalledWith(
-      'synthetixV3AssetGuard',
-      optimism.id,
-    )
     await waitFor(() => {
       expect(mockCallStaticFn).not.toHaveBeenCalled()
       expect(result.current.data).toBeUndefined()

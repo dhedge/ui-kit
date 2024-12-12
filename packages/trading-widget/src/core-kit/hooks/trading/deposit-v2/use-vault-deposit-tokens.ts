@@ -10,7 +10,7 @@ import {
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
-import { useIsPoolManagerAccount } from 'core-kit/hooks/user'
+import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 import {
   useAccount,
   useContractReadsErrorLogging,
@@ -28,7 +28,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
   const { address, chainId, depositParams } = useTradingPanelPoolConfig()
   const { account } = useAccount()
   const poolComposition = usePoolComposition({ address, chainId })
-  const isPoolManagerAccount = useIsPoolManagerAccount()
+  const isDhedgeVaultConnected = useIsDhedgeVaultConnected()
 
   const depositTokens = useMemo(
     () =>
@@ -107,8 +107,8 @@ export const useVaultDepositTokens = (): TradingToken[] => {
       ...productDepositTokens.filter(
         ({ symbol }) => symbol !== depositParams.defaultDepositTokenSymbol,
       ),
-      // remove native deposits for dHEDGE managers
-      ...(isPoolManagerAccount
+      // remove native deposits from dHEDGE vaults
+      ...(isDhedgeVaultConnected
         ? []
         : [
             {
@@ -122,7 +122,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
     ]
   }, [
     hasDepositTokens,
-    isPoolManagerAccount,
+    isDhedgeVaultConnected,
     depositTokens,
     balances,
     chainId,
