@@ -19,6 +19,7 @@ export interface ConfigProviderParams {
   isAllAssetsWithdrawOptionDefault: boolean
   aaveOffchainWithdrawChainIds: ChainId[]
   aaveOffchainWithdrawMinValue: number
+  getFallbackIconPath: (tokenName: string) => string
 }
 
 export interface ConfigProviderActions {

@@ -110,7 +110,7 @@ UI configuration provider. Manages params to configure custom styling, component
 ##### params
 
 > | name                               | type                                                           | default value                | description                                                                                                                                        |
-> | ---------------------------------- | -------------------------------------------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+> |------------------------------------|----------------------------------------------------------------|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 > | `isGeoBlocked`                     | `boolean`                                                      | `false`                      | Restricts depositing action button and conditionally renders GeoBlockAlert component                                                               |
 > | `isSanctioned`                     | `boolean`                                                      | `false`                      | Restricts depositing action button and conditionally renders SanctionedAlert component                                                             |
 > | `depositQuoteDiffWarningThreshold` | `number`                                                       | `1`                          | Deposit slippage absolute percent value warning threshold, Affects styling to warn user                                                            |
@@ -130,6 +130,7 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `chainConfig`                      | `Partial<Record<ChainId, { name: string; iconPath: string }>>` | `{}`                         | Sets map of chain `name` and `iconPath`                                                                                                            |
 > | `aaveOffchainWithdrawChainIds`     | `ChainId[]`                                                    | `[]`                         | Offchain swap data will be used for Aave withdrawals for selected chains                                                                           |
 > | `aaveOffchainWithdrawMinValue`     | `number`                                                       | `50`                         | Value in USD when off-chain Aave withdrawal is enabled                                                                                             |
+> | `getFallbackIconPath`              | `(tokenName: string) => string`                                | `buildIconLink`              | Fallback token icon path getter                                                                                                                    |
 
 ##### actions
 
