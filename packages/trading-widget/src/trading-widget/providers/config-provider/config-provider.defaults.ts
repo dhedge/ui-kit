@@ -13,6 +13,7 @@ import {
   polygon,
 } from 'core-kit/const'
 import { useConnect } from 'core-kit/hooks/web3'
+import { buildIconLink } from 'trading-widget/utils/icon'
 
 import type {
   ConfigProviderActions,
@@ -55,6 +56,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   },
   aaveOffchainWithdrawChainIds: [],
   aaveOffchainWithdrawMinValue: 50,
+  getFallbackIconPath: buildIconLink,
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {
