@@ -262,6 +262,7 @@ export {
   useTradingResultHandling,
   useTradingSettleHandler,
   useAvailableWithdrawLiquidity,
+  useEasySwapperTrackedAssets,
 } from './core-kit/hooks/trading'
 export {
   useVaultDepositTokens,
