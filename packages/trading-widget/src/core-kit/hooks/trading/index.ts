@@ -11,3 +11,4 @@ export { useProjectedEarningsCore } from './projected-earnings/use-projected-ear
 export { useSwapDataQuery } from './use-swap-data-query'
 export { useSendTokenDebouncedValue } from './use-send-token-debounced-value'
 export { useAvailableWithdrawLiquidity } from './synthetix-v3/use-available-withdraw-liquidity'
+export { useEasySwapperTrackedAssets } from './use-easy-swapper-tracked-assets'
