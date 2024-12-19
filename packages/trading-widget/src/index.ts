@@ -14,6 +14,7 @@ export {
   SynthetixV3CoreAbi,
   SynthetixV3AssetGuard,
   SynthetixV3ContractGuard,
+  EasySwapperV2Abi,
 } from './core-kit/abi'
 
 export {
