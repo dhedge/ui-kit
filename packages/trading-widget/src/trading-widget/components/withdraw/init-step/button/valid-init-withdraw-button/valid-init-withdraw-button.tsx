@@ -30,10 +30,11 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     cooldownEndsInTime,
     withdrawalWindowStartTime,
     withdrawalLiquidity,
-    withdrawalLiquiditySymbol = '',
     approve,
     updateOracles,
     isCheckOraclesPending,
+    requiresLeveragedCollateralLiquidity,
+    leveragedCollateralValueFormatted,
     handleHighSlippageClick,
   } = useValidInitWithdrawButton()
 
@@ -52,9 +53,10 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
   if (requiresWithdrawalLiquidity) {
     return (
       <DisabledButtonWithPrompt
-        promptText={t.withdrawalLiquidityDisabled
-          .replace('{value}', withdrawalLiquidity)
-          .replace('{symbol}', withdrawalLiquiditySymbol)}
+        promptText={t.withdrawalLiquidityDisabled.replace(
+          '{value}',
+          withdrawalLiquidity,
+        )}
       >
         {name}
       </DisabledButtonWithPrompt>
@@ -67,6 +69,19 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
         promptText={t.withdrawCooldown
           .replace('{tokenSymbol}', sendTokenSymbol)
           .replace('{cooldownEndTime}', cooldownEndsInTime)}
+      >
+        {name}
+      </DisabledButtonWithPrompt>
+    )
+  }
+
+  if (requiresLeveragedCollateralLiquidity) {
+    return (
+      <DisabledButtonWithPrompt
+        promptText={t.withdrawalLiquidityDisabled.replace(
+          '{value}',
+          leveragedCollateralValueFormatted,
+        )}
       >
         {name}
       </DisabledButtonWithPrompt>
