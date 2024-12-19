@@ -61,7 +61,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   withdrawalWindowDisabled:
     'You can sell your {tokenSymbol} tokens during withdrawal window period starting from {startTime}',
   withdrawalLiquidityDisabled:
-    'Intended withdraw value is greater than available liquidity ({symbol} {value})',
+    'Intended withdraw value is greater than available liquidity ({value})',
   withdrawCooldown:
     'You can sell your {tokenSymbol} tokens in {cooldownEndTime}',
   termsOfUse: 'Terms Of Use',

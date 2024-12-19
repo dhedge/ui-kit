@@ -11,7 +11,7 @@ import {
 import type { PoolCompositionWithFraction } from 'core-kit/types'
 import {
   getFlatMonetUnitSymbol,
-  isFlatMoneyLeveragedRethAsset,
+  isFlatMoneyLeveragedAsset,
   isSynthetixV3Asset,
 } from 'core-kit/utils'
 import { Skeleton, TokenBadge } from 'trading-widget/components/common'
@@ -46,7 +46,7 @@ export const AllAssetsCompositionTable = ({
       asset,
       tokenAddress,
     }: PoolCompositionWithFraction) => {
-      const isLeveragedRethAsset = isFlatMoneyLeveragedRethAsset(tokenAddress)
+      const isLeveragedRethAsset = isFlatMoneyLeveragedAsset(tokenAddress)
       const isSynthetixAsset = isSynthetixV3Asset(tokenAddress)
 
       return (
