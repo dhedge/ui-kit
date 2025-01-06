@@ -1,3 +1,5 @@
+import type { TransactionAction } from 'core-kit/types'
+
 export const TRADING_PANEL_LOG_EVENT = {
   INVEST_INPUT_FOCUS: 'invest_input_focus',
   APPROVED_TOKEN: 'approved_token',
@@ -13,10 +15,33 @@ export const TRADING_PANEL_LOG_EVENT = {
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
 }
 
+export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
+  TransactionAction,
+  string[]
+> = {
+  approve: [TRADING_PANEL_LOG_EVENT.APPROVED_TOKEN],
+  oraclesUpdate: [TRADING_PANEL_LOG_EVENT.UPDATE_ORACLES],
+  deposit: [TRADING_PANEL_LOG_EVENT.DEPOSIT],
+  multi_withdraw: [
+    TRADING_PANEL_LOG_EVENT.WITHDRAWAL,
+    TRADING_PANEL_LOG_EVENT.MULTI_ASSET_WITHDRAW,
+  ],
+  single_withdraw: [
+    TRADING_PANEL_LOG_EVENT.WITHDRAWAL,
+    TRADING_PANEL_LOG_EVENT.SINGLE_ASSET_WITHDRAW,
+  ],
+  single_withdraw_and_claim: [
+    TRADING_PANEL_LOG_EVENT.WITHDRAWAL,
+    TRADING_PANEL_LOG_EVENT.SINGLE_ASSET_WITHDRAW_AND_CLAIM,
+  ],
+  claim: [TRADING_PANEL_LOG_EVENT.CLAIM],
+  swap: [TRADING_PANEL_LOG_EVENT.SWAP],
+}
+
 /**
  * Limits: Up to 50 custom event parameters per project;
  * 40 must be numeric and 10 textual
- * Parameter names can be up to 40 characters long alfanumeric with underscores
+ * Parameter names can be up to 40 characters long alphanumeric with underscores
  * Parameter textual values can be up to 100 characters long
  */
 export const TRADING_LOG_EVENT_PARAM = {
