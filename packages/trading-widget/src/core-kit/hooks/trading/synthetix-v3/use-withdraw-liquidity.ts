@@ -49,7 +49,7 @@ export const useWithdrawLiquidity = () => {
         normalizeNumber(availableLiquidityAssetPriceUsd?.toString() ?? '0'),
       )
       .lt(snxFractionUsd),
-    symbol: SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[address],
+    symbol: SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[address] ?? '',
     availableLiquidity: availableLiquidity?.formatted,
   }
 }

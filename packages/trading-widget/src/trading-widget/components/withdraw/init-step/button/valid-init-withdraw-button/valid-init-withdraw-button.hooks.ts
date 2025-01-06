@@ -15,6 +15,7 @@ import {
   useHighSlippageCheck,
   useSynthetixWithdrawalWindow,
 } from 'trading-widget/hooks'
+import { useLeveragedFlatMoneyWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-flat-money-withdrawal-checks'
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
 
@@ -36,6 +37,11 @@ export const useValidInitWithdrawButton = () => {
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
   const liquidity = useWithdrawLiquidity()
+
+  const {
+    requiresLeveragedCollateralLiquidity,
+    leveragedCollateralValueFormatted,
+  } = useLeveragedFlatMoneyWithdrawalChecks()
 
   const handleHighSlippageClick = () => {
     dispatch({
@@ -65,11 +71,12 @@ export const useValidInitWithdrawButton = () => {
     slippageToBeUsed,
     cooldownEndsInTime,
     withdrawalWindowStartTime: startTime,
-    withdrawalLiquidity: liquidity.availableLiquidity ?? '0',
-    withdrawalLiquiditySymbol: liquidity.symbol,
+    withdrawalLiquidity: `${liquidity.symbol} ${liquidity.availableLiquidity ?? '0'}`,
     approve,
     updateOracles,
     handleHighSlippageClick,
     isCheckOraclesPending,
+    requiresLeveragedCollateralLiquidity,
+    leveragedCollateralValueFormatted,
   }
 }
