@@ -43,3 +43,10 @@ export const WSTETH_ARBITRUM: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const USDT_ARBITRUM: TradingToken = {
+  address: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9',
+  symbol: 'USDT',
+  decimals: 6,
+  value: '',
+}
