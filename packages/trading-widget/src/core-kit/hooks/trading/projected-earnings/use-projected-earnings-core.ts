@@ -28,7 +28,7 @@ const calculateProjectedEarnings = ({
   apyCurrencyPrice: number
   currency: ApyCurrency | undefined
 }): Omit<UseProjectedEarningsResult, 'showEarnings'> => {
-  if (depositValueInUsd === 0 || !apy || !currency) {
+  if (depositValueInUsd === 0 || !apy || !currency || apyCurrencyPrice === 0) {
     return {
       yearlyEarnings: '-',
       dailyEarnings: '-',
@@ -36,6 +36,7 @@ const calculateProjectedEarnings = ({
     }
   }
   const yearlyEarnings = (depositValueInUsd * apy) / 100 / apyCurrencyPrice
+
   return {
     yearlyEarnings: formatByCurrency({ value: yearlyEarnings, currency }),
     dailyEarnings: formatByCurrency({ value: yearlyEarnings / 365, currency }),
