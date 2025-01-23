@@ -440,7 +440,7 @@ path: `component.meta[name]`
 
 > | name                             | type   | default value                                                                                                                                                                         | description |
 > | -------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-> | `depositSlippageWarning`         | string | Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.                                                                                            |             |
+> | `depositSlippageWarning`         | string | Excludes entry fee.                                                                                                                                                                   |             |
 > | `withdrawSlippageWarning`        | string | Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.                                                                            |             |
 > | `minSlippageWarning`             | string | Flexible min slippage value that is likely enough to process the transaction.                                                                                                         |             |
 > | `highSlippageWarning`            | string | We recommend using another asset to trade with lower slippage.                                                                                                                        |             |
