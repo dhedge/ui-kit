@@ -1,8 +1,7 @@
 import type { TranslationMap } from './translation-provider.types'
 
 export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
-  depositSlippageWarning:
-    'Excludes entry fee. Slippage may be amplified by the leverage. See the docs for more info.',
+  depositSlippageWarning: 'Excludes entry fee.',
   withdrawSlippageWarning:
     'Slippage occurs in both single asset withdrawals and withdrawals from vaults with Aave debt positions. However, for vaults with Aave debt, slippage is only applied to the portion of the withdrawal that corresponds to the Aave position.',
   minSlippageWarning:
