@@ -6,10 +6,7 @@ import {
 import { useSynthetixV3OraclesUpdate } from 'core-kit/hooks/trading'
 import { useWithdrawLiquidity } from 'core-kit/hooks/trading/synthetix-v3/use-withdraw-liquidity'
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step'
-import {
-  isSynthetixV3Vault,
-  skipSynthetixV3WithdrawalChecks,
-} from 'core-kit/utils'
+import { isSynthetixV3Vault } from 'core-kit/utils'
 
 import {
   useHighSlippageCheck,
@@ -54,8 +51,7 @@ export const useValidInitWithdrawButton = () => {
     })
   }
 
-  const performSynthetixWithdrawalChecks =
-    isSynthetixV3Vault(address) && !skipSynthetixV3WithdrawalChecks(address)
+  const performSynthetixWithdrawalChecks = isSynthetixV3Vault(address)
 
   return {
     requiresWithdrawalWindow: performSynthetixWithdrawalChecks && !isWithdrawal,
