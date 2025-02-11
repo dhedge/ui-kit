@@ -65,16 +65,19 @@ export const useFetchInitWithdrawComplexAssetData = ({
                 withdrawAmountD18,
                 slippage,
               })
-              const swapData = await fetchAaveSwapData({
-                swapParams,
-                slippage,
-              })
-              return buildAaveWithdrawAssetTransactionData({
-                assetAddress: asset,
-                swapData,
-                swapParams,
-                slippageToleranceForContractTransaction: slippageTolerance,
-              })
+
+              if (swapParams?.srcData.length) {
+                const swapData = await fetchAaveSwapData({
+                  swapParams,
+                  slippage,
+                })
+                return buildAaveWithdrawAssetTransactionData({
+                  assetAddress: asset,
+                  swapData,
+                  swapParams,
+                  slippageToleranceForContractTransaction: slippageTolerance,
+                })
+              }
             } catch (error) {
               console.error(error)
             }
