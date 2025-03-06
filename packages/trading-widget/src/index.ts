@@ -306,3 +306,6 @@ export {
   useSendTransaction,
   useWaitForTransactionReceipt,
 } from './core-kit/hooks/web3'
+
+// Limit Orders
+export { LimitOrderModal, useUserLimitOrder } from './limit-orders/'
