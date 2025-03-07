@@ -627,4 +627,4 @@ export const LimitOrderAbi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

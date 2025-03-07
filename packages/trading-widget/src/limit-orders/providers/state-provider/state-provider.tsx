@@ -3,6 +3,8 @@ import { createContext, useCallback, useMemo, useReducer } from 'react'
 
 import { AddressZero } from 'core-kit/const'
 
+import { PRICING_ASSET_MAP } from 'limit-orders/constants'
+
 import type {
   LimitOrderAction,
   LimitOrderActionsState,
@@ -15,12 +17,20 @@ function noop() {
 }
 
 export const getDefaultLimitOrderState = (
-  config: Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId'>,
+  config: LimitOrderContextConfig['initialState'],
 ): LimitOrderState => {
   return {
     vaultAddress: config.vaultAddress,
     vaultChainId: config.vaultChainId,
     isModalOpen: false,
+    takeProfitPrice: '',
+    stopLossPrice: '',
+    termsAccepted: false,
+    pricingAssetsMap: Object.fromEntries(
+      Object.entries({ ...PRICING_ASSET_MAP, ...config.pricingAssetsMap }).map(
+        ([k, v]) => [k.toLowerCase(), v],
+      ),
+    ),
   }
 }
 
@@ -29,8 +39,10 @@ export const LimitOrderStateContext = createContext<LimitOrderState>(
 )
 
 export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
-  setVaultAddress: noop,
   setIsModalOpen: noop,
+  setTakeProfitPrice: noop,
+  setStopLossPrice: noop,
+  setTermsAccepted: noop,
 })
 
 const reducer = (
@@ -38,15 +50,25 @@ const reducer = (
   action: LimitOrderAction,
 ): LimitOrderState => {
   switch (action.type) {
-    case 'SET_VAULT_ADDRESS':
+    case 'SET_TAKE_PROFIT_PRICE':
       return {
         ...state,
-        vaultAddress: action.payload,
+        takeProfitPrice: action.payload,
+      }
+    case 'SET_STOP_LOSS_PRICE':
+      return {
+        ...state,
+        stopLossPrice: action.payload,
       }
     case 'SET_IS_MODAL_OPEN':
       return {
         ...state,
         isModalOpen: action.payload,
+      }
+    case 'SET_TERMS_ACCEPTED':
+      return {
+        ...state,
+        termsAccepted: action.payload,
       }
     default:
       return state
@@ -61,23 +83,30 @@ export const LimitOrderStateProvider: FC<
     getDefaultLimitOrderState(initialState),
   )
 
-  const setVaultAddress = useCallback(
-    (payload: LimitOrderState['vaultAddress']) => {
-      dispatch({ type: 'SET_VAULT_ADDRESS', payload })
-    },
-    [],
-  )
+  const setTakeProfitPrice = useCallback((payload: string) => {
+    dispatch({ type: 'SET_TAKE_PROFIT_PRICE', payload })
+  }, [])
+
+  const setStopLossPrice = useCallback((payload: string) => {
+    dispatch({ type: 'SET_STOP_LOSS_PRICE', payload })
+  }, [])
 
   const setIsModalOpen = useCallback((payload: boolean) => {
     dispatch({ type: 'SET_IS_MODAL_OPEN', payload })
   }, [])
 
+  const setTermsAccepted = useCallback((payload: boolean) => {
+    dispatch({ type: 'SET_TERMS_ACCEPTED', payload })
+  }, [])
+
   const actions: LimitOrderActionsState = useMemo(
     () => ({
-      setVaultAddress,
+      setTakeProfitPrice,
       setIsModalOpen,
+      setStopLossPrice,
+      setTermsAccepted,
     }),
-    [setVaultAddress, setIsModalOpen],
+    [setTakeProfitPrice, setIsModalOpen, setStopLossPrice, setTermsAccepted],
   )
 
   return (

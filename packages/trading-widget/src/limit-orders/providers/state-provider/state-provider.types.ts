@@ -4,20 +4,32 @@ export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
   vaultChainId: number
+  takeProfitPrice: string
+  stopLossPrice: string
+  termsAccepted: boolean
+  pricingAssetsMap: Record<Address, Address>
 }
 
 export type LimitOrderActionsState = {
-  setVaultAddress: (payload: LimitOrderState['vaultAddress']) => void
   setIsModalOpen: (payload: boolean) => void
+  setTakeProfitPrice: (payload: string) => void
+  setStopLossPrice: (payload: string) => void
+  setTermsAccepted: (payload: boolean) => void
 }
 
 export type LimitOrderAction =
   | {
-      type: 'SET_VAULT_ADDRESS'
-      payload: LimitOrderState['vaultAddress']
+      type: 'SET_TAKE_PROFIT_PRICE'
+      payload: string
+    }
+  | {
+      type: 'SET_STOP_LOSS_PRICE'
+      payload: string
     }
   | { type: 'SET_IS_MODAL_OPEN'; payload: boolean }
+  | { type: 'SET_TERMS_ACCEPTED'; payload: boolean }
 
 export interface LimitOrderContextConfig {
-  initialState: Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId'>
+  initialState: Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId'> &
+    Partial<Pick<LimitOrderState, 'pricingAssetsMap'>>
 }
