@@ -60,6 +60,7 @@ export {
   contractsAddressesMap,
   contractsAbisMap,
   CBETH_BASE,
+  CBBTC_BASE,
   RETH_BASE,
   BRIDGED_TOKENS_SYMBOLS,
   CHAIN_NATIVE_TOKENS,

@@ -1,20 +1,30 @@
-import type { Address } from 'viem'
+import type { Address, Hash } from 'viem'
 
 export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
   vaultChainId: number
-  takeProfitPrice: string
-  stopLossPrice: string
-  termsAccepted: boolean
-  pricingAssetsMap: Record<Address, Address>
+  form: {
+    takeProfitPrice: string
+    stopLossPrice: string
+    termsAccepted: boolean
+  }
+  pricingAsset: Address
+  pendingTransaction: Hash | null
 }
 
-export type LimitOrderActionsState = {
+export type LimitOrderCallbacks = {
+  onTransactionSuccess?: (transaction: Address) => void
+  onTransactionError?: (transaction: Address) => void
+}
+
+export type LimitOrderActionsState = LimitOrderCallbacks & {
   setIsModalOpen: (payload: boolean) => void
   setTakeProfitPrice: (payload: string) => void
   setStopLossPrice: (payload: string) => void
   setTermsAccepted: (payload: boolean) => void
+  setPendingTransaction: (payload: Hash | null) => void
+  reset: () => void
 }
 
 export type LimitOrderAction =
@@ -28,8 +38,13 @@ export type LimitOrderAction =
     }
   | { type: 'SET_IS_MODAL_OPEN'; payload: boolean }
   | { type: 'SET_TERMS_ACCEPTED'; payload: boolean }
+  | { type: 'RESET' }
+  | { type: 'SET_PENDING_TRANSACTION'; payload: Hash | null }
 
 export interface LimitOrderContextConfig {
-  initialState: Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId'> &
-    Partial<Pick<LimitOrderState, 'pricingAssetsMap'>>
+  initialState: Pick<
+    LimitOrderState,
+    'vaultAddress' | 'vaultChainId' | 'pricingAsset'
+  >
+  actions?: LimitOrderCallbacks
 }

@@ -1,3 +1,8 @@
+import {
+  EASY_SWAPPER_TRANSACTION_ERRORS,
+  LIMIT_ORDER_TRANSACTION_ERRORS,
+} from 'core-kit/const'
+
 type ErrorWithMessage = {
   message: string
 }
@@ -44,4 +49,34 @@ export const validateLoggerEventParams = (
   }
 
   return true
+}
+
+const truncateError = (error: string, maxLength = 150) => {
+  if (error.length > maxLength) {
+    return error.substring(0, maxLength)
+  }
+  return error
+}
+export const parseContractErrorMessage = ({
+  errorMessage,
+  abiErrors,
+}: {
+  errorMessage: string | undefined | null
+  abiErrors: string[]
+}) => {
+  if (!errorMessage || errorMessage.includes('User rejected')) {
+    return null
+  }
+  const reason = abiErrors.find((e) => errorMessage.includes(e))
+  const [shortMessage] = errorMessage
+    .split(reason ? '.' : 'Contract')
+    .map((s) => s.trim())
+
+  return (
+    EASY_SWAPPER_TRANSACTION_ERRORS[reason ?? errorMessage] ??
+    LIMIT_ORDER_TRANSACTION_ERRORS[reason ?? errorMessage] ?? {
+      title: 'Transaction failed',
+      hint: `${truncateError(shortMessage ?? '')} ${reason ? `: ${reason}` : ''}`,
+    }
+  )
 }

@@ -9,6 +9,7 @@ import {
   getContractAddressById,
   isZeroAddress,
 } from 'core-kit/utils'
+import { LIMIT_ORDER_READ_FUNCTION_NAME } from 'limit-orders/constants'
 import { getLimitOrderId } from 'limit-orders/utils'
 
 interface UseUserLimitOrderParams {
@@ -27,14 +28,22 @@ const selector = ([
   user,
   vault,
   pricingAsset,
-]: Data) => ({
-  takeProfitPrice: formatUnits(takeProfitPrice, DEFAULT_PRECISION),
-  stopLossPrice: formatUnits(stopLossPrice, DEFAULT_PRECISION),
-  amountD18,
-  user,
-  vault,
-  pricingAsset,
-})
+]: Data) => {
+  if (isZeroAddress(vault)) {
+    return null
+  }
+
+  return {
+    takeProfitPrice: formatUnits(takeProfitPrice, DEFAULT_PRECISION),
+    stopLossPrice: formatUnits(stopLossPrice, DEFAULT_PRECISION),
+    takeProfitPriceD18: takeProfitPrice,
+    stopLossPriceD18: stopLossPrice,
+    amountD18,
+    user,
+    vault,
+    pricingAsset,
+  }
+}
 export const useUserLimitOrder = ({
   chainId,
   userAddress,
@@ -44,7 +53,7 @@ export const useUserLimitOrder = ({
     address: getContractAddressById('limitOrder', chainId),
     abi: LimitOrderAbi,
     chainId,
-    functionName: 'limitOrders',
+    functionName: LIMIT_ORDER_READ_FUNCTION_NAME,
     args: [getLimitOrderId({ userAddress, vaultAddress })],
     query: {
       enabled: !isZeroAddress(userAddress) && !isZeroAddress(vaultAddress),

@@ -241,7 +241,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //input-color
         '--limit-order-input-content-color': `${
           config?.component?.input?.color?.textColor ??
-          'var(--limit-order-content-color)'
+          'var(--limit-order-secondary-content-color)'
         }`,
         '--limit-order-input-loading-content-color': `${
           config?.component?.input?.color?.loadingTextColor ??

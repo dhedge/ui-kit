@@ -7,22 +7,32 @@ import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { InputGroup } from 'limit-orders/component/input-group/input-group'
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
+import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
 import { LimitOrderStateProvider } from 'limit-orders/providers/state-provider/state-provider'
+import type { LimitOrderCallbacks } from 'limit-orders/providers/state-provider/state-provider.types'
 import { ThemeProvider } from 'limit-orders/providers/theme-provider'
 
 interface LimitOrderModalProps {
-  children: (onClick: () => void) => ReactNode
+  children: (args: {
+    onClick: () => void
+    isTransactionPending: boolean
+  }) => ReactNode
   vaultAddress: Address
   vaultChainId: number
+  pricingAsset: Address
+  actions?: LimitOrderCallbacks
 }
 
 const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
   children,
 }) => {
-  const { onOpen, isModalOpen, onClose } = useLimitOrderModal()
+  const { onOpen, isModalOpen, onClose, isTransactionPending } =
+    useLimitOrderModal()
+  useListenLimitOrderExecution()
+
   return (
     <>
-      {children(onOpen)}
+      {children({ onClick: onOpen, isTransactionPending })}
 
       <ModalDialog
         isOpen={isModalOpen}
@@ -31,7 +41,7 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
         className="limit-order"
       >
         <ModalContent
-          title="Limit Orders"
+          title="Set limit orders"
           className="dtw-text-[color:var(--limit-order-content-color)]"
         >
           <div className="dtw-flex dtw-flex-col dtw-gap-3">
@@ -48,13 +58,15 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   children,
   vaultChainId,
   vaultAddress,
+  pricingAsset,
+  actions,
 }) => {
   const initialState = useMemo(
-    () => ({ vaultAddress, vaultChainId }),
-    [vaultAddress, vaultChainId],
+    () => ({ vaultAddress, vaultChainId, pricingAsset }),
+    [vaultAddress, vaultChainId, pricingAsset],
   )
   return (
-    <LimitOrderStateProvider initialState={initialState}>
+    <LimitOrderStateProvider initialState={initialState} actions={actions}>
       <LimitOrderModalContent>{children}</LimitOrderModalContent>
     </LimitOrderStateProvider>
   )

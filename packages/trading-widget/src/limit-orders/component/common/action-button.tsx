@@ -63,7 +63,9 @@ export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({
     disabled={disabled || loading}
     type={type}
   >
-    {loading && <Spinner className="dtw-h-4 dtw-w-4" />}
+    {loading && (
+      <Spinner className="dtw-h-4 dtw-w-4 dtw-stroke-[color:var(--limit-order-accent-content-color)]" />
+    )}
     {children}
   </button>
 )

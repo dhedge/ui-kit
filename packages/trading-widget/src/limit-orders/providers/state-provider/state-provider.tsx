@@ -3,10 +3,12 @@ import { createContext, useCallback, useMemo, useReducer } from 'react'
 
 import { AddressZero } from 'core-kit/const'
 
-import { PRICING_ASSET_MAP } from 'limit-orders/constants'
+import {
+  DEFAULT_FORM_DATA,
+  reducer,
+} from 'limit-orders/providers/state-provider/reducer'
 
 import type {
-  LimitOrderAction,
   LimitOrderActionsState,
   LimitOrderContextConfig,
   LimitOrderState,
@@ -23,19 +25,18 @@ export const getDefaultLimitOrderState = (
     vaultAddress: config.vaultAddress,
     vaultChainId: config.vaultChainId,
     isModalOpen: false,
-    takeProfitPrice: '',
-    stopLossPrice: '',
-    termsAccepted: false,
-    pricingAssetsMap: Object.fromEntries(
-      Object.entries({ ...PRICING_ASSET_MAP, ...config.pricingAssetsMap }).map(
-        ([k, v]) => [k.toLowerCase(), v],
-      ),
-    ),
+    form: DEFAULT_FORM_DATA,
+    pendingTransaction: null,
+    pricingAsset: config.pricingAsset,
   }
 }
 
 export const LimitOrderStateContext = createContext<LimitOrderState>(
-  getDefaultLimitOrderState({ vaultAddress: AddressZero, vaultChainId: 0 }),
+  getDefaultLimitOrderState({
+    vaultAddress: AddressZero,
+    vaultChainId: 0,
+    pricingAsset: AddressZero,
+  }),
 )
 
 export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
@@ -43,41 +44,13 @@ export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
   setTakeProfitPrice: noop,
   setStopLossPrice: noop,
   setTermsAccepted: noop,
+  reset: noop,
+  setPendingTransaction: noop,
 })
-
-const reducer = (
-  state: LimitOrderState,
-  action: LimitOrderAction,
-): LimitOrderState => {
-  switch (action.type) {
-    case 'SET_TAKE_PROFIT_PRICE':
-      return {
-        ...state,
-        takeProfitPrice: action.payload,
-      }
-    case 'SET_STOP_LOSS_PRICE':
-      return {
-        ...state,
-        stopLossPrice: action.payload,
-      }
-    case 'SET_IS_MODAL_OPEN':
-      return {
-        ...state,
-        isModalOpen: action.payload,
-      }
-    case 'SET_TERMS_ACCEPTED':
-      return {
-        ...state,
-        termsAccepted: action.payload,
-      }
-    default:
-      return state
-  }
-}
 
 export const LimitOrderStateProvider: FC<
   PropsWithChildren<LimitOrderContextConfig>
-> = ({ children, initialState }) => {
+> = ({ children, initialState, actions: callbackActions }) => {
   const [state, dispatch] = useReducer(
     reducer,
     getDefaultLimitOrderState(initialState),
@@ -99,14 +72,38 @@ export const LimitOrderStateProvider: FC<
     dispatch({ type: 'SET_TERMS_ACCEPTED', payload })
   }, [])
 
+  const reset = useCallback(() => {
+    dispatch({ type: 'RESET' })
+  }, [])
+
+  const setPendingTransaction = useCallback(
+    (payload: LimitOrderState['pendingTransaction']) => {
+      dispatch({ type: 'SET_PENDING_TRANSACTION', payload })
+    },
+    [],
+  )
+
   const actions: LimitOrderActionsState = useMemo(
     () => ({
       setTakeProfitPrice,
       setIsModalOpen,
       setStopLossPrice,
       setTermsAccepted,
+      reset,
+      setPendingTransaction,
+      onTransactionSuccess: callbackActions?.onTransactionSuccess,
+      onTransactionError: callbackActions?.onTransactionError,
     }),
-    [setTakeProfitPrice, setIsModalOpen, setStopLossPrice, setTermsAccepted],
+    [
+      setTakeProfitPrice,
+      setIsModalOpen,
+      setStopLossPrice,
+      setTermsAccepted,
+      reset,
+      setPendingTransaction,
+      callbackActions?.onTransactionSuccess,
+      callbackActions?.onTransactionError,
+    ],
   )
 
   return (

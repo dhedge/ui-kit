@@ -6,10 +6,15 @@ import {
 } from 'limit-orders/hooks/state'
 
 export const useLimitOrderModal = () => {
-  const { isModalOpen } = useLimitOrderState()
+  const { isModalOpen, pendingTransaction } = useLimitOrderState()
   const { setIsModalOpen } = useLimitOrderActions()
   const onOpen = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
   const onClose = useCallback(() => setIsModalOpen(false), [setIsModalOpen])
 
-  return { isModalOpen, onOpen, onClose }
+  return {
+    isModalOpen,
+    onOpen,
+    onClose,
+    isTransactionPending: !!pendingTransaction,
+  }
 }
