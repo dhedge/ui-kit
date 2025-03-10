@@ -9,15 +9,13 @@ export const SIMULATION_TIMEOUT_ERROR = 'Simulation timeout'
 export const DEPOSIT_SWAP_DATA_ERROR = 'swap_data_deposit_error'
 export const WITHDRAW_SWAP_DATA_ERROR = 'swap_data_withdraw_error'
 
+type ErrorsMap = Record<string, { title: string; hint?: string }>
 const lowSlippageError = {
   title: 'Low Slippage',
   hint: 'Please increase slippage tolerance and try again.',
 }
 
-export const TRANSACTION_ERRORS: Record<
-  string,
-  { title: string; hint?: string }
-> = {
+export const EASY_SWAPPER_TRANSACTION_ERRORS: ErrorsMap = {
   'invalid liquidityMinted': lowSlippageError,
   'high withdraw slippage': lowSlippageError,
   'high deposit slippage': lowSlippageError,
@@ -38,5 +36,11 @@ export const TRANSACTION_ERRORS: Record<
   [WITHDRAW_SWAP_DATA_ERROR]: {
     title: 'Swap Quote Fetching Error',
     hint: 'Please refresh the swap quote or claim your assets without a swap.',
+  },
+}
+
+export const LIMIT_ORDER_TRANSACTION_ERRORS: ErrorsMap = {
+  InvalidPrices: {
+    title: 'Incorrect limit order prices',
   },
 }

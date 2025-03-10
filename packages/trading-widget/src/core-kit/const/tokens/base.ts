@@ -29,6 +29,13 @@ export const CBETH_BASE: TradingToken = {
   value: '',
 }
 
+export const CBBTC_BASE: TradingToken = {
+  address: '0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf',
+  symbol: 'cbBTC',
+  decimals: 8,
+  value: '',
+}
+
 export const RETH_BASE: TradingToken = {
   address: '0xb6fe221fe9eef5aba221c348ba20a1bf5e73624c',
   symbol: 'rETH',

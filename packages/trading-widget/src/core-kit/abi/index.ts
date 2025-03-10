@@ -19,3 +19,4 @@ export {
 } from './synthetix-v3'
 export { FlatcoinPointsModuleAbi } from './flatcoin-points-module'
 export { EasySwapperV2Abi } from './easy-swapper-v2'
+export { LimitOrderAbi } from './limit-order'

@@ -110,7 +110,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
         dynamicContractAddress: '0x',
       }),
     )
@@ -142,7 +142,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -174,7 +174,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -207,7 +207,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -232,7 +232,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -256,7 +256,7 @@ describe('useContractFunction::estimate', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -316,7 +316,7 @@ describe('useContractFunction::send', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -355,7 +355,7 @@ describe('useContractFunction::send', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 
@@ -382,7 +382,7 @@ describe('useContractFunction::send', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
     expect.assertions(2)
@@ -432,7 +432,7 @@ describe('useContractFunction::send', () => {
   //   const { result } = renderHook(() =>
   //     useContractFunction({
   //       functionName,
-  //       contractId: 'easySwapper',
+  //       contractId: 'easySwapperV2',
   //     }),
   //   )
   //
@@ -511,7 +511,7 @@ describe('useContractFunction::send', () => {
   //     const { result } = renderHook(() =>
   //       useContractFunction({
   //         functionName,
-  //         contractId: 'easySwapper',
+  //         contractId: 'easySwapperV2',
   //       }),
   //     )
   //
@@ -541,7 +541,7 @@ describe('useContractFunction::send', () => {
     const { result } = renderHook(() =>
       useContractFunction({
         functionName,
-        contractId: 'easySwapper',
+        contractId: 'easySwapperV2',
       }),
     )
 

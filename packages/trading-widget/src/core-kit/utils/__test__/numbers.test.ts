@@ -1,5 +1,3 @@
-import BigNumber from 'bignumber.js'
-
 import {
   getConventionalTokenPriceDecimals,
   getPercent,
@@ -19,10 +17,10 @@ describe('normalizeNumber', () => {
 
 describe('shiftBy', () => {
   it('should shift decimal point by n and convert to fixed string with no decimals', () => {
-    expect(shiftBy(new BigNumber(0.0001), 3)).toEqual('0')
-    expect(shiftBy(new BigNumber(0.0001), 4)).toEqual('1')
-    expect(shiftBy(new BigNumber(0.0001), 5)).toEqual('10')
-    expect(shiftBy(new BigNumber(0.0001), 6)).toEqual('100')
+    expect(shiftBy(0.0001, 3)).toEqual('0')
+    expect(shiftBy(0.0001, 4)).toEqual('1')
+    expect(shiftBy(0.0001, 5)).toEqual('10')
+    expect(shiftBy(0.0001, 6)).toEqual('100')
   })
 })
 

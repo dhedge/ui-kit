@@ -1,5 +1,3 @@
-import BigNumber from 'bignumber.js'
-
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
 import type { PoolComposition } from 'core-kit/types'
@@ -198,7 +196,7 @@ describe('usePoolCompositionWithFraction', () => {
     expect(result.current).toEqual(
       formatPoolComposition({
         composition: [poolComposition],
-        vaultTokensAmount: shiftBy(new BigNumber(vaultTokensAmount || 0)),
+        vaultTokensAmount: shiftBy(vaultTokensAmount || 0),
         totalSupply: totalSupply.toString(),
       }),
     )
