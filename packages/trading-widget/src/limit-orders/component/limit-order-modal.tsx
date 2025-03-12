@@ -1,27 +1,27 @@
 import type { FC, ReactNode } from 'react'
 import { useMemo } from 'react'
 
-import type { Address } from 'core-kit/types'
 import { ModalContent } from 'limit-orders/component/common/modal-content'
 import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { InputGroup } from 'limit-orders/component/input-group/input-group'
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
+import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
 import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
 import { LimitOrderStateProvider } from 'limit-orders/providers/state-provider/state-provider'
-import type { LimitOrderCallbacks } from 'limit-orders/providers/state-provider/state-provider.types'
+import type {
+  LimitOrderCallbacks,
+  LimitOrderState,
+} from 'limit-orders/providers/state-provider/state-provider.types'
 import { ThemeProvider } from 'limit-orders/providers/theme-provider'
 
-interface LimitOrderModalProps {
+type LimitOrderModalProps = {
   children: (args: {
     onClick: () => void
     isTransactionPending: boolean
   }) => ReactNode
-  vaultAddress: Address
-  vaultChainId: number
-  pricingAsset: Address
   actions?: LimitOrderCallbacks
-}
+} & Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId' | 'pricingAsset'>
 
 const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
   children,
@@ -46,7 +46,9 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
         >
           <div className="dtw-flex dtw-flex-col dtw-gap-3">
             <InputGroup />
-            <LimitOrderButton />
+            <NetworkCheckButton>
+              <LimitOrderButton />
+            </NetworkCheckButton>
           </div>
         </ModalContent>
       </ModalDialog>

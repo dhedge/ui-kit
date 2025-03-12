@@ -9,7 +9,10 @@ export interface LimitOrderState {
     stopLossPrice: string
     termsAccepted: boolean
   }
-  pricingAsset: Address
+  pricingAsset: {
+    address: Address
+    symbol: string
+  }
   pendingTransaction: Hash | null
 }
 

@@ -62,7 +62,7 @@ export const useLimitOrderButton = () => {
       takeProfitPriceD18,
       account,
       vaultAddress,
-      pricingAsset,
+      pricingAsset.address,
     ]
 
     try {

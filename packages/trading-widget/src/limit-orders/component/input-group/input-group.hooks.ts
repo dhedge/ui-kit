@@ -4,6 +4,10 @@ import {
   useLimitOrderActions,
   useLimitOrderState,
 } from 'limit-orders/hooks/state'
+import {
+  calculateLossPriceDifference,
+  calculateProfitPriceDifference,
+} from 'limit-orders/utils'
 
 export const useInputGroup = () => {
   const {
@@ -14,8 +18,17 @@ export const useInputGroup = () => {
   const { setTakeProfitPrice, setStopLossPrice, setTermsAccepted } =
     useLimitOrderActions()
   const pricingAssetPrice = useAssetPrice({
-    address: pricingAsset,
+    address: pricingAsset.address,
     chainId: vaultChainId,
+  })
+
+  const takeProfitPriceDifference = calculateProfitPriceDifference({
+    price: takeProfitPrice,
+    markPrice: pricingAssetPrice,
+  })
+  const stopLossPriceDifference = calculateLossPriceDifference({
+    price: stopLossPrice,
+    markPrice: pricingAssetPrice,
   })
 
   return {
@@ -33,5 +46,8 @@ export const useInputGroup = () => {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0,
           }),
+    takeProfitPriceDifference,
+    stopLossPriceDifference,
+    pricingAssetSymbol: pricingAsset.symbol,
   }
 }

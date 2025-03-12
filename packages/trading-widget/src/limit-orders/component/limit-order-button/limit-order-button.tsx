@@ -8,7 +8,7 @@ export const LimitOrderButton: FC = () => {
   return (
     <div>
       {error && (
-        <div className="dtw-mb-1 dtw-flex dtw-flex-col dtw-gap-1 dtw-text-error">
+        <div className="dtw-mb-2 dtw-flex dtw-flex-col dtw-gap-1 dtw-text-error">
           <span className="dtw-text-sm">{error.title}</span>
           {error.hint && <span className="dtw-text-xs">{error.hint}</span>}
         </div>

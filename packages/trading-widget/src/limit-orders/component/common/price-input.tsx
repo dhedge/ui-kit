@@ -1,6 +1,5 @@
 import type { ChangeEvent, FC } from 'react'
-
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export interface PriceInputProps {
   label: string
@@ -10,13 +9,24 @@ export interface PriceInputProps {
   disabled?: boolean
   placeholder?: string
   price?: string | null
+  percentage?: string
+  symbol: string | undefined
 }
+
+const formatNumber = (num: string) => {
+  if (!num) {
+    return ''
+  }
+  return num.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+const MAX_PRICE_LENGTH = 7
 
 export const usePriceInput = ({
   inputValue = '',
   onInputChange,
   autoFocus = false,
 }: PriceInputProps) => {
+  const [displayValue, setDisplayValue] = useState(formatNumber(inputValue))
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleContainerClick = () => {
@@ -24,14 +34,20 @@ export const usePriceInput = ({
   }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (onInputChange) {
-      onInputChange(e.target.value)
+    const inputValue = e.target.value.replace(/,/g, '')
+    if (
+      !isNaN(Number(inputValue)) &&
+      onInputChange &&
+      inputValue.length <= MAX_PRICE_LENGTH
+    ) {
+      setDisplayValue(formatNumber(inputValue))
+      onInputChange(inputValue)
     }
   }
 
   return {
     inputRef,
-    value: inputValue,
+    value: displayValue,
     autoFocus,
     onContainerClick: handleContainerClick,
     onInputChange: handleInputChange,
@@ -39,7 +55,7 @@ export const usePriceInput = ({
 }
 
 export const PriceInput: FC<PriceInputProps> = (props) => {
-  const { label, disabled, placeholder, price } = props
+  const { label, disabled, placeholder, price, percentage, symbol } = props
   const { inputRef, autoFocus, value, onContainerClick, onInputChange } =
     usePriceInput(props)
 
@@ -51,24 +67,29 @@ export const PriceInput: FC<PriceInputProps> = (props) => {
       <div className="dtw-flex dtw-justify-between dtw-text-[length:var(--limit-order-input-label-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-label-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-label-font-weight,var(--limit-order-font-weight-light))] dtw-gap-x-2">
         <span>{label}</span>
         {price ? (
-          <span className="dtw-text-xs">Mark price: {price}</span>
+          <span className="dtw-text-xs">
+            {symbol} price: {price}
+          </span>
         ) : null}
       </div>
       <div className="transparent-scrollbar dtw-flex dtw-items-center dtw-text-[color:var(--limit-order-input-content-color,var(--limit-order-secondary-content-color))]">
-        <span className="dtw-absolute dtw-text-[length:var(--limit-order-input-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-font-weight,var(--limit-order-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--limit-order-input-font-size-lg,var(--limit-order-font-size-lg))] lg:dtw-leading-[var(--limit-order-input-line-height-lg,var(--limit-order-line-height-lg))]">
+        <span className="dtw-text-[length:var(--limit-order-input-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-font-weight,var(--limit-order-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--limit-order-input-font-size-lg,var(--limit-order-font-size-lg))] lg:dtw-leading-[var(--limit-order-input-line-height-lg,var(--limit-order-line-height-lg))]">
           $
         </span>
         <input
-          className="dtw-pl-3 dtw-appearance-none dtw-bg-transparent placeholder:dtw-text-[color:var(--limit-order-input-placeholder-color,var(--limit-order-secondary-content-color))] dtw-text-[length:var(--limit-order-input-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-font-weight,var(--limit-order-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--limit-order-input-font-size-lg,var(--limit-order-font-size-lg))] lg:dtw-leading-[var(--limit-order-input-line-height-lg,var(--limit-order-line-height-lg))] dtw-w-full"
+          className="dtw-w-full dtw-appearance-none dtw-bg-transparent placeholder:dtw-text-[color:var(--limit-order-input-placeholder-color,var(--limit-order-secondary-content-color))] dtw-text-[length:var(--limit-order-input-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-font-weight,var(--limit-order-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--limit-order-input-font-size-lg,var(--limit-order-font-size-lg))] lg:dtw-leading-[var(--limit-order-input-line-height-lg,var(--limit-order-line-height-lg))]"
           ref={inputRef}
           autoFocus={autoFocus}
-          type="number"
+          type="text"
           min={0}
           value={value}
           onChange={onInputChange}
           disabled={disabled}
           placeholder={placeholder}
         />
+        {percentage ? (
+          <span className="dtw-font-light">{percentage}</span>
+        ) : null}
       </div>
     </div>
   )

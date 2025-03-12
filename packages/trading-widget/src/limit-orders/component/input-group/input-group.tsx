@@ -12,6 +12,9 @@ export const InputGroup: FC = () => {
     setTermsAccepted,
     termsAccepted,
     pricingAssetPrice,
+    takeProfitPriceDifference,
+    stopLossPriceDifference,
+    pricingAssetSymbol,
   } = useInputGroup()
 
   return (
@@ -22,12 +25,16 @@ export const InputGroup: FC = () => {
         inputValue={takeProfitPrice}
         onInputChange={setTakeProfitPrice}
         autoFocus
+        percentage={takeProfitPriceDifference}
+        symbol={pricingAssetSymbol}
       />
       <PriceInput
         label="Stop Loss"
         inputValue={stopLossPrice}
         onInputChange={setStopLossPrice}
         price={pricingAssetPrice}
+        percentage={stopLossPriceDifference}
+        symbol={pricingAssetSymbol}
       />
       <div className="dtw-mt-2 dtw-flex dtw-items-center dtw-gap-1.5 !dtw-text-[color:var(--limit-order-secondary-content-color)]">
         <input

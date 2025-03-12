@@ -35,7 +35,10 @@ export const LimitOrderStateContext = createContext<LimitOrderState>(
   getDefaultLimitOrderState({
     vaultAddress: AddressZero,
     vaultChainId: 0,
-    pricingAsset: AddressZero,
+    pricingAsset: {
+      address: AddressZero,
+      symbol: '',
+    },
   }),
 )
 

@@ -41,6 +41,7 @@ export const EASY_SWAPPER_TRANSACTION_ERRORS: ErrorsMap = {
 
 export const LIMIT_ORDER_TRANSACTION_ERRORS: ErrorsMap = {
   InvalidPrices: {
-    title: 'Incorrect limit order prices',
+    title: 'Invalid limit order prices',
+    hint: 'The take profit price must be higher than the mark price, and the stop loss price must be lower than the mark price.',
   },
 }
