@@ -4,6 +4,7 @@ export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
   vaultChainId: number
+  isReversedOrder?: boolean
   form: {
     takeProfitPrice: string
     stopLossPrice: string
@@ -47,7 +48,7 @@ export type LimitOrderAction =
 export interface LimitOrderContextConfig {
   initialState: Pick<
     LimitOrderState,
-    'vaultAddress' | 'vaultChainId' | 'pricingAsset'
+    'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
   >
   actions?: LimitOrderCallbacks
 }

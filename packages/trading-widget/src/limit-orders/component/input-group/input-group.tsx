@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import type { FC } from 'react'
 
 import { PriceInput } from 'limit-orders/component/common/price-input'
@@ -15,27 +16,40 @@ export const InputGroup: FC = () => {
     takeProfitPriceDifference,
     stopLossPriceDifference,
     pricingAssetSymbol,
+    isReversedOrder,
+    takeProfitInputLabel,
+    stopLossInputLabel,
   } = useInputGroup()
 
   return (
-    <div className="dtw-flex dtw-flex-col dtw-gap-[var(--limit-order-input-group-gap,var(--limit-order-gap))] dtw-px-[var(--limit-order-group-px)]">
-      <PriceInput
-        label="Take Profit"
-        price={pricingAssetPrice}
-        inputValue={takeProfitPrice}
-        onInputChange={setTakeProfitPrice}
-        autoFocus
-        percentage={takeProfitPriceDifference}
-        symbol={pricingAssetSymbol}
-      />
-      <PriceInput
-        label="Stop Loss"
-        inputValue={stopLossPrice}
-        onInputChange={setStopLossPrice}
-        price={pricingAssetPrice}
-        percentage={stopLossPriceDifference}
-        symbol={pricingAssetSymbol}
-      />
+    <>
+      <div
+        className={classNames(
+          'dtw-flex dtw-gap-[var(--limit-order-input-group-gap,var(--limit-order-gap))] dtw-px-[var(--limit-order-group-px)]',
+          {
+            'dtw-flex-col-reverse': isReversedOrder,
+            'dtw-flex-col': !isReversedOrder,
+          },
+        )}
+      >
+        <PriceInput
+          label={takeProfitInputLabel}
+          price={pricingAssetPrice}
+          inputValue={takeProfitPrice}
+          onInputChange={setTakeProfitPrice}
+          autoFocus
+          percentage={takeProfitPriceDifference}
+          symbol={pricingAssetSymbol}
+        />
+        <PriceInput
+          label={stopLossInputLabel}
+          inputValue={stopLossPrice}
+          onInputChange={setStopLossPrice}
+          price={pricingAssetPrice}
+          percentage={stopLossPriceDifference}
+          symbol={pricingAssetSymbol}
+        />
+      </div>
       <div className="dtw-mt-2 dtw-flex dtw-items-center dtw-gap-1.5 !dtw-text-[color:var(--limit-order-secondary-content-color)]">
         <input
           type="checkbox"
@@ -51,6 +65,6 @@ export const InputGroup: FC = () => {
           I understand and accept limit orders are not guaranteed
         </label>
       </div>
-    </div>
+    </>
   )
 }

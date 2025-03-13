@@ -28,6 +28,7 @@ export const getDefaultLimitOrderState = (
     form: DEFAULT_FORM_DATA,
     pendingTransaction: null,
     pricingAsset: config.pricingAsset,
+    isReversedOrder: config.isReversedOrder ?? false,
   }
 }
 

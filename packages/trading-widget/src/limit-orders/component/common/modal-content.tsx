@@ -16,7 +16,7 @@ export const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 }) => (
   <div
     className={classNames(
-      'dtw-relative dtw-flex dtw-flex-col dtw-gap-4 dtw-rounded-xl dtw-px-5 dtw-py-8 dtw-w-full md:dtw-min-w-[25rem] md:dtw-max-w-[30rem] dtw-bg-[var(--limit-order-background-color)]',
+      'dtw-relative dtw-flex dtw-flex-col dtw-gap-4 dtw-rounded-xl dtw-px-5 dtw-py-8 dtw-w-full dtw-bg-[var(--limit-order-background-color)]',
       className,
     )}
   >

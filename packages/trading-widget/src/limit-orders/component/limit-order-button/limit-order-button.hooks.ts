@@ -12,6 +12,7 @@ import { parseContractErrorMessage, shiftBy } from 'core-kit/utils'
 import { useLimitOrderState } from 'limit-orders/hooks/state'
 import { useOnLimitOrderSettled } from 'limit-orders/hooks/use-on-limit-order-settled'
 import { useUserLimitOrder } from 'limit-orders/hooks/use-user-limit-order'
+import { adjustLimitOrderError } from 'limit-orders/utils'
 
 const LIMIT_ORDER_ERRORS = LimitOrderAbi.filter(
   ({ type }) => type === 'error',
@@ -25,6 +26,7 @@ export const useLimitOrderButton = () => {
     form: { stopLossPrice, takeProfitPrice, termsAccepted },
     pricingAsset,
     pendingTransaction,
+    isReversedOrder,
   } = useLimitOrderState()
   const { data: limitOrder } = useUserLimitOrder({
     userAddress: account,
@@ -78,9 +80,12 @@ export const useLimitOrderButton = () => {
   return {
     modifyLimitOrder,
     disabled,
-    error: parseContractErrorMessage({
-      errorMessage,
-      abiErrors: LIMIT_ORDER_ERRORS,
+    error: adjustLimitOrderError({
+      error: parseContractErrorMessage({
+        errorMessage,
+        abiErrors: LIMIT_ORDER_ERRORS,
+      }),
+      isReversedOrder: isReversedOrder,
     }),
     isPending,
   }

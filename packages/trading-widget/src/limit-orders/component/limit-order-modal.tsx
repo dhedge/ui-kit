@@ -21,7 +21,10 @@ type LimitOrderModalProps = {
     isTransactionPending: boolean
   }) => ReactNode
   actions?: LimitOrderCallbacks
-} & Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId' | 'pricingAsset'>
+} & Pick<
+  LimitOrderState,
+  'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
+>
 
 const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
   children,
@@ -42,7 +45,7 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
       >
         <ModalContent
           title="Set limit orders"
-          className="dtw-text-[color:var(--limit-order-content-color)]"
+          className="dtw-text-[color:var(--limit-order-content-color)] dtw-max-w-[430px]"
         >
           <div className="dtw-flex dtw-flex-col dtw-gap-3">
             <InputGroup />
@@ -61,11 +64,12 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   vaultChainId,
   vaultAddress,
   pricingAsset,
+  isReversedOrder = false,
   actions,
 }) => {
   const initialState = useMemo(
-    () => ({ vaultAddress, vaultChainId, pricingAsset }),
-    [vaultAddress, vaultChainId, pricingAsset],
+    () => ({ vaultAddress, vaultChainId, pricingAsset, isReversedOrder }),
+    [vaultAddress, vaultChainId, pricingAsset, isReversedOrder],
   )
   return (
     <LimitOrderStateProvider initialState={initialState} actions={actions}>

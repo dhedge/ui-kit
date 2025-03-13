@@ -14,6 +14,7 @@ export const useInputGroup = () => {
     form: { takeProfitPrice, stopLossPrice, termsAccepted },
     pricingAsset,
     vaultChainId,
+    isReversedOrder,
   } = useLimitOrderState()
   const { setTakeProfitPrice, setStopLossPrice, setTermsAccepted } =
     useLimitOrderActions()
@@ -30,6 +31,9 @@ export const useInputGroup = () => {
     price: stopLossPrice,
     markPrice: pricingAssetPrice,
   })
+
+  const takeProfitInputLabel = isReversedOrder ? 'Stop Loss' : 'Take Profit'
+  const stopLossInputLabel = isReversedOrder ? 'Take Profit' : 'Stop Loss'
 
   return {
     takeProfitPrice,
@@ -49,5 +53,8 @@ export const useInputGroup = () => {
     takeProfitPriceDifference,
     stopLossPriceDifference,
     pricingAssetSymbol: pricingAsset.symbol,
+    isReversedOrder,
+    takeProfitInputLabel,
+    stopLossInputLabel,
   }
 }
