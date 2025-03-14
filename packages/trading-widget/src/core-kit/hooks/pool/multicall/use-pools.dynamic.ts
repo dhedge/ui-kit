@@ -6,7 +6,7 @@ import { optimism } from 'wagmi/chains'
 import { PoolLogicAbi } from 'core-kit/abi'
 import { AddressZero } from 'core-kit/const'
 import { useTradingPanelPoolConfigs } from 'core-kit/hooks/state'
-import { useAccount, useReadContracts } from 'core-kit/hooks/web3'
+import { useAccount, useNetwork, useReadContracts } from 'core-kit/hooks/web3'
 import type {
   Address,
   ContractFunctionReturnType,
@@ -78,6 +78,7 @@ export const usePoolsDynamic = ({
   PoolsMap
 > => {
   const { account: connectedAccount } = useAccount()
+  const { chainId } = useNetwork()
   const pools = useTradingPanelPoolConfigs()
   const accountAddress = account ?? connectedAccount ?? AddressZero
 
@@ -116,6 +117,11 @@ export const usePoolsDynamic = ({
           },
           {},
         ),
+      placeholderData: (previousValue, previousQuery) => {
+        if (previousQuery?.queryKey?.[1].chainId !== chainId) {
+          return previousValue
+        }
+      },
     },
   })
 }
