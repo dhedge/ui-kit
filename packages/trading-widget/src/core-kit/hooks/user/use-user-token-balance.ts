@@ -74,13 +74,14 @@ export const useUserTokenBalance = ({
   })
 
   return isNative
-    ? getNativeTokenInvestableBalance(
-        formatUnits(
+    ? getNativeTokenInvestableBalance({
+        nativeTokenBalance: formatUnits(
           nativeData?.value ?? BigInt(0),
           nativeData?.decimals ?? DEFAULT_PRECISION,
         ),
-        Number(gasData?.gasPrice ?? 0),
-      ).toString()
+        gasPrice: Number(gasData?.maxFeePerGas ?? 0),
+        tokenDecimals: nativeData?.decimals ?? DEFAULT_PRECISION,
+      }).toString()
     : formatUnits(
         tokenData?.[0]?.result ?? BigInt(0),
         tokenData?.[1]?.result ?? DEFAULT_PRECISION,
