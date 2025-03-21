@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { ModalContent } from 'limit-orders/component/common/modal-content'
 import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { InputGroup } from 'limit-orders/component/input-group/input-group'
+import { LimitOrderApproveButton } from 'limit-orders/component/limit-order-button/limit-order-approve-button'
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
 import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
@@ -50,7 +51,9 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
           <div className="dtw-flex dtw-flex-col dtw-gap-3">
             <InputGroup />
             <NetworkCheckButton>
-              <LimitOrderButton />
+              <LimitOrderApproveButton>
+                <LimitOrderButton />
+              </LimitOrderApproveButton>
             </NetworkCheckButton>
           </div>
         </ModalContent>

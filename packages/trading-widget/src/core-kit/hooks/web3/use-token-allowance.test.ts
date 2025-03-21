@@ -21,13 +21,13 @@ describe('useTokenAllowance', () => {
     } as unknown as ReturnType<typeof web3Hooks.useReadContract>)
 
     renderHook(() =>
-      useTokenAllowance(
-        TEST_ADDRESS,
-        TEST_ADDRESS,
-        TEST_ADDRESS,
-        optimism.id,
-        false,
-      ),
+      useTokenAllowance({
+        tokenAddress: TEST_ADDRESS,
+        ownerAddress: TEST_ADDRESS,
+        spenderAddress: TEST_ADDRESS,
+        chainId: optimism.id,
+        skip: false,
+      }),
     )
 
     expect(web3Hooks.useReadContract).toHaveBeenCalledTimes(1)
