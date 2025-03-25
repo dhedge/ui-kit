@@ -1,3 +1,5 @@
+import type { Hex } from 'viem'
+
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
 export type NativeTokenSymbol = 'ETH' | 'POL'
@@ -13,7 +15,9 @@ export type ChainNativeTokenMap = {
 
 export interface SwapDataResponse {
   destinationAmount: string
-  txData: string
+  rawTransaction: {
+    data: Hex
+  }
   routerKey: 'ONE_INCH' | 'ZERO_X' | 'PARASWAP' | 'ONE_INCH_V5' | 'PARASWAP_V6'
 }
 
