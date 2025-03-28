@@ -37,7 +37,9 @@ describe('useVaultDepositTransactionArguments', () => {
   const sendToken = { value: '100', decimals: 0, address: '0x123' }
   const vaultDepositTokenAmount = '101'
   const swapData = {
-    txData: '0x123123123123123',
+    rawTransaction: {
+      data: '0x123123123123123',
+    },
     routerKey: 'ZERO_X',
     destinationAmount: '100',
   }
@@ -117,7 +119,10 @@ describe('useVaultDepositTransactionArguments', () => {
         [
           sendToken.address,
           sendToken.value,
-          [stringToHex(swapData.routerKey, { size: 32 }), swapData.txData],
+          [
+            stringToHex(swapData.routerKey, { size: 32 }),
+            swapData.rawTransaction.data,
+          ],
         ],
         [depositParams.vaultDepositTokenAddress, '99'],
       ],
@@ -155,7 +160,10 @@ describe('useVaultDepositTransactionArguments', () => {
         [
           sendToken.address,
           sendToken.value,
-          [stringToHex(swapData.routerKey, { size: 32 }), swapData.txData],
+          [
+            stringToHex(swapData.routerKey, { size: 32 }),
+            swapData.rawTransaction.data,
+          ],
         ],
         [depositParams.vaultDepositTokenAddress, '99'],
       ],
