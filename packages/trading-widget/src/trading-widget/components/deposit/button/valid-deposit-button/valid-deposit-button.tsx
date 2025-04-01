@@ -36,6 +36,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     approve,
     confirmHighSlippage,
     isUpdateOraclesTransactionLoading,
+    maintenance,
   } = useValidDepositButton()
 
   if (requiresMinDeposit) {
@@ -49,13 +50,15 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     )
   }
 
-  if (requiresWhitelist) {
+  if (requiresWhitelist || maintenance) {
     return (
       <DisabledButtonWithPrompt
         promptText={
           deprecated
             ? t.poolIsInactive.replace('{poolSymbol}', poolSymbol)
-            : t.poolIsPrivate
+            : maintenance
+              ? t.poolIsMaintenance.replace('{poolSymbol}', poolSymbol)
+              : t.poolIsPrivate
         }
       >
         {name}

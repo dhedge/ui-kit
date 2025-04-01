@@ -36,7 +36,19 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
     handleHighSlippageClick,
+    maintenance,
+    poolSymbol,
   } = useValidInitWithdrawButton()
+
+  if (maintenance) {
+    return (
+      <DisabledButtonWithPrompt
+        promptText={t.poolIsMaintenance.replace('{poolSymbol}', poolSymbol)}
+      >
+        {name}
+      </DisabledButtonWithPrompt>
+    )
+  }
 
   if (requiresWithdrawalWindow) {
     return (

@@ -439,7 +439,7 @@ path: `component.meta[name]`
 </summary>|
 
 > | name                             | type   | default value                                                                                                                                                                         | description |
-> | -------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+> |----------------------------------| ------ |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ----------- |
 > | `depositSlippageWarning`         | string | Excludes entry fee.                                                                                                                                                                   |             |
 > | `withdrawSlippageWarning`        | string | Slippage only applies to single asset withdrawals and withdrawals from vaults with debt positions in Aave.                                                                            |             |
 > | `minSlippageWarning`             | string | Flexible min slippage value that is likely enough to process the transaction.                                                                                                         |             |
@@ -483,6 +483,7 @@ path: `component.meta[name]`
 > | `connectWallet`                  | string | Connect Wallet                                                                                                                                                                        |             |
 > | `minimumPurchase`                | string | Minimum purchase is ${value}                                                                                                                                                          |             |
 > | `poolIsInactive`                 | string | {poolSymbol} token is no longer active. Please withdraw from them.                                                                                                                    |             |
+> | `poolIsMaintenance`              | string | {poolSymbol} token is under maintenance. Deposits and withdrawals are temporarily blocked.                                                                                              |             |
 > | `poolIsPrivate`                  | string | This vault is currently private                                                                                                                                                       |             |
 > | `updateOracles`                  | string | Update Oracles                                                                                                                                                                        |             |
 > | `checkingOracles`                | string | Checking Oracles                                                                                                                                                                      |             |

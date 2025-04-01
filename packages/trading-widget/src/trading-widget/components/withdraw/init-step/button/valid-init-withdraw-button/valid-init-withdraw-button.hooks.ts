@@ -17,7 +17,7 @@ import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-prov
 import { OVERLAY } from 'trading-widget/types'
 
 export const useValidInitWithdrawButton = () => {
-  const { address, chainId } = useTradingPanelPoolConfig()
+  const { address, chainId, maintenance, symbol } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const { isWithdrawal, startTime } = useSynthetixWithdrawalWindow()
   const dispatch = useOverlayDispatchContext()
@@ -74,5 +74,7 @@ export const useValidInitWithdrawButton = () => {
     isCheckOraclesPending,
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
+    maintenance,
+    poolSymbol: symbol,
   }
 }
