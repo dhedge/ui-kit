@@ -15,7 +15,8 @@ import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transacti
 import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
-  const { address, chainId, deprecated, symbol } = useTradingPanelPoolConfig()
+  const { address, chainId, deprecated, symbol, maintenance } =
+    useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
   const [sendToken] = useSendTokenInput()
 
@@ -60,5 +61,6 @@ export const useValidDepositButton = () => {
     slippageToBeUsed,
     isCheckOraclesPending,
     isUpdateOraclesTransactionLoading,
+    maintenance,
   }
 }
