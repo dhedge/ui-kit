@@ -18,7 +18,13 @@ export interface SwapDataResponse {
   rawTransaction: {
     data: Hex
   }
-  routerKey: 'ONE_INCH' | 'ZERO_X' | 'PARASWAP' | 'ONE_INCH_V5' | 'PARASWAP_V6'
+  routerKey:
+    | 'ONE_INCH'
+    | 'ZERO_X'
+    | 'PARASWAP'
+    | 'ONE_INCH_V5'
+    | 'PARASWAP_V6'
+    | 'ODOS_V2'
 }
 
 export interface SwapDataRequest {
