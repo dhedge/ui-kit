@@ -3,7 +3,7 @@ import type { FC, PropsWithChildren } from 'react'
 import { createContext, useCallback, useMemo, useReducer } from 'react'
 
 import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
-import type { PoolFallbackData } from 'core-kit/types/config.types'
+import type { PoolConfig, PoolFallbackData } from 'core-kit/types/config.types'
 import type {
   TradingPanelAction,
   TradingPanelActionsState,
@@ -104,6 +104,7 @@ export const TradingPanelActionsContext =
     onLog: noop,
     onSimulateTransaction: () => Promise.resolve(null),
     getSwapData: () => Promise.resolve(null),
+    updatePoolConfig: noop,
   })
 
 const createReducerWithLogger =
@@ -161,6 +162,26 @@ const createReducerWithLogger =
       }
       case 'UPDATE_POOL_FALLBACK_DATA': {
         return { ...state, poolFallbackData: action.payload }
+      }
+      case 'UPDATE_POOL_CONFIG': {
+        return {
+          ...state,
+          poolConfigMap: {
+            ...state.poolConfigMap,
+            ...Object.entries(action.payload).reduce<
+              TradingPanelState['poolConfigMap']
+            >(
+              (acc, [address, config]) => ({
+                ...acc,
+                [address]: {
+                  ...state.poolConfigMap?.[address as PoolConfig['address']],
+                  ...config,
+                },
+              }),
+              state.poolConfigMap,
+            ),
+          },
+        }
       }
       case 'UPDATE_TRADING_TRANSACTIONS':
         {
@@ -317,6 +338,15 @@ export const TradingPanelProvider: FC<
     dispatch({ type: 'UPDATE_POOL_FALLBACK_DATA', payload })
   }, [])
 
+  const updatePoolConfig = useCallback(
+    (
+      payload: Record<PoolConfig['address'], Pick<PoolConfig, 'maintenance'>>,
+    ) => {
+      dispatch({ type: 'UPDATE_POOL_CONFIG', payload })
+    },
+    [],
+  )
+
   const actions: TradingPanelActionsState = useMemo(
     () => ({
       setPoolAddress,
@@ -335,6 +365,7 @@ export const TradingPanelProvider: FC<
       onSimulateTransaction,
       onTradingSettleError,
       getSwapData,
+      updatePoolConfig,
     }),
     [
       setPoolAddress,
@@ -353,6 +384,7 @@ export const TradingPanelProvider: FC<
       onSimulateTransaction,
       onTradingSettleError,
       getSwapData,
+      updatePoolConfig,
     ],
   )
 

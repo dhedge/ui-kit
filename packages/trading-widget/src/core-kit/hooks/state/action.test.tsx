@@ -23,6 +23,7 @@ import {
   useOnTransactionSuccess,
   useSetPoolAddress,
   useTradingPanelLogger,
+  useUpdatePoolConfig,
   useUpdatePoolFallbackData,
   useUpdateReceiveTokenInput,
   useUpdateSendTokenInput,
@@ -375,5 +376,65 @@ describe('useOnSimulateTransaction', () => {
     })
     expect(simulateCb).toHaveBeenCalledTimes(1)
     expect(simulateCb).toHaveBeenCalledWith(...testParams)
+  })
+})
+
+describe('useUpdatePoolConfig', () => {
+  it('should update PoolConfig state', () => {
+    const { result } = renderHook(() => {
+      const setter = useUpdatePoolConfig()
+      const state = useTradingPanelState()
+
+      return {
+        setter,
+        state,
+      }
+    })
+
+    expect(result.current.state.poolConfigMap?.[AddressZero]?.maintenance).toBe(
+      undefined,
+    )
+    act(() => {
+      result.current.setter({
+        [AddressZero]: { maintenance: true },
+      })
+    })
+    expect(result.current.state.poolConfigMap?.[AddressZero]?.maintenance).toBe(
+      true,
+    )
+  })
+
+  it('should update PoolConfig state for multiple pools', () => {
+    const { result } = renderHook(() => {
+      const setter = useUpdatePoolConfig()
+      const state = useTradingPanelState()
+
+      return {
+        setter,
+        state,
+      }
+    })
+
+    const poolConfigEntries = Object.entries(result.current.state.poolConfigMap)
+
+    for (const [, config] of poolConfigEntries) {
+      expect(config.maintenance).toBeFalsy()
+    }
+
+    act(() => {
+      result.current.setter(
+        poolConfigEntries.reduce(
+          (acc, [address]) => ({
+            ...acc,
+            [address]: { maintenance: true },
+          }),
+          {},
+        ),
+      )
+    })
+
+    for (const config of Object.values(result.current.state.poolConfigMap)) {
+      expect(config.maintenance).toBe(true)
+    }
   })
 })
