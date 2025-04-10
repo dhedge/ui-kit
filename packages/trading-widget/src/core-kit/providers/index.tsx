@@ -168,18 +168,21 @@ const createReducerWithLogger =
           ...state,
           poolConfigMap: {
             ...state.poolConfigMap,
-            ...Object.entries(action.payload).reduce<
-              TradingPanelState['poolConfigMap']
-            >(
-              (acc, [address, config]) => ({
-                ...acc,
-                [address]: {
-                  ...state.poolConfigMap?.[address as PoolConfig['address']],
-                  ...config,
-                },
-              }),
-              state.poolConfigMap,
-            ),
+            ...Object.entries(action.payload)
+              .filter(
+                ([address]) =>
+                  !!state.poolConfigMap?.[address as PoolConfig['address']],
+              )
+              .reduce<TradingPanelState['poolConfigMap']>(
+                (acc, [address, config]) => ({
+                  ...acc,
+                  [address]: {
+                    ...state.poolConfigMap?.[address as PoolConfig['address']],
+                    ...config,
+                  },
+                }),
+                state.poolConfigMap,
+              ),
           },
         }
       }
