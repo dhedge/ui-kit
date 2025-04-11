@@ -11,6 +11,7 @@ import { EstimationError } from 'core-kit/models'
 import type {
   CallbackConfig,
   PoolComposition,
+  PoolConfig,
   TradingToken,
 } from 'core-kit/types'
 import { CALLBACK_CONFIG_MOCK, TEST_ADDRESS } from 'tests/mocks'
@@ -391,15 +392,20 @@ describe('useUpdatePoolConfig', () => {
       }
     })
 
-    expect(result.current.state.poolConfigMap?.[AddressZero]?.maintenance).toBe(
+    const [address = AddressZero] = Object.keys(
+      result.current.state.poolConfigMap,
+    )
+    const poolAddress = address as PoolConfig['address']
+
+    expect(result.current.state.poolConfigMap?.[poolAddress]?.maintenance).toBe(
       undefined,
     )
     act(() => {
       result.current.setter({
-        [AddressZero]: { maintenance: true },
+        [poolAddress]: { maintenance: true },
       })
     })
-    expect(result.current.state.poolConfigMap?.[AddressZero]?.maintenance).toBe(
+    expect(result.current.state.poolConfigMap?.[poolAddress]?.maintenance).toBe(
       true,
     )
   })
