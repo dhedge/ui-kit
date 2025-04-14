@@ -1,5 +1,3 @@
-import { formatDuration, intervalToDuration } from 'date-fns'
-
 import {
   useManagerLogicAddress,
   useTotalFundValueMutable,
@@ -32,16 +30,7 @@ export const usePoolDynamicContractData = ({
     disabled: !isSynthetixVault,
   })
 
-  const cooldown = dynamicPoolData?.getExitRemainingCooldown
-    ? Number(dynamicPoolData.getExitRemainingCooldown) * 1000
-    : 0
-  const cooldownEndsInTime = formatDuration(
-    intervalToDuration({ start: 0, end: cooldown }),
-  )
-
   return {
-    cooldownActive: cooldown > 0,
-    cooldownEndsInTime,
     ...dynamicPoolData,
     totalValue: isSynthetixVault
       ? (totalFundValueMutable ?? dynamicPoolData?.totalValue)

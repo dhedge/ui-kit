@@ -1,5 +1,3 @@
-import { formatDuration, intervalToDuration } from 'date-fns'
-
 import { expect } from 'vitest'
 
 import { optimism } from 'core-kit/const'
@@ -37,83 +35,6 @@ describe('usePoolDynamicContractData', () => {
 
     expect(vi.mocked(poolMulticallHooks.usePoolsDynamic)).toHaveBeenCalledTimes(
       1,
-    )
-  })
-
-  it('should resolve positive cooldown data', () => {
-    const exitCooldown = '1'
-    const chainId = optimism.id
-
-    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
-      () =>
-        ({
-          data: {
-            [TEST_ADDRESS]: {
-              userBalance: '1',
-              tokenPrice: '2',
-              totalValue: '3',
-              totalSupply: '4',
-              isPrivateVault: true,
-              performanceFee: '5',
-              streamingFee: '6',
-              entryFee: '7',
-              exitFee: '10',
-              getExitRemainingCooldown: exitCooldown,
-            },
-          },
-        }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-
-    const { result } = renderHook(() =>
-      usePoolDynamicContractData({
-        address: TEST_ADDRESS,
-        chainId,
-      }),
-    )
-
-    expect(result.current).toEqual(
-      expect.objectContaining({
-        cooldownActive: true,
-        cooldownEndsInTime: formatDuration(
-          intervalToDuration({ start: 0, end: Number(exitCooldown) * 1000 }),
-        ),
-        userBalance: '1',
-        tokenPrice: '2',
-        totalValue: '3',
-        totalSupply: '4',
-        isPrivateVault: true,
-        performanceFee: '5',
-        streamingFee: '6',
-        entryFee: '7',
-        exitFee: '10',
-      }),
-    )
-  })
-
-  it('should resolve zero cooldown data', () => {
-    const chainId = optimism.id
-
-    vi.mocked(poolMulticallHooks.usePoolsDynamic).mockImplementation(
-      () =>
-        ({
-          data: {},
-        }) as ReturnType<typeof poolMulticallHooks.usePoolsDynamic>,
-    )
-
-    const { result } = renderHook(() =>
-      usePoolDynamicContractData({
-        address: TEST_ADDRESS,
-        chainId,
-      }),
-    )
-
-    expect(result.current).toEqual(
-      expect.objectContaining({
-        cooldownActive: false,
-        cooldownEndsInTime: formatDuration(
-          intervalToDuration({ start: 0, end: 0 }),
-        ),
-      }),
     )
   })
 
