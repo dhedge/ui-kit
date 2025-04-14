@@ -13,3 +13,4 @@ export { useInvalidatePoolContractData } from './use-invalidate-pool-contract-da
 export { usePoolsDynamic } from './multicall'
 export { useVaultVestedPoints } from './use-vault-vested-points'
 export { useHasNestedVaultInComposition } from './use-has-nested-vault-in-composition'
+export { usePoolDynamicExitRemainingCooldown } from 'core-kit/hooks/pool/use-pool-dynamic-exit-remaining-cooldown'
