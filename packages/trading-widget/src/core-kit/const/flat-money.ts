@@ -1,22 +1,28 @@
-import { base } from './network'
-import type { Address, ChainId } from '../types'
-
-export const FLATMONEY_LEVERAGED_ASSET_MAP: Record<ChainId, Address> = {
-  [base.id]: '0xdb0cd65dcc7fe07003ce1201f91e1f966fa95768',
+const FLATMONEY_LEVERAGED_ASSET_MAP = {
+  RETH_BASE: '0xdb0cd65dcc7fe07003ce1201f91e1f966fa95768',
+  WBTC_OPTIMISM: '0x6d857e9d24a7566bb72a3fb0847a3e0e4e1c2879',
 }
 
-export const FLATMONEY_COLLATERAL_ADDRESS_MAP: Record<ChainId, Address> = {
-  [base.id]: '0xb6fe221fe9eef5aba221c348ba20a1bf5e73624c', // rETH
+export const FLAT_MONEY_LEVERAGED_ASSET_ADDRESSES = Object.values(
+  FLATMONEY_LEVERAGED_ASSET_MAP,
+)
+
+export const FLAT_MONEY_COLLATERAL_MAP = {
+  [FLATMONEY_LEVERAGED_ASSET_MAP.RETH_BASE]: {
+    symbol: 'rETH',
+    decimals: 18,
+    address: '0xb6fe221fe9eef5aba221c348ba20a1bf5e73624c',
+  },
+  [FLATMONEY_LEVERAGED_ASSET_MAP.WBTC_OPTIMISM]: {
+    symbol: 'WBTC',
+    decimals: 8,
+    address: '0x68f180fcce6836688e9084f035309e29bf0a2095',
+  },
 }
 
-export const FLATMONEY_COLLATERAL_SYMBOL_MAP: Record<ChainId, string> = {
-  [base.id]: 'rETH',
-}
-
-export const FLATMONEY_UNIT_SYMBOL_MAP: Record<ChainId, string> = {
-  [base.id]: 'UNIT',
-}
-
-export const FLATMONEY_UNIT_ADDRESS_MAP: Record<ChainId, Address> = {
-  [base.id]: '0xb95fb324b8a2faf8ec4f76e3df46c718402736e2',
-}
+export const FLAT_MONEY_V1_UNIT_ADDRESS =
+  '0xb95fb324b8a2faf8ec4f76e3df46c718402736e2' // RETH_BASE
+export const FLAT_MONEY_UNIT_ADDRESSES = [
+  FLAT_MONEY_V1_UNIT_ADDRESS,
+  '0x357cb23571ef7a3d6189b7facfc361ea71f7cab5', // WBTC_OPTIMISM
+]
