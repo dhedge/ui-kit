@@ -57,7 +57,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
           deprecated
             ? t.poolIsInactive.replace('{poolSymbol}', poolSymbol)
             : maintenance
-              ? t.poolIsMaintenance.replace('{poolSymbol}', poolSymbol)
+              ? t.poolDepositsAreMaintenance.replace('{poolSymbol}', poolSymbol)
               : t.poolIsPrivate
         }
       >

@@ -68,7 +68,13 @@ export interface TradingPanelSetters {
   updateTransactions: (payload: UpdateTransactionsArguments) => void
   updatePoolFallbackData: (payload: PoolFallbackData) => void
   updatePoolConfig: (
-    payload: Record<PoolConfig['address'], Pick<PoolConfig, 'maintenance'>>,
+    payload: Record<
+      PoolConfig['address'],
+      Pick<
+        PoolConfig,
+        'maintenance' | 'maintenanceDeposits' | 'maintenanceWithdrawals'
+      >
+    >,
   ) => void
 }
 
@@ -141,7 +147,13 @@ export type TradingPanelAction =
   | { type: 'UPDATE_POOL_FALLBACK_DATA'; payload: PoolFallbackData }
   | {
       type: 'UPDATE_POOL_CONFIG'
-      payload: Record<PoolConfig['address'], Pick<PoolConfig, 'maintenance'>>
+      payload: Record<
+        PoolConfig['address'],
+        Pick<
+          PoolConfig,
+          'maintenance' | 'maintenanceDeposits' | 'maintenanceWithdrawals'
+        >
+      >
     }
 
 export interface TradingPanelContextConfig {
