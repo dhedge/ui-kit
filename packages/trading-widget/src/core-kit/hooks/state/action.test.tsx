@@ -402,12 +402,22 @@ describe('useUpdatePoolConfig', () => {
     )
     act(() => {
       result.current.setter({
-        [poolAddress]: { maintenance: true },
+        [poolAddress]: {
+          maintenance: true,
+          maintenanceDeposits: true,
+          maintenanceWithdrawals: true,
+        },
       })
     })
     expect(result.current.state.poolConfigMap?.[poolAddress]?.maintenance).toBe(
       true,
     )
+    expect(
+      result.current.state.poolConfigMap?.[poolAddress]?.maintenanceDeposits,
+    ).toBe(true)
+    expect(
+      result.current.state.poolConfigMap?.[poolAddress]?.maintenanceWithdrawals,
+    ).toBe(true)
   })
 
   it('should update PoolConfig state for multiple pools', () => {
@@ -425,6 +435,8 @@ describe('useUpdatePoolConfig', () => {
 
     for (const [, config] of poolConfigEntries) {
       expect(config.maintenance).toBeFalsy()
+      expect(config.maintenanceDeposits).toBeFalsy()
+      expect(config.maintenanceWithdrawals).toBeFalsy()
     }
 
     act(() => {
@@ -432,7 +444,11 @@ describe('useUpdatePoolConfig', () => {
         poolConfigEntries.reduce(
           (acc, [address]) => ({
             ...acc,
-            [address]: { maintenance: true },
+            [address]: {
+              maintenance: true,
+              maintenanceDeposits: true,
+              maintenanceWithdrawals: true,
+            },
           }),
           {},
         ),
@@ -441,6 +457,8 @@ describe('useUpdatePoolConfig', () => {
 
     for (const config of Object.values(result.current.state.poolConfigMap)) {
       expect(config.maintenance).toBe(true)
+      expect(config.maintenanceDeposits).toBe(true)
+      expect(config.maintenanceWithdrawals).toBe(true)
     }
   })
 })

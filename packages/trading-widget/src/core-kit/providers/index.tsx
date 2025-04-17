@@ -343,7 +343,13 @@ export const TradingPanelProvider: FC<
 
   const updatePoolConfig = useCallback(
     (
-      payload: Record<PoolConfig['address'], Pick<PoolConfig, 'maintenance'>>,
+      payload: Record<
+        PoolConfig['address'],
+        Pick<
+          PoolConfig,
+          'maintenance' | 'maintenanceDeposits' | 'maintenanceWithdrawals'
+        >
+      >,
     ) => {
       dispatch({ type: 'UPDATE_POOL_CONFIG', payload })
     },

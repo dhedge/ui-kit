@@ -43,7 +43,10 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
   if (maintenance) {
     return (
       <DisabledButtonWithPrompt
-        promptText={t.poolIsMaintenance.replace('{poolSymbol}', poolSymbol)}
+        promptText={t.poolWithdrawalsAreMaintenance.replace(
+          '{poolSymbol}',
+          poolSymbol,
+        )}
       >
         {name}
       </DisabledButtonWithPrompt>

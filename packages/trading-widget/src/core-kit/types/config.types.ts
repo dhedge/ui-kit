@@ -18,6 +18,8 @@ export interface PoolConfig {
   }
   deprecated?: boolean
   maintenance?: boolean
+  maintenanceDeposits?: boolean
+  maintenanceWithdrawals?: boolean
 }
 
 export interface PoolFallbackData {
