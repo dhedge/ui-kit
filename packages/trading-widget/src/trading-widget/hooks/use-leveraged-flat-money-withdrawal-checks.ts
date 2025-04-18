@@ -1,9 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import {
-  DEFAULT_PRECISION,
-  FLATMONEY_COLLATERAL_ADDRESS_MAP,
-} from 'core-kit/const'
+import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
 import { usePoolComposition, usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
@@ -11,6 +8,7 @@ import {
 } from 'core-kit/hooks/state'
 import {
   formatToUsd,
+  getFlatMoneyCollateralByLeverageAddress,
   isEqualAddress,
   isFlatMoneyLeveragedAsset,
 } from 'core-kit/utils'
@@ -21,18 +19,19 @@ export const useLeveragedFlatMoneyWithdrawalChecks = () => {
   const [sendToken] = useSendTokenInput()
   const vaultTokenPrice = usePoolTokenPrice(config)
 
-  const hasLeveragedRethPosition = composition.some(
+  const leveragedFlatMoneyPositionAsset = composition.find(
     ({ tokenAddress, amount }) =>
       isFlatMoneyLeveragedAsset(tokenAddress) && amount !== '0',
   )
+  const collateralAddress = getFlatMoneyCollateralByLeverageAddress(
+    leveragedFlatMoneyPositionAsset?.tokenAddress ?? AddressZero,
+  ).address
+
   const collateral = composition.find(({ tokenAddress }) =>
-    isEqualAddress(
-      FLATMONEY_COLLATERAL_ADDRESS_MAP[config.chainId],
-      tokenAddress,
-    ),
+    isEqualAddress(collateralAddress, tokenAddress),
   )
 
-  if (!hasLeveragedRethPosition || !collateral) {
+  if (!leveragedFlatMoneyPositionAsset || !collateral) {
     return {
       requiresLeveragedCollateralLiquidity: false,
       leveragedCollateralValueFormatted: '$0',
