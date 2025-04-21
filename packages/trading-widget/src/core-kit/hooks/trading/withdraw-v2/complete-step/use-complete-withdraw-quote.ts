@@ -8,7 +8,7 @@ import {
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { formatUnits, isEqualAddress } from 'core-kit/utils'
 
-export const useCompleteWithdrawQuote = () => {
+export const useCompleteWithdrawQuote = (): void => {
   const [receiveAsset, updateReceiveToken] = useReceiveTokenInput()
   const { data: assets = [] } = useCompleteWithdrawTrackedAssets()
   const { data: swapData, isFetching, isError } = useCompleteWithdrawSwapData()

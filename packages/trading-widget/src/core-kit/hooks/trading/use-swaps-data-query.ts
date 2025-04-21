@@ -1,4 +1,8 @@
-import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
+import {
+  type UseQueryOptions,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
 
 import type { Address } from 'viem'
 
@@ -43,7 +47,7 @@ export const useSwapsDataQuery = (
     >,
     'queryKey' | 'queryFn'
   >,
-) => {
+): UseQueryResult<Record<Address, SwapDataResponse | null>, Error> => {
   const getSwapData = useGetSwapData()
 
   return useQuery({

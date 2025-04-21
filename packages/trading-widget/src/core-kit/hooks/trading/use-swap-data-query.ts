@@ -1,8 +1,14 @@
-import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
+import {
+  type UseQueryOptions,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
 
 import { MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS } from 'core-kit/const'
 import { useGetSwapData } from 'core-kit/hooks/state'
 import type { SwapDataRequest, SwapDataResponse } from 'core-kit/types'
+
+type SwapDataQueryKey = [string, SwapDataRequest]
 
 export const useSwapDataQuery = (
   variables: Omit<SwapDataRequest, 'fromAddress'>,
@@ -11,14 +17,19 @@ export const useSwapDataQuery = (
       SwapDataResponse | null,
       Error,
       SwapDataResponse | null,
-      [string, SwapDataRequest]
+      SwapDataQueryKey
     >,
     'queryKey' | 'queryFn'
   >,
-) => {
+): UseQueryResult<SwapDataResponse | null, Error> => {
   const getSwapData = useGetSwapData()
 
-  return useQuery({
+  return useQuery<
+    SwapDataResponse | null,
+    Error,
+    SwapDataResponse | null,
+    SwapDataQueryKey
+  >({
     queryKey: [
       'getSwapData',
       { ...variables, fromAddress: MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS },

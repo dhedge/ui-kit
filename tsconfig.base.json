@@ -4,8 +4,9 @@
     "allowJs": true,
     "sourceMap": true,
     "jsx": "react-jsx",
-    "declaration": false,
-    "moduleResolution": "node",
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2021",
@@ -13,7 +14,7 @@
     "lib": ["es2021", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "noEmit": true,
+    "noEmit": false,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
@@ -22,6 +23,7 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "baseUrl": ".",
+    "outDir": "dist"
   },
   "exclude": ["node_modules", "tmp"]
 }

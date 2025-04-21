@@ -10,7 +10,7 @@ import {
 import { useAssetPrice } from 'core-kit/hooks/trading/use-asset-price'
 import { isNumeric } from 'core-kit/utils'
 
-export const useInitWithdrawQuote = () => {
+export const useInitWithdrawQuote = (): void => {
   const { chainId, address } = useTradingPanelPoolConfig()
   const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
     address,

@@ -15,7 +15,19 @@ interface PoolFeesParams {
   chainId: ChainId
 }
 
-export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
+interface PoolFeesResult {
+  performanceFee: string
+  streamingFee: string
+  entryFee: string
+  exitFee: string
+  withdrawalFeeNumber: number
+  exitFeeNumber: number
+}
+
+export const usePoolFees = ({
+  address,
+  chainId,
+}: PoolFeesParams): PoolFeesResult => {
   const [poolData] = useTradingPanelPoolFallbackData()
   const poolFallbackData = isEqualAddress(poolData.address, address)
     ? poolData

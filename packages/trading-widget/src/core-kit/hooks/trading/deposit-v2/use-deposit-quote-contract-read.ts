@@ -1,3 +1,5 @@
+import type { UseQueryResult } from '@tanstack/react-query'
+
 import { EasySwapperV2Abi } from 'core-kit/abi'
 import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
 import {
@@ -17,7 +19,7 @@ import { useVaultDepositTokenAmount } from './use-vault-deposit-token-amount'
 export const useDepositQuoteContractRead = ({
   address,
   chainId,
-}: Pick<PoolConfig, 'address' | 'chainId'>) => {
+}: Pick<PoolConfig, 'address' | 'chainId'>): UseQueryResult<bigint, Error> => {
   const [sendToken] = useSendTokenInput()
   const isDeposit = useIsDepositTradingPanelType()
   const { vaultDepositTokenAddress } = useVaultDepositParams()

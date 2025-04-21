@@ -1,4 +1,8 @@
-import type { DefaultError, UseQueryOptions } from '@tanstack/react-query'
+import type {
+  DefaultError,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 
 import { encodeFunctionData } from 'viem'
@@ -26,6 +30,8 @@ type UseOraclesUpdateQueryResult = {
   isOracleDataUpdateNeeded: boolean
   prependedTxns: TransactionRequest[]
 }
+
+type OraclesUpdateQueryKey = [string, UseOraclesUpdateQueryVariables]
 
 export const DEFAULT_ORACLES_DATA_RESPONSE = {
   isOracleDataUpdateNeeded: false,
@@ -107,16 +113,16 @@ export const useOraclesUpdateTransactionData = (
       UseOraclesUpdateQueryResult,
       DefaultError,
       UseOraclesUpdateQueryResult,
-      [string, UseOraclesUpdateQueryVariables]
+      OraclesUpdateQueryKey
     >,
     'queryKey' | 'queryFn'
   >,
-) =>
+): UseQueryResult<UseOraclesUpdateQueryResult, DefaultError> =>
   useQuery<
     UseOraclesUpdateQueryResult,
     DefaultError,
     UseOraclesUpdateQueryResult,
-    [string, UseOraclesUpdateQueryVariables]
+    OraclesUpdateQueryKey
   >({
     queryKey: [
       QUERY_KEYS.SYNTHETIX_ORACLES_UPDATE,
