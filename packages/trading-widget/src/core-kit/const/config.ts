@@ -5,6 +5,7 @@ import {
   DHedgeStakingV2Abi,
   EasySwapperV2Abi,
   FlatcoinPointsModuleAbi,
+  LimitOrderAbi,
   PoolFactoryAbi,
   PoolLogicAbi,
   PoolManagerLogicAbi,
@@ -30,6 +31,7 @@ import {
   FACTORY_ADDRESS_OPTIMISM,
   FACTORY_ADDRESS_POLYGON,
   FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
+  LIMIT_ORDER_ADDRESS_BASE,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
   STAKING_V2_ADDRESS_OPTIMISM,
   SYNTHETIX_V3_CORE_ADDRESS_ARBITRUM,
@@ -49,6 +51,7 @@ export type ContractId =
   | 'synthetixV3Core'
   | 'flatcoinPointsModule'
   | 'easySwapperV2'
+  | 'limitOrder'
 
 type ContractsAddressesMap = Readonly<
   Record<ChainId, { [id in ContractId]?: Address }>
@@ -80,6 +83,7 @@ export const contractsAddressesMap: ContractsAddressesMap = {
     flatcoinPointsModule: FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_BASE,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_BASE,
+    limitOrder: LIMIT_ORDER_ADDRESS_BASE,
   },
 }
 
@@ -97,6 +101,7 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   synthetixV3Core: SynthetixV3CoreAbi,
   flatcoinPointsModule: FlatcoinPointsModuleAbi,
   easySwapperV2: EasySwapperV2Abi,
+  limitOrder: LimitOrderAbi,
 }
 
 export const QUERY_KEYS = {

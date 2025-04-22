@@ -21,13 +21,13 @@ export const useCanSpend = ({
   chainId,
   skip = false,
 }: UseCanSpendParams) => {
-  const { data: remainingAllowance } = useTokenAllowance(
+  const { data: remainingAllowance } = useTokenAllowance({
     tokenAddress,
     ownerAddress,
     spenderAddress,
     chainId,
     skip,
-  )
+  })
 
   return useMemo(() => {
     if (skip) {

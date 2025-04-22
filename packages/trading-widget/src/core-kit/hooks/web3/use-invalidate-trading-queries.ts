@@ -3,12 +3,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 import { QUERY_KEYS } from 'core-kit/const'
-
-type ContractReadQueryKey = ['readContract', { functionName?: string }]
-type ContractReadsQueryKey = [
-  'readContracts',
-  { contracts?: { functionName?: string }[] },
-]
+import type {
+  ContractReadQueryKey,
+  ContractReadsQueryKey,
+} from 'core-kit/types'
 
 const tradingContractCalls = [
   'balanceOf',

@@ -60,6 +60,7 @@ export {
   contractsAddressesMap,
   contractsAbisMap,
   CBETH_BASE,
+  CBBTC_BASE,
   RETH_BASE,
   BRIDGED_TOKENS_SYMBOLS,
   CHAIN_NATIVE_TOKENS,
@@ -307,3 +308,6 @@ export {
   useSendTransaction,
   useWaitForTransactionReceipt,
 } from './core-kit/hooks/web3'
+
+// Limit Orders
+export { LimitOrderModal, useUserLimitOrder } from './limit-orders/'

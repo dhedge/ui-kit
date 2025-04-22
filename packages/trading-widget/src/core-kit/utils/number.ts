@@ -24,8 +24,10 @@ export const getConventionalTokenPriceDecimals = (
   return 2
 }
 
-export const shiftBy = (value: BigNumber, n = DEFAULT_PRECISION): string =>
-  value.shiftedBy(n).toFixed(0)
+export const shiftBy = (
+  value: bigint | string | number,
+  n = DEFAULT_PRECISION,
+): string => new BigNumber(value.toString()).shiftedBy(n).toFixed(0)
 
 export const getPoolFraction = (
   poolTotalValue: string,

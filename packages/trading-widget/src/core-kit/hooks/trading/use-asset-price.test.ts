@@ -1,4 +1,8 @@
-import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
+import {
+  DEFAULT_PRECISION,
+  SHORTEN_POLLING_INTERVAL,
+  optimism,
+} from 'core-kit/const'
 
 import { formatUnits } from 'core-kit/utils'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -27,7 +31,7 @@ describe('useAssetPrice', () => {
     expect(vi.mocked(useRawAssetPrice)).toHaveBeenCalledWith({
       address,
       chainId,
-      watch: undefined,
+      refetchInterval: SHORTEN_POLLING_INTERVAL,
     })
   })
 
