@@ -1,4 +1,7 @@
+import { type UseQueryResult } from '@tanstack/react-query'
 import { useMemo } from 'react'
+
+import type { Address } from 'viem'
 
 import { AddressZero, SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
 import {
@@ -12,10 +15,14 @@ import {
   useHasSwappableAssets,
 } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import { useAccount } from 'core-kit/hooks/web3'
+import type { SwapDataResponse } from 'core-kit/types'
 import { isEqualAddress } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 
-export const useCompleteWithdrawSwapData = () => {
+export const useCompleteWithdrawSwapData = (): UseQueryResult<
+  Record<Address, SwapDataResponse | null>,
+  Error
+> => {
   const { defaultSwapTransactionSlippage } = useConfigContextParams()
   const { chainId } = useTradingPanelPoolConfig()
   const { account: walletAddress = AddressZero } = useAccount()

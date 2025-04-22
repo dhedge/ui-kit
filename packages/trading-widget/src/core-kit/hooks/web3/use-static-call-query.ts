@@ -15,6 +15,13 @@ type UseStaticCallVariables = Pick<
   refetchInterval?: number
 }
 
+type QueryKeyParams = {
+  functionName: string
+  address: string
+  args: unknown[]
+  chainId: number
+}
+
 export const makeStaticCall = async <T>({
   functionName,
   address,
@@ -41,10 +48,10 @@ export const useStaticCallQuery = <T>({
   args,
   chainId,
   refetchInterval,
-}: UseStaticCallVariables): UseQueryResult<T> => {
+}: UseStaticCallVariables): UseQueryResult<T | undefined, Error> => {
   const publicClient = usePublicClient({ chainId })
 
-  return useQuery({
+  return useQuery<T | undefined, Error, T | undefined, [QueryKeyParams]>({
     queryKey: [{ functionName, address, args, chainId }],
     queryFn: async ({ queryKey: [params] }) => {
       if (params) {

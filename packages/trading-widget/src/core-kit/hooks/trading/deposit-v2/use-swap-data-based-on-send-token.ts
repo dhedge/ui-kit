@@ -1,3 +1,4 @@
+import type { UseQueryResult } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 
 import { AddressZero, SWAP_QUOTE_REFRESH_INTERVAL_MS } from 'core-kit/const'
@@ -10,12 +11,16 @@ import {
   useSwapDataQuery,
 } from 'core-kit/hooks/trading'
 import { useAccount } from 'core-kit/hooks/web3'
+import type { SwapDataResponse } from 'core-kit/types'
 
 import { useAppliedDepositSlippage } from './use-applied-deposit-slippage'
 import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-transaction'
 import { useVaultDepositParams } from './use-vault-deposit-params'
 
-export const useSwapDataBasedOnSendToken = () => {
+export const useSwapDataBasedOnSendToken = (): UseQueryResult<
+  SwapDataResponse | null,
+  Error
+> => {
   const { account: walletAddress = AddressZero } = useAccount()
   const { chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()

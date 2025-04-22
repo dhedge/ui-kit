@@ -15,7 +15,7 @@ import { useSendTokenDebouncedValue } from 'core-kit/hooks/trading'
 import { useDepositQuoteContractRead } from './use-deposit-quote-contract-read'
 import { useSwapDataBasedOnSendToken } from './use-swap-data-based-on-send-token'
 
-export const useDepositQuote = () => {
+export const useDepositQuote = (): void => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const isDeposit = useIsDepositTradingPanelType()
 

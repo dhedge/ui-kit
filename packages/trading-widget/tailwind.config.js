@@ -24,10 +24,14 @@ module.exports = {
         network: COLORS.NETWORK,
       },
       borderColor: {
-        'arrow-top': 'var(--panel-tooltip-bg) transparent transparent transparent',
-        'arrow-right': 'transparent var(--panel-tooltip-bg) transparent transparent',
-        'arrow-bottom': 'transparent transparent var(--panel-tooltip-bg) transparent',
-        'arrow-left': 'transparent transparent transparent var(--panel-tooltip-bg)',
+        'arrow-top':
+          'var(--panel-tooltip-bg) transparent transparent transparent',
+        'arrow-right':
+          'transparent var(--panel-tooltip-bg) transparent transparent',
+        'arrow-bottom':
+          'transparent transparent var(--panel-tooltip-bg) transparent',
+        'arrow-left':
+          'transparent transparent transparent var(--panel-tooltip-bg)',
       },
     },
   },

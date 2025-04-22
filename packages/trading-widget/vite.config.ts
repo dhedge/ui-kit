@@ -17,6 +17,7 @@ export default defineConfig({
       entryRoot: 'src',
       tsConfigFilePath: path.join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
+      rollupTypes: true,
     }),
     // banner((fileName: string) => {
     //   // Or use switch statement
@@ -43,7 +44,7 @@ export default defineConfig({
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
       name: '@dhedge/trading-widget',
-      fileName: 'index',
+      fileName: (format) => `index.${format === 'es' ? 'mjs' : 'js'}`,
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es', 'cjs'],
@@ -51,6 +52,12 @@ export default defineConfig({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [...Object.keys(peerDependencies)],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
     },
   },
 
