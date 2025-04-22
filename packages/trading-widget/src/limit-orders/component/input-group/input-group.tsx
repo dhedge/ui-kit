@@ -3,8 +3,10 @@ import type { FC } from 'react'
 
 import { PriceInput } from 'limit-orders/component/common/price-input'
 import { useInputGroup } from 'limit-orders/component/input-group/input-group.hooks'
+import {useTranslationContext} from "limit-orders/providers/translation-provider";
 
 export const InputGroup: FC = () => {
+  const t = useTranslationContext()
   const {
     takeProfitPrice,
     setTakeProfitPrice,
@@ -62,7 +64,7 @@ export const InputGroup: FC = () => {
           htmlFor="limitOrderCheckbox"
           className="dtw-text-sm dtw-cursor-pointer "
         >
-          I understand and accept limit orders are not guaranteed
+          {t.limitOrderTerms}
         </label>
       </div>
     </>

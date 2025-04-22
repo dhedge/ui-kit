@@ -15,8 +15,11 @@ import type {
   LimitOrderState,
 } from 'limit-orders/providers/state-provider/state-provider.types'
 import { ThemeProvider } from 'limit-orders/providers/theme-provider'
+import type { TranslationProviderProps } from 'limit-orders/providers/translation-provider'
+import { TranslationProvider } from 'limit-orders/providers/translation-provider'
 
 type LimitOrderModalProps = {
+  translation?: TranslationProviderProps['config']
   children: (args: {
     onClick: () => void
     isTransactionPending: boolean
@@ -67,6 +70,7 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   vaultChainId,
   vaultAddress,
   pricingAsset,
+  translation,
   isReversedOrder = false,
   actions,
 }) => {
@@ -75,8 +79,10 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
     [vaultAddress, vaultChainId, pricingAsset, isReversedOrder],
   )
   return (
-    <LimitOrderStateProvider initialState={initialState} actions={actions}>
-      <LimitOrderModalContent>{children}</LimitOrderModalContent>
-    </LimitOrderStateProvider>
+    <TranslationProvider config={translation}>
+      <LimitOrderStateProvider initialState={initialState} actions={actions}>
+        <LimitOrderModalContent>{children}</LimitOrderModalContent>
+      </LimitOrderStateProvider>
+    </TranslationProvider>
   )
 }

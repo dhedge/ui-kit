@@ -1,6 +1,8 @@
 import type { ChangeEvent, FC } from 'react'
 import { useRef, useState } from 'react'
 
+import { useTranslationContext } from 'limit-orders/providers/translation-provider'
+
 export interface PriceInputProps {
   label: string
   inputValue: string
@@ -55,6 +57,7 @@ export const usePriceInput = ({
 }
 
 export const PriceInput: FC<PriceInputProps> = (props) => {
+  const t = useTranslationContext()
   const { label, disabled, placeholder, price, percentage, symbol } = props
   const { inputRef, autoFocus, value, onContainerClick, onInputChange } =
     usePriceInput(props)
@@ -68,7 +71,7 @@ export const PriceInput: FC<PriceInputProps> = (props) => {
         <span>{label}</span>
         {price ? (
           <span className="dtw-text-xs">
-            {symbol} price: {price}
+            {symbol} {t.price}: {price}
           </span>
         ) : null}
       </div>

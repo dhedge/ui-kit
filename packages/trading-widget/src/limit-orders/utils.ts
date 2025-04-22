@@ -4,6 +4,7 @@ import { encodePacked, keccak256 } from 'viem'
 import { INVALID_PRICES_LIMIT_ORDER_TITLE } from 'core-kit/const'
 import type { Address } from 'core-kit/types'
 import { formatPercentage } from 'core-kit/utils'
+import type { TranslationMap } from 'limit-orders/providers/translation-provider'
 
 export const getLimitOrderId = ({
   userAddress,
@@ -44,9 +45,11 @@ export const calculateLossPriceDifference = ({
 export const adjustLimitOrderError = ({
   error,
   isReversedOrder,
+  translationMap,
 }: {
   error: { title: string; hint?: string } | null
   isReversedOrder: boolean | undefined
+  translationMap: Required<Partial<TranslationMap>>
 }) => {
   if (!error) {
     return null
@@ -56,8 +59,8 @@ export const adjustLimitOrderError = ({
     return {
       ...error,
       hint: isReversedOrder
-        ? 'The take profit price must be lower than the mark price, and the stop loss price must be higher than the mark price.'
-        : 'The take profit price must be higher than the mark price, and the stop loss price must be lower than the mark price.',
+        ? translationMap.invalidLimitOrderPriceErrorReversed
+        : translationMap.invalidLimitOrderPriceError,
     }
   }
   return error

@@ -12,6 +12,7 @@ import { parseContractErrorMessage, shiftBy } from 'core-kit/utils'
 import { useLimitOrderState } from 'limit-orders/hooks/state'
 import { useOnLimitOrderSettled } from 'limit-orders/hooks/use-on-limit-order-settled'
 import { useUserLimitOrder } from 'limit-orders/hooks/use-user-limit-order'
+import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 import { adjustLimitOrderError } from 'limit-orders/utils'
 
 const LIMIT_ORDER_ERRORS = LimitOrderAbi.filter(
@@ -19,6 +20,7 @@ const LIMIT_ORDER_ERRORS = LimitOrderAbi.filter(
 ).map(({ name }) => name)
 
 export const useLimitOrderButton = () => {
+  const translationMap = useTranslationContext()
   const { account = AddressZero } = useAccount()
   const {
     vaultAddress,
@@ -86,6 +88,7 @@ export const useLimitOrderButton = () => {
         abiErrors: LIMIT_ORDER_ERRORS,
       }),
       isReversedOrder: isReversedOrder,
+      translationMap,
     }),
     isPending,
   }

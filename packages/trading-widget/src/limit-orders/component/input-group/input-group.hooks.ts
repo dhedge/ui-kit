@@ -5,12 +5,14 @@ import {
   useLimitOrderActions,
   useLimitOrderState,
 } from 'limit-orders/hooks/state'
+import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 import {
   calculateLossPriceDifference,
   calculateProfitPriceDifference,
 } from 'limit-orders/utils'
 
 export const useInputGroup = () => {
+  const t = useTranslationContext()
   const {
     form: { takeProfitPrice, stopLossPrice, termsAccepted },
     pricingAsset,
@@ -34,8 +36,12 @@ export const useInputGroup = () => {
     markPrice: pricingAssetPrice,
   })
 
-  const takeProfitInputLabel = isReversedOrder ? 'Stop Loss' : 'Take Profit'
-  const stopLossInputLabel = isReversedOrder ? 'Take Profit' : 'Stop Loss'
+  const takeProfitInputLabel = isReversedOrder
+    ? t.stopLossLabel
+    : t.takeProfitLabel
+  const stopLossInputLabel = isReversedOrder
+    ? t.takeProfitLabel
+    : t.stopLossLabel
 
   return {
     takeProfitPrice,

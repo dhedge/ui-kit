@@ -2,8 +2,10 @@ import type { FC } from 'react'
 
 import { ActionButton } from 'limit-orders/component/common/action-button'
 import { useLimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button.hooks'
+import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 
 export const LimitOrderButton: FC = () => {
+  const t = useTranslationContext()
   const { modifyLimitOrder, disabled, error, isPending } = useLimitOrderButton()
   return (
     <div>
@@ -18,7 +20,7 @@ export const LimitOrderButton: FC = () => {
         disabled={disabled}
         loading={isPending}
       >
-        Modify
+        {t.modify}
       </ActionButton>
     </div>
   )

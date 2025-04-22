@@ -10,13 +10,13 @@ export const useOnLimitOrderSettled = () => {
 
   return useCallback(
     (transaction: Hash | undefined) => {
-      if (transaction) {
-        setPendingTransaction(transaction)
-        setIsModalOpen(false)
-        reset()
-        return
+      if (!transaction) {
+        return setPendingTransaction(null)
       }
-      setPendingTransaction(null)
+
+      setPendingTransaction(transaction)
+      setIsModalOpen(false)
+      reset()
     },
     [reset, setIsModalOpen, setPendingTransaction],
   )
