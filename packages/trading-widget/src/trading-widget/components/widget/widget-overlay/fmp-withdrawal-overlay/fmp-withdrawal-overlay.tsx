@@ -41,7 +41,7 @@ export const FmpWithdrawalOverlay: FC<OverlayProps> = (props) => {
       <p className="dtw-text-sm dtw-self-start">
         Please consider the following before confirming:
       </p>
-      <ul className="dtw-self-start dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-max-h-28 dtw-overflow-y-scroll">
+      <ul className="dtw-self-start dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-max-h-28 dtw-overflow-y-auto">
         {showUnlockTaxAmount && (
           <>
             <li className="dtw-text-warning">

@@ -45,6 +45,8 @@ export type TranslationMap = {
   minimumPurchase: string
   poolIsInactive: string
   poolIsPrivate: string
+  poolDepositsAreMaintenance: string
+  poolWithdrawalsAreMaintenance: string
   updateOracles: string
   checkingOracles: string
   confirmMaxSlippage: string

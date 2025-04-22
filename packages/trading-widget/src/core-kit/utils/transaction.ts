@@ -44,7 +44,7 @@ export const buildZapDepositTransactionArguments = ({
   swapSlippage,
 }: {
   vaultAddress: Address
-  swapData: string
+  swapData: Hex
   sendTokenAddress: Address
   sendTokenAmount: string
   vaultDepositTokenAddress: Address
@@ -87,7 +87,7 @@ export const buildSwapWithdrawTransactionData = ({
 
       const aggregatorData = [
         stringToHex(assetSwapData.routerKey, { size: 32 }),
-        assetSwapData.txData,
+        assetSwapData.rawTransaction.data,
       ]
       const srcData = [asset.address, asset.rawBalance, aggregatorData]
 
@@ -133,7 +133,7 @@ export const buildAaveWithdrawAssetTransactionData = ({
       amount,
       swapData: {
         routerKey: stringToHex(assetSwapData?.routerKey ?? '', { size: 32 }),
-        txData: (assetSwapData?.txData ?? '') as Hex,
+        txData: assetSwapData?.rawTransaction.data ?? '0x',
       },
     }
   })

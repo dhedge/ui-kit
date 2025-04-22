@@ -53,6 +53,10 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   minimumPurchase: 'Minimum purchase is ${value}',
   poolIsInactive:
     '{poolSymbol} token is no longer active. Please withdraw from them.',
+  poolDepositsAreMaintenance:
+    '{poolSymbol} token is under maintenance. Deposits are temporarily blocked.',
+  poolWithdrawalsAreMaintenance:
+    '{poolSymbol} token is under maintenance. Withdrawals are temporarily blocked.',
   poolIsPrivate: 'This vault is currently private',
   updateOracles: 'Update Oracles',
   checkingOracles: 'Checking Oracles',

@@ -3,14 +3,11 @@ import classNames from 'classnames'
 
 import { useCallback } from 'react'
 
-import {
-  FLATMONEY_COLLATERAL_SYMBOL_MAP,
-  FLAT_MONEY_UNIT_LINK,
-  SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP,
-} from 'core-kit/const'
+import { SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP } from 'core-kit/const'
 import type { PoolCompositionWithFraction } from 'core-kit/types'
 import {
-  getFlatMonetUnitSymbol,
+  getFlatMoneyCollateralByLeverageAddress,
+  getFlatMoneyLinkByUnitAddress,
   isFlatMoneyLeveragedAsset,
   isSynthetixV3Asset,
 } from 'core-kit/utils'
@@ -33,9 +30,10 @@ export const AllAssetsCompositionTable = ({
   const {
     visibleAssets,
     hiddenAssets,
-    chainId,
     showUnitWithdrawalTip,
     address,
+    unitSymbol,
+    unitAddress,
   } = useAllAssetsCompositionTable(showAllAsset)
 
   const renderRow = useCallback(
@@ -46,7 +44,7 @@ export const AllAssetsCompositionTable = ({
       asset,
       tokenAddress,
     }: PoolCompositionWithFraction) => {
-      const isLeveragedRethAsset = isFlatMoneyLeveragedAsset(tokenAddress)
+      const isLeveragedFlatMoneyAsset = isFlatMoneyLeveragedAsset(tokenAddress)
       const isSynthetixAsset = isSynthetixV3Asset(tokenAddress)
 
       return (
@@ -63,9 +61,11 @@ export const AllAssetsCompositionTable = ({
               symbolClasses="dtw-text-xs dtw-font-bold"
               size={iconSize}
             />
-            {isLeveragedRethAsset && (
+            {isLeveragedFlatMoneyAsset && (
               <WithdrawExplanationTip
-                symbol={FLATMONEY_COLLATERAL_SYMBOL_MAP[chainId] ?? 'rETH'}
+                symbol={
+                  getFlatMoneyCollateralByLeverageAddress(tokenAddress).symbol
+                }
               />
             )}
             {isSynthetixAsset && (
@@ -93,7 +93,7 @@ export const AllAssetsCompositionTable = ({
         </tr>
       )
     },
-    [address, chainId, iconSize, showFraction],
+    [address, iconSize, showFraction],
   )
 
   return (
@@ -113,10 +113,10 @@ export const AllAssetsCompositionTable = ({
 
           {showUnitWithdrawalTip && (
             <p className="dtw-text-warning dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))]">
-              {getFlatMonetUnitSymbol(chainId)} can be redeemed using{' '}
+              {unitSymbol} can be redeemed using{' '}
               <a
-                className="dtw-underline dtw-inline-flex dtw-gap-0.5"
-                href={FLAT_MONEY_UNIT_LINK}
+                className="dtw-text-warning dtw-inline-flex dtw-gap-0.5"
+                href={getFlatMoneyLinkByUnitAddress(unitAddress)}
                 target="_blank"
                 rel="noreferrer"
               >

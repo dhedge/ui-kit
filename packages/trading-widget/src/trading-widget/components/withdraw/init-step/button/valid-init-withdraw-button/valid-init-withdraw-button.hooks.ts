@@ -1,4 +1,9 @@
-import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
+import { formatDuration, intervalToDuration } from 'date-fns'
+
+import {
+  usePoolDynamicContractData,
+  usePoolDynamicExitRemainingCooldown,
+} from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
@@ -17,19 +22,32 @@ import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-prov
 import { OVERLAY } from 'trading-widget/types'
 
 export const useValidInitWithdrawButton = () => {
-  const { address, chainId } = useTradingPanelPoolConfig()
+  const { address, chainId, maintenance, maintenanceWithdrawals, symbol } =
+    useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const { isWithdrawal, startTime } = useSynthetixWithdrawalWindow()
   const dispatch = useOverlayDispatchContext()
 
-  const { cooldownActive, cooldownEndsInTime } = usePoolDynamicContractData({
+  const { getExitRemainingCooldown } = usePoolDynamicContractData({
     address,
     chainId,
   })
+
+  const { data: dynamicCooldownMs = 0 } = usePoolDynamicExitRemainingCooldown({
+    address,
+    chainId,
+    enabled: Number(getExitRemainingCooldown ?? '0') > 0,
+  })
+
+  const dynamicCooldownActive = dynamicCooldownMs > 0
+  const dynamicCooldownEndsInTime = formatDuration(
+    intervalToDuration({ start: 0, end: dynamicCooldownMs }),
+  )
+
   const { approve, canSpend } = useInitWithdrawAllowance()
   const { needToBeUpdated, updateOracles, isCheckOraclesPending } =
     useSynthetixV3OraclesUpdate({
-      disabled: !canSpend || cooldownActive,
+      disabled: !canSpend || dynamicCooldownActive,
     })
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
@@ -59,13 +77,13 @@ export const useValidInitWithdrawButton = () => {
       performSynthetixWithdrawalChecks &&
       !!sendToken.value &&
       liquidity.noLiquidity,
-    requiresEndOfCooldown: cooldownActive,
+    requiresEndOfCooldown: dynamicCooldownActive,
     requiresApprove: !canSpend,
     requiresHighSlippageConfirm,
     requiresUpdate: needToBeUpdated && !!sendToken.value,
     sendTokenSymbol: sendToken.symbol,
     slippageToBeUsed,
-    cooldownEndsInTime,
+    dynamicCooldownEndsInTime,
     withdrawalWindowStartTime: startTime,
     withdrawalLiquidity: `${liquidity.symbol} ${liquidity.availableLiquidity ?? '0'}`,
     approve,
@@ -74,5 +92,7 @@ export const useValidInitWithdrawButton = () => {
     isCheckOraclesPending,
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
+    maintenance: maintenance || maintenanceWithdrawals,
+    poolSymbol: symbol,
   }
 }

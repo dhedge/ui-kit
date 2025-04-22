@@ -27,7 +27,7 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     requiresUpdate,
     sendTokenSymbol,
     slippageToBeUsed,
-    cooldownEndsInTime,
+    dynamicCooldownEndsInTime,
     withdrawalWindowStartTime,
     withdrawalLiquidity,
     approve,
@@ -36,7 +36,22 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
     handleHighSlippageClick,
+    maintenance,
+    poolSymbol,
   } = useValidInitWithdrawButton()
+
+  if (maintenance) {
+    return (
+      <DisabledButtonWithPrompt
+        promptText={t.poolWithdrawalsAreMaintenance.replace(
+          '{poolSymbol}',
+          poolSymbol,
+        )}
+      >
+        {name}
+      </DisabledButtonWithPrompt>
+    )
+  }
 
   if (requiresWithdrawalWindow) {
     return (
@@ -68,7 +83,7 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
       <DisabledButtonWithPrompt
         promptText={t.withdrawCooldown
           .replace('{tokenSymbol}', sendTokenSymbol)
-          .replace('{cooldownEndTime}', cooldownEndsInTime)}
+          .replace('{cooldownEndTime}', dynamicCooldownEndsInTime)}
       >
         {name}
       </DisabledButtonWithPrompt>

@@ -41,7 +41,7 @@ export const useVaultDepositTransactionArguments = ({
           sendTokenAmount,
           minVaultTokensReceivedAmount,
           vaultDepositTokenAddress,
-          swapData: swapData?.txData ?? '',
+          swapData: swapData?.rawTransaction.data ?? '0x',
           routerKey: swapData?.routerKey,
           swapDestinationAmount: swapData?.destinationAmount ?? '0',
           swapSlippage: depositSlippage,
@@ -74,14 +74,14 @@ export const useVaultDepositTransactionArguments = ({
   }, [
     depositMethod,
     address,
-    minVaultTokensReceivedAmount,
-    vaultDepositTokenAmount,
     sendToken.address,
     sendTokenAmount,
+    minVaultTokensReceivedAmount,
     vaultDepositTokenAddress,
-    swapData?.txData,
+    swapData?.rawTransaction.data,
     swapData?.routerKey,
     swapData?.destinationAmount,
     depositSlippage,
+    vaultDepositTokenAmount,
   ])
 }

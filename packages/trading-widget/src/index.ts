@@ -253,6 +253,7 @@ export {
   useUpdateSendTokenInput,
   useUpdateTradingModal,
   useUpdateTradingSettings,
+  useUpdatePoolConfig,
 } from './core-kit/hooks/state'
 export {
   useProjectedEarningsCore,

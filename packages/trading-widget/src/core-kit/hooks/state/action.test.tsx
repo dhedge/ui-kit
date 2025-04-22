@@ -11,6 +11,7 @@ import { EstimationError } from 'core-kit/models'
 import type {
   CallbackConfig,
   PoolComposition,
+  PoolConfig,
   TradingToken,
 } from 'core-kit/types'
 import { CALLBACK_CONFIG_MOCK, TEST_ADDRESS } from 'tests/mocks'
@@ -23,6 +24,7 @@ import {
   useOnTransactionSuccess,
   useSetPoolAddress,
   useTradingPanelLogger,
+  useUpdatePoolConfig,
   useUpdatePoolFallbackData,
   useUpdateReceiveTokenInput,
   useUpdateSendTokenInput,
@@ -375,5 +377,88 @@ describe('useOnSimulateTransaction', () => {
     })
     expect(simulateCb).toHaveBeenCalledTimes(1)
     expect(simulateCb).toHaveBeenCalledWith(...testParams)
+  })
+})
+
+describe('useUpdatePoolConfig', () => {
+  it('should update PoolConfig state', () => {
+    const { result } = renderHook(() => {
+      const setter = useUpdatePoolConfig()
+      const state = useTradingPanelState()
+
+      return {
+        setter,
+        state,
+      }
+    })
+
+    const [address = AddressZero] = Object.keys(
+      result.current.state.poolConfigMap,
+    )
+    const poolAddress = address as PoolConfig['address']
+
+    expect(result.current.state.poolConfigMap?.[poolAddress]?.maintenance).toBe(
+      undefined,
+    )
+    act(() => {
+      result.current.setter({
+        [poolAddress]: {
+          maintenance: true,
+          maintenanceDeposits: true,
+          maintenanceWithdrawals: true,
+        },
+      })
+    })
+    expect(result.current.state.poolConfigMap?.[poolAddress]?.maintenance).toBe(
+      true,
+    )
+    expect(
+      result.current.state.poolConfigMap?.[poolAddress]?.maintenanceDeposits,
+    ).toBe(true)
+    expect(
+      result.current.state.poolConfigMap?.[poolAddress]?.maintenanceWithdrawals,
+    ).toBe(true)
+  })
+
+  it('should update PoolConfig state for multiple pools', () => {
+    const { result } = renderHook(() => {
+      const setter = useUpdatePoolConfig()
+      const state = useTradingPanelState()
+
+      return {
+        setter,
+        state,
+      }
+    })
+
+    const poolConfigEntries = Object.entries(result.current.state.poolConfigMap)
+
+    for (const [, config] of poolConfigEntries) {
+      expect(config.maintenance).toBeFalsy()
+      expect(config.maintenanceDeposits).toBeFalsy()
+      expect(config.maintenanceWithdrawals).toBeFalsy()
+    }
+
+    act(() => {
+      result.current.setter(
+        poolConfigEntries.reduce(
+          (acc, [address]) => ({
+            ...acc,
+            [address]: {
+              maintenance: true,
+              maintenanceDeposits: true,
+              maintenanceWithdrawals: true,
+            },
+          }),
+          {},
+        ),
+      )
+    })
+
+    for (const config of Object.values(result.current.state.poolConfigMap)) {
+      expect(config.maintenance).toBe(true)
+      expect(config.maintenanceDeposits).toBe(true)
+      expect(config.maintenanceWithdrawals).toBe(true)
+    }
   })
 })

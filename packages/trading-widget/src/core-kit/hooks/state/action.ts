@@ -39,3 +39,6 @@ export const useOnSimulateTransaction = () =>
   useTradingPanelActions().onSimulateTransaction
 
 export const useGetSwapData = () => useTradingPanelActions().getSwapData
+
+export const useUpdatePoolConfig = () =>
+  useTradingPanelActions().updatePoolConfig
