@@ -222,7 +222,7 @@ export {
   usePoolsDynamic,
   usePoolTokenPrice,
   useVaultVestedPoints,
-  useHasNestedVaultInComposition,
+  useHasSingleAssetWithdrawBlockers,
 } from './core-kit/hooks/pool'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {
