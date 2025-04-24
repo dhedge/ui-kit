@@ -10,7 +10,6 @@
     "storybook": "pnpx nx run trading-widget:storybook"
   },
   "dependencies": {
-    "@date-fns/utc": "^1.2.0",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "bignumber.js": "^9.1.2",
