@@ -26,16 +26,11 @@ interface UseFlatmoneyPointsUserBalancesData {
 
 export const useFlatmoneyPointsUserBalances =
   (): UseFlatmoneyPointsUserBalancesData => {
-    const {
-      address: vaultAddress,
-      symbol,
-      chainId,
-    } = useTradingPanelPoolConfig()
+    const { address: vaultAddress, symbol } = useTradingPanelPoolConfig()
     const { account = AddressZero } = useAccount()
     const balance = useUserTokenBalance({ symbol, address: vaultAddress })
     const { totalSupply } = usePoolDynamicContractData({
       address: vaultAddress,
-      chainId,
     })
 
     const isFmpAirdropVault = isFmpAirdropVaultAddress(vaultAddress)

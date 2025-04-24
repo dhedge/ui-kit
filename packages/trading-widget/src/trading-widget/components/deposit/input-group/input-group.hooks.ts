@@ -30,10 +30,10 @@ const useSendToken = () => {
 }
 
 const useReceiveToken = () => {
-  const { address, chainId } = useTradingPanelPoolConfig()
+  const { address } = useTradingPanelPoolConfig()
   const [receiveToken] = useReceiveTokenInput()
 
-  const price = usePoolTokenPrice({ address, chainId })
+  const price = usePoolTokenPrice({ address })
 
   return {
     ...receiveToken,

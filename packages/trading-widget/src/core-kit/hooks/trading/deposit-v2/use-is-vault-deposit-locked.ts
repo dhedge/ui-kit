@@ -8,7 +8,6 @@ export const useIsVaultDepositLocked = () => {
   const { chainId, address, deprecated } = useTradingPanelPoolConfig()
   const { isPrivateVault = false } = usePoolDynamicContractData({
     address,
-    chainId,
   })
 
   const isVaultDepositLocked = isPrivateVault || deprecated

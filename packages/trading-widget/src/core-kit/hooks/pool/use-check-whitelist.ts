@@ -9,7 +9,7 @@ export const useCheckWhitelist = ({
   chainId,
 }: PoolContractCallParams) => {
   const { account } = useAccount()
-  const { managerAddress } = usePoolDynamicContractData({ address, chainId })
+  const { managerAddress } = usePoolDynamicContractData({ address })
   const { data: { isMemberAllowed = false } = {} } = usePoolManagerStatic({
     address,
     chainId,

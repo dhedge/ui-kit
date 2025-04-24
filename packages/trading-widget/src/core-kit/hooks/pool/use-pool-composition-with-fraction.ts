@@ -15,7 +15,6 @@ import {
   formatToUsd,
   getConventionalTokenPriceDecimals,
   getPoolFraction,
-  isSynthetixV3Asset,
   shiftBy,
 } from 'core-kit/utils'
 
@@ -36,14 +35,6 @@ export const formatPoolComposition = ({
   totalSupply,
 }: PoolCompositionParams): PoolCompositionWithFraction[] =>
   composition
-    .map((token) => {
-      const isSynthetixAsset = isSynthetixV3Asset(token.tokenAddress)
-      return {
-        ...token,
-        tokenName: isSynthetixAsset ? 'Synthetix V3' : token.tokenName,
-        asset: isSynthetixAsset ? { iconSymbols: ['snxv3'] } : token.asset,
-      }
-    })
     .reduce<PoolComposition[]>((acc, asset) => {
       const existingToken = acc.find(
         ({ tokenName }) => tokenName === asset.tokenName,
@@ -96,7 +87,7 @@ export const usePoolCompositionWithFraction = ({
   chainId,
 }: PoolCompositionWithFractionParams) => {
   const poolComposition = usePoolComposition({ address, chainId })
-  const { totalSupply } = usePoolDynamicContractData({ address, chainId })
+  const { totalSupply } = usePoolDynamicContractData({ address })
 
   return useMemo(() => {
     if (!totalSupply) {

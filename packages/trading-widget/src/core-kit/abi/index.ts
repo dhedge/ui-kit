@@ -10,13 +10,6 @@ export {
 } from './pool-logic'
 export { PoolManagerLogicAbi } from './pool-manager-logic'
 export { RewardDistributionAbi } from './reward-distribution'
-export {
-  ITrustedMulticallForwarderAbi,
-  IERC7412Abi,
-  SynthetixV3CoreAbi,
-  SynthetixV3AssetGuard,
-  SynthetixV3ContractGuard,
-} from './synthetix-v3'
 export { FlatcoinPointsModuleAbi } from './flatcoin-points-module'
 export { EasySwapperV2Abi } from './easy-swapper-v2'
 export { LimitOrderAbi } from './limit-order'

@@ -47,10 +47,7 @@ export type TranslationMap = {
   poolIsPrivate: string
   poolDepositsAreMaintenance: string
   poolWithdrawalsAreMaintenance: string
-  updateOracles: string
-  checkingOracles: string
   confirmMaxSlippage: string
-  withdrawalWindowDisabled: string
   withdrawalLiquidityDisabled: string
   withdrawCooldown: string
   termsOfUse: string
@@ -71,7 +68,6 @@ export type TranslationMap = {
   sendingOrderToWallet: string
   settingUpTx: string
   miningTx: string
-  updateSynthetixOracles: string
   approveSpending: string
   pay: string
   multiAssetFractions: string

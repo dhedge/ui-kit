@@ -1,10 +1,7 @@
 import BigNumber from 'bignumber.js'
 
 import { usePoolTokenPrice } from 'core-kit/hooks/pool'
-import {
-  useSendTokenInput,
-  useTradingPanelPoolConfig,
-} from 'core-kit/hooks/state'
+import { useSendTokenInput } from 'core-kit/hooks/state'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 import { formatBalance, formatToUsd } from 'core-kit/utils'
@@ -15,8 +12,7 @@ export const useInitWithdrawBalance = () => {
   const [{ symbol, address }] = useSendTokenInput()
   const balance = useUserTokenBalance({ symbol, address })
 
-  const { chainId } = useTradingPanelPoolConfig()
-  const sendTokenPrice = usePoolTokenPrice({ address, chainId }) ?? ''
+  const sendTokenPrice = usePoolTokenPrice({ address }) ?? ''
   const precision = symbol === 'USDC' ? stablePrecision : defaultPrecision
 
   return {

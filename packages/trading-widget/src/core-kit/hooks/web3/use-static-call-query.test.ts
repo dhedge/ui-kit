@@ -59,7 +59,7 @@ describe('useStaticCallQuery', () => {
       useStaticCallQuery({
         disabled: false,
         address,
-        abi: getContractAbiById('synthetixV3AssetGuard'),
+        abi: getContractAbiById('easySwapperV2'),
         args,
         chainId: optimism.id,
         functionName: functionName,
@@ -71,7 +71,7 @@ describe('useStaticCallQuery', () => {
     await waitFor(() => {
       expect(mockCallStaticFn).toHaveBeenCalledWith({
         address,
-        abi: getContractAbiById('synthetixV3AssetGuard'),
+        abi: getContractAbiById('easySwapperV2'),
         functionName,
         args,
       })
