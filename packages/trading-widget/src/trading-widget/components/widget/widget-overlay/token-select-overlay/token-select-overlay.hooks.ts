@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
+import { useHasSingleAssetWithdrawBlockers } from 'core-kit/hooks/pool/use-has-single-asset-withdraw-blockers'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -30,11 +30,11 @@ const useTokens = (): {
   const [type] = useTradingPanelType()
   const [sendToken, updateSendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
-  const { data: hasNestedVaultInComposition } =
-    useHasNestedVaultInComposition(poolConfig)
+  const { data: hasSingleAssetWithdrawBlockers } =
+    useHasSingleAssetWithdrawBlockers(poolConfig)
 
   const depositTokens = useVaultDepositTokens()
-  const withdrawTokens = hasNestedVaultInComposition
+  const withdrawTokens = hasSingleAssetWithdrawBlockers
     ? EMPTY_TOKEN_LIST
     : poolConfig.withdrawParams.customTokens
 

@@ -1,5 +1,5 @@
 import { DEFAULT_PRECISION, MULTI_ASSET_TOKEN } from 'core-kit/const'
-import { useHasNestedVaultInComposition } from 'core-kit/hooks/pool/use-has-nested-vault-in-composition'
+import { useHasSingleAssetWithdrawBlockers } from 'core-kit/hooks/pool/use-has-single-asset-withdraw-blockers'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -18,8 +18,8 @@ export const useOnTradingTypeChange = () => {
   const { data: completeWithdrawSwappableAsset = [] } =
     useCompleteWithdrawTrackedAssets()
   const isCompleteWithdrawStep = completeWithdrawSwappableAsset.length > 0
-  const { data: hasNestedVaultInComposition } =
-    useHasNestedVaultInComposition(poolConfig)
+  const { data: hasSingleAssetWithdrawBlockers } =
+    useHasSingleAssetWithdrawBlockers(poolConfig)
 
   const setTradingType = useTradingPanelType()[1]
   const updateSendToken = useSendTokenInput()[1]
@@ -44,7 +44,7 @@ export const useOnTradingTypeChange = () => {
       poolConfig.withdrawParams.customTokens
     const withdrawToken = isCompleteWithdrawStep
       ? customWithdrawToken
-      : hasNestedVaultInComposition || isAllAssetsWithdrawOptionDefault
+      : hasSingleAssetWithdrawBlockers || isAllAssetsWithdrawOptionDefault
         ? MULTI_ASSET_TOKEN
         : customWithdrawToken
 

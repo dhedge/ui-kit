@@ -12,5 +12,5 @@ export { useTotalFundValueMutable } from './synthetixV3/use-total-funds-value-mu
 export { useInvalidatePoolContractData } from './use-invalidate-pool-contract-data'
 export { usePoolsDynamic } from './multicall'
 export { useVaultVestedPoints } from './use-vault-vested-points'
-export { useHasNestedVaultInComposition } from './use-has-nested-vault-in-composition'
+export { useHasSingleAssetWithdrawBlockers } from './use-has-single-asset-withdraw-blockers'
 export { usePoolDynamicExitRemainingCooldown } from './use-pool-dynamic-exit-remaining-cooldown'
