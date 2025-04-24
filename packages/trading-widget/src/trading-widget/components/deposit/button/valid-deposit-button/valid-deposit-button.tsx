@@ -25,17 +25,13 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     minDepositUSD,
     requiresApprove,
     requiresWhitelist,
-    requiresUpdate,
     requiresHighSlippageConfirm,
     deprecated = false,
     poolSymbol,
     sendTokenSymbol,
     slippageToBeUsed,
-    updateOracles,
-    isCheckOraclesPending,
     approve,
     confirmHighSlippage,
-    isUpdateOraclesTransactionLoading,
     maintenance,
   } = useValidDepositButton()
 
@@ -68,17 +64,6 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   if (requiresApprove) {
     return <ApproveButton symbol={sendTokenSymbol} onApprove={approve} />
-  }
-
-  if (requiresUpdate || isCheckOraclesPending) {
-    return (
-      <Button
-        onClick={updateOracles}
-        loading={isCheckOraclesPending || isUpdateOraclesTransactionLoading}
-      >
-        {isCheckOraclesPending ? t.checkingOracles : t.updateOracles}
-      </Button>
-    )
   }
 
   if (requiresHighSlippageConfirm) {

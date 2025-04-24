@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { MANAGER_FEE_DENOMINATOR, WITHDRAWAL_FEE_MAP } from 'core-kit/const'
 import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
 import { useTradingPanelPoolFallbackData } from 'core-kit/hooks/state'
-import type { Address, ChainId } from 'core-kit/types/web3.types'
+import type { Address } from 'core-kit/types/web3.types'
 import {
   formatNumeratorToPercentage,
   getPercent,
@@ -12,10 +12,9 @@ import {
 
 interface PoolFeesParams {
   address: Address
-  chainId: ChainId
 }
 
-export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
+export const usePoolFees = ({ address }: PoolFeesParams) => {
   const [poolData] = useTradingPanelPoolFallbackData()
   const poolFallbackData = isEqualAddress(poolData.address, address)
     ? poolData
@@ -25,7 +24,7 @@ export const usePoolFees = ({ address, chainId }: PoolFeesParams) => {
     streamingFee,
     entryFee: entryFeeContract,
     exitFee: exitFeeContract,
-  } = usePoolDynamicContractData({ address, chainId })
+  } = usePoolDynamicContractData({ address })
   const entryFee =
     entryFeeContract ?? poolFallbackData?.entryFeeNumerator ?? '0'
   const exitFee = exitFeeContract ?? poolFallbackData?.exitFeeNumerator ?? '0'

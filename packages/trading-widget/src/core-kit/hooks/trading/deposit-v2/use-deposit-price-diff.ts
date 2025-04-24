@@ -22,14 +22,14 @@ type UseDepositPriceDiffProps =
 
 export const useDepositPriceDiff = (props: UseDepositPriceDiffProps = {}) => {
   const { address, chainId } = useTradingPanelPoolConfig()
-  const { entryFee = '0' } = usePoolDynamicContractData({ address, chainId })
+  const { entryFee = '0' } = usePoolDynamicContractData({ address })
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
   const sendTokenPrice = useAssetPrice({
     address: sendToken.address,
     chainId,
   })
-  const vaultTokenPrice = usePoolTokenPrice({ address, chainId })
+  const vaultTokenPrice = usePoolTokenPrice({ address })
   const entryFeeValue = props.includesEntryFee
     ? getPercent(+entryFee, MANAGER_FEE_DENOMINATOR)
     : 0

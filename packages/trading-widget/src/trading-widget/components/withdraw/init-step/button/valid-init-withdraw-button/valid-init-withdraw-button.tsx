@@ -19,20 +19,13 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
   const t = useTranslationContext()
   const name = useTradingTypeName('withdraw')
   const {
-    requiresWithdrawalWindow,
-    requiresWithdrawalLiquidity,
     requiresEndOfCooldown,
     requiresApprove,
     requiresHighSlippageConfirm,
-    requiresUpdate,
     sendTokenSymbol,
     slippageToBeUsed,
     dynamicCooldownEndsInTime,
-    withdrawalWindowStartTime,
-    withdrawalLiquidity,
     approve,
-    updateOracles,
-    isCheckOraclesPending,
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
     handleHighSlippageClick,
@@ -46,31 +39,6 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
         promptText={t.poolWithdrawalsAreMaintenance.replace(
           '{poolSymbol}',
           poolSymbol,
-        )}
-      >
-        {name}
-      </DisabledButtonWithPrompt>
-    )
-  }
-
-  if (requiresWithdrawalWindow) {
-    return (
-      <DisabledButtonWithPrompt
-        promptText={t.withdrawalWindowDisabled
-          .replace('{tokenSymbol}', sendTokenSymbol)
-          .replace('{startTime}', withdrawalWindowStartTime)}
-      >
-        {name}
-      </DisabledButtonWithPrompt>
-    )
-  }
-
-  if (requiresWithdrawalLiquidity) {
-    return (
-      <DisabledButtonWithPrompt
-        promptText={t.withdrawalLiquidityDisabled.replace(
-          '{value}',
-          withdrawalLiquidity,
         )}
       >
         {name}
@@ -114,14 +82,6 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
           '{slippagePercentage}',
           `${Math.abs(slippageToBeUsed)}`,
         )}
-      </Button>
-    )
-  }
-
-  if (requiresUpdate || isCheckOraclesPending) {
-    return (
-      <Button onClick={updateOracles} loading={isCheckOraclesPending}>
-        {isCheckOraclesPending ? t.checkingOracles : t.updateOracles}
       </Button>
     )
   }

@@ -3,7 +3,6 @@ import type { TransactionAction } from 'core-kit/types'
 export const TRADING_PANEL_LOG_EVENT = {
   INVEST_INPUT_FOCUS: 'invest_input_focus',
   APPROVED_TOKEN: 'approved_token',
-  UPDATE_ORACLES: 'update_oracles',
   DEPOSIT: 'deposit',
   MULTI_ASSET_WITHDRAW: 'multi_asset_withdraw',
   SINGLE_ASSET_WITHDRAW: 'single_asset_unroll',
@@ -20,7 +19,6 @@ export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
   string[]
 > = {
   approve: [TRADING_PANEL_LOG_EVENT.APPROVED_TOKEN],
-  oraclesUpdate: [TRADING_PANEL_LOG_EVENT.UPDATE_ORACLES],
   deposit: [TRADING_PANEL_LOG_EVENT.DEPOSIT],
   multi_withdraw: [
     TRADING_PANEL_LOG_EVENT.WITHDRAWAL,

@@ -37,7 +37,6 @@ describe('useIsVaultDepositLocked', () => {
 
     expect(poolHooks.usePoolDynamicContractData).toHaveBeenCalledTimes(1)
     expect(poolHooks.usePoolDynamicContractData).toHaveBeenCalledWith({
-      chainId: optimism.id,
       address: TEST_ADDRESS,
     })
     expect(poolHooks.useCheckWhitelist).toHaveBeenCalledTimes(1)

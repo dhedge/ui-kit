@@ -14,11 +14,10 @@ export const useInitWithdrawQuote = () => {
   const { chainId, address } = useTradingPanelPoolConfig()
   const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
     address,
-    chainId,
   })
   const [sendToken] = useSendTokenInput()
   const [receiveToken, updateReceiveToken] = useReceiveTokenInput()
-  const sendTokenPrice = usePoolTokenPrice({ address, chainId })
+  const sendTokenPrice = usePoolTokenPrice({ address })
   const receiveTokenPrice = useAssetPrice({
     address: receiveToken.address,
     chainId,

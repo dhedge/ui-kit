@@ -33,7 +33,7 @@ export const useDepositTransactionDisclosure = () => {
   const [receiveToken] = useReceiveTokenInput()
   const { address, chainId } = useTradingPanelPoolConfig()
 
-  const { entryFee } = usePoolFees({ address, chainId })
+  const { entryFee } = usePoolFees({ address })
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
   const projectedEarnings = useDepositProjectedEarnings()
   const lockTime = useDepositLockTime()

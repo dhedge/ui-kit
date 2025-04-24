@@ -39,7 +39,6 @@ export type TransactionAction =
   | 'multi_withdraw'
   | 'single_withdraw'
   | 'approve'
-  | 'oraclesUpdate'
   | 'swap'
   | 'claim'
   | 'single_withdraw_and_claim'
