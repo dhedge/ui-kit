@@ -38,6 +38,11 @@ const LEVERAGED_ASSET_CONFIGS: LeveragedAssetConfig[] = [
   },
 ]
 
+const DEFAULT_RESULT = {
+  requiresLeveragedCollateralLiquidity: false,
+  leveragedCollateralValueFormatted: '$0',
+}
+
 export const useLeveragedWithdrawalChecks = () => {
   const config = useTradingPanelPoolConfig()
   const composition = usePoolComposition(config)
@@ -52,10 +57,7 @@ export const useLeveragedWithdrawalChecks = () => {
   )
 
   if (!leveragedPosition) {
-    return {
-      requiresLeveragedCollateralLiquidity: false,
-      leveragedCollateralValueFormatted: '$0',
-    }
+    return DEFAULT_RESULT
   }
 
   const assetConfig = LEVERAGED_ASSET_CONFIGS.find((config) =>
@@ -63,10 +65,7 @@ export const useLeveragedWithdrawalChecks = () => {
   )
 
   if (!assetConfig) {
-    return {
-      requiresLeveragedCollateralLiquidity: false,
-      leveragedCollateralValueFormatted: '$0',
-    }
+    return DEFAULT_RESULT
   }
 
   const collateralAddress = assetConfig.getCollateralByLeverageAddress(
@@ -78,10 +77,7 @@ export const useLeveragedWithdrawalChecks = () => {
   )
 
   if (!collateral) {
-    return {
-      requiresLeveragedCollateralLiquidity: false,
-      leveragedCollateralValueFormatted: '$0',
-    }
+    return DEFAULT_RESULT
   }
 
   const sendTokenValue =
