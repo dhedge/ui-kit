@@ -1,3 +1,5 @@
+import { RETH_BASE, WBTC_OPTIMISM } from 'core-kit/const/tokens'
+
 const FLATMONEY_LEVERAGED_ASSET_MAP = {
   RETH_BASE: '0xdb0cd65dcc7fe07003ce1201f91e1f966fa95768',
   WBTC_OPTIMISM: '0x6d857e9d24a7566bb72a3fb0847a3e0e4e1c2879',
@@ -9,14 +11,14 @@ export const FLAT_MONEY_LEVERAGED_ASSET_ADDRESSES = Object.values(
 
 export const FLAT_MONEY_COLLATERAL_MAP = {
   [FLATMONEY_LEVERAGED_ASSET_MAP.RETH_BASE]: {
-    symbol: 'rETH',
-    decimals: 18,
-    address: '0xb6fe221fe9eef5aba221c348ba20a1bf5e73624c',
+    symbol: RETH_BASE.symbol,
+    decimals: RETH_BASE.decimals,
+    address: RETH_BASE.address,
   },
   [FLATMONEY_LEVERAGED_ASSET_MAP.WBTC_OPTIMISM]: {
-    symbol: 'WBTC',
-    decimals: 8,
-    address: '0x68f180fcce6836688e9084f035309e29bf0a2095',
+    symbol: WBTC_OPTIMISM.symbol,
+    decimals: WBTC_OPTIMISM.decimals,
+    address: WBTC_OPTIMISM.address,
   },
 }
 
