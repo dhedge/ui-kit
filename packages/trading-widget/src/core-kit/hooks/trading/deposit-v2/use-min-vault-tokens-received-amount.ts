@@ -24,7 +24,7 @@ export const useMinVaultTokensReceivedAmount = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
-  const { entryFee = '0' } = usePoolDynamicContractData({ address, chainId })
+  const { entryFee = '0' } = usePoolDynamicContractData({ address })
   const entryFeeValue = getPercent(+entryFee, MANAGER_FEE_DENOMINATOR)
   const [{ slippage }] = useTradingPanelSettings()
   const isAutoSlippage = slippage === 'auto'
@@ -35,7 +35,7 @@ export const useMinVaultTokensReceivedAmount = () => {
     address: sendToken.address,
     chainId,
   })
-  const vaultTokenPrice = +usePoolTokenPrice({ address, chainId })
+  const vaultTokenPrice = +usePoolTokenPrice({ address })
 
   if (isDepositWithSwapTransaction) {
     const sendValue =

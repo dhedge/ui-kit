@@ -36,7 +36,6 @@ export const useGetInitWithdrawTransactionArguments = () => {
   const fetchComplexAssetData = useFetchInitWithdrawComplexAssetData(poolConfig)
   const vaultTokenPrice = usePoolTokenPrice({
     address: poolConfig.address,
-    chainId: poolConfig.chainId,
     formatter: tokenPriceFormatter,
   })
 

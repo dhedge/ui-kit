@@ -10,8 +10,6 @@ import {
   PoolLogicAbi,
   PoolManagerLogicAbi,
   RewardDistributionAbi,
-  SynthetixV3AssetGuard,
-  SynthetixV3CoreAbi,
   erc20Abi,
 } from 'core-kit/abi'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
@@ -34,8 +32,6 @@ import {
   LIMIT_ORDER_ADDRESS_BASE,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
   STAKING_V2_ADDRESS_OPTIMISM,
-  SYNTHETIX_V3_CORE_ADDRESS_ARBITRUM,
-  SYNTHETIX_V3_CORE_ADDRESS_BASE,
 } from './contracts'
 
 export type ContractId =
@@ -47,8 +43,6 @@ export type ContractId =
   | 'poolManagerLogic'
   | 'erc20'
   | 'poolLogic'
-  | 'synthetixV3AssetGuard'
-  | 'synthetixV3Core'
   | 'flatcoinPointsModule'
   | 'easySwapperV2'
   | 'limitOrder'
@@ -74,12 +68,10 @@ export const contractsAddressesMap: ContractsAddressesMap = {
   [arbitrum.id]: {
     factory: FACTORY_ADDRESS_ARBITRUM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_ARBITRUM,
-    synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_ARBITRUM,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
   },
   [base.id]: {
     factory: FACTORY_ADDRESS_BASE,
-    synthetixV3Core: SYNTHETIX_V3_CORE_ADDRESS_BASE,
     flatcoinPointsModule: FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_BASE,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_BASE,
@@ -97,13 +89,7 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   poolManagerLogic: PoolManagerLogicAbi,
   erc20: erc20Abi,
   poolLogic: PoolLogicAbi,
-  synthetixV3AssetGuard: SynthetixV3AssetGuard,
-  synthetixV3Core: SynthetixV3CoreAbi,
   flatcoinPointsModule: FlatcoinPointsModuleAbi,
   easySwapperV2: EasySwapperV2Abi,
   limitOrder: LimitOrderAbi,
-}
-
-export const QUERY_KEYS = {
-  SYNTHETIX_ORACLES_UPDATE: 'useOraclesUpdateTransactionData',
 }

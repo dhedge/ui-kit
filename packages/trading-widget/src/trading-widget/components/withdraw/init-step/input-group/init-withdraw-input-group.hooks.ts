@@ -8,13 +8,13 @@ import { useAssetPrice } from 'core-kit/hooks/trading'
 import { useUserTokenBalance } from 'core-kit/hooks/user'
 
 const useSendToken = () => {
-  const { address, chainId } = useTradingPanelPoolConfig()
+  const { address } = useTradingPanelPoolConfig()
   const [data, updater] = useSendTokenInput()
   const balance = useUserTokenBalance({
     symbol: data.symbol,
     address: data.address,
   })
-  const price = usePoolTokenPrice({ address, chainId })
+  const price = usePoolTokenPrice({ address })
 
   return {
     ...data,

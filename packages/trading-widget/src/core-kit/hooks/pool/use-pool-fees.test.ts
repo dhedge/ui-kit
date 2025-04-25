@@ -1,4 +1,4 @@
-import { MANAGER_FEE_DENOMINATOR, optimism } from 'core-kit/const'
+import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
 import * as stateHooks from 'core-kit/hooks/state'
 import { formatNumeratorToPercentage } from 'core-kit/utils'
@@ -18,7 +18,6 @@ vi.mock('core-kit/hooks/state', () => ({
 describe('usePoolFees', () => {
   it('should call usePoolDynamicContractData hook', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
 
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
       () =>
@@ -36,7 +35,7 @@ describe('usePoolFees', () => {
         >,
     )
 
-    renderHook(() => usePoolFees({ address, chainId }))
+    renderHook(() => usePoolFees({ address }))
 
     expect(
       vi.mocked(poolHooks.usePoolDynamicContractData),
@@ -45,13 +44,11 @@ describe('usePoolFees', () => {
       vi.mocked(poolHooks.usePoolDynamicContractData),
     ).toHaveBeenCalledWith({
       address,
-      chainId,
     })
   })
 
   it('should return performanceFee data', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
     const performanceFee = '1'
 
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
@@ -63,7 +60,7 @@ describe('usePoolFees', () => {
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
 
-    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+    const { result } = renderHook(() => usePoolFees({ address }))
 
     expect(result.current.performanceFee).toEqual(
       formatNumeratorToPercentage(performanceFee, MANAGER_FEE_DENOMINATOR),
@@ -72,7 +69,6 @@ describe('usePoolFees', () => {
 
   it('should return streamingFee data', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
     const streamingFee = '1'
 
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
@@ -84,7 +80,7 @@ describe('usePoolFees', () => {
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
 
-    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+    const { result } = renderHook(() => usePoolFees({ address }))
 
     expect(result.current.streamingFee).toEqual(
       formatNumeratorToPercentage(streamingFee, MANAGER_FEE_DENOMINATOR, 2),
@@ -93,7 +89,6 @@ describe('usePoolFees', () => {
 
   it('should return entryFee data', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
     const entryFee = '1'
 
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
@@ -105,7 +100,7 @@ describe('usePoolFees', () => {
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
 
-    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+    const { result } = renderHook(() => usePoolFees({ address }))
 
     expect(result.current.entryFee).toEqual(
       formatNumeratorToPercentage(entryFee, MANAGER_FEE_DENOMINATOR, 2),
@@ -114,7 +109,6 @@ describe('usePoolFees', () => {
 
   it('should return exit fee data', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
     const exitFee = '10'
 
     vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
@@ -127,7 +121,7 @@ describe('usePoolFees', () => {
         }) as ReturnType<typeof poolHooks.usePoolDynamicContractData>,
     )
 
-    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+    const { result } = renderHook(() => usePoolFees({ address }))
 
     expect(result.current.exitFee).toEqual('0.1%')
     expect(result.current.exitFeeNumber).toEqual(0.1)
@@ -135,7 +129,6 @@ describe('usePoolFees', () => {
 
   it('should rely on fallback fees', () => {
     const address = TEST_ADDRESS
-    const chainId = optimism.id
     const fallbackData = {
       performanceFeeNumerator: '100',
       streamingFeeNumerator: '200',
@@ -160,7 +153,7 @@ describe('usePoolFees', () => {
         >,
     )
 
-    const { result } = renderHook(() => usePoolFees({ address, chainId }))
+    const { result } = renderHook(() => usePoolFees({ address }))
 
     expect(result.current.performanceFee).toEqual('1%')
     expect(result.current.streamingFee).toEqual('2%')

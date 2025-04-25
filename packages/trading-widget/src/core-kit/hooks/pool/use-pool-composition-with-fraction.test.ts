@@ -17,7 +17,6 @@ vi.mock('core-kit/utils', () => ({
   getConventionalTokenPriceDecimals: vi.fn(),
   getPoolFraction: vi.fn(),
   shiftBy: vi.fn(),
-  isSynthetixV3Asset: vi.fn(),
 }))
 
 vi.mock('./use-pool-dynamic-contract-data', () => ({

@@ -3,13 +3,11 @@ import classNames from 'classnames'
 
 import { useCallback } from 'react'
 
-import { SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP } from 'core-kit/const'
 import type { PoolCompositionWithFraction } from 'core-kit/types'
 import {
   getFlatMoneyCollateralByLeverageAddress,
   getFlatMoneyLinkByUnitAddress,
   isFlatMoneyLeveragedAsset,
-  isSynthetixV3Asset,
 } from 'core-kit/utils'
 import { Skeleton, TokenBadge } from 'trading-widget/components/common'
 
@@ -45,7 +43,6 @@ export const AllAssetsCompositionTable = ({
       tokenAddress,
     }: PoolCompositionWithFraction) => {
       const isLeveragedFlatMoneyAsset = isFlatMoneyLeveragedAsset(tokenAddress)
-      const isSynthetixAsset = isSynthetixV3Asset(tokenAddress)
 
       return (
         <tr key={tokenName}>
@@ -65,14 +62,6 @@ export const AllAssetsCompositionTable = ({
               <WithdrawExplanationTip
                 symbol={
                   getFlatMoneyCollateralByLeverageAddress(tokenAddress).symbol
-                }
-              />
-            )}
-            {isSynthetixAsset && (
-              <WithdrawExplanationTip
-                symbol={
-                  SYNTHETIX_V3_VAULTS_WITHDRAW_ASSET_SYMBOL_MAP[address] ??
-                  'Synthetix V3'
                 }
               />
             )}
