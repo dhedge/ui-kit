@@ -15,7 +15,7 @@ interface WidgetSettingsProps {
 
 export const WidgetSettings: FC<WidgetSettingsProps> = ({ tradingType }) => (
   <TabGroup selectedIndex={TABS.indexOf(tradingType)}>
-    <TabList className="dtw-flex dtw-px-[var(--panel-tab-group-px)]">
+    <TabList className="dtw-flex">
       {TABS.map((tradingType) => (
         <Tab key={tradingType} className="dtw-hidden" />
       ))}

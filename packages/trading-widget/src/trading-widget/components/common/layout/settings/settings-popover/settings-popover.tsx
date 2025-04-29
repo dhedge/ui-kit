@@ -32,7 +32,12 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
   }
 
   return (
-    <Popover className={classNames('dtw-flex dtw-items-center', className)}>
+    <Popover
+      className={classNames(
+        'dtw-flex dtw-items-center dtw-justify-end',
+        className,
+      )}
+    >
       <PopoverButton onClick={handleClick}>
         <Cog6ToothIcon
           className={classNames(

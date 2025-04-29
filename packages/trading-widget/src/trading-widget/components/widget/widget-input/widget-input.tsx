@@ -55,12 +55,19 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
       onClick={onContainerClick}
     >
       <div className="dtw-flex dtw-justify-between dtw-text-[length:var(--panel-input-label-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-label-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-label-font-weight,var(--panel-font-weight-light))] dtw-gap-x-2">
-        <span className={textColorClassNames}>{label}</span>
+        <span
+          className={classNames(textColorClassNames, {
+            'dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
+              isLoading || type === THEME_TYPE.DEFAULT,
+          })}
+        >
+          {label}
+        </span>
         <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1">
           {displayCalculatedValue && (
             <>
               {isLoading ? (
-                <div className="dtw-ml-auto dtw-h-[22px]">
+                <div className="dtw-ml-auto dtw-h-[18px]">
                   <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
                 </div>
               ) : (
@@ -70,6 +77,8 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
                     {
                       'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
                         isLoading,
+                      '!dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] !dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
+                        !isLoading && type === THEME_TYPE.DEFAULT,
                     },
                     textColorClassNames,
                   )}
@@ -89,7 +98,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
           ) : (
             <input
               className={classNames(
-                'dtw-appearance-none dtw-bg-transparent dtw-text-[color:var(--panel-input-content-color,var(--panel-content-color))] placeholder:dtw-text-[color:var(--panel-input-placeholder-color,var(--panel-secondary-content-color))] dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-font-weight,var(--panel-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--panel-input-font-size-lg,var(--panel-font-size-lg))] lg:dtw-leading-[var(--panel-input-line-height-lg,var(--panel-line-height-lg))] dtw-w-full',
+                'dtw-appearance-none dtw-bg-transparent dtw-text-[color:var(--panel-input-content-color,var(--panel-content-color))] placeholder:dtw-text-[color:var(--panel-input-placeholder-color,var(--panel-secondary-content-color))] dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))] !dtw-leading-[var(--panel-input-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-font-weight,var(--panel-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--panel-input-font-size-lg,var(--panel-font-size-lg))] lg:dtw-leading-[var(--panel-input-line-height-lg,var(--panel-line-height-lg))] dtw-w-full',
                 textColorClassNames,
               )}
               ref={inputRef}

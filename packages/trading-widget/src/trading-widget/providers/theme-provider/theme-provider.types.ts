@@ -86,7 +86,18 @@ export interface ThemeProviderConfigProps {
       size?: {
         px?: string
       }
-      style?: object
+    }
+    tabList?: {
+      color?: {
+        colorBg?: string
+      }
+      style?: {
+        radius?: string
+      }
+      size?: {
+        px?: string
+        py?: string
+      }
     }
     tabContent?: {
       color?: object
@@ -221,6 +232,8 @@ export interface ThemeProviderConfigProps {
       color?: {
         colorBgChecked?: string
         colorBg?: string
+        color?: string
+        colorChecked?: string
       }
       size?: object
       style?: object
