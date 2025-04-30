@@ -8,6 +8,7 @@ export type TranslationMap = {
   modify: string
   invalidLimitOrderPriceError: string
   invalidLimitOrderPriceErrorReversed: string
+  minimumVaultBalanceRequired: string
   [key: string]: string
 }
 

@@ -8,6 +8,7 @@ import { LimitOrderApproveButton } from 'limit-orders/component/limit-order-butt
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
 import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
+import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
 import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
 import { LimitOrderStateProvider } from 'limit-orders/providers/state-provider/state-provider'
 import type {
@@ -28,7 +29,8 @@ type LimitOrderModalProps = {
 } & Pick<
   LimitOrderState,
   'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
->
+> &
+  Partial<Pick<LimitOrderState, 'minAmountInUsd'>>
 
 const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
   children,
@@ -71,12 +73,19 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   vaultAddress,
   pricingAsset,
   translation,
+  minAmountInUsd = DEFAULT_MIN_ORDER_AMOUNT,
   isReversedOrder = false,
   actions,
 }) => {
   const initialState = useMemo(
-    () => ({ vaultAddress, vaultChainId, pricingAsset, isReversedOrder }),
-    [vaultAddress, vaultChainId, pricingAsset, isReversedOrder],
+    () => ({
+      vaultAddress,
+      vaultChainId,
+      pricingAsset,
+      isReversedOrder,
+      minAmountInUsd,
+    }),
+    [vaultAddress, vaultChainId, pricingAsset, isReversedOrder, minAmountInUsd],
   )
   return (
     <TranslationProvider config={translation}>

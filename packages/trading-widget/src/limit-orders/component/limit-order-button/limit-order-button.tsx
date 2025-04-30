@@ -6,13 +6,26 @@ import { useTranslationContext } from 'limit-orders/providers/translation-provid
 
 export const LimitOrderButton: FC = () => {
   const t = useTranslationContext()
-  const { modifyLimitOrder, disabled, error, isPending } = useLimitOrderButton()
+  const {
+    modifyLimitOrder,
+    disabled,
+    error,
+    isPending,
+    minAmount,
+    isAmountSufficient,
+  } = useLimitOrderButton()
+
   return (
     <div>
       {error && (
         <div className="dtw-mb-2 dtw-flex dtw-flex-col dtw-gap-1 dtw-text-error">
           <span className="dtw-text-sm">{error.title}</span>
           {error.hint && <span className="dtw-text-xs">{error.hint}</span>}
+        </div>
+      )}
+      {!isAmountSufficient && (
+        <div className="dtw-mb-1 dtw-text-warning dtw-text-sm">
+          {t.minimumVaultBalanceRequired.replace('{amount}', minAmount)}
         </div>
       )}
       <ActionButton
