@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import classNames from 'classnames'
+import { Fragment } from 'react'
 import type { FC, PropsWithChildren } from 'react'
 
 import { useWithdrawStepper } from 'trading-widget/components/withdraw/stepper/withdraw-stepper.hooks'
@@ -20,7 +21,7 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
         const isActive = step.index === activeStepIndex
         const isLast = index === steps.length - 1
         return (
-          <>
+          <Fragment key={step.index}>
             <div
               className={classNames(
                 'dtw-grid dtw-grid-cols-1 dtw-h-full dtw-gap-0.5',
@@ -75,7 +76,7 @@ export const WithdrawStepper: FC<PropsWithChildren> = ({
                 </div>
               )}
             </div>
-          </>
+          </Fragment>
         )
       })}
     </div>

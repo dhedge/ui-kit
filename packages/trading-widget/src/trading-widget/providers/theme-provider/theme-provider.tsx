@@ -196,7 +196,27 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //tab-group-spacing
         '--panel-tab-group-px': `${
           config?.component?.tabGroup?.size?.px ??
+          'calc(var(--panel-spacer) * 6)'
+        }`,
+
+        //tab-list
+        //tab-list-color
+        '--panel-tab-list-bg': `${
+          config?.component?.tabList?.color?.colorBg ?? COLORS.DARK.DEFAULT
+        }`,
+        //tab-list-spacing
+        '--panel-tab-list-px': `${
+          config?.component?.tabList?.size?.px ??
           'calc(var(--panel-spacer) * 3)'
+        }`,
+        '--panel-tab-list-py': `${
+          config?.component?.tabList?.size?.py ??
+          'calc(var(--panel-spacer) * 2)'
+        }`,
+        //tab-list-sizing
+        '--panel-tab-list-radius': `${
+          config?.component?.tabList?.style?.radius ??
+          'var(--panel-radius-secondary)'
         }`,
 
         //tab-content
@@ -220,7 +240,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.tab?.size?.px ?? 'calc(var(--panel-spacer) * 9)'
         }`,
         '--panel-tab-py': `${
-          config?.component?.tab?.size?.py ?? 'calc(var(--panel-spacer) * 3)'
+          config?.component?.tab?.size?.py ?? 'calc(var(--panel-spacer) * 2)'
         }`,
         // tab-color
         '--panel-tab-bg': `${
@@ -244,7 +264,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         }`,
         '--panel-tab-font-weight': `${
           config?.component?.tab?.style?.fontWeight ??
-          'var(--panel-font-weight-bold)'
+          'var(--panel-font-weight-medium)'
         }`,
         '--panel-tab-line-height': `${
           config?.component?.tab?.style?.lineHeight ??
@@ -255,7 +275,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         // balance-spacing
         '--panel-balance-group-px': `${
           config?.component?.balance?.size?.px ??
-          'calc(var(--panel-spacer) * 3)'
+          'calc(var(--panel-spacer) * 6)'
         }`,
         '--panel-balance-group-gap': `${
           config?.component?.balance?.size?.gap ?? 'var(--panel-gap)'
@@ -294,7 +314,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         }`,
         '--panel-inputs-group-px': `${
           config?.component?.inputGroup?.size?.px ??
-          'calc(var(--panel-spacer) * 3)'
+          'calc(var(--panel-spacer) * 6)'
         }`,
 
         //input
@@ -493,7 +513,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.meta?.size?.gap ?? 'var(--panel-gap)'
         }`,
         '--panel-meta-group-px': `${
-          config?.component?.meta?.size?.px ?? 'calc(var(--panel-spacer) * 3)'
+          config?.component?.meta?.size?.px ?? 'calc(var(--panel-spacer) * 6)'
         }`,
         //meta-color
         '--panel-meta-link-color': `${
@@ -523,6 +543,9 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--panel-switch-bg': `${
           config?.component?.switch?.color?.colorBg ?? COLORS.GRAY['700']
         }`,
+        '--panel-switch-color-checked':
+          config?.component?.switch?.color?.colorChecked,
+        '--panel-switch-color': config?.component?.switch?.color?.color,
       }}
     >
       {children}

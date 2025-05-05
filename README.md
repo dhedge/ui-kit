@@ -283,6 +283,18 @@ path: `component.tabGroup[name]`
 > | --------- | ------ | ------------------------ | ------------------------ |
 > | `size.px` | string | `global.size.spacer * 3` | Tab group padding inline |
 
+###### tabList
+
+path: `component.tabList[name]`
+
+> | name            | type   | default value                  | description               |
+> |-----------------| ------ |--------------------------------|---------------------------|
+> | `color.colorBg` | string | `#181C25`                      | Tab list bg color         |
+> | `style.radius`  | string | `global.style.radiusSecondary` | Tab list border radius    |
+> | `size.px`       | string | `global.size.spacer * 3`       | Tab list padding inline   |
+> | `size.py`       | string | `global.size.spacer * 2`       | Tab list padding vertical |
+
+
 ###### tabContent
 
 path: `component.tabContent[name]`
@@ -389,10 +401,12 @@ path: `component.tooltip[name]`
 
 path: `component.switch[name]`
 
-> | name                   | type   | default value | description               |
-> | ---------------------- | ------ | ------------- | ------------------------- |
-> | `color.colorBgChecked` | string | `#152E4D`     | Switch checked bg color   |
-> | `color.colorBg`        | string | `#4C505B`     | Switch unchecked bg color |
+> | name                   | type   | default value | description                 |
+> |------------------------| ------ |---------------|-----------------------------|
+> | `color.colorBgChecked` | string | `#152E4D`     | Switch checked bg color     |
+> | `color.colorBg`        | string | `#4C505B`     | Switch unchecked bg color   |
+> | `color.color`          | string | ``            | Switch unchecked text color |
+> | `color.colorChecked`   | string | ``            | Switch checked text color   |
 
 ###### actionButton
 

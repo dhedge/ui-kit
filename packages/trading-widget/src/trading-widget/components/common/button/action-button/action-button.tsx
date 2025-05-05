@@ -15,13 +15,13 @@ export interface ActionButtonProps {
 const NON_HIGHLIGHTED_CLASSNAMES = [
   'dtw-bg-transparent',
   'dtw-border-[var(--panel-action-outline-button-border-color,var(--panel-border-color))]',
-  'dtw-text-[color:var(--panel-action-outline-button-color,var(--panel-content-color))]',
+  '!dtw-text-[color:var(--panel-action-outline-button-color,var(--panel-content-color))]',
   'active:dtw-border-opacity-100',
   'hover:enabled:dtw-border-[var(--panel-action-outline-button-border-hover-color)]',
 ]
 
 const HIGHLIGHTED_CLASSNAMES = [
-  'dtw-text-[color:var(--panel-action-accent-button-color,var(--panel-accent-content-color))]',
+  '!dtw-text-[color:var(--panel-action-accent-button-color,var(--panel-accent-content-color))]',
   'dtw-bg-gradient-to-r',
   'dtw-from-[var(--panel-action-accent-button-bg-from,var(--panel-accent-from-color))]',
   'dtw-to-[var(--panel-action-accent-button-bg-to,var(--panel-accent-to-color))]',
