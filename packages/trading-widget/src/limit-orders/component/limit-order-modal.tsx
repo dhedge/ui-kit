@@ -6,6 +6,7 @@ import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { InputGroup } from 'limit-orders/component/input-group/input-group'
 import { LimitOrderApproveButton } from 'limit-orders/component/limit-order-button/limit-order-approve-button'
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
+import { LimitOrderDeleteButton } from 'limit-orders/component/limit-order-button/limit-order-delete-button'
 import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
 import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
@@ -50,15 +51,16 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
         className="limit-order"
       >
         <ModalContent
-          title="Set limit orders"
+          title="Set limit sells"
           className="dtw-text-[color:var(--limit-order-content-color)] dtw-max-w-[430px]"
         >
-          <div className="dtw-flex dtw-flex-col dtw-gap-3">
+          <div className="dtw-flex dtw-flex-col dtw-gap-2">
             <InputGroup />
             <NetworkCheckButton>
               <LimitOrderApproveButton>
                 <LimitOrderButton />
               </LimitOrderApproveButton>
+              <LimitOrderDeleteButton />
             </NetworkCheckButton>
           </div>
         </ModalContent>
