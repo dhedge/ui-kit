@@ -29,7 +29,9 @@
   }
 
   .theme-scrollbar::-webkit-scrollbar-thumb {
-    @apply dtw-rounded-full dtw-bg-themeGreen-600/50;
+    @apply dtw-rounded-full;
+    
+    background-color: var(--panel-scrollbar-color);
   }
 
   .transparent-scrollbar::-webkit-scrollbar {

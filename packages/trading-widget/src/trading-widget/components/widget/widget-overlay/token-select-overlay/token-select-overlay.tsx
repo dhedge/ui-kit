@@ -34,7 +34,7 @@ export const TokenSelectOverlay: FC<TokenSelectOverlayProps> = ({
       <span className="dtw-text-center dtw-text-[length:var(--panel-font-size-sm)] dtw-font-[var(--panel-font-weight-medium)]">
         {t.selectToken}
       </span>
-      <ul className="dtw-grid dtw-gap-[calc(var(--panel-gap) * 0.5)] dtw-overflow-y-auto">
+      <ul className="theme-scrollbar dtw-grid dtw-gap-[calc(var(--panel-gap) * 0.5)] dtw-overflow-y-auto">
         {tokenList.map((token) => {
           const isActive = activeTokens.some(
             ({ address, symbol }) =>
