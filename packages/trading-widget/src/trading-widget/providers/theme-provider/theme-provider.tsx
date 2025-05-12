@@ -90,6 +90,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           `var(--panel-content-color)`
         }`,
 
+        //scrollbar
+        '--panel-scrollbar-color': `${
+          config?.global?.color?.colorScrollbar ?? `${COLORS.GREEN.DEFAULT}80`
+        }`,
+
         //global-size
         '--panel-font-size': `${config?.global?.size?.fontSizeBase ?? '16px'}`,
         '--panel-line-height': `${
