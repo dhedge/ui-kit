@@ -81,18 +81,18 @@ Top level provider component. Headless part of trading logic. API handles params
 <details>
 <summary><code>initialState</code> <code><b>/</b></code> <code>Optional initial state of trading panel</code></summary>
 
-> | name               | type                                                                                                                                                                                                                                | default value                                                                                                              | description                                                                                     |
-> | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-> | `poolAddress`      | Address                                                                                                                                                                                                                             | `AddressZero`                                                                                                              | Current active pool address                                                                     |
-> | `poolConfigMap`    | Record<Address, PoolConfig>                                                                                                                                                                                                         | `{}`                                                                                                                       | Map of pool configs available for trading                                                       |
-> | `settings`         | { slippage: `number \| 'auto'`; minSlippage?: `number`; isInfiniteAllowance: `boolean`; isMultiAssetWithdrawalEnabled: `boolean`; isMaxSlippageLoading: `boolean` }                                                                 | { slippage: `'auto'`; isInfiniteAllowance: `false`; isMultiAssetWithdrawalEnabled: `true`; isMaxSlippageLoading: `false` } | Panel settings                                                                                  |
-> | `type`             | 'deposit' \| 'withdraw'                                                                                                                                                                                                             | `'deposit'`                                                                                                                | Trading type                                                                                    |
+> | name               | type                                                                                                                                                                                                                                    | default value                                                                                                              | description                                                                                     |
+> | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+> | `poolAddress`      | Address                                                                                                                                                                                                                                 | `AddressZero`                                                                                                              | Current active pool address                                                                     |
+> | `poolConfigMap`    | Record<Address, PoolConfig>                                                                                                                                                                                                             | `{}`                                                                                                                       | Map of pool configs available for trading                                                       |
+> | `settings`         | { slippage: `number \| 'auto'`; minSlippage?: `number`; isInfiniteAllowance: `boolean`; isMultiAssetWithdrawalEnabled: `boolean`; isMaxSlippageLoading: `boolean` }                                                                     | { slippage: `'auto'`; isInfiniteAllowance: `false`; isMultiAssetWithdrawalEnabled: `true`; isMaxSlippageLoading: `false` } | Panel settings                                                                                  |
+> | `type`             | 'deposit' \| 'withdraw'                                                                                                                                                                                                                 | `'deposit'`                                                                                                                | Trading type                                                                                    |
 > | `input`            | { sendToken: { address: `Address`; symbol: `string`; value: `string`; decimals: `number`; isLoading?: `boolean` }; receiveToken: { address: `Address`; symbol: `string`; value: `string`; decimals: `number`; isLoading?: `boolean` } } | `poolConfigMap[poolAddress]`                                                                                               | Send/receive tokens pair                                                                        |
-> | `entryFee`         | { deposit: `number`; depositWithCustomCooldown: `number`; }                                                                                                                                                                         | { deposit: `0`; depositWithCustomCooldown: `0.1` }                                                                         | Entry fee config map                                                                            |
-> | `modal`            | { isOpen: `boolean`; status: `'Success' \| 'None' \| 'Mining' \|  'Wallet'`; action: `'deposit' \| 'withdraw' \| 'approve  \`; link?: `string`; sendToken: TradingToken \| null; receiveToken: TradingToken \| null }  | `{ isOpen: `false`,status: `'None'`, receiveToken: `null`, sendToken: `null` }`                                            | Trading modal state                                                                             |
-> | `transactions`     | { action: `'deposit' \| 'withdraw' \| 'approve'`; symbol: `string`; chainId: `ChainId`; txHash?: `Address` }[]                                                                                                                      | `[]`                                                                                                                       | Pending transactions                                                                            |
-> | `poolFallbackData` | { address: `Address`; managerLogicAddress?: `Address`; poolCompositions: `PoolComposition[]`; tokenPrice?: `string`; apy?: { value: `number`; currency: `'USD' \| 'ETH'` } }                                                        | { address: `AddressZero` }                                                                                                 | Current active pool fallback data to override or extend contract's response                     |
-> | `defaultChainId`   | number (optional)                                                                                                                                                                                                                   | undefined                                                                                                                  | Chain id that will be returned from useNetwork wagmi hook when connected to unsupported network |
+> | `entryFee`         | { deposit: `number`; depositWithCustomCooldown: `number`; }                                                                                                                                                                             | { deposit: `0`; depositWithCustomCooldown: `0.1` }                                                                         | Entry fee config map                                                                            |
+> | `modal`            | { isOpen: `boolean`; status: `'Success' \| 'None' \| 'Mining' \|  'Wallet'`; action: `'deposit' \| 'withdraw' \| 'approve  \`; link?: `string`; sendToken: TradingToken \| null; receiveToken: TradingToken \| null }                   | `{ isOpen: `false`,status: `'None'`, receiveToken: `null`, sendToken: `null` }`                                            | Trading modal state                                                                             |
+> | `transactions`     | { action: `'deposit' \| 'withdraw' \| 'approve'`; symbol: `string`; chainId: `ChainId`; txHash?: `Address` }[]                                                                                                                          | `[]`                                                                                                                       | Pending transactions                                                                            |
+> | `poolFallbackData` | { address: `Address`; managerLogicAddress?: `Address`; poolCompositions: `PoolComposition[]`; tokenPrice?: `string`; apy?: { value: `number`; currency: `'USD' \| 'ETH'` } }                                                            | { address: `AddressZero` }                                                                                                 | Current active pool fallback data to override or extend contract's response                     |
+> | `defaultChainId`   | number (optional)                                                                                                                                                                                                                       | undefined                                                                                                                  | Chain id that will be returned from useNetwork wagmi hook when connected to unsupported network |
 
 ###### Source: `packages/trading-widget/src/core-kit/providers/index.tsx`
 
@@ -204,7 +204,8 @@ path: `global.color[name]`
 > | `colorTextLoading`       | string | `#ffffff99`                                  | Loading text color                    |
 > | `colorTextError`         | string | `#EF4444`                                    | Error text color                      |
 > | `colorTextWarning`       | string | `#AFA58D`                                    | Warning text color                    |
-> | `colorIcon`              | string | `global?.color?.colorTextPrimary ?? #ffffff` | Warning text color                    |
+> | `colorIcon`              | string | `global?.color?.colorTextPrimary ?? #ffffff` | Icon color                            |
+> | `colorScrollbar`         | string | `#73D39380`                                  | Scrollbar color                       |
 
 ###### size
 
@@ -282,6 +283,17 @@ path: `component.tabGroup[name]`
 > | name      | type   | default value            | description              |
 > | --------- | ------ | ------------------------ | ------------------------ |
 > | `size.px` | string | `global.size.spacer * 3` | Tab group padding inline |
+
+###### tabList
+
+path: `component.tabList[name]`
+
+> | name            | type   | default value                  | description               |
+> | --------------- | ------ | ------------------------------ | ------------------------- |
+> | `color.colorBg` | string | `#181C25`                      | Tab list bg color         |
+> | `style.radius`  | string | `global.style.radiusSecondary` | Tab list border radius    |
+> | `size.px`       | string | `global.size.spacer * 3`       | Tab list padding inline   |
+> | `size.py`       | string | `global.size.spacer * 2`       | Tab list padding vertical |
 
 ###### tabContent
 
@@ -389,10 +401,12 @@ path: `component.tooltip[name]`
 
 path: `component.switch[name]`
 
-> | name                   | type   | default value | description               |
-> | ---------------------- | ------ | ------------- | ------------------------- |
-> | `color.colorBgChecked` | string | `#152E4D`     | Switch checked bg color   |
-> | `color.colorBg`        | string | `#4C505B`     | Switch unchecked bg color |
+> | name                   | type   | default value | description                 |
+> | ---------------------- | ------ | ------------- | --------------------------- |
+> | `color.colorBgChecked` | string | `#152E4D`     | Switch checked bg color     |
+> | `color.colorBg`        | string | `#4C505B`     | Switch unchecked bg color   |
+> | `color.color`          | string | ``            | Switch unchecked text color |
+> | `color.colorChecked`   | string | ``            | Switch checked text color   |
 
 ###### actionButton
 

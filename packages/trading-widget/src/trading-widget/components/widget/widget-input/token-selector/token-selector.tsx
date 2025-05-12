@@ -27,10 +27,10 @@ export const TokenSelector: FC<TokenSelectorProps> = ({ symbol }) => {
       <TokenBadge
         symbol={symbol}
         iconSymbols={hideTokenIcon ? [] : [symbol]}
-        symbolClasses="dtw-font-[var(--panel-input-token-font-weight,var(--panel-font-weight-medium))] dtw-text-[length:var(--panel-input-token-font-size,var(--panel-font-size-xs))] dtw-line-height-[length:var(--panel-input-token-line-height,var(--panel-line-height-xs))] sm:dtw-text-[length:var(--panel-input-token-font-size-sm,var(--panel-font-size))] sm:dtw-leading-[var(--panel-input-token-line-height-sm,var(--panel-line-height))]"
+        symbolClasses="dtw-font-[var(--panel-input-token-font-weight,var(--panel-font-weight-medium))] dtw-text-[length:var(--panel-input-token-font-size,var(--panel-font-size-xs))] dtw-line-height-[length:var(--panel-input-token-line-height,var(--panel-line-height-xs))] sm:dtw-text-[length:var(--panel-input-token-font-size-sm,var(--panel-font-size))] sm:dtw-leading-[var(--panel-input-token-line-height-sm,var(--panel-line-height))] dtw-text-[color:var(--panel-input-button-content-color)]"
         CustomIcon={
           isAllSymbol ? (
-            <CircleStackIcon className="dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))]" />
+            <CircleStackIcon className="dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))]" />
           ) : undefined
         }
         customTitle={isAllSymbol ? t.all : undefined}

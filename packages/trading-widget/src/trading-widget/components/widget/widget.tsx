@@ -30,7 +30,7 @@ export const Widget: FC = () => {
     <div className="trading-widget dtw-relative dtw-pt-3 dtw-bg-[var(--panel-background-color)] dtw-text-[color:var(--panel-content-color)] dtw-rounded-[var(--panel-radius)] dtw-overflow-hidden">
       <TabGroup selectedIndex={TABS.indexOf(type)} onChange={onTabChange}>
         <WidgetTabs>
-          <div className="dtw-flex dtw-gap-1 dtw-items-center">
+          <div className="dtw-flex dtw-gap-2 dtw-items-center dtw-justify-end">
             <ReloadSwapQuoteButton />
             <WidgetSettings tradingType={type} />
           </div>

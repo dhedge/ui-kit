@@ -32,11 +32,16 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
   }
 
   return (
-    <Popover className={classNames('dtw-flex dtw-items-center', className)}>
+    <Popover
+      className={classNames(
+        'dtw-flex dtw-items-center dtw-justify-end',
+        className,
+      )}
+    >
       <PopoverButton onClick={handleClick}>
         <Cog6ToothIcon
           className={classNames(
-            'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] hover:dtw-opacity-80',
+            'dtw-h-[var(--panel-input-token-icon-size,var(--panel-icon-size))] dtw-w-[var(--panel-input-token-icon-size,var(--panel-icon-size))] sm:dtw-w-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] sm:dtw-h-[var(--panel-input-token-icon-size-sm,var(--panel-icon-size-sm))] hover:dtw-opacity-80 dtw-text-[color:var(--panel-icon-color,var(--panel-content-color))]',
             iconClassName,
           )}
         />
