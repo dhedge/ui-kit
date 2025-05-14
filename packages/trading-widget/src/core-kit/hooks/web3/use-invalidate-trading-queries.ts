@@ -14,6 +14,7 @@ const tradingContractCalls = [
   'withdrawalContracts',
   'getTrackedAssets',
   'getAssetPrice',
+  'allowance',
 ]
 const allowanceContractCalls = ['allowance']
 
