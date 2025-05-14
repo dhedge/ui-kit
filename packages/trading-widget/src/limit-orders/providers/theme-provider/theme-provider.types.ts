@@ -26,6 +26,8 @@ export interface ThemeProviderConfigProps {
       //warning
       colorTextWarning?: string
       colorIcon?: string
+      //scrollbar
+      colorScrollbar?: string
     }
     size?: {
       gap?: string

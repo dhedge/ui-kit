@@ -3,6 +3,7 @@ import { createContext, useCallback, useMemo, useReducer } from 'react'
 
 import { AddressZero } from 'core-kit/const'
 
+import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
 import {
   DEFAULT_FORM_DATA,
   reducer,
@@ -29,6 +30,7 @@ export const getDefaultLimitOrderState = (
     pendingTransaction: null,
     pricingAsset: config.pricingAsset,
     isReversedOrder: config.isReversedOrder ?? false,
+    minAmountInUsd: config.minAmountInUsd,
   }
 }
 
@@ -40,6 +42,7 @@ export const LimitOrderStateContext = createContext<LimitOrderState>(
       address: AddressZero,
       symbol: '',
     },
+    minAmountInUsd: DEFAULT_MIN_ORDER_AMOUNT,
   }),
 )
 

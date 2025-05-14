@@ -3,7 +3,8 @@ import type { FC } from 'react'
 
 import { PriceInput } from 'limit-orders/component/common/price-input'
 import { useInputGroup } from 'limit-orders/component/input-group/input-group.hooks'
-import {useTranslationContext} from "limit-orders/providers/translation-provider";
+import { TermsContent } from 'limit-orders/component/input-group/terms-content'
+import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 
 export const InputGroup: FC = () => {
   const t = useTranslationContext()
@@ -58,15 +59,16 @@ export const InputGroup: FC = () => {
           id="limitOrderCheckbox"
           checked={termsAccepted}
           onChange={(e) => setTermsAccepted(e.target.checked)}
-          className="dtw-h-4 dtw-w-4 dtw-rounded dtw-cursor-pointer "
+          className="dtw-h-4 dtw-w-4 dtw-rounded dtw-cursor-pointer"
         />
         <label
           htmlFor="limitOrderCheckbox"
-          className="dtw-text-sm dtw-cursor-pointer "
+          className="dtw-text-sm dtw-cursor-pointer"
         >
           {t.limitOrderTerms}
         </label>
       </div>
+      <TermsContent />
     </>
   )
 }
