@@ -1,11 +1,7 @@
 import { useState } from 'react'
 
-import { AddressZero } from 'core-kit/const'
-import {
-  useAccount,
-  useBalance,
-  useContractFunction,
-} from 'core-kit/hooks/web3'
+import { MaxUint256 } from 'core-kit/const'
+import { useContractFunction } from 'core-kit/hooks/web3'
 import { getContractAddressById } from 'core-kit/utils'
 import {
   useLimitOrderActions,
@@ -13,18 +9,11 @@ import {
 } from 'limit-orders/hooks/state'
 
 export const useLimitOrderApproveTransaction = () => {
-  const { account = AddressZero } = useAccount()
   const { vaultAddress, vaultChainId, pendingTransaction } =
     useLimitOrderState()
   const { setPendingTransaction } = useLimitOrderActions()
   const [isLoading, setIsLoading] = useState(false)
   const limitOrderAddress = getContractAddressById('limitOrder', vaultChainId)
-
-  const { data: vaultBalance } = useBalance({
-    address: account,
-    token: vaultAddress,
-    chainId: vaultChainId,
-  })
 
   const { send } = useContractFunction({
     contractId: 'erc20',
@@ -38,7 +27,7 @@ export const useLimitOrderApproveTransaction = () => {
 
   const approveLimitOrder = async () => {
     setIsLoading(true)
-    send(limitOrderAddress, vaultBalance?.value)
+    send(limitOrderAddress, MaxUint256)
   }
 
   return {

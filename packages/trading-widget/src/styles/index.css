@@ -30,8 +30,7 @@
 
   .theme-scrollbar::-webkit-scrollbar-thumb {
     @apply dtw-rounded-full;
-    
-    background-color: var(--panel-scrollbar-color);
+    background-color: var(--panel-scrollbar-color, var(--limit-order-scrollbar-color));
   }
 
   .transparent-scrollbar::-webkit-scrollbar {

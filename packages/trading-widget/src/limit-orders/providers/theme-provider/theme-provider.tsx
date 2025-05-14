@@ -90,6 +90,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           `var(--limit-order-content-color)`
         }`,
 
+        //scrollbar
+        '--limit-order-scrollbar-color': `${
+          config?.global?.color?.colorScrollbar ?? `${COLORS.GREEN.DEFAULT}80`
+        }`,
+
         //global-size
         '--limit-order-font-size': `${config?.global?.size?.fontSizeBase ?? '16px'}`,
         '--limit-order-line-height': `${
