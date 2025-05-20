@@ -50,7 +50,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   pending: 'Pending...',
   approve: 'Approve',
   connectWallet: 'Connect Wallet',
-  minimumPurchase: 'Minimum purchase is ${value}',
+  minimumPurchase: 'Minimum purchase is {value}',
   poolIsInactive:
     '{poolSymbol} token is no longer active. Please withdraw from them.',
   poolDepositsAreMaintenance:

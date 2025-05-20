@@ -1,7 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
 
-import { commify } from 'core-kit/utils'
-
 import {
   ActionButton,
   DisabledButtonWithPrompt,
@@ -22,7 +20,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
 
   const {
     requiresMinDeposit,
-    minDepositUSD,
+    requiredMinDepositAmount,
     requiresApprove,
     requiresWhitelist,
     requiresHighSlippageConfirm,
@@ -38,10 +36,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
   if (requiresMinDeposit) {
     return (
       <Button disabled>
-        {t.minimumPurchase.replace(
-          '{value}',
-          commify(minDepositUSD.toString() ?? ''),
-        )}
+        {t.minimumPurchase.replace('{value}', requiredMinDepositAmount)}
       </Button>
     )
   }
