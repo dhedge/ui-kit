@@ -1,15 +1,17 @@
 import { useCallback } from 'react'
 
-import type { Hash } from 'viem'
-
 import { useLimitOrderActions } from 'limit-orders/hooks/state'
+import type { OnLimitOrderSettled } from 'limit-orders/providers/state-provider/state-provider.types'
 
-export const useOnLimitOrderSettled = () => {
-  const { setIsModalOpen, reset, setPendingTransaction } =
+export const useOnLimitOrderSettled = (): OnLimitOrderSettled => {
+  const { setIsModalOpen, reset, setPendingTransaction, onTransactionSettled } =
     useLimitOrderActions()
 
-  return useCallback(
-    (transaction: Hash | undefined) => {
+  return useCallback<OnLimitOrderSettled>(
+    (...params) => {
+      const [transaction] = params
+      onTransactionSettled?.(...params)
+
       if (!transaction) {
         return setPendingTransaction(null)
       }
@@ -18,6 +20,6 @@ export const useOnLimitOrderSettled = () => {
       setIsModalOpen(false)
       reset()
     },
-    [reset, setIsModalOpen, setPendingTransaction],
+    [reset, setIsModalOpen, setPendingTransaction, onTransactionSettled],
   )
 }

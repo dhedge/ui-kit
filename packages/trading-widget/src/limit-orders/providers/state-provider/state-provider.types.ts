@@ -1,5 +1,7 @@
 import type { Address, Hash } from 'viem'
 
+import type { UseWriteContractParameters } from 'core-kit/types/web3.types'
+
 export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
@@ -18,9 +20,14 @@ export interface LimitOrderState {
   pendingTransaction: Hash | null
 }
 
+export type OnLimitOrderSettled = NonNullable<
+  NonNullable<NonNullable<UseWriteContractParameters>['mutation']>['onSettled']
+>
+
 export type LimitOrderCallbacks = {
   onTransactionSuccess?: (transaction: Address) => void
   onTransactionError?: (transaction: Address) => void
+  onTransactionSettled?: OnLimitOrderSettled
 }
 
 export type LimitOrderActionsState = LimitOrderCallbacks & {
