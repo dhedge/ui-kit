@@ -1,47 +1,26 @@
-import BigNumber from 'bignumber.js'
-
-import { usePoolManagerLogicData, usePoolTokenPrice } from 'core-kit/hooks/pool'
 import {
-  useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
 import {
   useDepositAllowance,
   useIsVaultDepositLocked,
+  useRequiresMinDeposit,
 } from 'core-kit/hooks/trading/deposit-v2'
-import { useHighSlippageCheck, useUserVaultBalance } from 'trading-widget/hooks'
+import { useHighSlippageCheck } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
-  const {
-    address,
-    chainId,
-    deprecated,
-    symbol,
-    maintenance,
-    maintenanceDeposits,
-  } = useTradingPanelPoolConfig()
-  const [receiveToken] = useReceiveTokenInput()
+  const { deprecated, symbol, maintenance, maintenanceDeposits } =
+    useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
 
   const { isVaultDepositLocked, isAccountWhitelisted } =
     useIsVaultDepositLocked()
-  const poolTokenPrice = usePoolTokenPrice({ address })
-  const { minDepositUSD } = usePoolManagerLogicData(address, chainId)
-  const poolBalance = useUserVaultBalance(address)
   const { approve, canSpend } = useDepositAllowance()
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
-
-  const depositValueInUsd = new BigNumber(
-    receiveToken.value || '0',
-  ).multipliedBy(poolTokenPrice || '0')
-
-  const requiresMinDeposit =
-    (poolBalance && poolBalance.balanceInUsdNumber > minDepositUSD) ||
-    receiveToken.value === '0'
-      ? false
-      : depositValueInUsd.lt(minDepositUSD)
+  const { requiresMinDeposit, requiredMinDepositAmount } =
+    useRequiresMinDeposit()
 
   return {
     requiresMinDeposit,
@@ -50,7 +29,7 @@ export const useValidDepositButton = () => {
     requiresHighSlippageConfirm,
     sendTokenSymbol: sendToken.symbol,
     poolSymbol: symbol,
-    minDepositUSD,
+    requiredMinDepositAmount,
     deprecated,
     approve,
     confirmHighSlippage,
