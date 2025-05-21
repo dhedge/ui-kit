@@ -1,12 +1,11 @@
 import { PoolLogicAbi } from 'core-kit/abi'
-import { AddressZero } from 'core-kit/const'
+import { AddressZero, EXTENDED_POLLING_INTERVAL } from 'core-kit/const'
 import { useAccount, useReadContract } from 'core-kit/hooks/web3'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
 interface PoolExitRemainingCooldownParams {
   address: Address
   chainId: ChainId
-  enabled: boolean
 }
 
 export const REFETCH_INTERVALS = [
@@ -26,7 +25,7 @@ export const getRefetchInterval = (cooldownMs: number) => {
     }
   }
 
-  return false
+  return EXTENDED_POLLING_INTERVAL
 }
 
 const select = (data?: bigint) => Number(data?.toString() ?? '0') * 1000
@@ -34,7 +33,6 @@ const select = (data?: bigint) => Number(data?.toString() ?? '0') * 1000
 export const usePoolDynamicExitRemainingCooldown = ({
   address,
   chainId,
-  enabled,
 }: PoolExitRemainingCooldownParams) => {
   const { account } = useAccount()
 
@@ -45,7 +43,7 @@ export const usePoolDynamicExitRemainingCooldown = ({
     chainId,
     args: [account ?? AddressZero],
     query: {
-      enabled: !!account && enabled,
+      enabled: !!account,
       select,
       refetchInterval: (query) => getRefetchInterval(select(query.state?.data)),
       refetchOnWindowFocus: (query) => select(query.state?.data) > 0,

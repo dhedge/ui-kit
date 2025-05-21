@@ -1,7 +1,6 @@
 export { erc20Abi } from './erc20'
 export { AaveLendingPoolAbi } from './aave/aave-lending-pool'
 export { AaveAssetGuardAbi } from './aave/aave-asset-guard'
-export { DHedgeStakingV2Abi } from './dhedge-staking-v2'
 export { PoolFactoryAbi } from './pool-factory'
 export {
   PoolLogicAbi,

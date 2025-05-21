@@ -1,8 +1,10 @@
 import BigNumber from 'bignumber.js'
 
-import { CURRENCY_SYMBOL_MAP } from 'core-kit/const'
+import { CURRENCY_SYMBOL_MAP, DEFAULT_PRECISION } from 'core-kit/const'
 
-import type { ApyCurrency } from 'core-kit/types'
+import type { ApyCurrency, Balance } from 'core-kit/types'
+
+import { formatUnits } from 'core-kit/utils/web3'
 
 import { getPercent, isNumeric, normalizeNumber } from './number'
 
@@ -69,3 +71,49 @@ export const formatBalance = (value: string, precision: number) =>
   new BigNumber(
     new BigNumber(value).toFixed(precision, BigNumber.ROUND_DOWN),
   ).toString()
+
+const nonZeroBigInt = (value: unknown): value is bigint =>
+  typeof value === 'bigint' && value !== BigInt(0)
+
+export function formatBalanceInUsd(
+  balance: string | undefined,
+  tokenPrice: string | undefined,
+  maximumFractionDigits?: number,
+): { balanceInUsd: string; balanceInUsdNumber: number } {
+  if (!balance || !tokenPrice) {
+    return {
+      balanceInUsd: '',
+      balanceInUsdNumber: 0,
+    }
+  }
+
+  const balanceInUsdNumber = +balance * normalizeNumber(tokenPrice)
+  return {
+    balanceInUsd: formatToUsd({
+      value: balanceInUsdNumber,
+      maximumFractionDigits,
+    }),
+    balanceInUsdNumber,
+  }
+}
+
+export const formatVaultBalance = (
+  balance: bigint | undefined,
+  tokenPrice: bigint | undefined,
+): Balance => {
+  if (nonZeroBigInt(balance)) {
+    return {
+      rawBalance: balance?.toString() ?? '',
+      ...formatBalanceInUsd(
+        formatUnits(balance, DEFAULT_PRECISION),
+        tokenPrice?.toString(),
+      ),
+    }
+  }
+
+  return {
+    rawBalance: '',
+    balanceInUsd: '',
+    balanceInUsdNumber: 0,
+  }
+}

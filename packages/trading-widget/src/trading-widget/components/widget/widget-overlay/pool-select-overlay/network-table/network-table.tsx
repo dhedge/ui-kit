@@ -2,9 +2,8 @@ import { CheckIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import type { FC } from 'react'
 
-import type { TradingToken } from 'core-kit/types'
+import type { Balance, TradingToken } from 'core-kit/types'
 import { Spinner, TokenBadge } from 'trading-widget/components/common'
-import type { Balance } from 'trading-widget/types'
 
 type PoolListItem = Pick<TradingToken, 'symbol'> &
   Pick<Balance, 'balanceInUsd' | 'balanceInUsdNumber'> & { isActive: boolean }

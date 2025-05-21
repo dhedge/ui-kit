@@ -76,6 +76,7 @@ export interface TradingPanelSetters {
       >
     >,
   ) => void
+  addPoolConfig: (payload: PoolConfig) => void
 }
 
 export interface CallbackConfig {
@@ -154,6 +155,10 @@ export type TradingPanelAction =
           'maintenance' | 'maintenanceDeposits' | 'maintenanceWithdrawals'
         >
       >
+    }
+  | {
+      type: 'ADD_POOL_CONFIG'
+      payload: PoolConfig
     }
 
 export interface TradingPanelContextConfig {

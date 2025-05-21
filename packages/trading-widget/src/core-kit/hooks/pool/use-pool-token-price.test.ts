@@ -1,8 +1,9 @@
+import { optimism } from 'core-kit/const'
+import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import * as stateHooks from 'core-kit/hooks/state'
 import { TEST_ADDRESS } from 'tests/mocks'
 import { renderHook } from 'tests/test-utils'
 
-import { usePoolDynamicContractData } from './use-pool-dynamic-contract-data'
 import { usePoolTokenPrice } from './use-pool-token-price'
 
 vi.mock('core-kit/hooks/state', () => ({
@@ -10,8 +11,8 @@ vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelPoolConfigs: vi.fn(),
 }))
 
-vi.mock('./use-pool-dynamic-contract-data', () => ({
-  usePoolDynamicContractData: vi.fn(),
+vi.mock('core-kit/hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 
 describe('usePoolTokenPrice', () => {
@@ -20,10 +21,10 @@ describe('usePoolTokenPrice', () => {
     const tokenPrice = BigInt(1)
     const poolData = { tokenPrice: '1' }
 
-    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
         ({ data: { tokenPrice } }) as unknown as ReturnType<
-          typeof usePoolDynamicContractData
+          typeof poolMulticallHooks.usePoolDynamic
         >,
     )
     vi.mocked(
@@ -38,12 +39,14 @@ describe('usePoolTokenPrice', () => {
     renderHook(() =>
       usePoolTokenPrice({
         address,
+        chainId: optimism.id,
       }),
     )
 
-    expect(usePoolDynamicContractData).toHaveBeenCalledTimes(1)
-    expect(usePoolDynamicContractData).toHaveBeenCalledWith({
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
       address,
+      chainId: optimism.id,
     })
   })
 
@@ -53,11 +56,11 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: '2' }
     const formatterMock = vi.fn()
 
-    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
         ({
-          tokenPrice,
-        }) as unknown as ReturnType<typeof usePoolDynamicContractData>,
+          data: { tokenPrice },
+        }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(
       stateHooks.useTradingPanelPoolFallbackData,
@@ -71,6 +74,7 @@ describe('usePoolTokenPrice', () => {
     renderHook(() =>
       usePoolTokenPrice({
         address,
+        chainId: optimism.id,
         formatter: formatterMock,
       }),
     )
@@ -84,10 +88,10 @@ describe('usePoolTokenPrice', () => {
     const poolData = { tokenPrice: BigInt(1) }
     const formatterMock = vi.fn()
 
-    vi.mocked(usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
         ({ data: { tokenPrice } }) as unknown as ReturnType<
-          typeof usePoolDynamicContractData
+          typeof poolMulticallHooks.usePoolDynamic
         >,
     )
     vi.mocked(
@@ -102,6 +106,7 @@ describe('usePoolTokenPrice', () => {
     renderHook(() =>
       usePoolTokenPrice({
         address,
+        chainId: optimism.id,
         formatter: formatterMock,
       }),
     )

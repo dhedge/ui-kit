@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useOnTransactionError,
   useOnTransactionSuccess,
@@ -32,7 +32,7 @@ export const useTradingResultHandling = () => {
   const { data, error } = useWaitForTransactionReceipt({
     hash: txHash,
     chainId,
-    pollingInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+    pollingInterval: SHORTEN_POLLING_INTERVAL,
   })
 
   useEffect(() => {

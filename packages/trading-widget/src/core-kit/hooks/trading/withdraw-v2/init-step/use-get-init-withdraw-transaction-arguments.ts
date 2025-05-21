@@ -37,6 +37,7 @@ export const useGetInitWithdrawTransactionArguments = () => {
   const vaultTokenPrice = usePoolTokenPrice({
     address: poolConfig.address,
     formatter: tokenPriceFormatter,
+    chainId: poolConfig.chainId,
   })
 
   return useCallback(async () => {

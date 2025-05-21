@@ -14,10 +14,11 @@ import { THEME_TYPE } from 'trading-widget/types'
 
 export const useInitWithdrawTransactionDisclosure = () => {
   const t = useTranslationContext()
-  const { address } = useTradingPanelPoolConfig()
+  const { address, chainId } = useTradingPanelPoolConfig()
   const [{ isMaxSlippageLoading }] = useTradingPanelSettings()
   const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
     address,
+    chainId,
   })
   const slippage = useAppliedWithdrawSlippage()
   const showMinReceivedText = useIsMultiAssetWithdraw()

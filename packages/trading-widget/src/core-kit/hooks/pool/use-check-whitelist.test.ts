@@ -1,5 +1,4 @@
 import { optimism } from 'core-kit/const'
-import { usePoolDynamicContractData } from 'core-kit/hooks/pool'
 import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import * as web3Hooks from 'core-kit/hooks/web3'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -13,9 +12,7 @@ vi.mock('core-kit/hooks/web3', () => ({
 
 vi.mock('core-kit/hooks/pool/multicall', () => ({
   usePoolManagerStatic: vi.fn(),
-}))
-vi.mock('core-kit/hooks/pool/', () => ({
-  usePoolDynamicContractData: vi.fn(),
+  usePoolDynamic: vi.fn(),
 }))
 
 describe('useCheckWhitelist', () => {
@@ -30,11 +27,11 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(usePoolDynamicContractData).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          managerAddress,
-        }) as ReturnType<typeof usePoolDynamicContractData>,
+          data: { managerAddress },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
@@ -70,11 +67,11 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(usePoolDynamicContractData).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          managerAddress,
-        }) as ReturnType<typeof usePoolDynamicContractData>,
+          data: { managerAddress },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>
@@ -110,11 +107,11 @@ describe('useCheckWhitelist', () => {
           account,
         }) as ReturnType<typeof web3Hooks.useAccount>,
     )
-    vi.mocked(usePoolDynamicContractData).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          managerAddress,
-        }) as ReturnType<typeof usePoolDynamicContractData>,
+          data: { managerAddress },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(poolMulticallHooks.usePoolManagerStatic).mockImplementation(
       () =>

@@ -1,5 +1,5 @@
 import { EasySwapperV2Abi } from 'core-kit/abi'
-import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useIsDepositTradingPanelType,
   useSendTokenInput,
@@ -34,7 +34,7 @@ export const useDepositQuoteContractRead = ({
     query: {
       enabled:
         isDeposit && hasSendInputValue && !!sendToken.address && !!sendAmount,
-      refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+      refetchInterval: SHORTEN_POLLING_INTERVAL,
     },
   })
 

@@ -2,6 +2,7 @@ import { beforeEach } from 'vitest'
 
 import { optimism } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
+import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import * as stateHooks from 'core-kit/hooks/state'
 import * as tradingHooks from 'core-kit/hooks/trading'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -11,7 +12,10 @@ import { useDepositPriceDiff } from './use-deposit-price-diff'
 
 vi.mock('core-kit/hooks/pool', () => ({
   usePoolTokenPrice: vi.fn(),
-  usePoolDynamicContractData: vi.fn(),
+}))
+
+vi.mock('core-kit/hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 
 vi.mock('core-kit/hooks/state', () => ({
@@ -50,9 +54,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee: '0' },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValueOnce(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValueOnce(poolTokenPrice)
 
@@ -78,9 +82,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee: '0' },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValueOnce(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValueOnce(poolTokenPrice)
 
@@ -106,9 +110,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee: '0' },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValueOnce(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValueOnce(poolTokenPrice)
 
@@ -134,9 +138,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '0',
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee: '0' },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValueOnce(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValueOnce(poolTokenPrice)
 
@@ -163,9 +167,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee,
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValue(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue(poolTokenPrice)
 
@@ -192,9 +196,9 @@ describe('useTradingPriceDiff', () => {
     vi.mocked(stateHooks.useReceiveTokenInput).mockReturnValueOnce([
       { value: receiveAssetValue },
     ] as unknown as ReturnType<typeof stateHooks.useReceiveTokenInput>)
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee,
-    } as unknown as ReturnType<typeof poolHooks.usePoolDynamicContractData>)
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee },
+    } as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>)
     vi.mocked(tradingHooks.useAssetPrice).mockReturnValue(sendTokenPrice)
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue(poolTokenPrice)
 
