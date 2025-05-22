@@ -7,6 +7,8 @@ import type {
 } from 'core-kit/types'
 import { isZeroAddress } from 'core-kit/utils'
 
+type UsePoolDynamicParams = PoolContractCallParams & { enabled?: boolean }
+
 const getContracts = ({ chainId, address }: PoolContractCallParams) =>
   [
     {
@@ -42,11 +44,15 @@ const selector = ([tokenPrice, getFundSummary]: Data) => {
   }
 }
 
-export const usePoolDynamic = ({ address, chainId }: PoolContractCallParams) =>
+export const usePoolDynamic = ({
+  address,
+  chainId,
+  enabled = true,
+}: UsePoolDynamicParams) =>
   useReadContracts({
     contracts: getContracts({ address, chainId }),
     query: {
-      enabled: !!address && !isZeroAddress(address),
+      enabled: enabled && !!address && !isZeroAddress(address),
       refetchInterval: DEFAULT_POLLING_INTERVAL,
       select: selector,
     },
