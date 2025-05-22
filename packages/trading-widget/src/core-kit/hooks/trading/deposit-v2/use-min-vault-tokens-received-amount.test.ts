@@ -1,7 +1,6 @@
-import {
-  usePoolDynamicContractData,
-  usePoolTokenPrice,
-} from 'core-kit/hooks/pool'
+import { optimism } from 'core-kit/const'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -17,8 +16,10 @@ import { useIsDepositWithSwapTransaction } from './use-is-deposit-with-swap-tran
 import { useMinVaultTokensReceivedAmount } from './use-min-vault-tokens-received-amount'
 
 vi.mock('core-kit/hooks/pool', () => ({
-  usePoolDynamicContractData: vi.fn(),
   usePoolTokenPrice: vi.fn(),
+}))
+vi.mock('core-kit/hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 vi.mock('core-kit/hooks/state', () => ({
   useReceiveTokenInput: vi.fn(),
@@ -54,7 +55,7 @@ const receiveTokenPrice = '1'
 describe('useMinVaultTokensReceivedAmount', () => {
   beforeEach(() => {
     vi.mocked(useTradingPanelPoolConfig).mockReturnValue([
-      { address: TEST_ADDRESS, chainId: 1 },
+      { address: TEST_ADDRESS, chainId: optimism.id },
     ] as unknown as ReturnType<typeof useTradingPanelPoolConfig>)
     vi.mocked(useSendTokenInput).mockReturnValue([
       sendToken,
@@ -72,9 +73,9 @@ describe('useMinVaultTokensReceivedAmount', () => {
 
   it('should return the minimum vault tokens received amount for deposit without swap transaction', () => {
     vi.mocked(useIsDepositWithSwapTransaction).mockReturnValue(false)
-    vi.mocked(usePoolDynamicContractData).mockReturnValue({
-      entryFee: '1000',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolDynamic).mockReturnValue({
+      data: { entryFee: '1000' },
+    } as unknown as ReturnType<typeof usePoolDynamic>)
     vi.mocked(useTradingPanelSettings).mockReturnValue([
       { slippage: 'auto' },
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
@@ -95,9 +96,9 @@ describe('useMinVaultTokensReceivedAmount', () => {
 
   it('should return the minimum vault tokens received amount for deposit with swap transaction and auto slippage', () => {
     vi.mocked(useIsDepositWithSwapTransaction).mockReturnValue(true)
-    vi.mocked(usePoolDynamicContractData).mockReturnValue({
-      entryFee: '1000',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolDynamic).mockReturnValue({
+      data: { entryFee: '1000' },
+    } as unknown as ReturnType<typeof usePoolDynamic>)
     vi.mocked(useTradingPanelSettings).mockReturnValue([
       { slippage: 'auto' },
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
@@ -109,9 +110,9 @@ describe('useMinVaultTokensReceivedAmount', () => {
 
   it('should return the minimum vault tokens received amount for deposit with swap transaction and manual slippage', () => {
     vi.mocked(useIsDepositWithSwapTransaction).mockReturnValue(true)
-    vi.mocked(usePoolDynamicContractData).mockReturnValue({
-      entryFee: '0',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolDynamic).mockReturnValue({
+      data: { entryFee: '0' },
+    } as unknown as ReturnType<typeof usePoolDynamic>)
     vi.mocked(useTradingPanelSettings).mockReturnValue([
       { slippage: 0.1 },
     ] as unknown as ReturnType<typeof useTradingPanelSettings>)
@@ -122,9 +123,9 @@ describe('useMinVaultTokensReceivedAmount', () => {
     )
     expect(result.current).toBe('1998')
 
-    vi.mocked(usePoolDynamicContractData).mockReturnValueOnce({
-      entryFee: '1000',
-    } as ReturnType<typeof usePoolDynamicContractData>)
+    vi.mocked(usePoolDynamic).mockReturnValueOnce({
+      data: { entryFee: '1000' },
+    } as unknown as ReturnType<typeof usePoolDynamic>)
 
     act(() => rerender())
     expect(result.current).toBe('1798')

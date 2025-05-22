@@ -1,5 +1,6 @@
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
+import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import type { PoolComposition } from 'core-kit/types'
 import * as utils from 'core-kit/utils'
 
@@ -19,8 +20,8 @@ vi.mock('core-kit/utils', () => ({
   shiftBy: vi.fn(),
 }))
 
-vi.mock('./use-pool-dynamic-contract-data', () => ({
-  usePoolDynamicContractData: vi.fn(),
+vi.mock('core-kit/hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 
 vi.mock('./use-pool-composition', () => ({
@@ -133,13 +134,11 @@ describe('usePoolCompositionWithFraction', () => {
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       poolComposition,
     ])
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          totalSupply,
-        }) as unknown as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+          data: { totalSupply },
+        }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     const { result } = renderHook(() =>
@@ -175,13 +174,11 @@ describe('usePoolCompositionWithFraction', () => {
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       poolComposition,
     ])
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementation(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          totalSupply,
-        }) as unknown as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+          data: { totalSupply },
+        }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
     const { result } = renderHook(() =>

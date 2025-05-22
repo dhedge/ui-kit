@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useWaitForTransactionReceipt } from 'core-kit/hooks/web3'
 import {
   useLimitOrderActions,
@@ -17,7 +17,7 @@ export const useListenLimitOrderExecution = () => {
   const { data, error } = useWaitForTransactionReceipt({
     hash: pendingTransaction ?? undefined,
     chainId: vaultChainId,
-    pollingInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+    pollingInterval: SHORTEN_POLLING_INTERVAL,
   })
 
   useEffect(() => {

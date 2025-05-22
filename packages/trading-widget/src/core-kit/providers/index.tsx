@@ -105,6 +105,7 @@ export const TradingPanelActionsContext =
     onSimulateTransaction: () => Promise.resolve(null),
     getSwapData: () => Promise.resolve(null),
     updatePoolConfig: noop,
+    addPoolConfig: noop,
   })
 
 const createReducerWithLogger =
@@ -183,6 +184,15 @@ const createReducerWithLogger =
                 }),
                 state.poolConfigMap,
               ),
+          },
+        }
+      }
+      case 'ADD_POOL_CONFIG': {
+        return {
+          ...state,
+          poolConfigMap: {
+            ...state.poolConfigMap,
+            [action.payload.address]: action.payload,
           },
         }
       }
@@ -356,6 +366,10 @@ export const TradingPanelProvider: FC<
     [],
   )
 
+  const addPoolConfig = useCallback((payload: PoolConfig) => {
+    dispatch({ type: 'ADD_POOL_CONFIG', payload })
+  }, [])
+
   const actions: TradingPanelActionsState = useMemo(
     () => ({
       setPoolAddress,
@@ -375,6 +389,7 @@ export const TradingPanelProvider: FC<
       onTradingSettleError,
       getSwapData,
       updatePoolConfig,
+      addPoolConfig,
     }),
     [
       setPoolAddress,
@@ -394,6 +409,7 @@ export const TradingPanelProvider: FC<
       onTradingSettleError,
       getSwapData,
       updatePoolConfig,
+      addPoolConfig,
     ],
   )
 

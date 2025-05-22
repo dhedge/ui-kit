@@ -2,7 +2,6 @@ import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
 
 import {
   AaveLendingPoolAbi,
-  DHedgeStakingV2Abi,
   EasySwapperV2Abi,
   FlatcoinPointsModuleAbi,
   LimitOrderAbi,
@@ -34,7 +33,6 @@ import {
   LIMIT_ORDER_ADDRESS_OPTIMISM,
   LIMIT_ORDER_ADDRESS_POLYGON,
   REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
-  STAKING_V2_ADDRESS_OPTIMISM,
 } from './contracts'
 
 export type ContractId =
@@ -42,7 +40,6 @@ export type ContractId =
   | 'rewardDistribution'
   | 'aaveLendingPoolV2'
   | 'aaveLendingPoolV3'
-  | 'stakingV2'
   | 'poolManagerLogic'
   | 'erc20'
   | 'poolLogic'
@@ -65,7 +62,6 @@ export const contractsAddressesMap: ContractsAddressesMap = {
   [optimism.id]: {
     factory: FACTORY_ADDRESS_OPTIMISM,
     rewardDistribution: REWARD_DISTRIBUTION_ADDRESS_OPTIMISM,
-    stakingV2: STAKING_V2_ADDRESS_OPTIMISM,
     aaveLendingPoolV3: AAVE_LENDING_POOL_V3_ADDRESS_OPTIMISM,
     easySwapperV2: EASY_SWAPPER_V2_ADDRESS_OPTIMISM,
     limitOrder: LIMIT_ORDER_ADDRESS_OPTIMISM,
@@ -91,7 +87,6 @@ export const contractsAbisMap: { [id in ContractId]: any } = {
   aaveLendingPoolV2: AaveLendingPoolAbi,
   aaveLendingPoolV3: AaveLendingPoolAbi,
   rewardDistribution: RewardDistributionAbi,
-  stakingV2: DHedgeStakingV2Abi,
   poolManagerLogic: PoolManagerLogicAbi,
   erc20: erc20Abi,
   poolLogic: PoolLogicAbi,

@@ -48,7 +48,10 @@ export const useLimitOrderButton = () => {
     token: vaultAddress,
     chainId: vaultChainId,
   })
-  const vaultPrice = usePoolTokenPrice({ address: vaultAddress })
+  const vaultPrice = usePoolTokenPrice({
+    address: vaultAddress,
+    chainId: vaultChainId,
+  })
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const onSettled = useOnLimitOrderSettled()
   const { send } = useContractFunction({

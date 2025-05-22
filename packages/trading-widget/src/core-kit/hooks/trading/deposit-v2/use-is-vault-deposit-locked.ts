@@ -1,14 +1,14 @@
-import {
-  useCheckWhitelist,
-  usePoolDynamicContractData,
-} from 'core-kit/hooks/pool'
+import { useCheckWhitelist } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 
 export const useIsVaultDepositLocked = () => {
   const { chainId, address, deprecated } = useTradingPanelPoolConfig()
-  const { isPrivateVault = false } = usePoolDynamicContractData({
-    address,
-  })
+  const { data: { isPrivateVault } = { isPrivateVault: false } } =
+    usePoolDynamic({
+      address,
+      chainId,
+    })
 
   const isVaultDepositLocked = isPrivateVault || deprecated
   const isAccountWhitelisted = useCheckWhitelist({

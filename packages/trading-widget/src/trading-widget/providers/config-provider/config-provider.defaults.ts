@@ -32,7 +32,6 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   defaultNotificationDuration: DEFAULT_NOTIFICATION_DURATION_MS,
   stablePrecision: 3,
   defaultPrecision: 6,
-  stakingChainId: optimism.id,
   termsOfUseAccepted: true,
   standalone: true,
   isAllAssetsWithdrawOptionDefault: false,

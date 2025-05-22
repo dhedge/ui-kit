@@ -15,6 +15,7 @@ export {
   useOnTradingSettleError,
   useGetSwapData,
   useUpdatePoolConfig,
+  useAddPoolConfig,
 } from './action'
 export {
   useTradingPanelPoolAddress,

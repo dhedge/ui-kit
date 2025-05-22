@@ -42,3 +42,5 @@ export const useGetSwapData = () => useTradingPanelActions().getSwapData
 
 export const useUpdatePoolConfig = () =>
   useTradingPanelActions().updatePoolConfig
+
+export const useAddPoolConfig = () => useTradingPanelActions().addPoolConfig

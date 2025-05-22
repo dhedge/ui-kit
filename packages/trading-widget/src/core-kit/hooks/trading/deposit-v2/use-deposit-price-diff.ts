@@ -2,10 +2,8 @@ import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
 import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
-import {
-  usePoolDynamicContractData,
-  usePoolTokenPrice,
-} from 'core-kit/hooks/pool'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -22,16 +20,19 @@ type UseDepositPriceDiffProps =
 
 export const useDepositPriceDiff = (props: UseDepositPriceDiffProps = {}) => {
   const { address, chainId } = useTradingPanelPoolConfig()
-  const { entryFee = '0' } = usePoolDynamicContractData({ address })
+  const { data } = usePoolDynamic({
+    address,
+    chainId,
+  })
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
   const sendTokenPrice = useAssetPrice({
     address: sendToken.address,
     chainId,
   })
-  const vaultTokenPrice = usePoolTokenPrice({ address })
+  const vaultTokenPrice = usePoolTokenPrice({ address, chainId })
   const entryFeeValue = props.includesEntryFee
-    ? getPercent(+entryFee, MANAGER_FEE_DENOMINATOR)
+    ? getPercent(Number(data?.entryFee ?? '0'), MANAGER_FEE_DENOMINATOR)
     : 0
 
   return useMemo(() => {
