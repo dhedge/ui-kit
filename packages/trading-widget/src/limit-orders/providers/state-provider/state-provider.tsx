@@ -100,6 +100,7 @@ export const LimitOrderStateProvider: FC<
       setPendingTransaction,
       onTransactionSuccess: callbackActions?.onTransactionSuccess,
       onTransactionError: callbackActions?.onTransactionError,
+      onTransactionSettled: callbackActions?.onTransactionSettled,
     }),
     [
       setTakeProfitPrice,
@@ -110,6 +111,7 @@ export const LimitOrderStateProvider: FC<
       setPendingTransaction,
       callbackActions?.onTransactionSuccess,
       callbackActions?.onTransactionError,
+      callbackActions?.onTransactionSettled,
     ],
   )
 
