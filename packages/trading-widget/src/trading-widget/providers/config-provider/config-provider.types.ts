@@ -12,7 +12,6 @@ export interface ConfigProviderParams {
   defaultLockTime: string
   stablePrecision: number
   defaultPrecision: number
-  stakingChainId: ChainId
   termsOfUseAccepted: boolean
   standalone: boolean
   chainConfig: Partial<Record<ChainId, { name: string; iconPath: string }>>

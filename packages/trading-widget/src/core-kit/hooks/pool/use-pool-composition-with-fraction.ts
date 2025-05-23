@@ -2,10 +2,8 @@ import BigNumber from 'bignumber.js'
 
 import { useMemo } from 'react'
 
-import {
-  usePoolComposition,
-  usePoolDynamicContractData,
-} from 'core-kit/hooks/pool'
+import { usePoolComposition } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import type {
   PoolComposition,
   PoolCompositionWithFraction,
@@ -87,7 +85,7 @@ export const usePoolCompositionWithFraction = ({
   chainId,
 }: PoolCompositionWithFractionParams) => {
   const poolComposition = usePoolComposition({ address, chainId })
-  const { totalSupply } = usePoolDynamicContractData({ address })
+  const { data: { totalSupply } = {} } = usePoolDynamic({ address, chainId })
 
   return useMemo(() => {
     if (!totalSupply) {

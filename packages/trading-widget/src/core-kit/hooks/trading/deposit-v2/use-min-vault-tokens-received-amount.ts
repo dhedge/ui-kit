@@ -1,10 +1,8 @@
 import BigNumber from 'bignumber.js'
 
 import { MANAGER_FEE_DENOMINATOR } from 'core-kit/const'
-import {
-  usePoolDynamicContractData,
-  usePoolTokenPrice,
-} from 'core-kit/hooks/pool'
+import { usePoolTokenPrice } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -24,8 +22,11 @@ export const useMinVaultTokensReceivedAmount = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const [receiveToken] = useReceiveTokenInput()
-  const { entryFee = '0' } = usePoolDynamicContractData({ address })
-  const entryFeeValue = getPercent(+entryFee, MANAGER_FEE_DENOMINATOR)
+  const { data: { entryFee } = {} } = usePoolDynamic({ address, chainId })
+  const entryFeeValue = getPercent(
+    Number(entryFee ?? '0'),
+    MANAGER_FEE_DENOMINATOR,
+  )
   const [{ slippage }] = useTradingPanelSettings()
   const isAutoSlippage = slippage === 'auto'
   const depositSlippage = useAppliedDepositSlippage()
@@ -35,7 +36,7 @@ export const useMinVaultTokensReceivedAmount = () => {
     address: sendToken.address,
     chainId,
   })
-  const vaultTokenPrice = +usePoolTokenPrice({ address })
+  const vaultTokenPrice = +usePoolTokenPrice({ address, chainId })
 
   if (isDepositWithSwapTransaction) {
     const sendValue =

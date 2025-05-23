@@ -1,4 +1,4 @@
-import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
 import {
@@ -24,7 +24,7 @@ export const useInputGroup = () => {
   const pricingAssetPrice = useAssetPrice({
     address: pricingAsset.address,
     chainId: vaultChainId,
-    refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+    refetchInterval: SHORTEN_POLLING_INTERVAL,
   })
 
   const takeProfitPriceDifference = calculateProfitPriceDifference({

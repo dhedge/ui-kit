@@ -4,7 +4,6 @@ export { TradingPanelProvider } from './core-kit'
 export {
   erc20Abi,
   AaveLendingPoolAbi,
-  DHedgeStakingV2Abi,
   PoolFactoryAbi,
   PoolLogicAbi,
   PoolManagerLogicAbi,
@@ -29,7 +28,6 @@ export {
   MAX_GAS_LIMIT_MAP,
   GAS_LIMIT_BUFFER_COEFF,
   GAS_ESTIMATION_ERROR,
-  STAKING_V2_ADDRESS_OPTIMISM,
   FACTORY_ADDRESS_OPTIMISM,
   FACTORY_ADDRESS_POLYGON,
   FACTORY_ADDRESS_ARBITRUM,
@@ -115,7 +113,6 @@ export type {
   CallbackConfig,
   PoolConfig,
   PoolCompositionWithFraction,
-  DynamicPoolContractData,
   PoolFallbackData,
   PoolContractAccountCallParams,
   PoolContractCallParams,
@@ -154,6 +151,8 @@ export type {
   WaitForTransactionReceiptReturnType,
   SwapDataRequest,
   SwapDataResponse,
+  UserPoolBalances,
+  Balance,
 } from './core-kit/types'
 export {
   formatNumberToLimitedDecimals,
@@ -191,10 +190,10 @@ export {
   encodeFunctionData,
   transformAddressForAnalytics,
   isFmpAirdropVaultAddress,
+  formatVaultBalance,
 } from './core-kit/utils'
 
 export {
-  usePoolDynamicContractData,
   useInvalidatePoolContractData,
   useContractPoolComposition,
   useCheckWhitelist,
@@ -203,11 +202,19 @@ export {
   usePoolCompositionWithFraction,
   usePoolManagerLogicData,
   useManagerLogicAddress,
-  usePoolsDynamic,
   usePoolTokenPrice,
   useVaultVestedPoints,
   useHasSingleAssetWithdrawBlockers,
+  useUserVaultBalance,
+  useUserVaultsBalances,
 } from './core-kit/hooks/pool'
+export {
+  usePoolDynamic,
+  useUserBalancesDynamic,
+  usePoolManagerDynamic,
+  usePoolManagerStatic,
+  usePoolStatic,
+} from './core-kit/hooks/pool/multicall'
 export { useReferralProgram } from './core-kit/hooks/referral'
 export {
   useIsDepositTradingPanelType,
@@ -238,6 +245,7 @@ export {
   useUpdateTradingModal,
   useUpdateTradingSettings,
   useUpdatePoolConfig,
+  useAddPoolConfig,
 } from './core-kit/hooks/state'
 export {
   useProjectedEarningsCore,

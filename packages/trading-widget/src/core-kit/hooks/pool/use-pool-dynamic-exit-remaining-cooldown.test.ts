@@ -1,5 +1,7 @@
 import { expect } from 'vitest'
 
+import { EXTENDED_POLLING_INTERVAL } from 'core-kit/const'
+
 import {
   REFETCH_INTERVALS,
   getRefetchInterval,
@@ -24,8 +26,11 @@ describe('getRefetchInterval', () => {
     expect(getRefetchInterval(61000)).toEqual(REFETCH_INTERVALS[2][1])
   })
 
-  it('should return false interval', () => {
-    expect(getRefetchInterval(301000)).toEqual(false)
+  it('should return false for zero cooldown', () => {
     expect(getRefetchInterval(0)).toEqual(false)
+  })
+
+  it('should return EXTENDED_POLLING_INTERVAL for values greater than 5 minutes', () => {
+    expect(getRefetchInterval(6 * 60 * 1000)).toEqual(EXTENDED_POLLING_INTERVAL)
   })
 })

@@ -4,10 +4,8 @@ import { format } from 'date-fns'
 import { useMemo } from 'react'
 
 import { AddressZero, DEFAULT_PRECISION } from 'core-kit/const'
-import {
-  usePoolDynamicContractData,
-  useVaultVestedPoints,
-} from 'core-kit/hooks/pool'
+import { useVaultVestedPoints } from 'core-kit/hooks/pool'
+import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
 import { useAccount } from 'core-kit/hooks/web3'
 
@@ -26,11 +24,16 @@ interface UseFlatmoneyPointsUserBalancesData {
 
 export const useFlatmoneyPointsUserBalances =
   (): UseFlatmoneyPointsUserBalancesData => {
-    const { address: vaultAddress, symbol } = useTradingPanelPoolConfig()
+    const {
+      address: vaultAddress,
+      symbol,
+      chainId,
+    } = useTradingPanelPoolConfig()
     const { account = AddressZero } = useAccount()
     const balance = useUserTokenBalance({ symbol, address: vaultAddress })
-    const { totalSupply } = usePoolDynamicContractData({
+    const { data: { totalSupply } = {} } = usePoolDynamic({
       address: vaultAddress,
+      chainId,
     })
 
     const isFmpAirdropVault = isFmpAirdropVaultAddress(vaultAddress)

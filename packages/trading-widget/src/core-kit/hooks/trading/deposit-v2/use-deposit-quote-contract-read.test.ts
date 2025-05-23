@@ -2,7 +2,7 @@ import { act } from '@testing-library/react'
 import { expect } from 'vitest'
 
 import { EasySwapperV2Abi } from 'core-kit/abi'
-import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
+import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useIsDepositTradingPanelType,
   useSendTokenInput,
@@ -64,7 +64,7 @@ describe('useDepositQuoteContractRead', () => {
         chainId: 1,
         query: expect.objectContaining({
           enabled: false,
-          refetchInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+          refetchInterval: SHORTEN_POLLING_INTERVAL,
         }),
       }),
     )

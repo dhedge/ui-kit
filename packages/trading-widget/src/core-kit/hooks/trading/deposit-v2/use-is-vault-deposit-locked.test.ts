@@ -1,5 +1,6 @@
 import { optimism } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
+import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import * as stateHooks from 'core-kit/hooks/state'
 
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -9,7 +10,9 @@ import { useIsVaultDepositLocked } from './use-is-vault-deposit-locked'
 
 vi.mock('core-kit/hooks/pool', () => ({
   useCheckWhitelist: vi.fn(),
-  usePoolDynamicContractData: vi.fn(),
+}))
+vi.mock('core-kit/hooks/pool/multicall', () => ({
+  usePoolDynamic: vi.fn(),
 }))
 vi.mock('core-kit/hooks/state', () => ({ useTradingPanelPoolConfig: vi.fn() }))
 
@@ -17,11 +20,11 @@ describe('useIsVaultDepositLocked', () => {
   it('should not check whitelisting if vault is not private or deprecated', () => {
     const isPrivateVault = false
     const deprecated = false
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
-        ({ isPrivateVault }) as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+        ({
+          data: { isPrivateVault },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementationOnce(
       () =>
@@ -35,9 +38,10 @@ describe('useIsVaultDepositLocked', () => {
 
     const { result } = renderHook(() => useIsVaultDepositLocked())
 
-    expect(poolHooks.usePoolDynamicContractData).toHaveBeenCalledTimes(1)
-    expect(poolHooks.usePoolDynamicContractData).toHaveBeenCalledWith({
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledTimes(1)
+    expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
       address: TEST_ADDRESS,
+      chainId: optimism.id,
     })
     expect(poolHooks.useCheckWhitelist).toHaveBeenCalledTimes(1)
     expect(poolHooks.useCheckWhitelist).toHaveBeenCalledWith({
@@ -55,11 +59,11 @@ describe('useIsVaultDepositLocked', () => {
     const isPrivateVault = true
     const deprecated = false
     const chainId = optimism.id
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
-        ({ isPrivateVault }) as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+        ({
+          data: { isPrivateVault },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementationOnce(
       () =>
@@ -89,11 +93,11 @@ describe('useIsVaultDepositLocked', () => {
     const isPrivateVault = false
     const deprecated = true
     const chainId = optimism.id
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
-        ({ isPrivateVault }) as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+        ({
+          data: { isPrivateVault },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementationOnce(
       () =>
@@ -123,11 +127,11 @@ describe('useIsVaultDepositLocked', () => {
     const isPrivateVault = true
     const deprecated = true
     const chainId = optimism.id
-    vi.mocked(poolHooks.usePoolDynamicContractData).mockImplementationOnce(
+    vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementationOnce(
       () =>
-        ({ isPrivateVault }) as ReturnType<
-          typeof poolHooks.usePoolDynamicContractData
-        >,
+        ({
+          data: { isPrivateVault },
+        }) as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
     vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementationOnce(
       () =>

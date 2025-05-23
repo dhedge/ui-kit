@@ -1,9 +1,6 @@
 import { formatDuration, intervalToDuration } from 'date-fns'
 
-import {
-  usePoolDynamicContractData,
-  usePoolDynamicExitRemainingCooldown,
-} from 'core-kit/hooks/pool'
+import { usePoolDynamicExitRemainingCooldown } from 'core-kit/hooks/pool'
 import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
@@ -21,14 +18,9 @@ export const useValidInitWithdrawButton = () => {
   const [sendToken] = useSendTokenInput()
   const dispatch = useOverlayDispatchContext()
 
-  const { getExitRemainingCooldown } = usePoolDynamicContractData({
-    address,
-  })
-
   const { data: dynamicCooldownMs = 0 } = usePoolDynamicExitRemainingCooldown({
     address,
     chainId,
-    enabled: Number(getExitRemainingCooldown ?? '0') > 0,
   })
 
   const dynamicCooldownActive = dynamicCooldownMs > 0

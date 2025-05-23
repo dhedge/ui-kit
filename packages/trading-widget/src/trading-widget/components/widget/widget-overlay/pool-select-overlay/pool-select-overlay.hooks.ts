@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
+import { useUserVaultsBalances } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useSendTokenInput,
@@ -8,15 +9,15 @@ import {
   useTradingPanelPoolConfigs,
   useTradingPanelType,
 } from 'core-kit/hooks/state'
-import type { PoolConfig, TradingToken } from 'core-kit/types'
-import { formatToUsd } from 'core-kit/utils'
-import { useUserVaultsBalances } from 'trading-widget/hooks/use-user-vaults-balances'
-import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import type {
   Balance,
-  OverlayProps,
+  PoolConfig,
+  TradingToken,
   UserPoolBalances,
-} from 'trading-widget/types'
+} from 'core-kit/types'
+import { formatToUsd } from 'core-kit/utils'
+import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
+import type { OverlayProps } from 'trading-widget/types'
 
 export interface PoolSelectOverlayProps extends OverlayProps {
   searchQuery: string

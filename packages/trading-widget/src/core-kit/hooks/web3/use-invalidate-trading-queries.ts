@@ -15,6 +15,8 @@ const tradingContractCalls = [
   'getTrackedAssets',
   'getAssetPrice',
   'allowance',
+  'getExitRemainingCooldown',
+  'tokenPrice',
 ]
 const allowanceContractCalls = ['allowance']
 
