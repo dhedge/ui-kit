@@ -6,7 +6,7 @@ import {
   WBTC_ARBITRUM,
   WETH_ARBITRUM,
 } from './arbitrum'
-import { USDC_BASE, WETH_BASE } from './base'
+import { CBBTC_BASE, USDC_BASE, WETH_BASE } from './base'
 import {
   BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
@@ -51,6 +51,13 @@ export const WETH_BY_CHAIN_ID: Record<number, TradingToken> = {
   [base.id]: WETH_BASE,
   [polygon.id]: WETH_POLYGON,
   [arbitrum.id]: WETH_ARBITRUM,
+}
+
+export const WBTC_BY_CHAIN_ID: Record<number, TradingToken> = {
+  [optimism.id]: WBTC_OPTIMISM,
+  [base.id]: CBBTC_BASE,
+  [polygon.id]: WBTC_POLYGON,
+  [arbitrum.id]: WBTC_ARBITRUM,
 }
 
 export const FALLBACK_ASSETS_MAP: Record<

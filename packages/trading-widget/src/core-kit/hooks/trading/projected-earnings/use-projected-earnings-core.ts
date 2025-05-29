@@ -1,11 +1,13 @@
-import { AddressZero, WETH_BY_CHAIN_ID } from 'core-kit/const'
+import { useMemo } from 'react'
+
+import { AddressZero, WBTC_BY_CHAIN_ID, WETH_BY_CHAIN_ID } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import type {
   ApyCurrency,
   ChainId,
   UseProjectedEarningsResult,
 } from 'core-kit/types'
-import { formatByCurrency, isZeroAddress } from 'core-kit/utils'
+import { formatByCurrency } from 'core-kit/utils'
 
 interface ProjectedEarningsVariables {
   currency: ApyCurrency | undefined
@@ -16,6 +18,7 @@ interface ProjectedEarningsVariables {
 }
 
 const USD_PRICE = 1
+const DEFAULT_CURRENCY: ApyCurrency = 'USD'
 
 const calculateProjectedEarnings = ({
   depositValueInUsd,
@@ -35,6 +38,7 @@ const calculateProjectedEarnings = ({
       monthlyEarnings: '-',
     }
   }
+
   const yearlyEarnings = (depositValueInUsd * apy) / 100 / apyCurrencyPrice
 
   return {
@@ -50,23 +54,35 @@ export const useProjectedEarningsCore = ({
   chainId,
   apy,
   disabled,
-}: ProjectedEarningsVariables) => {
-  const isEthApyCurrency = currency === 'ETH'
-  const ethPrice = useAssetPrice({
-    address: WETH_BY_CHAIN_ID[chainId]?.address ?? AddressZero,
-    chainId,
-    disabled:
-      disabled ||
-      !apy ||
-      !isEthApyCurrency ||
-      isZeroAddress(WETH_BY_CHAIN_ID[chainId]?.address ?? AddressZero),
-  })
-  const apyCurrencyPrice = isEthApyCurrency ? +ethPrice : USD_PRICE
+}: ProjectedEarningsVariables): Omit<
+  UseProjectedEarningsResult,
+  'showEarnings'
+> => {
+  const customAssetAddress =
+    currency === 'ETH'
+      ? WETH_BY_CHAIN_ID[chainId]?.address
+      : currency === 'BTC'
+        ? WBTC_BY_CHAIN_ID[chainId]?.address
+        : undefined
 
-  return calculateProjectedEarnings({
-    depositValueInUsd,
-    apy,
-    apyCurrencyPrice,
-    currency,
+  const customAssetPrice = useAssetPrice({
+    address: customAssetAddress ?? AddressZero,
+    chainId,
+    disabled: disabled || !apy || !customAssetAddress,
   })
+
+  const apyCurrencyPrice = customAssetAddress
+    ? Number(customAssetPrice)
+    : USD_PRICE
+
+  return useMemo(
+    () =>
+      calculateProjectedEarnings({
+        depositValueInUsd,
+        apy,
+        apyCurrencyPrice,
+        currency: customAssetAddress ? currency : DEFAULT_CURRENCY,
+      }),
+    [depositValueInUsd, apy, apyCurrencyPrice, currency, customAssetAddress],
+  )
 }

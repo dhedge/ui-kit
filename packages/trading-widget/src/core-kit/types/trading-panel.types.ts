@@ -50,7 +50,7 @@ export interface TokenSelectorPayload {
   entity: SwapEntity
 }
 
-export type ApyCurrency = 'USD' | 'ETH'
+export type ApyCurrency = 'USD' | 'ETH' | 'BTC'
 
 export interface UseProjectedEarningsResult {
   dailyEarnings: string | null
