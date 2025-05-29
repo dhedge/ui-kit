@@ -1,6 +1,10 @@
 import BigNumber from 'bignumber.js'
 
-import { CURRENCY_SYMBOL_MAP, DEFAULT_PRECISION } from 'core-kit/const'
+import {
+  CURRENCY_DECIMALS_MAP,
+  CURRENCY_SYMBOL_MAP,
+  DEFAULT_PRECISION,
+} from 'core-kit/const'
 
 import type { ApyCurrency, Balance } from 'core-kit/types'
 
@@ -63,7 +67,7 @@ export const formatByCurrency = ({
 
   return `${CURRENCY_SYMBOL_MAP[currency]} ${formatNumberToLimitedDecimals(
     value,
-    4,
+    CURRENCY_DECIMALS_MAP[currency],
   )}`
 }
 
