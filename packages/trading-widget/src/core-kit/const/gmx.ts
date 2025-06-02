@@ -1,19 +1,22 @@
+import type { Address } from 'viem'
+
 import {
   USDC_ARBITRUM,
   WBTC_ARBITRUM,
   WETH_ARBITRUM,
 } from 'core-kit/const/tokens'
+import type { TradingToken } from 'core-kit/types'
 
-const GMX_MARKET_ASSETS_MAP = {
+export const GMX_MARKET_ASSETS_MAP = {
   SOL_USDC_ARBITRUM: '0x09400d9db990d5ed3f35d7be61dfaeb900af03c9',
   BTC_USDC_ARBITRUM: '0x47c031236e19d024b42f8ae6780e44a573170703',
   ETH_USDC_ARBITRUM: '0x70d95587d40a2caf56bd97485ab3eec10bee6336',
   WETH_USD_ARBITRUM: '0x450bb6774dd8a756274e0ab4107953259d2ac541',
-}
+} as const satisfies Record<string, Address>
 
 export const GMX_MARKET_ASSETS = Object.values(GMX_MARKET_ASSETS_MAP)
 
-export const GMX_COLLATERAL_MAP = {
+export const GMX_COLLATERAL_MAP: Record<string, TradingToken> = {
   [GMX_MARKET_ASSETS_MAP.SOL_USDC_ARBITRUM]: USDC_ARBITRUM,
   [GMX_MARKET_ASSETS_MAP.BTC_USDC_ARBITRUM]: WBTC_ARBITRUM,
   [GMX_MARKET_ASSETS_MAP.ETH_USDC_ARBITRUM]: WETH_ARBITRUM,
