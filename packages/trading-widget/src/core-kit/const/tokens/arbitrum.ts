@@ -50,3 +50,10 @@ export const USDT_ARBITRUM: TradingToken = {
   decimals: 6,
   value: '',
 }
+
+export const WSOL_ARBITRUM: TradingToken = {
+  address: '0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07',
+  symbol: 'SOL',
+  decimals: 9,
+  value: '',
+}
