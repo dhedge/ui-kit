@@ -1,4 +1,4 @@
-import { arbitrum, base, optimism, polygon } from 'wagmi/chains'
+import { arbitrum, base, mainnet, optimism, polygon } from 'wagmi/chains'
 
 import {
   AaveLendingPoolAbi,
@@ -21,10 +21,12 @@ import {
   AAVE_LENDING_POOL_V3_ADDRESS_POLYGON,
   EASY_SWAPPER_V2_ADDRESS_ARBITRUM,
   EASY_SWAPPER_V2_ADDRESS_BASE,
+  EASY_SWAPPER_V2_ADDRESS_MAINNET,
   EASY_SWAPPER_V2_ADDRESS_OPTIMISM,
   EASY_SWAPPER_V2_ADDRESS_POLYGON,
   FACTORY_ADDRESS_ARBITRUM,
   FACTORY_ADDRESS_BASE,
+  FACTORY_ADDRESS_MAINNET,
   FACTORY_ADDRESS_OPTIMISM,
   FACTORY_ADDRESS_POLYGON,
   FLATCOIN_POINTS_MODULE_ADDRESS_BASE,
@@ -52,6 +54,10 @@ type ContractsAddressesMap = Readonly<
 >
 
 export const contractsAddressesMap: ContractsAddressesMap = {
+  [mainnet.id]: {
+    factory: FACTORY_ADDRESS_MAINNET,
+    easySwapperV2: EASY_SWAPPER_V2_ADDRESS_MAINNET,
+  },
   [polygon.id]: {
     factory: FACTORY_ADDRESS_POLYGON,
     aaveLendingPoolV2: AAVE_LENDING_POOL_V2_ADDRESS_POLYGON,
