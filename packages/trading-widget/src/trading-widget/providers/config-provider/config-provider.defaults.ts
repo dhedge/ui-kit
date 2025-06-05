@@ -9,6 +9,7 @@ import {
   DEFAULT_WITHDRAW_SLIPPAGE,
   arbitrum,
   base,
+  mainnet,
   optimism,
   polygon,
 } from 'core-kit/const'
@@ -36,6 +37,10 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   standalone: true,
   isAllAssetsWithdrawOptionDefault: false,
   chainConfig: {
+    [mainnet.id]: {
+      name: 'Ethereum',
+      iconPath: '',
+    },
     [arbitrum.id]: {
       name: 'Arbitrum',
       iconPath: '',
