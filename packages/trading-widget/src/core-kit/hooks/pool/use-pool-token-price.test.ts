@@ -1,4 +1,4 @@
-import { optimism } from 'core-kit/const'
+import { DEFAULT_POLLING_INTERVAL, optimism } from 'core-kit/const'
 import * as poolMulticallHooks from 'core-kit/hooks/pool/multicall'
 import * as stateHooks from 'core-kit/hooks/state'
 import { TEST_ADDRESS } from 'tests/mocks'
@@ -47,6 +47,7 @@ describe('usePoolTokenPrice', () => {
     expect(poolMulticallHooks.usePoolDynamic).toHaveBeenCalledWith({
       address,
       chainId: optimism.id,
+      refetchInterval: DEFAULT_POLLING_INTERVAL,
     })
   })
 

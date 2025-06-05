@@ -1,5 +1,4 @@
 import { PoolLogicAbi } from 'core-kit/abi'
-import { DEFAULT_POLLING_INTERVAL } from 'core-kit/const'
 import { useReadContracts } from 'core-kit/hooks/web3'
 import type {
   MulticallReturnType,
@@ -7,7 +6,10 @@ import type {
 } from 'core-kit/types'
 import { isZeroAddress } from 'core-kit/utils'
 
-type UsePoolDynamicParams = PoolContractCallParams & { enabled?: boolean }
+type UsePoolDynamicParams = PoolContractCallParams & {
+  enabled?: boolean
+  refetchInterval?: number
+}
 
 const getContracts = ({ chainId, address }: PoolContractCallParams) =>
   [
@@ -47,13 +49,14 @@ const selector = ([tokenPrice, getFundSummary]: Data) => {
 export const usePoolDynamic = ({
   address,
   chainId,
+  refetchInterval,
   enabled = true,
 }: UsePoolDynamicParams) =>
   useReadContracts({
     contracts: getContracts({ address, chainId }),
     query: {
       enabled: enabled && !!address && !isZeroAddress(address),
-      refetchInterval: DEFAULT_POLLING_INTERVAL,
+      refetchInterval,
       select: selector,
     },
   })
