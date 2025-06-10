@@ -28,7 +28,7 @@ const defaultToken: TradingToken = {
 }
 
 export const getDefaultTradingPanelState = (
-  config?: Partial<TradingPanelState>,
+  config?: TradingPanelContextConfig['initialState'],
 ): TradingPanelState => {
   const poolAddress = config?.poolAddress ?? AddressZero
 
@@ -53,7 +53,9 @@ export const getDefaultTradingPanelState = (
       isInfiniteAllowance: false,
       isMultiAssetWithdrawalEnabled: true,
       isMaxSlippageLoading: false,
+      availableAggregators: [],
       ...config?.settings,
+      selectedAggregators: config?.settings?.availableAggregators ?? [],
     },
     type,
     input: {
