@@ -1,6 +1,5 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite'
-// import banner from 'vite-plugin-banner'
 import dts from 'vite-plugin-dts'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 
@@ -9,6 +8,7 @@ import { peerDependencies } from './package.json'
 import * as path from 'path'
 
 export default defineConfig({
+  root: __dirname,
   cacheDir: '../../node_modules/.vite/trading-widget',
 
   plugins: [
@@ -18,17 +18,6 @@ export default defineConfig({
       tsConfigFilePath: path.join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
     }),
-    // banner((fileName: string) => {
-    //   // Or use switch statement
-    //   return fileName.endsWith('.js')
-    //     ? `/*/ */ import * as requireViem from 'viem';
-    //    function require(m) {
-    //      if (m === 'viem') return requireViem;
-    //
-    //      throw new Error(\`Unknown module \${m}\`);
-    //    } `
-    //     : null
-    // }),
   ],
 
   // Uncomment this if you are using workers.
@@ -48,6 +37,7 @@ export default defineConfig({
       // Don't forget to update your package.json as well.
       formats: ['es', 'cjs'],
     },
+    outDir: process.env['NX_OUTPUT_PATH'] || 'dist',
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [...Object.keys(peerDependencies)],

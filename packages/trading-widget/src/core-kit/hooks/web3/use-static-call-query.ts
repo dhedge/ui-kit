@@ -41,7 +41,7 @@ export const useStaticCallQuery = <T>({
   args,
   chainId,
   refetchInterval,
-}: UseStaticCallVariables): UseQueryResult<T> => {
+}: UseStaticCallVariables): UseQueryResult<T | undefined> => {
   const publicClient = usePublicClient({ chainId })
 
   return useQuery({
