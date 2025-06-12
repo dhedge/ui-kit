@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "pnpm": "^9.0.0"
+  },
   "scripts": {
     "build": "pnpx nx build trading-widget",
     "lint": "pnpx nx lint trading-widget",

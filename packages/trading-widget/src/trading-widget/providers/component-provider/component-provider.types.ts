@@ -19,12 +19,6 @@ export interface ButtonProps {
   loading?: boolean
 }
 
-export interface CheckboxProps {
-  checked: boolean
-  onChange: () => void
-  className?: string
-}
-
 export interface ComponentProviderProps {
   config?: {
     GeoBlockAlert?: ComponentType
@@ -36,6 +30,5 @@ export interface ComponentProviderProps {
     LogoSpinner?: ComponentType<SVGProps<SVGElement>>
     DepositTermsOfUse?: ComponentType
     ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
-    Checkbox?: ComponentType<CheckboxProps>
   }
 }

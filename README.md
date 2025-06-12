@@ -162,7 +162,6 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `LogoSpinner`       | ComponentType<SVGProps<SVGElement>> | `<Spinner>`         | Component is injected into widget pending transaction overlay. Assume using of spinning animation               |
 > | `DepositTermsOfUse` | ComponentType                       | `undefined`         | Component is injected into `TermsOfUseOverlay` to extend default terms of use statement points                  |
 > | `ActionButton`      | ComponentType                       | `<ActionButton>`    | Component overrides default `ActionButton` and has `ButtonProps` API                                            |
-> | `Checkbox`          | ComponentType<CheckboxProps>        | `<Checkbox>`        | Component overrides default checkbox input and has `CheckboxProps` API                                          |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/component-provider/component-provider.tsx`
 
@@ -546,7 +545,7 @@ path: `component.meta[name]`
 > | `hide`                           | string | Hide                                                                                                                                                                                  |             |
 > | `refreshSwapQuoteTooltip`        | string | Refresh swap quote                                                                                                                                                                    |             |
 > | `proceedWithNextStep`            | string | Please proceed with the next step.                                                                                                                                                    |             |
-> | `aggregatorsLabel`               | string | Available aggregators                                                                                                                                                                 |             |
+> | `aggregatorsLabel`               | string | Swap source                                                                                                                                                                           |             |
 > | `aggregatorsTooltip`             | string | Choose which aggregators to use for your trades.                                                                                                                                      |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`

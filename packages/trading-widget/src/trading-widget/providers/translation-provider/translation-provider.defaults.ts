@@ -113,6 +113,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   hide: 'Hide',
   refreshSwapQuoteTooltip: 'Refresh swap quote',
   proceedWithNextStep: 'Please proceed with the next step.',
-  aggregatorsLabel: 'Available aggregators',
+  aggregatorsLabel: 'Swap source',
   aggregatorsTooltip: 'Choose which aggregators to use for your trades.',
 }
