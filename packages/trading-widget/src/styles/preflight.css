@@ -198,8 +198,8 @@ html,
     2. Remove default button styles.
     */
 
-  button,
-  [type='button'],
+  button:not([role='switch']),
+  [type='button']:not([role='switch']),
   [type='reset'],
   [type='submit'] {
     -webkit-appearance: button; /* 1 */

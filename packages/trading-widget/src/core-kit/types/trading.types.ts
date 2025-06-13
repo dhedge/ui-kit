@@ -35,6 +35,7 @@ export interface SwapDataRequest {
   fromAddress: Address
   amount: string
   slippage: string
+  aggregators?: string[]
 }
 
 export interface VaultDepositParams {

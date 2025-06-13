@@ -3,7 +3,7 @@ import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
 import type { Address } from 'viem'
 
 import { MULTI_CHAIN_SWAPPER_CONTRACT_ADDRESS } from 'core-kit/const'
-import { useGetSwapData } from 'core-kit/hooks/state'
+import { useGetSwapData, useTradingPanelState } from 'core-kit/hooks/state'
 import type { SwapDataRequest, SwapDataResponse } from 'core-kit/types'
 
 export const fetchSwapsData = async ({
@@ -39,15 +39,18 @@ export const useSwapsDataQuery = (
       Record<Address, SwapDataResponse | null>,
       Error,
       Record<Address, SwapDataResponse | null>,
-      [string, Omit<SwapDataRequest, 'fromAddress'>[]]
+      [string, Omit<SwapDataRequest, 'fromAddress'>[], string[]]
     >,
     'queryKey' | 'queryFn'
   >,
 ) => {
   const getSwapData = useGetSwapData()
+  const {
+    settings: { selectedAggregators },
+  } = useTradingPanelState()
 
   return useQuery({
-    queryKey: ['getSwapsData', assets],
+    queryKey: ['getSwapsData', assets, selectedAggregators],
     queryFn: async ({ signal, queryKey: [, assets] }) =>
       fetchSwapsData({ assets, getSwapData, signal }),
     ...options,

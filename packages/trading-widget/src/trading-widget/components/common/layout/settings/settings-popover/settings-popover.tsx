@@ -51,7 +51,7 @@ export const SettingsPopover: FC<PropsWithChildren<SettingsPopoverProps>> = ({
         className="dtw-absolute dtw-z-10 dtw-max-w-xs dtw-top-14 dtw-right-0 dtw-transition dtw-duration-100 dtw-ease-out data-[closed]:dtw-translate-x-1/2 data-[closed]:dtw-opacity-0"
         transition
       >
-        <div className="dtw-rounded-l-[var(--panel-radius)] dtw-bg-[var(--panel-popup-bg,var(--panel-secondary-color))] dtw-p-4 dtw-flex dtw-flex-col dtw-gap-1.5">
+        <div className="dtw-rounded-l-[var(--panel-radius)] dtw-bg-[var(--panel-popup-bg,var(--panel-secondary-color))] dtw-p-4 dtw-flex dtw-flex-col dtw-gap-y-2.5">
           {children}
         </div>
       </PopoverPanel>

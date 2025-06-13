@@ -93,6 +93,8 @@ export type TranslationMap = {
   hide: string
   refreshSwapQuoteTooltip: string
   proceedWithNextStep: string
+  aggregatorsLabel: string
+  aggregatorsTooltip: string
   [key: string]: string
 }
 

@@ -1,4 +1,8 @@
-import { useTradingPanelActions } from './context'
+import { useCallback } from 'react'
+
+import type { SwapDataRequest } from 'core-kit/types'
+
+import { useTradingPanelActions, useTradingPanelState } from './context'
 
 export const useSetPoolAddress = () => useTradingPanelActions().setPoolAddress
 
@@ -38,7 +42,32 @@ export const useTradingPanelLogger = () => useTradingPanelActions().onLog
 export const useOnSimulateTransaction = () =>
   useTradingPanelActions().onSimulateTransaction
 
-export const useGetSwapData = () => useTradingPanelActions().getSwapData
+export const useGetSwapData = () => {
+  const getSwapData = useTradingPanelActions().getSwapData
+  const {
+    settings: { selectedAggregators },
+  } = useTradingPanelState()
+
+  return useCallback(
+    ({
+      signal,
+      variables,
+    }: {
+      signal: AbortSignal
+      variables: SwapDataRequest
+    }) =>
+      getSwapData({
+        signal,
+        variables: {
+          ...variables,
+          ...(!!selectedAggregators.length && {
+            aggregators: selectedAggregators,
+          }),
+        },
+      }),
+    [getSwapData, selectedAggregators],
+  )
+}
 
 export const useUpdatePoolConfig = () =>
   useTradingPanelActions().updatePoolConfig
