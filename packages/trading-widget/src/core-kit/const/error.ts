@@ -23,7 +23,7 @@ export const EASY_SWAPPER_TRANSACTION_ERRORS: ErrorsMap = {
   InsufficientAmountReceived: lowSlippageError,
   SwapFailed: {
     title: 'Swap Failed',
-    hint: 'Please refresh the swap quote and try again.',
+    hint: 'Please refresh the swap quote or choose another swap source in settings and try again.',
   },
   'assetType not handled': {
     title: 'Single Asset Withdrawal not available',
@@ -31,11 +31,11 @@ export const EASY_SWAPPER_TRANSACTION_ERRORS: ErrorsMap = {
   },
   [DEPOSIT_SWAP_DATA_ERROR]: {
     title: 'Swap Quote Fetching Error',
-    hint: 'Please select a different deposit option or refresh the swap quote.',
+    hint: 'Please select a different deposit option, refresh the swap quote, or choose another swap source in settings.',
   },
   [WITHDRAW_SWAP_DATA_ERROR]: {
     title: 'Swap Quote Fetching Error',
-    hint: 'Please refresh the swap quote or claim your assets without a swap.',
+    hint: 'Please refresh the swap quote, choose another swap source in settings, or claim your assets without a swap.',
   },
 }
 
