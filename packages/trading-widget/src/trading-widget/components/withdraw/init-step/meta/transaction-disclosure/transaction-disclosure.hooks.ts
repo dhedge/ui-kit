@@ -16,7 +16,7 @@ export const useInitWithdrawTransactionDisclosure = () => {
   const t = useTranslationContext()
   const { address, chainId } = useTradingPanelPoolConfig()
   const [{ isMaxSlippageLoading }] = useTradingPanelSettings()
-  const { exitFeeNumber, withdrawalFeeNumber } = usePoolFees({
+  const { exitFeeNumber } = usePoolFees({
     address,
     chainId,
   })
@@ -34,11 +34,8 @@ export const useInitWithdrawTransactionDisclosure = () => {
     slippageTooltipText,
     isMaxSlippageLoading,
     slippagePlaceholder: `${slippage}%`,
-    exitFee: formatPercentage(exitFeeNumber + withdrawalFeeNumber, 2),
+    exitFee: formatPercentage(exitFeeNumber, 2),
     minReceivedText: t.estimatedMultiAssetFractions,
     showMinReceivedText,
-    withdrawalFee: withdrawalFeeNumber
-      ? `*${withdrawalFeeNumber}% fee will go back to the vault holders`
-      : null,
   }
 }
