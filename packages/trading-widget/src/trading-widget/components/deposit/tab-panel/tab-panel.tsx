@@ -16,8 +16,7 @@ export const DepositTab: FC = () => {
   useDepositTabPanel()
 
   const { isGeoBlocked, isSanctioned } = useConfigContextParams()
-  const { GeoBlockAlert, ExtraActionButton, SanctionedAlert } =
-    useComponentContext()
+  const { GeoBlockAlert, SanctionedAlert } = useComponentContext()
 
   const isBlocked = isGeoBlocked || isSanctioned
   const alerts = [
@@ -53,7 +52,6 @@ export const DepositTab: FC = () => {
                 <DepositTradeButton />
               </ValidDepositButton>
             </ValidNetworkButton>
-            {ExtraActionButton && <ExtraActionButton />}
           </>
         )}
       </DepositMeta>

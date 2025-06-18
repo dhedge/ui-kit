@@ -156,7 +156,6 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `SanctionedAlert`   | ComponentType                       | `<SanctionedAlert>` | Component replaces deposit button while `isSanctioned` config param is set to `true`                            |
 > | `DepositMetaInfo`   | ComponentType                       | `undefined`         | Component is injected into deposit meta part of widget layout nearby TransactionOverviewDisclosure              |
 > | `WithdrawMetaInfo`  | ComponentType                       | `undefined`         | Component is injected into withdraw meta part of widget layout nearby WithdrawTransactionOverviewDisclosure     |
-> | `ExtraActionButton` | ComponentType                       | `undefined`         | Component is injected below deposit action button and rendered if `isGeoBlocked` config param is set to `false` |
 > | `Image`             | ComponentType<ImageProps>           | `<img>`             | Component optionally can be used to pass `nextjs` Image component to be used for assets rendering               |
 > | `LogoSpinner`       | ComponentType<SVGProps<SVGElement>> | `<Spinner>`         | Component is injected into widget pending transaction overlay. Assume using of spinning animation               |
 > | `DepositTermsOfUse` | ComponentType                       | `undefined`         | Component is injected into `TermsOfUseOverlay` to extend default terms of use statement points                  |
