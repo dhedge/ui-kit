@@ -25,6 +25,7 @@ export interface ComponentProviderProps {
     SanctionedAlert?: ComponentType
     DepositMetaInfo?: ComponentType
     WithdrawMetaInfo?: ComponentType
+    CustomDepositMeta?: ComponentType
     Image?: ComponentType<ImageProps>
     LogoSpinner?: ComponentType<SVGProps<SVGElement>>
     DepositTermsOfUse?: ComponentType

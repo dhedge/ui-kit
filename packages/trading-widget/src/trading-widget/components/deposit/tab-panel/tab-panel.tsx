@@ -16,7 +16,8 @@ export const DepositTab: FC = () => {
   useDepositTabPanel()
 
   const { isGeoBlocked, isSanctioned } = useConfigContextParams()
-  const { GeoBlockAlert, SanctionedAlert } = useComponentContext()
+  const { GeoBlockAlert, SanctionedAlert, CustomDepositMeta } =
+    useComponentContext()
 
   const isBlocked = isGeoBlocked || isSanctioned
   const alerts = [
@@ -40,6 +41,7 @@ export const DepositTab: FC = () => {
       <Layout.InputGroup>
         <DepositInputGroup />
       </Layout.InputGroup>
+      {CustomDepositMeta && <CustomDepositMeta />}
       <DepositMeta>
         {isBlocked ? (
           alerts.map(
