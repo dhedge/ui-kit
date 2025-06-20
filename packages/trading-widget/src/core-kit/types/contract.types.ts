@@ -12,3 +12,7 @@ export interface ComplexWithdrawAssetData {
   withdrawData: string
   slippageTolerance: bigint
 }
+
+export type InitWithdrawTransactionArguments =
+  | [bigint, ComplexWithdrawAssetData[]]
+  | [Address, bigint, ComplexWithdrawAssetData[]]

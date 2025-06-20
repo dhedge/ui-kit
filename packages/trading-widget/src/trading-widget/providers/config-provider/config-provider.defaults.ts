@@ -53,7 +53,6 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
       iconPath: '',
     },
   },
-  aaveOffchainWithdrawChainIds: [],
   aaveOffchainWithdrawMinValue: 50,
   getFallbackIconPath: buildIconLink,
 }
