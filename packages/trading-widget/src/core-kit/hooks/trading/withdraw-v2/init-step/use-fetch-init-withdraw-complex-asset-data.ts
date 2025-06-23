@@ -37,14 +37,9 @@ export const useFetchInitWithdrawComplexAssetData = ({
       withdrawAmountD18,
       vaultTokenPrice,
       slippage,
-      disabled,
     }: FetchAaveSwapParamsProps & {
-      disabled?: boolean
       vaultTokenPrice: string
     }): Promise<ComplexWithdrawAssetData[]> => {
-      if (disabled) {
-        return []
-      }
       const isOffchainAaveWithdrawSupported = new BigNumber(
         withdrawAmountD18.toString(),
       )
