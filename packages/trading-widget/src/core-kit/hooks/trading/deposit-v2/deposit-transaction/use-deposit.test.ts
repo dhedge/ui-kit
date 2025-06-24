@@ -10,14 +10,14 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
+import { useVaultDepositParams } from 'core-kit/hooks/trading/deposit-v2/use-vault-deposit-params'
+import { useVaultDepositTransactionArguments } from 'core-kit/hooks/trading/deposit-v2/use-vault-deposit-transaction-arguments'
 import { useContractFunction } from 'core-kit/hooks/web3'
 import type { DynamicTradingToken } from 'core-kit/types'
 
 import { renderHook } from 'tests/test-utils'
 
 import { useDeposit } from './use-deposit'
-import { useVaultDepositParams } from './use-vault-deposit-params'
-import { useVaultDepositTransactionArguments } from './use-vault-deposit-transaction-arguments'
 
 vi.mock('core-kit/hooks/state', () => ({
   useReceiveTokenInput: vi.fn(),
@@ -34,13 +34,16 @@ vi.mock('core-kit/hooks/web3', () => ({
   useContractFunction: vi.fn(),
 }))
 
-vi.mock('./use-vault-deposit-params', () => ({
+vi.mock('core-kit/hooks/trading/deposit-v2/use-vault-deposit-params', () => ({
   useVaultDepositParams: vi.fn(),
 }))
 
-vi.mock('./use-vault-deposit-transaction-arguments', () => ({
-  useVaultDepositTransactionArguments: vi.fn(),
-}))
+vi.mock(
+  'core-kit/hooks/trading/deposit-v2/use-vault-deposit-transaction-arguments',
+  () => ({
+    useVaultDepositTransactionArguments: vi.fn(),
+  }),
+)
 
 describe('useDeposit', () => {
   const chainId = optimism.id

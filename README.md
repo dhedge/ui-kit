@@ -546,6 +546,10 @@ path: `component.meta[name]`
 > | `proceedWithNextStep`            | string | Please proceed with the next step.                                                                                                                                                    |             |
 > | `aggregatorsLabel`               | string | Swap source                                                                                                                                                                           |             |
 > | `aggregatorsTooltip`             | string | Choose which aggregators to use for your trades.                                                                                                                                      |             |
+> | `batchTransactionsLabel`         | string | Batch transactions                                                                                                                                                                    |             |
+> | `batchTransactionsSwitchLabel`   | string | Batch                                                                                                                                                                                 |             |
+> | `batchTransactionsTooltip`       | string | Group approve and trade calls into a single batch transaction. Disable if you prefer separate prompts.                                                                                |             |
+> | `batchTransactionsWarning`       | string | Approve and deposit will be batched into a single transaction. Disable batching in Trading Settings if you prefer separate transactions or if your wallet doesn't support batching. |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

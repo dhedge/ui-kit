@@ -306,6 +306,7 @@ export {
   useTokenAllowance,
   useSendTransaction,
   useWaitForTransactionReceipt,
+  useIsBatchContractWritesSupported,
 } from './core-kit/hooks/web3'
 
 // Limit Orders
