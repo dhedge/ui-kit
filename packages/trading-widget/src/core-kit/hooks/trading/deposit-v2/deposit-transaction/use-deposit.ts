@@ -1,0 +1,30 @@
+import { useCallback } from 'react'
+
+import { useDepositCommon } from 'core-kit/hooks/trading/deposit-v2/deposit-transaction/use-deposit-common'
+import { useTradingSettleHandler } from 'core-kit/hooks/trading/index'
+import { useContractFunction } from 'core-kit/hooks/web3'
+
+import type { ContractActionFunc } from 'core-kit/types/web3.types'
+
+const action = 'deposit'
+
+export const useDeposit = (): ContractActionFunc => {
+  const { depositMethod, txArgs, addPendingTransaction } = useDepositCommon()
+
+  const onSettled = useTradingSettleHandler(action)
+
+  const { send } = useContractFunction({
+    contractId: 'easySwapperV2',
+    functionName: depositMethod,
+    onSettled,
+  })
+
+  return useCallback(async () => {
+    addPendingTransaction()
+
+    console.log('Function Name:', depositMethod)
+    console.log('Transaction Arguments:', txArgs)
+
+    return send(...txArgs)
+  }, [addPendingTransaction, send, txArgs, depositMethod])
+}

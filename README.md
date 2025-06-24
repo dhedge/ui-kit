@@ -150,17 +150,17 @@ UI configuration provider. Manages params to configure custom styling, component
 <code>Custom components to be injected into widget layout</code>
 </summary>
 
-> | name                | type                                | default value       | description                                                                                                     |
-> | ------------------- | ----------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------- |
-> | `GeoBlockAlert`     | ComponentType                       | `<GeoBlockAlert>`   | Component replaces deposit button while `isGeoBlocked` config param is set to `true`                            |
-> | `SanctionedAlert`   | ComponentType                       | `<SanctionedAlert>` | Component replaces deposit button while `isSanctioned` config param is set to `true`                            |
-> | `DepositMetaInfo`   | ComponentType                       | `undefined`         | Component is injected into deposit meta part of widget layout nearby TransactionOverviewDisclosure              |
-> | `WithdrawMetaInfo`  | ComponentType                       | `undefined`         | Component is injected into withdraw meta part of widget layout nearby WithdrawTransactionOverviewDisclosure     |
-> | `CustomDepositMeta` | ComponentType                       | `undefined`         | Custom extra component injected above deposit meta section in the deposit tab panel (e.g., chart, info, etc.)   |
-> | `Image`             | ComponentType<ImageProps>           | `<img>`             | Component optionally can be used to pass `nextjs` Image component to be used for assets rendering               |
-> | `LogoSpinner`       | ComponentType<SVGProps<SVGElement>> | `<Spinner>`         | Component is injected into widget pending transaction overlay. Assume using of spinning animation               |
-> | `DepositTermsOfUse` | ComponentType                       | `undefined`         | Component is injected into `TermsOfUseOverlay` to extend default terms of use statement points                  |
-> | `ActionButton`      | ComponentType                       | `<ActionButton>`    | Component overrides default `ActionButton` and has `ButtonProps` API                                            |
+> | name                | type                                | default value       | description                                                                                                   |
+> | ------------------- | ----------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------- |
+> | `GeoBlockAlert`     | ComponentType                       | `<GeoBlockAlert>`   | Component replaces deposit button while `isGeoBlocked` config param is set to `true`                          |
+> | `SanctionedAlert`   | ComponentType                       | `<SanctionedAlert>` | Component replaces deposit button while `isSanctioned` config param is set to `true`                          |
+> | `DepositMetaInfo`   | ComponentType                       | `undefined`         | Component is injected into deposit meta part of widget layout nearby TransactionOverviewDisclosure            |
+> | `WithdrawMetaInfo`  | ComponentType                       | `undefined`         | Component is injected into withdraw meta part of widget layout nearby WithdrawTransactionOverviewDisclosure   |
+> | `CustomDepositMeta` | ComponentType                       | `undefined`         | Custom extra component injected above deposit meta section in the deposit tab panel (e.g., chart, info, etc.) |
+> | `Image`             | ComponentType<ImageProps>           | `<img>`             | Component optionally can be used to pass `nextjs` Image component to be used for assets rendering             |
+> | `LogoSpinner`       | ComponentType<SVGProps<SVGElement>> | `<Spinner>`         | Component is injected into widget pending transaction overlay. Assume using of spinning animation             |
+> | `DepositTermsOfUse` | ComponentType                       | `undefined`         | Component is injected into `TermsOfUseOverlay` to extend default terms of use statement points                |
+> | `ActionButton`      | ComponentType                       | `<ActionButton>`    | Component overrides default `ActionButton` and has `ButtonProps` API                                          |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/component-provider/component-provider.tsx`
 
@@ -546,6 +546,10 @@ path: `component.meta[name]`
 > | `proceedWithNextStep`            | string | Please proceed with the next step.                                                                                                                                                    |             |
 > | `aggregatorsLabel`               | string | Swap source                                                                                                                                                                           |             |
 > | `aggregatorsTooltip`             | string | Choose which aggregators to use for your trades.                                                                                                                                      |             |
+> | `batchTransactionsLabel`         | string | Batch transactions                                                                                                                                                                    |             |
+> | `batchTransactionsSwitchLabel`   | string | Batch                                                                                                                                                                                 |             |
+> | `batchTransactionsTooltip`       | string | Group approve and trade calls into a single batch transaction. Disable if you prefer separate prompts.                                                                                |             |
+> | `seamlessOneClickTrading`        | string | Seamless one-click trading                                                                                                                                                             |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

@@ -95,6 +95,10 @@ export type TranslationMap = {
   proceedWithNextStep: string
   aggregatorsLabel: string
   aggregatorsTooltip: string
+  batchTransactionsLabel: string
+  batchTransactionsSwitchLabel: string
+  batchTransactionsTooltip: string
+  seamlessOneClickTrading: string
   [key: string]: string
 }
 

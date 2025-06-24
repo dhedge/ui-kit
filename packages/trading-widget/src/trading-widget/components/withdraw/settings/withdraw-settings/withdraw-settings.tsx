@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { SettingsOption } from 'trading-widget/components/common'
 import {
   AggregatorsSelector,
+  BatchTransactionsSwitch,
   SlippageSelector,
   TokenAllowanceSwitch,
 } from 'trading-widget/components/widget/widget-settings'
@@ -24,6 +25,12 @@ export const WithdrawSettings: FC = () => {
         tooltipText={t.toggleTokenApprovalAmount}
       >
         <TokenAllowanceSwitch />
+      </SettingsOption>
+      <SettingsOption
+        label={t.batchTransactionsLabel}
+        tooltipText={t.batchTransactionsTooltip ?? ''}
+      >
+        <BatchTransactionsSwitch label={t.batchTransactionsSwitchLabel} />
       </SettingsOption>
       <AggregatorsSelector />
     </>
