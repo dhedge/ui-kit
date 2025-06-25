@@ -6,7 +6,7 @@ import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 import type { OverlayProps } from 'trading-widget/types'
 
-export interface TradingOverlayProps extends OverlayProps {}
+export type TradingOverlayProps = OverlayProps
 
 export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
   const t = useTranslationContext()

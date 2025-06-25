@@ -36,9 +36,12 @@ export const Switch = ({
       <div
         className={classNames('dtw-flex', {
           'dtw-flex-col dtw-gap-y-0.5': vertical,
-          'dtw-items-center': !vertical,
+          'dtw-items-center dtw-justify-between': !vertical,
         })}
       >
+        {label && (
+          <Label className="dtw-cursor-pointer dtw-text-xs">{label}</Label>
+        )}
         <HeadlessSwitch
           checked={checked}
           onChange={onSwitchChange}
@@ -63,15 +66,6 @@ export const Switch = ({
             )}
           />
         </HeadlessSwitch>
-        {label && (
-          <Label
-            className={classNames('dtw-cursor-pointer dtw-text-xs', {
-              'dtw-ml-2': !vertical,
-            })}
-          >
-            {label}
-          </Label>
-        )}
       </div>
     </Field>
   )

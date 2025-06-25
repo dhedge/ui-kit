@@ -47,7 +47,10 @@ export const OverlayProviderStateContext =
 
 export const OverlayProviderDispatchContext = createContext<
   Dispatch<OverlayProviderAction>
->(() => {})
+>(() => {
+  // This is a no-op function that will be replaced by the actual dispatch function
+  // when the provider is mounted
+})
 
 export const useOverlayStateContext = () => {
   const context = useContext(OverlayProviderStateContext)

@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import { SettingsOption } from 'trading-widget/components/common'
 import {
+  AggregatorsSelector,
   SlippageSelector,
   TokenAllowanceSwitch,
 } from 'trading-widget/components/widget/widget-settings'
@@ -24,6 +25,7 @@ export const DepositSettings: FC = () => {
       >
         <TokenAllowanceSwitch />
       </SettingsOption>
+      <AggregatorsSelector />
     </>
   )
 }

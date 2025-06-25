@@ -6,8 +6,9 @@ const CUSTOM_TOKEN_ICONS_MAP: Record<string, string> = {
 }
 
 export function getTokenIconName(symbol: string): string {
-  if (CUSTOM_TOKEN_ICONS_MAP[symbol]) {
-    return CUSTOM_TOKEN_ICONS_MAP[symbol]!
+  const customIcon = CUSTOM_TOKEN_ICONS_MAP[symbol]
+  if (customIcon) {
+    return customIcon
   }
 
   const lowerCaseSymbol = symbol.toLowerCase()

@@ -1,3 +1,4 @@
+import { DEFAULT_POLLING_INTERVAL } from 'core-kit/const'
 import { usePoolDynamic } from 'core-kit/hooks/pool/multicall'
 import { useTradingPanelPoolFallbackData } from 'core-kit/hooks/state'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
@@ -17,7 +18,11 @@ export const usePoolTokenPrice = ({
 }: PoolTokenPriceParams): string => {
   const [poolData] = useTradingPanelPoolFallbackData()
 
-  const { data: contractData } = usePoolDynamic({ address, chainId })
+  const { data: contractData } = usePoolDynamic({
+    address,
+    chainId,
+    refetchInterval: DEFAULT_POLLING_INTERVAL,
+  })
 
   return formatter(
     BigInt(contractData?.tokenPrice ?? poolData?.tokenPrice ?? '0'),

@@ -42,6 +42,8 @@ export interface TradingPanelState {
     isInfiniteAllowance: boolean
     isMultiAssetWithdrawalEnabled: boolean
     isMaxSlippageLoading: boolean
+    availableAggregators: string[]
+    selectedAggregators: string[]
   }
   type: TradingPanelType
   input: {
@@ -163,7 +165,11 @@ export type TradingPanelAction =
 
 export interface TradingPanelContextConfig {
   actions: Partial<CallbackConfig> & Pick<CallbackConfig, 'getSwapData'>
-  initialState?: Partial<TradingPanelState>
+  initialState?: Partial<Omit<TradingPanelState, 'settings'>> & {
+    settings?: Partial<
+      Omit<TradingPanelState['settings'], 'selectedAggregators'>
+    >
+  }
 }
 
 export type TradingPanelActionsState = TradingPanelSetters & {

@@ -11,6 +11,7 @@ export {
   EasySwapperV2Abi,
 } from './core-kit/abi'
 
+export type { GmxMarketAsset } from './core-kit/const'
 export {
   USDC_ARBITRUM,
   arbitrum,
