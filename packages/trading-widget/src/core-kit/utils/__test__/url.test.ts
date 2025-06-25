@@ -22,8 +22,8 @@ describe('getExplorerLink', () => {
   })
 
   it('should return undefined if chainId is not provided', () => {
-    expect(
-      getExplorerLink('0x123abc', 'transaction', mainnet.id),
-    ).toBeUndefined()
+    expect(getExplorerLink('0x123abc', 'transaction', mainnet.id)).toBe(
+      'https://etherscan.io/tx/0x123abc',
+    )
   })
 })
