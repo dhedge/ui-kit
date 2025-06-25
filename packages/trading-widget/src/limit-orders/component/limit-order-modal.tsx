@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { ModalContent } from 'limit-orders/component/common/modal-content'
 import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
@@ -16,10 +16,13 @@ import type {
   LimitOrderCallbacks,
   LimitOrderState,
 } from 'limit-orders/providers/state-provider/state-provider.types'
+import type { ThemeProviderConfigProps } from 'limit-orders/providers/theme-provider'
 import { ThemeProvider } from 'limit-orders/providers/theme-provider'
 import type { TranslationProviderProps } from 'limit-orders/providers/translation-provider'
-import { TranslationProvider } from 'limit-orders/providers/translation-provider'
-import { useTranslationContext } from 'limit-orders/providers/translation-provider'
+import {
+  TranslationProvider,
+  useTranslationContext,
+} from 'limit-orders/providers/translation-provider'
 
 type LimitOrderModalProps = {
   translation?: TranslationProviderProps['config']
@@ -28,19 +31,24 @@ type LimitOrderModalProps = {
     isTransactionPending: boolean
   }) => ReactNode
   actions?: LimitOrderCallbacks
+  themeConfig?: ThemeProviderConfigProps
 } & Pick<
   LimitOrderState,
   'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
 > &
   Partial<Pick<LimitOrderState, 'minAmountInUsd'>>
 
-const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
-  children,
-}) => {
+const LimitOrderModalContent: FC<
+  Pick<LimitOrderModalProps, 'children' | 'themeConfig'>
+> = ({ children, themeConfig }) => {
   const { onOpen, isModalOpen, onClose, isTransactionPending } =
     useLimitOrderModal()
   const t = useTranslationContext()
   useListenLimitOrderExecution()
+  const ConfiguredThemeProvider = useCallback(
+    () => <ThemeProvider config={themeConfig} />,
+    [themeConfig],
+  )
 
   return (
     <>
@@ -49,7 +57,7 @@ const LimitOrderModalContent: FC<Pick<LimitOrderModalProps, 'children'>> = ({
       <ModalDialog
         isOpen={isModalOpen}
         onClose={onClose}
-        ThemeProvider={ThemeProvider}
+        ThemeProvider={ConfiguredThemeProvider}
         className="limit-order"
       >
         <ModalContent
@@ -80,6 +88,7 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   minAmountInUsd = DEFAULT_MIN_ORDER_AMOUNT,
   isReversedOrder = false,
   actions,
+  themeConfig,
 }) => {
   const initialState = useMemo(
     () => ({
@@ -94,7 +103,9 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   return (
     <TranslationProvider config={translation}>
       <LimitOrderStateProvider initialState={initialState} actions={actions}>
-        <LimitOrderModalContent>{children}</LimitOrderModalContent>
+        <LimitOrderModalContent themeConfig={themeConfig}>
+          {children}
+        </LimitOrderModalContent>
       </LimitOrderStateProvider>
     </TranslationProvider>
   )
