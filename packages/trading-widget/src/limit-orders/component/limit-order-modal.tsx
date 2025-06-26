@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react'
+import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { useCallback, useMemo } from 'react'
 
 import { ModalContent } from 'limit-orders/component/common/modal-content'
@@ -46,7 +46,9 @@ const LimitOrderModalContent: FC<
   const t = useTranslationContext()
   useListenLimitOrderExecution()
   const ConfiguredThemeProvider = useCallback(
-    () => <ThemeProvider config={themeConfig} />,
+    ({ children }: PropsWithChildren) => (
+      <ThemeProvider config={themeConfig}>{children}</ThemeProvider>
+    ),
     [themeConfig],
   )
 
