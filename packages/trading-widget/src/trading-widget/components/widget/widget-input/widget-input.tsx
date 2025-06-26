@@ -1,7 +1,11 @@
 import classNames from 'classnames'
 import type { FC } from 'react'
 
-import { MaxBalanceButton, Spinner } from 'trading-widget/components/common'
+import {
+  InputNumber,
+  MaxBalanceButton,
+  Spinner,
+} from 'trading-widget/components/common'
 import { AllAssetsCompositionTable } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/all-assets-composition-table'
 import { THEME_TYPE } from 'trading-widget/types'
 
@@ -71,7 +75,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
                   <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
                 </div>
               ) : (
-                <input
+                <InputNumber
                   className={classNames(
                     'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1 dtw-py-[1px]',
                     {
@@ -96,15 +100,13 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
           {assetSymbol === 'all' ? (
             <AllAssetsCompositionTable iconSize="sm" />
           ) : (
-            <input
+            <InputNumber
               className={classNames(
                 'dtw-appearance-none dtw-bg-transparent dtw-text-[color:var(--panel-input-content-color,var(--panel-content-color))] placeholder:dtw-text-[color:var(--panel-input-placeholder-color,var(--panel-secondary-content-color))] dtw-text-[length:var(--panel-input-font-size,var(--panel-font-size-sm))] !dtw-leading-[var(--panel-input-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-font-weight,var(--panel-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--panel-input-font-size-lg,var(--panel-font-size-lg))] lg:dtw-leading-[var(--panel-input-line-height-lg,var(--panel-line-height-lg))] dtw-w-full',
                 textColorClassNames,
               )}
               ref={inputRef}
               autoFocus={autoFocus}
-              type="number"
-              min={0}
               value={value}
               onChange={onInputChange}
               onFocus={onInputFocus}
