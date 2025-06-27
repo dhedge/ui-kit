@@ -85,6 +85,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.global?.color?.colorTextWarning ?? COLORS.AMBER['400']
         }`,
 
+        '--panel-info-content-color': `${
+          config?.global?.color?.colorTextInfo ?? COLORS.AMBER['400']
+        }`,
+
         '--panel-border-color': `${
           config?.global?.color?.colorBorderPrimary ??
           `var(--panel-content-color)`

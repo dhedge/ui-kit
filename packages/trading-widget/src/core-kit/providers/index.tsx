@@ -54,6 +54,8 @@ export const getDefaultTradingPanelState = (
       isMultiAssetWithdrawalEnabled: true,
       isMaxSlippageLoading: false,
       availableAggregators: [],
+      isBatchTransactionsEnabled:
+        config?.settings?.isBatchTransactionsEnabled ?? false,
       ...config?.settings,
       selectedAggregators: config?.settings?.availableAggregators ?? [],
     },
