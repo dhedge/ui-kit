@@ -134,6 +134,43 @@ export interface ThemeProviderConfigProps {
       size?: object
       style?: object
     }
+    switchPanel?: {
+      color?: {
+        colorBorder?: string
+      }
+      size?: object
+      style?: {
+        radius?: string
+      }
+    }
+    switch?: {
+      color?: {
+        colorBgChecked?: string
+        colorBg?: string
+        colorThumbBgChecked?: string
+        colorThumbBg?: string
+        color?: string
+        colorChecked?: string
+      }
+      size?: object
+      style?: object
+    }
+    checkbox?: {
+      color?: {
+        colorBgChecked?: string
+        colorBg?: string
+        color?: string
+        colorBorder?: string
+        colorBorderChecked?: string
+      }
+      size?: {
+        size?: string
+        iconSize?: string
+      }
+      style?: {
+        radius?: string
+      }
+    }
   }
 }
 

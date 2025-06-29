@@ -61,6 +61,7 @@ export interface LimitOrderContextConfig {
     | 'pricingAsset'
     | 'isReversedOrder'
     | 'minAmountInUsd'
-  >
+  > &
+    Partial<Pick<LimitOrderState, 'isModalOpen'>>
   actions?: LimitOrderCallbacks
 }

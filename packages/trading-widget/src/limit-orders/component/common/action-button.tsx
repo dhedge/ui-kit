@@ -14,21 +14,21 @@ export interface ActionButtonProps {
 
 const NON_HIGHLIGHTED_CLASSNAMES = [
   'dtw-bg-transparent',
-  'dtw-border-[var(--limit-order-outline-button-border-color,var(--limit-order-border-color))]',
-  'dtw-text-[color:var(--limit-order-outline-button-color,var(--limit-order-content-color))]',
+  'dtw-border-[var(--limit-order-action-outline-button-border-color,var(--limit-order-border-color))]',
+  '!dtw-text-[color:var(--limit-order-action-outline-button-color,var(--limit-order-content-color))]',
   'active:dtw-border-opacity-100',
-  'hover:enabled:dtw-border-[var(--limit-order-outline-button-border-hover-color)]',
+  'hover:enabled:dtw-border-[var(--limit-order-action-outline-button-border-hover-color)]',
 ]
 
 const HIGHLIGHTED_CLASSNAMES = [
-  'dtw-text-[color:var(--limit-order-accent-button-color,var(--limit-order-accent-content-color))]',
+  '!dtw-text-[color:var(--limit-order-action-accent-button-color,var(--limit-order-accent-content-color))]',
   'dtw-bg-gradient-to-r',
-  'dtw-from-[var(--limit-order-accent-button-bg-from,var(--limit-order-accent-from-color))]',
-  'dtw-to-[var(--limit-order-accent-button-bg-to,var(--limit-order-accent-to-color))]',
+  'dtw-from-[var(--limit-order-action-accent-button-bg-from,var(--limit-order-accent-from-color))]',
+  'dtw-to-[var(--limit-order-action-accent-button-bg-to,var(--limit-order-accent-to-color))]',
   'dtw-border-[color:var(--limit-order-action-accent-button-border-color)]',
-  'dtw-border-[length:var(--limit-order-accent-button-border-width)]',
-  'hover:enabled:dtw-from-[var(--limit-order-accent-button-hover-bg-from,var(--limit-order-accent-hover-from-color))]',
-  'hover:enabled:dtw-to-[var(--limit-order-accent-button-hover-bg-to,var(--limit-order-accent-hover-to-color))]',
+  'dtw-border-[length:var(--limit-order-action-accent-button-border-width)]',
+  'hover:enabled:dtw-from-[var(--limit-order-action-accent-button-hover-bg-from,var(--limit-order-accent-hover-from-color))]',
+  'hover:enabled:dtw-to-[var(--limit-order-action-accent-button-hover-bg-to,var(--limit-order-accent-hover-to-color))]',
 ]
 
 export const ActionButton: FC<PropsWithChildren<ActionButtonProps>> = ({

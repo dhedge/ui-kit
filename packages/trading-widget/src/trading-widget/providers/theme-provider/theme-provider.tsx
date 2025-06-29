@@ -548,9 +548,39 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--panel-switch-bg': `${
           config?.component?.switch?.color?.colorBg ?? COLORS.GRAY['700']
         }`,
+        '--panel-switch-thumb-bg-checked': `${
+          config?.component?.switch?.color?.colorThumbBgChecked ??
+          COLORS.WHITE.DEFAULT
+        }`,
+        '--panel-switch-thumb-bg': `${
+          config?.component?.switch?.color?.colorThumbBg ?? COLORS.WHITE.DEFAULT
+        }`,
         '--panel-switch-color-checked':
           config?.component?.switch?.color?.colorChecked,
         '--panel-switch-color': config?.component?.switch?.color?.color,
+
+        //checkbox
+        //checkbox-color
+        '--panel-checkbox-bg-checked': `${
+          config?.component?.checkbox?.color?.colorBgChecked ??
+          COLORS.GRAY['700']
+        }`,
+        '--panel-checkbox-bg': `${
+          config?.component?.checkbox?.color?.colorBg ?? 'transparent'
+        }`,
+        '--panel-checkbox-border-color-checked': `${
+          config?.component?.checkbox?.color?.colorBorder ?? 'transparent'
+        }`,
+        '--panel-checkbox-border-color': `${
+          config?.component?.checkbox?.color?.colorBorderChecked ??
+          COLORS.GRAY.DEFAULT
+        }`,
+        '--panel-checkbox-color': `${config?.component?.checkbox?.color?.color ?? COLORS.GRAY['300']}`,
+        //checkbox-size
+        '--panel-checkbox-size': `${config?.component?.checkbox?.size?.size ?? '20px'}`,
+        '--panel-checkbox-icon-size': `${config?.component?.checkbox?.size?.iconSize ?? '16px'}`,
+        //checkbox-style
+        '--panel-checkbox-radius': `${config?.component?.checkbox?.style?.radius ?? '4px'}`,
       }}
     >
       {children}

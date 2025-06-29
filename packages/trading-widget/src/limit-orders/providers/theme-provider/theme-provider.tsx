@@ -273,11 +273,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //input-typography
         '--limit-order-input-label-font-size': `${
           config?.component?.input?.size?.labelFontSize ??
-          'var(--limit-order-font-size-sm)'
+          'var(--limit-order-font-size)'
         }`,
         '--limit-order-input-label-line-height': `${
           config?.component?.input?.size?.labelLineHeight ??
-          'var(--limit-order-line-height-sm)'
+          'var(--limit-order-line-height)'
         }`,
         '--limit-order-input-label-font-weight': `${
           config?.component?.input?.style?.labelFontWeight ??
@@ -372,6 +372,60 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--limit-order-tooltip-color': `${
           config?.component?.tooltip?.color?.colorText ?? COLORS.WHITE.DEFAULT
         }`,
+
+        //switch-panel
+        //switch-panel-color
+        '--limit-order-switch-panel-border-color': `${
+          config?.component?.switchPanel?.color?.colorBorder ??
+          'var(--limit-order-action-accent-button-border-color)'
+        }`,
+        //switch-panel-style
+        '--limit-order-switch-panel-radius': `${
+          config?.component?.switchPanel?.style?.radius ??
+          'var(--limit-order-input-radius)'
+        }`,
+        //switch
+        //switch-color
+        '--panel-switch-bg-checked': `${
+          config?.component?.switch?.color?.colorBgChecked ??
+          COLORS.BLUE.DEFAULT
+        }`,
+        '--panel-switch-bg': `${
+          config?.component?.switch?.color?.colorBg ?? COLORS.GRAY['700']
+        }`,
+        '--panel-switch-thumb-bg-checked': `${
+          config?.component?.switch?.color?.colorThumbBgChecked ??
+          COLORS.WHITE.DEFAULT
+        }`,
+        '--panel-switch-thumb-bg': `${
+          config?.component?.switch?.color?.colorThumbBg ?? COLORS.WHITE.DEFAULT
+        }`,
+        '--panel-switch-color-checked':
+          config?.component?.switch?.color?.colorChecked,
+        '--panel-switch-color': config?.component?.switch?.color?.color,
+
+        //checkbox
+        //checkbox-color
+        '--panel-checkbox-bg-checked': `${
+          config?.component?.checkbox?.color?.colorBgChecked ??
+          COLORS.GRAY['700']
+        }`,
+        '--panel-checkbox-bg': `${
+          config?.component?.checkbox?.color?.colorBg ?? 'transparent'
+        }`,
+        '--panel-checkbox-border-color-checked': `${
+          config?.component?.checkbox?.color?.colorBorder ?? 'transparent'
+        }`,
+        '--panel-checkbox-border-color': `${
+          config?.component?.checkbox?.color?.colorBorderChecked ??
+          COLORS.GRAY.DEFAULT
+        }`,
+        '--panel-checkbox-color': `${config?.component?.checkbox?.color?.color ?? COLORS.GRAY['300']}`,
+        //checkbox-size
+        '--panel-checkbox-size': `${config?.component?.checkbox?.size?.size ?? '20px'}`,
+        '--panel-checkbox-icon-size': `${config?.component?.checkbox?.size?.iconSize ?? '16px'}`,
+        //checkbox-style
+        '--panel-checkbox-radius': `${config?.component?.checkbox?.style?.radius ?? '4px'}`,
       }}
     >
       {children}

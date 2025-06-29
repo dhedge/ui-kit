@@ -58,10 +58,12 @@ export const Switch = ({
         >
           <span
             className={classNames(
-              'dtw-inline-block dtw-h-4 dtw-w-4 dtw-transform dtw-rounded-full dtw-bg-white dtw-transition-transform',
+              'dtw-inline-block dtw-h-4 dtw-w-4 dtw-transform dtw-rounded-full dtw-transition-transform',
               {
-                'dtw-translate-x-6': checked,
-                'dtw-translate-x-1': !checked,
+                'dtw-translate-x-6 !dtw-bg-[color:var(--panel-switch-thumb-bg-checked)]':
+                  checked,
+                'dtw-translate-x-1 !dtw-bg-[color:var(--panel-switch-thumb-bg)]':
+                  !checked,
               },
             )}
           />
