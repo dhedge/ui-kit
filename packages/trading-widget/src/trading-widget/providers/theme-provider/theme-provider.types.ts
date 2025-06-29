@@ -234,11 +234,29 @@ export interface ThemeProviderConfigProps {
       color?: {
         colorBgChecked?: string
         colorBg?: string
+        colorThumbBgChecked?: string
+        colorThumbBg?: string
         color?: string
         colorChecked?: string
       }
       size?: object
       style?: object
+    }
+    checkbox?: {
+      color?: {
+        colorBgChecked?: string
+        colorBg?: string
+        color?: string
+        colorBorder?: string
+        colorBorderChecked?: string
+      }
+      size?: {
+        size?: string
+        iconSize?: string
+      }
+      style?: {
+        radius?: string
+      }
     }
   }
 }

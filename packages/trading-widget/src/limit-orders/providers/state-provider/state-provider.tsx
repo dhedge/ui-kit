@@ -25,7 +25,7 @@ export const getDefaultLimitOrderState = (
   return {
     vaultAddress: config.vaultAddress,
     vaultChainId: config.vaultChainId,
-    isModalOpen: false,
+    isModalOpen: config.isModalOpen ?? false,
     form: DEFAULT_FORM_DATA,
     pendingTransaction: null,
     pricingAsset: config.pricingAsset,

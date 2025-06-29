@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
@@ -36,18 +38,35 @@ export const useInputGroup = () => {
     markPrice: pricingAssetPrice,
   })
 
+  const onDisableTakeProfitPrice = useCallback(() => {
+    setTakeProfitPrice('')
+  }, [setTakeProfitPrice])
+
+  const onDisableStopLossPrice = useCallback(() => {
+    setStopLossPrice('')
+  }, [setStopLossPrice])
+
   const takeProfitInputLabel = isReversedOrder
     ? t.stopLossLabel
     : t.takeProfitLabel
+  const takeProfitInputSubtitle = isReversedOrder
+    ? t.stopLossSubtitle
+    : t.takeProfitSubtitle
   const stopLossInputLabel = isReversedOrder
     ? t.takeProfitLabel
     : t.stopLossLabel
+  const stopLossInputSubtitle = isReversedOrder
+    ? t.takeProfitSubtitle
+    : t.stopLossSubtitle
+  const inputSuffix = `${pricingAsset.symbol} ${t.price}`
 
   return {
     takeProfitPrice,
     stopLossPrice,
     setTakeProfitPrice,
     setStopLossPrice,
+    onDisableTakeProfitPrice,
+    onDisableStopLossPrice,
     termsAccepted,
     setTermsAccepted,
     pricingAssetPrice:
@@ -64,5 +83,8 @@ export const useInputGroup = () => {
     isReversedOrder,
     takeProfitInputLabel,
     stopLossInputLabel,
+    takeProfitInputSubtitle,
+    stopLossInputSubtitle,
+    inputSuffix,
   }
 }

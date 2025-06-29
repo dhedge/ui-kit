@@ -13,15 +13,19 @@ export type TranslationMap = {
   switchNetwork: string
   approve: string
   stopLossLabel: string
+  stopLossSubtitle: string
   takeProfitLabel: string
+  takeProfitSubtitle: string
   price: string
+  currentPrice: string
   limitOrderTerms: string
   modify: string
   delete: string
+  cancel: string
   invalidLimitOrderPriceError: string
   invalidLimitOrderPriceErrorReversed: string
   minimumVaultBalanceRequired: string
-  limitSellsTitle: string
+  limitOrdersTitle: string
   [key: string]: string
 } & TermsMap
 
