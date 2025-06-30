@@ -41,6 +41,7 @@ export interface TradingPanelState {
     minSlippage?: number
     isInfiniteAllowance: boolean
     isMultiAssetWithdrawalEnabled: boolean
+    isCustomDepositOptionsDisabled?: boolean
     isMaxSlippageLoading: boolean
     availableAggregators: string[]
     selectedAggregators: string[]

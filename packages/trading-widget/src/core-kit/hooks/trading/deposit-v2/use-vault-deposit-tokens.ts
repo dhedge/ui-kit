@@ -9,7 +9,10 @@ import {
   DEFAULT_PRECISION,
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import {
+  useTradingPanelPoolConfig,
+  useTradingPanelSettings,
+} from 'core-kit/hooks/state'
 import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 import {
   useAccount,
@@ -29,6 +32,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
   const { account } = useAccount()
   const poolComposition = usePoolComposition({ address, chainId })
   const isDhedgeVaultConnected = useIsDhedgeVaultConnected()
+  const [{ isCustomDepositOptionsDisabled }] = useTradingPanelSettings()
 
   const depositTokens = useMemo(
     () =>
@@ -41,14 +45,20 @@ export const useVaultDepositTokens = (): TradingToken[] => {
               symbol: tokenName,
               decimals: precision,
             })),
-          ...depositParams.customTokens.map((token) => ({
-            ...token,
-            address: token.address.toLowerCase() as Address,
-          })),
+          ...(isCustomDepositOptionsDisabled
+            ? []
+            : depositParams.customTokens.map((token) => ({
+                ...token,
+                address: token.address.toLowerCase() as Address,
+              }))),
         ],
         'address',
       ),
-    [poolComposition, depositParams.customTokens],
+    [
+      poolComposition,
+      isCustomDepositOptionsDisabled,
+      depositParams.customTokens,
+    ],
   )
 
   const hasDepositTokens = !!depositTokens.length
@@ -108,7 +118,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
         ({ symbol }) => symbol !== depositParams.defaultDepositTokenSymbol,
       ),
       // remove native deposits from dHEDGE vaults
-      ...(isDhedgeVaultConnected
+      ...(isDhedgeVaultConnected || isCustomDepositOptionsDisabled
         ? []
         : [
             {
@@ -123,9 +133,10 @@ export const useVaultDepositTokens = (): TradingToken[] => {
   }, [
     hasDepositTokens,
     isDhedgeVaultConnected,
+    isCustomDepositOptionsDisabled,
+    chainId,
     depositTokens,
     balances,
-    chainId,
     depositParams.defaultDepositTokenSymbol,
   ])
 }

@@ -16,6 +16,7 @@ export interface ConfigProviderParams {
   standalone: boolean
   chainConfig: Partial<Record<ChainId, { name: string; iconPath: string }>>
   isAllAssetsWithdrawOptionDefault: boolean
+  isCustomDepositOptionsDisabled?: boolean
   aaveOffchainWithdrawMinValue: number
   getFallbackIconPath: (tokenName: string) => string
 }
