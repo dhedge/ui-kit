@@ -44,11 +44,9 @@ export const calculateLossPriceDifference = ({
 
 export const adjustLimitOrderError = ({
   error,
-  isReversedOrder,
   translationMap,
 }: {
   error: { title: string; hint?: string } | null
-  isReversedOrder: boolean | undefined
   translationMap: Required<Partial<TranslationMap>>
 }) => {
   if (!error) {
@@ -58,9 +56,7 @@ export const adjustLimitOrderError = ({
   if (error.title === INVALID_PRICES_LIMIT_ORDER_TITLE) {
     return {
       ...error,
-      hint: isReversedOrder
-        ? translationMap.invalidLimitOrderPriceErrorReversed
-        : translationMap.invalidLimitOrderPriceError,
+      hint: translationMap.invalidLimitOrderPriceError,
     }
   }
   return error

@@ -15,7 +15,10 @@ import { renderHook } from 'tests/test-utils'
 
 import { useVaultDepositTokens } from './use-vault-deposit-tokens'
 
-vi.mock('core-kit/hooks/state', () => ({ useTradingPanelPoolConfig: vi.fn() }))
+vi.mock('core-kit/hooks/state', () => ({
+  useTradingPanelPoolConfig: vi.fn(),
+  useTradingPanelSettings: vi.fn(),
+}))
 vi.mock('core-kit/hooks/pool', () => ({ usePoolComposition: vi.fn() }))
 vi.mock('core-kit/hooks/user', () => ({ useIsDhedgeVaultConnected: vi.fn() }))
 vi.mock('core-kit/hooks/web3', () => ({
@@ -36,6 +39,13 @@ describe('useVaultDepositTokens', () => {
           chainId: optimism.id,
           depositParams: { customTokens: [] as TradingToken[] },
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [])
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
@@ -77,6 +87,13 @@ describe('useVaultDepositTokens', () => {
           chainId: optimism.id,
           depositParams: { customTokens: [] as TradingToken[] },
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       {
@@ -142,6 +159,13 @@ describe('useVaultDepositTokens', () => {
           chainId,
           depositParams: { customTokens: [customDepositToken] },
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
@@ -234,6 +258,13 @@ describe('useVaultDepositTokens', () => {
           depositParams: { customTokens: [customDepositToken] },
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
     )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
     ])
@@ -315,6 +346,13 @@ describe('useVaultDepositTokens', () => {
           },
         }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
     )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       depositToken,
     ])
@@ -352,6 +390,82 @@ describe('useVaultDepositTokens', () => {
         address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
         symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
         decimals: CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
+        value: '',
+      },
+    ])
+  })
+
+  it('should exclude both custom tokens and native token when isCustomDepositOptionsDisabled is true', () => {
+    const isPoolManagerAccount = true
+    const chainId = optimism.id
+    const defaultDepositToken = {
+      tokenName: 'WETH',
+      isDeposit: true,
+      tokenAddress: '0xWETH',
+      precision: 3,
+    } as unknown as PoolComposition
+    const customDepositToken: TradingToken = {
+      symbol: 'USDC',
+      value: '',
+      address: '0xUSDC',
+      decimals: 6,
+    }
+    const defaultDepositTokenBalance = BigInt(10)
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementation(
+      () =>
+        ({
+          address: TEST_ADDRESS,
+          chainId,
+          depositParams: { customTokens: [customDepositToken] },
+        }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: true },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
+      defaultDepositToken,
+    ])
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
+      () => isPoolManagerAccount,
+    )
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+      () =>
+        ({
+          data: [{ result: defaultDepositTokenBalance }],
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+    )
+
+    const { result } = renderHook(() => useVaultDepositTokens())
+
+    expect(web3Hooks.useReadContracts).toHaveBeenCalledWith({
+      contracts: [
+        expect.objectContaining({
+          address: defaultDepositToken.tokenAddress.toLowerCase(),
+          abi: erc20Abi,
+          functionName: 'balanceOf',
+          args: [TEST_ADDRESS],
+          chainId,
+        }),
+      ],
+      query: expect.objectContaining({
+        enabled: true,
+      }),
+    })
+    expect(result.current).toEqual([
+      {
+        address: defaultDepositToken.tokenAddress.toLowerCase(),
+        balance: 0.01,
+        decimals: 3,
+        symbol: 'WETH',
         value: '',
       },
     ])

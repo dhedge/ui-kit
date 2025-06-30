@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
@@ -14,12 +16,11 @@ import {
 export const useInputGroup = () => {
   const t = useTranslationContext()
   const {
-    form: { takeProfitPrice, stopLossPrice, termsAccepted },
+    form: { upperLimitPrice, lowerLimitPrice, termsAccepted },
     pricingAsset,
     vaultChainId,
-    isReversedOrder,
   } = useLimitOrderState()
-  const { setTakeProfitPrice, setStopLossPrice, setTermsAccepted } =
+  const { setUpperLimitPrice, setLowerLimitPrice, setTermsAccepted } =
     useLimitOrderActions()
   const pricingAssetPrice = useAssetPrice({
     address: pricingAsset.address,
@@ -27,27 +28,32 @@ export const useInputGroup = () => {
     refetchInterval: SHORTEN_POLLING_INTERVAL,
   })
 
-  const takeProfitPriceDifference = calculateProfitPriceDifference({
-    price: takeProfitPrice,
+  const upperLimitPriceDifference = calculateProfitPriceDifference({
+    price: upperLimitPrice,
     markPrice: pricingAssetPrice,
   })
-  const stopLossPriceDifference = calculateLossPriceDifference({
-    price: stopLossPrice,
+  const lowerLimitPriceDifference = calculateLossPriceDifference({
+    price: lowerLimitPrice,
     markPrice: pricingAssetPrice,
   })
 
-  const takeProfitInputLabel = isReversedOrder
-    ? t.stopLossLabel
-    : t.takeProfitLabel
-  const stopLossInputLabel = isReversedOrder
-    ? t.takeProfitLabel
-    : t.stopLossLabel
+  const onDisableUpperLimitPrice = useCallback(() => {
+    setUpperLimitPrice('')
+  }, [setUpperLimitPrice])
+
+  const onDisableLowerLimitPrice = useCallback(() => {
+    setLowerLimitPrice('')
+  }, [setLowerLimitPrice])
+
+  const inputSuffix = `${pricingAsset.symbol} ${t.price}`
 
   return {
-    takeProfitPrice,
-    stopLossPrice,
-    setTakeProfitPrice,
-    setStopLossPrice,
+    upperLimitPrice,
+    lowerLimitPrice,
+    setUpperLimitPrice,
+    setLowerLimitPrice,
+    onDisableUpperLimitPrice,
+    onDisableLowerLimitPrice,
     termsAccepted,
     setTermsAccepted,
     pricingAssetPrice:
@@ -58,11 +64,9 @@ export const useInputGroup = () => {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0,
           }),
-    takeProfitPriceDifference,
-    stopLossPriceDifference,
+    upperLimitPriceDifference,
+    lowerLimitPriceDifference,
     pricingAssetSymbol: pricingAsset.symbol,
-    isReversedOrder,
-    takeProfitInputLabel,
-    stopLossInputLabel,
+    inputSuffix,
   }
 }

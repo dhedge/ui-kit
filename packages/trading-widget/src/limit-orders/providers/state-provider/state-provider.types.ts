@@ -6,11 +6,10 @@ export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
   vaultChainId: number
-  isReversedOrder?: boolean
   minAmountInUsd: number
   form: {
-    takeProfitPrice: string
-    stopLossPrice: string
+    upperLimitPrice: string
+    lowerLimitPrice: string
     termsAccepted: boolean
   }
   pricingAsset: {
@@ -32,8 +31,8 @@ export type LimitOrderCallbacks = {
 
 export type LimitOrderActionsState = LimitOrderCallbacks & {
   setIsModalOpen: (payload: boolean) => void
-  setTakeProfitPrice: (payload: string) => void
-  setStopLossPrice: (payload: string) => void
+  setUpperLimitPrice: (payload: string) => void
+  setLowerLimitPrice: (payload: string) => void
   setTermsAccepted: (payload: boolean) => void
   setPendingTransaction: (payload: Hash | null) => void
   reset: () => void
@@ -41,11 +40,11 @@ export type LimitOrderActionsState = LimitOrderCallbacks & {
 
 export type LimitOrderAction =
   | {
-      type: 'SET_TAKE_PROFIT_PRICE'
+      type: 'SET_UPPER_LIMIT_PRICE'
       payload: string
     }
   | {
-      type: 'SET_STOP_LOSS_PRICE'
+      type: 'SET_LOWER_LIMIT_PRICE'
       payload: string
     }
   | { type: 'SET_IS_MODAL_OPEN'; payload: boolean }
@@ -56,11 +55,8 @@ export type LimitOrderAction =
 export interface LimitOrderContextConfig {
   initialState: Pick<
     LimitOrderState,
-    | 'vaultAddress'
-    | 'vaultChainId'
-    | 'pricingAsset'
-    | 'isReversedOrder'
-    | 'minAmountInUsd'
-  >
+    'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'minAmountInUsd'
+  > &
+    Partial<Pick<LimitOrderState, 'isModalOpen'>>
   actions?: LimitOrderCallbacks
 }

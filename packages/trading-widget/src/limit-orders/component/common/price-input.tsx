@@ -1,18 +1,15 @@
 import type { ChangeEvent, FC } from 'react'
 import { useRef, useState } from 'react'
 
-import { useTranslationContext } from 'limit-orders/providers/translation-provider'
-
 export interface PriceInputProps {
-  label: string
   inputValue: string
   onInputChange?: (value: string) => void
   autoFocus?: boolean
   disabled?: boolean
   placeholder?: string
-  price?: string | null
   percentage?: string
   symbol: string | undefined
+  suffix?: string
 }
 
 const formatNumber = (num: string) => {
@@ -57,8 +54,7 @@ export const usePriceInput = ({
 }
 
 export const PriceInput: FC<PriceInputProps> = (props) => {
-  const t = useTranslationContext()
-  const { label, disabled, placeholder, price, percentage, symbol } = props
+  const { disabled, placeholder, percentage, suffix } = props
   const { inputRef, autoFocus, value, onContainerClick, onInputChange } =
     usePriceInput(props)
 
@@ -67,15 +63,7 @@ export const PriceInput: FC<PriceInputProps> = (props) => {
       className="dtw-flex dtw-flex-col dtw-gap-[var(--limit-order-input-group-gap,var(--limit-order-gap))] dtw-border-[var(--limit-order-input-border-color)] dtw-rounded-[var(--limit-order-input-radius,var(--limit-order-radius))] dtw-border dtw-bg-[var(--limit-order-input-bg,var(--limit-order-neutral-color))] dtw-py-[var(--limit-order-input-py)] dtw-px-[var(--limit-order-input-px)] focus-within:dtw-border-[var(--limit-order-input-focus-border-color)] focus-within:dtw-bg-[var(--limit-order-input-focus-bg)] dtw-shadow-md"
       onClick={onContainerClick}
     >
-      <div className="dtw-flex dtw-justify-between dtw-text-[length:var(--limit-order-input-label-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-label-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-label-font-weight,var(--limit-order-font-weight-light))] dtw-gap-x-2">
-        <span>{label}</span>
-        {price ? (
-          <span className="dtw-text-xs">
-            {symbol} {t.price}: {price}
-          </span>
-        ) : null}
-      </div>
-      <div className="transparent-scrollbar dtw-flex dtw-items-center dtw-text-[color:var(--limit-order-input-content-color,var(--limit-order-secondary-content-color))]">
+      <div className="transparent-scrollbar dtw-flex dtw-items-center dtw-gap-1 dtw-text-[color:var(--limit-order-input-content-color,var(--limit-order-secondary-content-color))]">
         <span className="dtw-text-[length:var(--limit-order-input-font-size,var(--limit-order-font-size-sm))] dtw-leading-[var(--limit-order-input-line-height,var(--limit-order-line-height-sm))] dtw-font-[var(--limit-order-input-font-weight,var(--limit-order-font-weight-light))] dtw-outline-none focus:dtw-outline-none lg:dtw-text-[length:var(--limit-order-input-font-size-lg,var(--limit-order-font-size-lg))] lg:dtw-leading-[var(--limit-order-input-line-height-lg,var(--limit-order-line-height-lg))]">
           $
         </span>
@@ -90,8 +78,15 @@ export const PriceInput: FC<PriceInputProps> = (props) => {
           disabled={disabled}
           placeholder={placeholder}
         />
+        {suffix ? (
+          <span className="dtw-font-light dtw-whitespace-nowrap dtw-text-[color:var(--limit-order-secondary-content-color)]">
+            {suffix}
+          </span>
+        ) : null}
         {percentage ? (
-          <span className="dtw-font-light">{percentage}</span>
+          <span className="dtw-font-light dtw-text-[color:var(--limit-order-secondary-content-color)]">
+            {percentage}
+          </span>
         ) : null}
       </div>
     </div>

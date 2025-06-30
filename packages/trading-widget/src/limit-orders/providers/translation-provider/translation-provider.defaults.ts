@@ -3,19 +3,20 @@ import type { TranslationMap } from './translation-provider.types'
 export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   switchNetwork: 'Switch Network',
   approve: 'Approve',
-  stopLossLabel: 'Stop Loss',
-  takeProfitLabel: 'Take Profit',
+  lowerLimitLabel: 'Lower limit',
+  lowerLimitSubtitle: 'Sells when price drops',
+  upperLimitLabel: 'Upper limit',
+  upperLimitSubtitle: 'Sells when price rises',
   price: 'price',
-  limitOrderTerms:
-    'I acknowledge and agree to the following terms and conditions',
+  currentPrice: 'Current {symbol} price',
+  limitOrderTerms: 'I understand and accept limit orders are not guaranteed',
   modify: 'Modify',
   delete: 'Delete',
+  cancel: 'Cancel',
   invalidLimitOrderPriceError:
-    'The take profit price must be higher than the current price, and the stop loss price must be lower than the current price.',
-  invalidLimitOrderPriceErrorReversed:
-    'The take profit price must be lower than the current price, and the stop loss price must be higher than the current price.',
+    'The upper limit price must be higher than the current price, and the lower limit price must be lower than the current price.',
   minimumVaultBalanceRequired: 'Minimum vault balance required: {amount}',
-  limitSellsTitle: 'Set limit sells',
+  limitOrdersTitle: 'Set limit orders',
   termsPoint1:
     'Once a limit order is placed, the associated vault token balance must remain unchanged. Any transfers or manual withdrawals will prevent the order from being executed.',
   termsPoint2:
