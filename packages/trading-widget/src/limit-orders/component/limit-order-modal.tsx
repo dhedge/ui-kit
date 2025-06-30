@@ -1,6 +1,7 @@
 import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { useCallback, useMemo } from 'react'
 
+import { ActionButton } from 'limit-orders/component/common/action-button'
 import { ModalContent } from 'limit-orders/component/common/modal-content'
 import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { InputGroup } from 'limit-orders/component/input-group/input-group'
@@ -24,7 +25,7 @@ import {
   useTranslationContext,
 } from 'limit-orders/providers/translation-provider'
 
-type LimitOrderModalProps = {
+export type LimitOrderModalProps = {
   translation?: TranslationProviderProps['config']
   children: (args: {
     onClick: () => void
@@ -34,9 +35,9 @@ type LimitOrderModalProps = {
   themeConfig?: ThemeProviderConfigProps
 } & Pick<
   LimitOrderState,
-  'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
+  'vaultAddress' | 'vaultChainId' | 'pricingAsset'
 > &
-  Partial<Pick<LimitOrderState, 'minAmountInUsd'>>
+  Partial<Pick<LimitOrderState, 'minAmountInUsd' | 'isModalOpen'>>
 
 const LimitOrderModalContent: FC<
   Pick<LimitOrderModalProps, 'children' | 'themeConfig'>
@@ -63,8 +64,8 @@ const LimitOrderModalContent: FC<
         className="limit-order"
       >
         <ModalContent
-          title={t.limitSellsTitle}
-          className="dtw-text-[color:var(--limit-order-content-color)] dtw-max-w-[430px]"
+          title={t.limitOrdersTitle}
+          className="dtw-text-[color:var(--limit-order-content-color)] dtw-text-[length:var(--limit-order-font-size)] dtw-max-w-[430px]"
         >
           <div className="dtw-flex dtw-flex-col dtw-gap-2">
             <InputGroup />
@@ -74,6 +75,9 @@ const LimitOrderModalContent: FC<
               </LimitOrderApproveButton>
               <LimitOrderDeleteButton />
             </NetworkCheckButton>
+            <ActionButton highlighted={false} onClick={onClose}>
+              {t.cancel}
+            </ActionButton>
           </div>
         </ModalContent>
       </ModalDialog>
@@ -88,19 +92,25 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   pricingAsset,
   translation,
   minAmountInUsd = DEFAULT_MIN_ORDER_AMOUNT,
-  isReversedOrder = false,
   actions,
   themeConfig,
+  isModalOpen,
 }) => {
   const initialState = useMemo(
     () => ({
       vaultAddress,
       vaultChainId,
       pricingAsset,
-      isReversedOrder,
       minAmountInUsd,
+      isModalOpen,
     }),
-    [vaultAddress, vaultChainId, pricingAsset, isReversedOrder, minAmountInUsd],
+    [
+      vaultAddress,
+      vaultChainId,
+      pricingAsset,
+      minAmountInUsd,
+      isModalOpen,
+    ],
   )
   return (
     <TranslationProvider config={translation}>

@@ -32,10 +32,9 @@ export const useLimitOrderButton = () => {
   const {
     vaultAddress,
     vaultChainId,
-    form: { stopLossPrice, takeProfitPrice, termsAccepted },
+    form: { lowerLimitPrice, upperLimitPrice, termsAccepted },
     pricingAsset,
     pendingTransaction,
-    isReversedOrder,
     minAmountInUsd,
   } = useLimitOrderState()
   const { data: limitOrder } = useUserLimitOrder({
@@ -70,17 +69,17 @@ export const useLimitOrderButton = () => {
 
   const modifyLimitOrder = async () => {
     const amount = balance?.value ?? BigInt(0)
-    const stopLossPriceD18 = stopLossPrice
-      ? BigInt(shiftBy(stopLossPrice, DEFAULT_PRECISION))
+    const lowerLimitPriceD18 = lowerLimitPrice
+      ? BigInt(shiftBy(lowerLimitPrice, DEFAULT_PRECISION))
       : BigInt(0)
-    const takeProfitPriceD18 = takeProfitPrice
-      ? BigInt(shiftBy(takeProfitPrice, DEFAULT_PRECISION))
+    const upperLimitPriceD18 = upperLimitPrice
+      ? BigInt(shiftBy(upperLimitPrice, DEFAULT_PRECISION))
       : MaxUint256
 
     const args = [
       amount,
-      stopLossPriceD18,
-      takeProfitPriceD18,
+      lowerLimitPriceD18,
+      upperLimitPriceD18,
       account,
       vaultAddress,
       pricingAsset.address,
@@ -104,7 +103,6 @@ export const useLimitOrderButton = () => {
         errorMessage,
         abiErrors: LIMIT_ORDER_ERRORS,
       }),
-      isReversedOrder: isReversedOrder,
       translationMap,
     }),
     isPending,

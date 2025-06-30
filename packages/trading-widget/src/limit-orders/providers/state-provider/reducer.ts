@@ -4,8 +4,8 @@ import type {
 } from 'limit-orders/providers/state-provider/state-provider.types'
 
 export const DEFAULT_FORM_DATA = {
-  takeProfitPrice: '',
-  stopLossPrice: '',
+  upperLimitPrice: '',
+  lowerLimitPrice: '',
   termsAccepted: false,
 }
 
@@ -14,15 +14,15 @@ export const reducer = (
   action: LimitOrderAction,
 ): LimitOrderState => {
   switch (action.type) {
-    case 'SET_TAKE_PROFIT_PRICE':
+    case 'SET_UPPER_LIMIT_PRICE':
       return {
         ...state,
-        form: { ...state.form, takeProfitPrice: action.payload },
+        form: { ...state.form, upperLimitPrice: action.payload },
       }
-    case 'SET_STOP_LOSS_PRICE':
+    case 'SET_LOWER_LIMIT_PRICE':
       return {
         ...state,
-        form: { ...state.form, stopLossPrice: action.payload },
+        form: { ...state.form, lowerLimitPrice: action.payload },
       }
     case 'SET_IS_MODAL_OPEN':
       return {

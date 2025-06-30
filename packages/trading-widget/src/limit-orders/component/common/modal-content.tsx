@@ -16,14 +16,14 @@ export const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 }) => (
   <div
     className={classNames(
-      'dtw-relative dtw-flex dtw-flex-col dtw-gap-4 dtw-rounded-xl dtw-px-5 dtw-py-8 dtw-w-full dtw-bg-[var(--limit-order-background-color)]',
+      'dtw-relative dtw-flex dtw-flex-col dtw-gap-4 dtw-rounded-xl dtw-p-3 dtw-w-full dtw-bg-[var(--limit-order-background-color)]',
       className,
     )}
   >
     {title && (
       <h1
         className={classNames(
-          'dtw-mb-6 dtw-text-lg dtw-font-semibold dtw-drop-shadow-md dtw-text-[color:var(--limit-order-secondary-content-color)]',
+          'dtw-mb-6 !dtw-text-[length:var(--limit-order-font-size-lg)] dtw-drop-shadow-md dtw-text-[color:var(--limit-order-secondary-content-color)]',
           titleClassName,
         )}
       >
