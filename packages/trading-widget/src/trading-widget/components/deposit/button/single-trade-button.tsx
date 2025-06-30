@@ -8,8 +8,9 @@ import { useComponentContext } from 'trading-widget/providers/component-provider
 
 export const SingleDepositTradeButton: FC = () => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
+  const deposit = useDeposit()
   const { handleClick, label, disabled, isLoading } =
-    useDepositTradeButton(useDeposit)
+    useDepositTradeButton(deposit)
 
   return (
     <Button onClick={handleClick} disabled={disabled} loading={isLoading}>

@@ -20,14 +20,14 @@ export const BatchedTransactionTip: FC = () => {
           {t.seamlessOneClickTrading}
         </p>
         <p className="dtw-text-xs dtw-text-[color:var(--panel-secondary-content-color)]">
-          Approve & deposit in a{' '}
+          {t.approveDepositPrefix}{' '}
           <a
             className="!dtw-text-[color:var(--panel-meta-link-color,var(--panel-content-color))]"
             href={EIP5792_LINK}
             target="_blank"
             rel="noreferrer"
           >
-            single transaction
+            {t.singleTransaction}
           </a>
           .
         </p>

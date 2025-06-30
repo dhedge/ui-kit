@@ -120,4 +120,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   batchTransactionsTooltip:
     'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
   seamlessOneClickTrading: 'Seamless one-click trading',
+  approveDepositPrefix: 'Approve & deposit in a',
+  singleTransaction: 'single transaction',
 }

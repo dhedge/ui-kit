@@ -30,9 +30,6 @@ export const useBatchDeposit = () => {
       args: txArgs,
     }
 
-    console.log('Approve:', approveTransaction)
-    console.log('Deposit:', depositTransaction)
-
     return send([approveTransaction, depositTransaction])
   }, [
     addPendingTransaction,

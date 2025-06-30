@@ -22,9 +22,6 @@ export const useDeposit = (): ContractActionFunc => {
   return useCallback(async () => {
     addPendingTransaction()
 
-    console.log('Function Name:', depositMethod)
-    console.log('Transaction Arguments:', txArgs)
-
     return send(...txArgs)
-  }, [addPendingTransaction, send, txArgs, depositMethod])
+  }, [addPendingTransaction, send, txArgs])
 }
