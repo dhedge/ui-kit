@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import type { FC } from 'react'
 
 import { AssetPricePanel } from 'limit-orders/component/common/asset-price-panel'
@@ -12,65 +11,52 @@ import { CheckBox } from 'trading-widget/components/common/checkbox/checkbox'
 export const InputGroup: FC = () => {
   const t = useTranslationContext()
   const {
-    takeProfitPrice,
-    setTakeProfitPrice,
-    setStopLossPrice,
-    onDisableTakeProfitPrice,
-    onDisableStopLossPrice,
-    stopLossPrice,
+    upperLimitPrice,
+    lowerLimitPrice,
+    setUpperLimitPrice,
+    setLowerLimitPrice,
+    onDisableUpperLimitPrice,
+    onDisableLowerLimitPrice,
     setTermsAccepted,
     termsAccepted,
     pricingAssetPrice,
-    takeProfitPriceDifference,
-    stopLossPriceDifference,
+    upperLimitPriceDifference,
+    lowerLimitPriceDifference,
     pricingAssetSymbol,
-    isReversedOrder,
-    takeProfitInputLabel,
-    stopLossInputLabel,
-    takeProfitInputSubtitle,
-    stopLossInputSubtitle,
     inputSuffix,
   } = useInputGroup()
 
   return (
     <>
-      <div
-        className={classNames(
-          'dtw-flex dtw-gap-[var(--limit-order-input-group-gap,var(--limit-order-gap))] dtw-px-[var(--limit-order-group-px)]',
-          {
-            'dtw-flex-col-reverse': isReversedOrder,
-            'dtw-flex-col': !isReversedOrder,
-          },
-        )}
-      >
+      <div className="dtw-flex dtw-flex-col dtw-gap-[var(--limit-order-input-group-gap,var(--limit-order-gap))] dtw-px-[var(--limit-order-group-px)]">
         <AssetPricePanel
           symbol={pricingAssetSymbol}
           price={pricingAssetPrice}
         />
         <SwitchPanel
-          title={takeProfitInputLabel}
-          subtitle={takeProfitInputSubtitle}
-          defaultEnabled={!!takeProfitPrice}
-          onDisable={onDisableTakeProfitPrice}
+          title={t.upperLimitLabel}
+          subtitle={t.upperLimitSubtitle}
+          defaultEnabled={!!upperLimitPrice}
+          onDisable={onDisableUpperLimitPrice}
         >
           <PriceInput
-            inputValue={takeProfitPrice}
-            onInputChange={setTakeProfitPrice}
-            percentage={takeProfitPriceDifference}
+            inputValue={upperLimitPrice}
+            onInputChange={setUpperLimitPrice}
+            percentage={upperLimitPriceDifference}
             symbol={pricingAssetSymbol}
             suffix={inputSuffix}
           />
         </SwitchPanel>
         <SwitchPanel
-          title={stopLossInputLabel}
-          subtitle={stopLossInputSubtitle}
-          defaultEnabled={!!stopLossPrice}
-          onDisable={onDisableStopLossPrice}
+          title={t.lowerLimitLabel}
+          subtitle={t.lowerLimitSubtitle}
+          defaultEnabled={!!lowerLimitPrice}
+          onDisable={onDisableLowerLimitPrice}
         >
           <PriceInput
-            inputValue={stopLossPrice}
-            onInputChange={setStopLossPrice}
-            percentage={stopLossPriceDifference}
+            inputValue={lowerLimitPrice}
+            onInputChange={setLowerLimitPrice}
+            percentage={lowerLimitPriceDifference}
             symbol={pricingAssetSymbol}
             suffix={inputSuffix}
           />

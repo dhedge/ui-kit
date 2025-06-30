@@ -29,7 +29,6 @@ export const getDefaultLimitOrderState = (
     form: DEFAULT_FORM_DATA,
     pendingTransaction: null,
     pricingAsset: config.pricingAsset,
-    isReversedOrder: config.isReversedOrder ?? false,
     minAmountInUsd: config.minAmountInUsd,
   }
 }
@@ -48,8 +47,8 @@ export const LimitOrderStateContext = createContext<LimitOrderState>(
 
 export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
   setIsModalOpen: noop,
-  setTakeProfitPrice: noop,
-  setStopLossPrice: noop,
+  setUpperLimitPrice: noop,
+  setLowerLimitPrice: noop,
   setTermsAccepted: noop,
   reset: noop,
   setPendingTransaction: noop,
@@ -63,12 +62,12 @@ export const LimitOrderStateProvider: FC<
     getDefaultLimitOrderState(initialState),
   )
 
-  const setTakeProfitPrice = useCallback((payload: string) => {
-    dispatch({ type: 'SET_TAKE_PROFIT_PRICE', payload })
+  const setUpperLimitPrice = useCallback((payload: string) => {
+    dispatch({ type: 'SET_UPPER_LIMIT_PRICE', payload })
   }, [])
 
-  const setStopLossPrice = useCallback((payload: string) => {
-    dispatch({ type: 'SET_STOP_LOSS_PRICE', payload })
+  const setLowerLimitPrice = useCallback((payload: string) => {
+    dispatch({ type: 'SET_LOWER_LIMIT_PRICE', payload })
   }, [])
 
   const setIsModalOpen = useCallback((payload: boolean) => {
@@ -92,9 +91,9 @@ export const LimitOrderStateProvider: FC<
 
   const actions: LimitOrderActionsState = useMemo(
     () => ({
-      setTakeProfitPrice,
+      setUpperLimitPrice,
       setIsModalOpen,
-      setStopLossPrice,
+      setLowerLimitPrice,
       setTermsAccepted,
       reset,
       setPendingTransaction,
@@ -103,9 +102,9 @@ export const LimitOrderStateProvider: FC<
       onTransactionSettled: callbackActions?.onTransactionSettled,
     }),
     [
-      setTakeProfitPrice,
+      setUpperLimitPrice,
       setIsModalOpen,
-      setStopLossPrice,
+      setLowerLimitPrice,
       setTermsAccepted,
       reset,
       setPendingTransaction,

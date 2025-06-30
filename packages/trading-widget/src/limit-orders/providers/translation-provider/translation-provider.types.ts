@@ -12,10 +12,10 @@ type TermsMap = {
 export type TranslationMap = {
   switchNetwork: string
   approve: string
-  stopLossLabel: string
-  stopLossSubtitle: string
-  takeProfitLabel: string
-  takeProfitSubtitle: string
+  lowerLimitLabel: string
+  lowerLimitSubtitle: string
+  upperLimitLabel: string
+  upperLimitSubtitle: string
   price: string
   currentPrice: string
   limitOrderTerms: string
@@ -23,7 +23,6 @@ export type TranslationMap = {
   delete: string
   cancel: string
   invalidLimitOrderPriceError: string
-  invalidLimitOrderPriceErrorReversed: string
   minimumVaultBalanceRequired: string
   limitOrdersTitle: string
   [key: string]: string

@@ -35,7 +35,7 @@ export type LimitOrderModalProps = {
   themeConfig?: ThemeProviderConfigProps
 } & Pick<
   LimitOrderState,
-  'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'isReversedOrder'
+  'vaultAddress' | 'vaultChainId' | 'pricingAsset'
 > &
   Partial<Pick<LimitOrderState, 'minAmountInUsd' | 'isModalOpen'>>
 
@@ -92,7 +92,6 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   pricingAsset,
   translation,
   minAmountInUsd = DEFAULT_MIN_ORDER_AMOUNT,
-  isReversedOrder = false,
   actions,
   themeConfig,
   isModalOpen,
@@ -102,7 +101,6 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
       vaultAddress,
       vaultChainId,
       pricingAsset,
-      isReversedOrder,
       minAmountInUsd,
       isModalOpen,
     }),
@@ -110,7 +108,6 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
       vaultAddress,
       vaultChainId,
       pricingAsset,
-      isReversedOrder,
       minAmountInUsd,
       isModalOpen,
     ],
