@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
-import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
+import { useWaitForCallsStatus } from 'wagmi'
+
+import { EXTREMELY_SHORT_POLLING_INTERVAL } from 'core-kit/const'
 import {
   useOnTransactionError,
   useOnTransactionSuccess,
@@ -11,8 +13,29 @@ import {
   useInvalidateTradingQueries,
   useWaitForTransactionReceipt,
 } from 'core-kit/hooks/web3'
-import type { Address } from 'core-kit/types/web3.types'
+import type { Address, Hex } from 'core-kit/types/web3.types'
 import { getExplorerLink } from 'core-kit/utils'
+
+const useBatchTransactionHandling = ({
+  batchId,
+  updatePendingTransactions,
+}: {
+  batchId: Hex | undefined
+  updatePendingTransactions: ReturnType<typeof useTradingPanelTransactions>[1]
+}) => {
+  const { data: result } = useWaitForCallsStatus({
+    id: batchId,
+    pollingInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+    query: { enabled: !!batchId },
+  })
+  const batchTxHash = result?.receipts?.[0]?.transactionHash
+
+  useEffect(() => {
+    if (!batchTxHash) return
+
+    updatePendingTransactions({ type: 'update', txHash: batchTxHash })
+  }, [batchTxHash, updatePendingTransactions])
+}
 
 export const useTradingResultHandling = () => {
   const [transactions, updatePendingTransactions] =
@@ -22,6 +45,7 @@ export const useTradingResultHandling = () => {
   const onTransactionSuccess = useOnTransactionSuccess()
 
   const [pendingTransaction] = transactions
+  const batchId = pendingTransaction?.batchId
   const txHash = pendingTransaction?.txHash
   const action = pendingTransaction?.action
   const isTokenApproveTransaction = action === 'approve'
@@ -29,10 +53,13 @@ export const useTradingResultHandling = () => {
   const { invalidateTradingQueries, invalidateAllowanceQueries } =
     useInvalidateTradingQueries()
 
+  useBatchTransactionHandling({ batchId, updatePendingTransactions })
+
   const { data, error } = useWaitForTransactionReceipt({
     hash: txHash,
     chainId,
-    pollingInterval: SHORTEN_POLLING_INTERVAL,
+    pollingInterval: EXTREMELY_SHORT_POLLING_INTERVAL,
+    query: { enabled: !!txHash },
   })
 
   useEffect(() => {

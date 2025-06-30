@@ -20,7 +20,7 @@ vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelType: vi.fn(),
 }))
 
-vi.mock('./use-is-trading-enabled', () => ({
+vi.mock('core-kit/hooks/trading', () => ({
   useIsTradingEnabled: vi.fn(),
 }))
 

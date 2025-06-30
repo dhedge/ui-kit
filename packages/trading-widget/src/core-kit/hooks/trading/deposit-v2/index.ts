@@ -1,4 +1,4 @@
-export { useDeposit } from './use-deposit'
+export { useDeposit } from './deposit-transaction/use-deposit'
 export { useDepositAllowance } from './use-deposit-allowance'
 export { useDepositQuote } from './use-deposit-quote'
 export { useDepositQuoteContractRead } from './use-deposit-quote-contract-read'

@@ -37,8 +37,8 @@
     "@storybook/react-vite": "^7.6.20",
     "@swc-node/register": "^1.10.10",
     "@swc/core": "^1.11.31",
-    "@tanstack/react-query": "^5.28.4",
-    "@tanstack/react-query-devtools": "^5.28.4",
+    "@tanstack/react-query": "^5.81.2",
+    "@tanstack/react-query-devtools": "^5.81.2",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.1.2",
@@ -76,12 +76,12 @@
     "ts-custom-error": "^3.3.1",
     "ts-node": "10.9.1",
     "typescript": "~5.8.3",
-    "viem": "^2.8.14",
+    "viem": "^2.31.4",
     "vite": "^5.4.19",
     "vite-plugin-dts": "~2.3.0",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.1",
-    "wagmi": "^2.5.11"
+    "wagmi": "^2.15.6"
   },
   "nx": {
     "includedScripts": []

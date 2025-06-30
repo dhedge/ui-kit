@@ -45,6 +45,7 @@ export interface TradingPanelState {
     isMaxSlippageLoading: boolean
     availableAggregators: string[]
     selectedAggregators: string[]
+    isBatchTransactionsEnabled: boolean
   }
   type: TradingPanelType
   input: {

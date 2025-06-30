@@ -1,4 +1,4 @@
-import type { Address, ChainId } from 'core-kit/types/web3.types'
+import type { Address, ChainId, Hex } from 'core-kit/types/web3.types'
 
 export interface TradingToken {
   address: Address
@@ -18,6 +18,7 @@ export interface PendingTransaction {
   symbol: string
   chainId: ChainId
   txHash?: Address
+  batchId?: Hex
 }
 
 type AddTransaction = { type: 'add' } & PendingTransaction

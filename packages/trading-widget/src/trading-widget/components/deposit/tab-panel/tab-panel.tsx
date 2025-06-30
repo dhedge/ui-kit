@@ -7,7 +7,6 @@ import { useConfigContextParams } from 'trading-widget/providers/config-provider
 
 import { useDepositTabPanel } from './tab-panel.hooks'
 import { DepositBalance } from '../balance/balance'
-import { DepositTradeButton } from '../button/trade-button/trade-button'
 import { ValidDepositButton } from '../button/valid-deposit-button/valid-deposit-button'
 import { DepositInputGroup } from '../input-group/input-group'
 import { DepositMeta } from '../meta/meta'
@@ -50,9 +49,7 @@ export const DepositTab: FC = () => {
         ) : (
           <>
             <ValidNetworkButton>
-              <ValidDepositButton>
-                <DepositTradeButton />
-              </ValidDepositButton>
+              <ValidDepositButton />
             </ValidNetworkButton>
           </>
         )}

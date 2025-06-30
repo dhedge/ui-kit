@@ -1,26 +1,21 @@
 import { DEPOSIT_SWAP_DATA_ERROR } from 'core-kit/const'
 import { useHandleTrade } from 'core-kit/hooks/trading'
-import {
-  useDeposit,
-  useSwapDataBasedOnSendToken,
-} from 'core-kit/hooks/trading/deposit-v2'
-
+import { useSwapDataBasedOnSendToken } from 'core-kit/hooks/trading/deposit-v2'
 import { useIsTransactionLoading } from 'core-kit/hooks/trading/use-is-transaction-loading'
+import type { ContractActionFunc } from 'core-kit/types'
 import {
   useConfigContextActions,
   useConfigContextParams,
 } from 'trading-widget/providers/config-provider'
-
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
 
-export const useDepositTradeButton = () => {
+export const useDepositTradeButton = (tradeExecutor: ContractActionFunc) => {
   const dispatch = useOverlayDispatchContext()
   const { onAcceptTermsOfUse } = useConfigContextActions()
   const { termsOfUseAccepted } = useConfigContextParams()
-  const deposit = useDeposit()
-  // TODO consider transforming label into param for mapping
-  const { disabled, label, handleTrade } = useHandleTrade(deposit)
+
+  const { disabled, label, handleTrade } = useHandleTrade(tradeExecutor)
   const { isError: isSwapDataFetchingError } = useSwapDataBasedOnSendToken()
   const isLoading = useIsTransactionLoading('deposit')
 

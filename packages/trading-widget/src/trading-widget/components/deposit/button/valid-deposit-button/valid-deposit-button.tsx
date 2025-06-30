@@ -1,9 +1,11 @@
-import type { FC, PropsWithChildren } from 'react'
+import type { FC } from 'react'
 
 import {
   ActionButton,
   DisabledButtonWithPrompt,
 } from 'trading-widget/components/common'
+import { BatchDepositTradeButton } from 'trading-widget/components/deposit/button/batch-trade-button'
+import { SingleDepositTradeButton } from 'trading-widget/components/deposit/button/single-trade-button'
 import { ApproveButton } from 'trading-widget/components/widget/widget-buttons'
 
 import { useTradingTypeName } from 'trading-widget/hooks'
@@ -13,7 +15,7 @@ import { useTranslationContext } from 'trading-widget/providers/translation-prov
 
 import { useValidDepositButton } from './valid-deposit-button.hooks'
 
-export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
+export const ValidDepositButton: FC = () => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
   const t = useTranslationContext()
   const name = useTradingTypeName('deposit')
@@ -31,6 +33,7 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     approve,
     confirmHighSlippage,
     maintenance,
+    isBatchContractWritesSupported,
   } = useValidDepositButton()
 
   if (requiresMinDeposit) {
@@ -57,10 +60,6 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     )
   }
 
-  if (requiresApprove) {
-    return <ApproveButton symbol={sendTokenSymbol} onApprove={approve} />
-  }
-
   if (requiresHighSlippageConfirm) {
     return (
       <Button onClick={confirmHighSlippage}>
@@ -72,5 +71,13 @@ export const ValidDepositButton: FC<PropsWithChildren> = ({ children }) => {
     )
   }
 
-  return children
+  if (requiresApprove) {
+    return isBatchContractWritesSupported ? (
+      <BatchDepositTradeButton />
+    ) : (
+      <ApproveButton symbol={sendTokenSymbol} onApprove={approve} />
+    )
+  }
+
+  return <SingleDepositTradeButton />
 }

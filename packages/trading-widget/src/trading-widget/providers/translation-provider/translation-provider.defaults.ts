@@ -115,4 +115,11 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   proceedWithNextStep: 'Please proceed with the next step.',
   aggregatorsLabel: 'Swap source',
   aggregatorsTooltip: 'Choose which aggregators to use for your trades.',
+  batchTransactionsLabel: 'Batch transactions',
+  batchTransactionsSwitchLabel: 'Batch',
+  batchTransactionsTooltip:
+    'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
+  seamlessOneClickTrading: 'Seamless one-click trading',
+  approveDepositPrefix: 'Approve & deposit in a',
+  singleTransaction: 'single transaction',
 }
