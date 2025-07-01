@@ -36,7 +36,7 @@ export const InputGroup: FC = () => {
         <SwitchPanel
           title={t.upperLimitLabel}
           subtitle={t.upperLimitSubtitle}
-          defaultEnabled={!!upperLimitPrice}
+          defaultEnabled
           onDisable={onDisableUpperLimitPrice}
         >
           <PriceInput
