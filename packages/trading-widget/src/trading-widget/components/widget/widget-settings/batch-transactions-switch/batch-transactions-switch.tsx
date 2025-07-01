@@ -2,15 +2,17 @@ import type { FC } from 'react'
 
 import { Switch } from 'trading-widget/components/common'
 import { useBatchTransactionsSwitch } from 'trading-widget/components/widget/widget-settings/batch-transactions-switch/batch-transactions-switch.hooks'
+import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
-interface BatchTransactionsSwitchProps {
-  label?: string
-}
-
-export const BatchTransactionsSwitch: FC<BatchTransactionsSwitchProps> = ({
-  label,
-}) => {
+export const BatchTransactionsSwitch: FC = () => {
+  const t = useTranslationContext()
   const [enabled, onToggle] = useBatchTransactionsSwitch()
 
-  return <Switch defaultEnabled={enabled} onChange={onToggle} label={label} />
+  return (
+    <Switch
+      defaultEnabled={enabled}
+      onChange={onToggle}
+      label={t.batchTransactionsSwitchLabel}
+    />
+  )
 }

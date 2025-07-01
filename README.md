@@ -550,9 +550,6 @@ path: `component.meta[name]`
 > | `batchTransactionsLabel`         | string | Batch transactions                                                                                                                                                                    |             |
 > | `batchTransactionsSwitchLabel`   | string | Batch                                                                                                                                                                                 |             |
 > | `batchTransactionsTooltip`       | string | Group approve and trade calls into a single batch transaction. Disable if you prefer separate prompts.                                                                                |             |
-> | `seamlessOneClickTrading`        | string | Seamless one-click trading                                                                                                                                                            |             |
-> | `approveDepositPrefix`           | string | Approve & deposit in a                                                                                                                                                                |             |
-> | `singleTransaction`              | string | single transaction                                                                                                                                                                    |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

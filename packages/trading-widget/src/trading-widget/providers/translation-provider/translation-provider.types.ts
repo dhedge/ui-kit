@@ -98,9 +98,6 @@ export type TranslationMap = {
   batchTransactionsLabel: string
   batchTransactionsSwitchLabel: string
   batchTransactionsTooltip: string
-  seamlessOneClickTrading: string
-  approveDepositPrefix: string
-  singleTransaction: string
   [key: string]: string
 }
 

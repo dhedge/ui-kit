@@ -30,7 +30,7 @@ export const WithdrawSettings: FC = () => {
         label={t.batchTransactionsLabel}
         tooltipText={t.batchTransactionsTooltip ?? ''}
       >
-        <BatchTransactionsSwitch label={t.batchTransactionsSwitchLabel} />
+        <BatchTransactionsSwitch />
       </SettingsOption>
       <AggregatorsSelector />
     </>
