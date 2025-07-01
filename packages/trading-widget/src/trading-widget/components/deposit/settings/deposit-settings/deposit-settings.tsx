@@ -30,7 +30,7 @@ export const DepositSettings: FC = () => {
         label={t.batchTransactionsLabel}
         tooltipText={t.batchTransactionsTooltip}
       >
-        <BatchTransactionsSwitch label={t.batchTransactionsSwitchLabel} />
+        <BatchTransactionsSwitch />
       </SettingsOption>
       <AggregatorsSelector />
     </>
