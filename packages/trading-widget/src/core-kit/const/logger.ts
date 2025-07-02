@@ -12,6 +12,7 @@ export const TRADING_PANEL_LOG_EVENT = {
   WITHDRAWAL: 'withdrawal',
   TRADING_SETTINGS_OPENED: 'trading_settings_opened',
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
+  BATCH_TRANSACTIONS_CHANGE: 'batch_transactions_change',
 }
 
 export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
@@ -47,4 +48,5 @@ export const TRADING_LOG_EVENT_PARAM = {
   SYMBOL: { NAME: 'symbol', TYPE: 'string' },
   CHAIN_ID: { NAME: 'chain_id', TYPE: 'number' },
   ADDRESS: { NAME: 'address', TYPE: 'string' },
+  IS_BATCH_TRANSACTIONS_ENABLED: { NAME: 'is_batch_enabled', TYPE: 'number' },
 }
