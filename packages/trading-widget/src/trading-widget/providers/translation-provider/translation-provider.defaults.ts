@@ -119,4 +119,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   batchTransactionsSwitchLabel: 'Batch',
   batchTransactionsTooltip:
     'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
+  openLimitOrderAfterBuySwitchLabel: 'Add limit sell',
 }

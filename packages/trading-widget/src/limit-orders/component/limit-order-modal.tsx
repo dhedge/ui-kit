@@ -33,10 +33,7 @@ export type LimitOrderModalProps = {
   }) => ReactNode
   actions?: LimitOrderCallbacks
   themeConfig?: ThemeProviderConfigProps
-} & Pick<
-  LimitOrderState,
-  'vaultAddress' | 'vaultChainId' | 'pricingAsset'
-> &
+} & Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId' | 'pricingAsset'> &
   Partial<Pick<LimitOrderState, 'minAmountInUsd' | 'isModalOpen'>>
 
 const LimitOrderModalContent: FC<
@@ -104,13 +101,7 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
       minAmountInUsd,
       isModalOpen,
     }),
-    [
-      vaultAddress,
-      vaultChainId,
-      pricingAsset,
-      minAmountInUsd,
-      isModalOpen,
-    ],
+    [vaultAddress, vaultChainId, pricingAsset, minAmountInUsd, isModalOpen],
   )
   return (
     <TranslationProvider config={translation}>
