@@ -10,3 +10,4 @@ export { useProjectedEarningsCore } from './projected-earnings/use-projected-ear
 export { useSwapDataQuery } from './use-swap-data-query'
 export { useSendTokenDebouncedValue } from './use-send-token-debounced-value'
 export { useEasySwapperTrackedAssets } from './use-easy-swapper-tracked-assets'
+export { useIsBatchContractWritesTrading } from './use-is-batch-contract-writes-trading'

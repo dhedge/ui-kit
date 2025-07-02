@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 
+import { useIsBatchContractWritesSupported } from 'core-kit/hooks/web3'
 import { SettingsOption } from 'trading-widget/components/common'
 import {
   AggregatorsSelector,
@@ -10,6 +11,7 @@ import {
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 export const WithdrawSettings: FC = () => {
+  const isBatchContractWritesSupported = useIsBatchContractWritesSupported()
   const t = useTranslationContext()
 
   return (
@@ -26,12 +28,14 @@ export const WithdrawSettings: FC = () => {
       >
         <TokenAllowanceSwitch />
       </SettingsOption>
-      <SettingsOption
-        label={t.batchTransactionsLabel}
-        tooltipText={t.batchTransactionsTooltip ?? ''}
-      >
-        <BatchTransactionsSwitch />
-      </SettingsOption>
+      {isBatchContractWritesSupported && (
+        <SettingsOption
+          label={t.batchTransactionsLabel}
+          tooltipText={t.batchTransactionsTooltip ?? ''}
+        >
+          <BatchTransactionsSwitch />
+        </SettingsOption>
+      )}
       <AggregatorsSelector />
     </>
   )
