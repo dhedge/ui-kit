@@ -33,7 +33,7 @@ export const ValidDepositButton: FC = () => {
     approve,
     confirmHighSlippage,
     maintenance,
-    isBatchContractWritesSupported,
+    isBatchContractWritesTrading,
   } = useValidDepositButton()
 
   if (requiresMinDeposit) {
@@ -72,7 +72,7 @@ export const ValidDepositButton: FC = () => {
   }
 
   if (requiresApprove) {
-    return isBatchContractWritesSupported ? (
+    return isBatchContractWritesTrading ? (
       <BatchDepositTradeButton />
     ) : (
       <ApproveButton symbol={sendTokenSymbol} onApprove={approve} />

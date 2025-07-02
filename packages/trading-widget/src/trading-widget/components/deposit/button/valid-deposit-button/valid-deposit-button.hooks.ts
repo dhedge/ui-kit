@@ -2,16 +2,16 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
+import { useIsBatchContractWritesTrading } from 'core-kit/hooks/trading'
 import {
   useDepositAllowance,
   useIsVaultDepositLocked,
   useRequiresMinDeposit,
 } from 'core-kit/hooks/trading/deposit-v2'
-import { useIsBatchContractWritesSupported } from 'core-kit/hooks/web3'
 import { useHighSlippageCheck } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
-  const isBatchContractWritesSupported = useIsBatchContractWritesSupported()
+  const isBatchContractWritesTrading = useIsBatchContractWritesTrading()
   const { deprecated, symbol, maintenance, maintenanceDeposits } =
     useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
@@ -37,6 +37,6 @@ export const useValidDepositButton = () => {
     confirmHighSlippage,
     slippageToBeUsed,
     maintenance: maintenance || maintenanceDeposits,
-    isBatchContractWritesSupported,
+    isBatchContractWritesTrading,
   }
 }
