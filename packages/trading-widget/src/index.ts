@@ -121,6 +121,7 @@ export type {
   TransactionRequest,
   CallbackConfig,
   PoolConfig,
+  PricingAsset,
   PoolCompositionWithFraction,
   PoolFallbackData,
   PoolContractAccountCallParams,

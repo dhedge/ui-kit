@@ -56,6 +56,8 @@ export const getDefaultTradingPanelState = (
       availableAggregators: [],
       isBatchTransactionsEnabled:
         config?.settings?.isBatchTransactionsEnabled ?? false,
+      openLimitOrderModalAfterBuy:
+        config?.settings?.openLimitOrderModalAfterBuy ?? true,
       ...config?.settings,
       selectedAggregators: config?.settings?.availableAggregators ?? [],
     },

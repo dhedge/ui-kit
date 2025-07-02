@@ -5,6 +5,11 @@ import type {
 } from 'core-kit/types/trading-panel.types'
 import type { Address, ChainId } from 'core-kit/types/web3.types'
 
+export type PricingAsset = {
+  address: Address
+  symbol: string
+}
+
 export interface PoolConfig {
   address: Address
   symbol: string
@@ -20,6 +25,7 @@ export interface PoolConfig {
   maintenance?: boolean
   maintenanceDeposits?: boolean
   maintenanceWithdrawals?: boolean
+  pricingAsset?: PricingAsset
 }
 
 export interface PoolFallbackData {

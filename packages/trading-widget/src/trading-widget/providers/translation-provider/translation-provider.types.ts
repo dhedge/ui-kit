@@ -98,6 +98,7 @@ export type TranslationMap = {
   batchTransactionsLabel: string
   batchTransactionsSwitchLabel: string
   batchTransactionsTooltip: string
+  openLimitOrderAfterBuySwitchLabel: string
   [key: string]: string
 }
 
