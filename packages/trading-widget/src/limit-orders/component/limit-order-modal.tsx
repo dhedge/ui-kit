@@ -1,14 +1,9 @@
 import type { FC, PropsWithChildren, ReactNode } from 'react'
 import { useCallback, useMemo } from 'react'
 
-import { ActionButton } from 'limit-orders/component/common/action-button'
 import { ModalContent } from 'limit-orders/component/common/modal-content'
 import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
-import { InputGroup } from 'limit-orders/component/input-group/input-group'
-import { LimitOrderApproveButton } from 'limit-orders/component/limit-order-button/limit-order-approve-button'
-import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
-import { LimitOrderDeleteButton } from 'limit-orders/component/limit-order-button/limit-order-delete-button'
-import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
+import { LimitOrderContent } from 'limit-orders/component/limit-order-content'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
 import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
 import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
@@ -64,18 +59,7 @@ const LimitOrderModalContent: FC<
           title={t.limitOrdersTitle}
           className="dtw-text-[color:var(--limit-order-content-color)] dtw-text-[length:var(--limit-order-font-size)] dtw-max-w-[430px]"
         >
-          <div className="dtw-flex dtw-flex-col dtw-gap-2">
-            <InputGroup />
-            <NetworkCheckButton>
-              <LimitOrderApproveButton>
-                <LimitOrderButton />
-              </LimitOrderApproveButton>
-              <LimitOrderDeleteButton />
-            </NetworkCheckButton>
-            <ActionButton highlighted={false} onClick={onClose}>
-              {t.cancel}
-            </ActionButton>
-          </div>
+          <LimitOrderContent onClose={onClose} />
         </ModalContent>
       </ModalDialog>
     </>

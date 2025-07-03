@@ -1,7 +1,6 @@
 import type { FC, PropsWithChildren } from 'react'
 
 import type { ThemeProviderConfigProps } from 'limit-orders/providers/theme-provider'
-import { LimitOrderProvider } from 'trading-widget/providers/limit-order-provider/limit-order-provider'
 
 import type { ComponentProviderProps } from './component-provider'
 import { ComponentProvider } from './component-provider'
@@ -27,17 +26,13 @@ export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
   theme,
   components,
   translation,
-  limitOrderThemeConfig,
+  // limitOrderThemeConfig, TODO: add config into ConfigProvider
 }) => (
   <TranslationProvider config={translation}>
     <ThemeProvider config={theme}>
       <ConfigProvider config={config}>
         <ComponentProvider config={components}>
-          <OverlayProvider>
-            <LimitOrderProvider config={limitOrderThemeConfig}>
-              {children}
-            </LimitOrderProvider>
-          </OverlayProvider>
+          <OverlayProvider>{children}</OverlayProvider>
         </ComponentProvider>
       </ConfigProvider>
     </ThemeProvider>

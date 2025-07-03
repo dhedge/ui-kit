@@ -22,7 +22,7 @@ export const useSwapButton = () => {
       dispatch({
         type: 'MERGE_OVERLAY',
         payload: {
-          type: OVERLAY.NOTIFICATION,
+          type: OVERLAY.ERROR_NOTIFICATION,
           isOpen: true,
           meta: {
             error: WITHDRAW_SWAP_DATA_ERROR,

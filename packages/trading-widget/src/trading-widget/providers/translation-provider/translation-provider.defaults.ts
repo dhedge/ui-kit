@@ -101,6 +101,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim Assets',
+  createLimitSellOrder: 'Create limit sell order',
   swapAndClaimTo: 'Swap and claim assets to',
   initWithdrawDescription: 'Unroll',
   initWithdrawTooltip: 'Unroll prepares assets for single asset withdrawal.',

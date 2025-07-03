@@ -15,7 +15,7 @@ import {
 } from 'core-kit/hooks/web3'
 import type { Address, Hex } from 'core-kit/types/web3.types'
 import { getExplorerLink } from 'core-kit/utils'
-import { useOpenLimitOrderModal } from 'trading-widget/providers/limit-order-provider/limit-order-provider'
+import { useOpenLimitSellsOverlay } from 'trading-widget/hooks'
 
 const useBatchTransactionHandling = ({
   batchId,
@@ -45,9 +45,6 @@ export const useTradingResultHandling = () => {
   const onTransactionError = useOnTransactionError()
   const onTransactionSuccess = useOnTransactionSuccess()
 
-  // This hook is used to open the limit order modal when widget is wrapped in LimitOrderProvider
-  const openLimitOrderModal = useOpenLimitOrderModal()
-
   const [pendingTransaction] = transactions
   const batchId = pendingTransaction?.batchId
   const txHash = pendingTransaction?.txHash
@@ -56,6 +53,9 @@ export const useTradingResultHandling = () => {
   const chainId = pendingTransaction?.chainId
   const { invalidateTradingQueries, invalidateAllowanceQueries } =
     useInvalidateTradingQueries()
+
+  //open the limit sells overlay after a successful buy transaction
+  const openLimitSellsOverlay = useOpenLimitSellsOverlay()
 
   useBatchTransactionHandling({ batchId, updatePendingTransactions })
 
@@ -76,7 +76,7 @@ export const useTradingResultHandling = () => {
         onTransactionSuccess?.(data, action, link)
 
         if (action === 'deposit') {
-          openLimitOrderModal?.()
+          openLimitSellsOverlay()
         }
       }
 
@@ -94,7 +94,7 @@ export const useTradingResultHandling = () => {
     updateTradingModal,
     invalidateAllowanceQueries,
     invalidateTradingQueries,
-    openLimitOrderModal,
+    openLimitSellsOverlay,
   ])
 
   useEffect(() => {

@@ -24,7 +24,7 @@ export const useDepositTradeButton = (tradeExecutor: ContractActionFunc) => {
       dispatch({
         type: 'MERGE_OVERLAY',
         payload: {
-          type: OVERLAY.NOTIFICATION,
+          type: OVERLAY.ERROR_NOTIFICATION,
           isOpen: true,
           meta: {
             error: DEPOSIT_SWAP_DATA_ERROR,

@@ -27,17 +27,14 @@ vi.mock('core-kit/hooks/web3', () => ({
   })),
 }))
 
-const openLimitOrderModalMock = vi.fn()
+const openLimitSellsOverlayMock = vi.fn()
 
-vi.mock(
-  'trading-widget/providers/limit-order-provider/limit-order-provider',
-  () => ({
-    useOpenLimitOrderModal: () => openLimitOrderModalMock,
-  }),
-)
+vi.mock('trading-widget/hooks', () => ({
+  useOpenLimitSellsOverlay: () => openLimitSellsOverlayMock,
+}))
 
 beforeEach(() => {
-  openLimitOrderModalMock.mockClear()
+  openLimitSellsOverlayMock.mockClear()
 })
 
 describe('useTradingResultHandling', () => {
@@ -96,7 +93,7 @@ describe('useTradingResultHandling', () => {
     renderHook(() => useTradingResultHandling())
 
     await waitFor(() => {
-      expect(openLimitOrderModalMock).toHaveBeenCalledTimes(1)
+      expect(openLimitSellsOverlayMock).toHaveBeenCalledTimes(1)
     })
   })
 })
