@@ -82,6 +82,7 @@ export type TranslationMap = {
   swapAction: string
   claimAction: string
   claimLabel: string
+  createLimitSellOrder: string
   swapAndClaimTo: string
   initWithdrawDescription: string
   initWithdrawTooltip: string

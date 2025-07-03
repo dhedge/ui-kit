@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 
 import { Layout } from 'trading-widget/components/common'
-import { useNotificationOverlay } from 'trading-widget/components/widget/widget-overlay/notification-overlay/notification-overlay.hooks'
+import { useErrorNotificationOverlay } from 'trading-widget/components/widget/widget-overlay/error-notification-overlay/error-notification-overlay.hooks'
 import type { OverlayProps } from 'trading-widget/types'
 
-export const NotificationOverlay: FC<OverlayProps> = (props) => {
-  const { handleReject, error } = useNotificationOverlay(props)
+export const ErrorNotificationOverlay: FC<OverlayProps> = (props) => {
+  const { handleReject, error } = useErrorNotificationOverlay(props)
 
   if (!error) {
     return null

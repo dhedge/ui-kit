@@ -5,4 +5,5 @@ export { FmpWithdrawalOverlay } from './fmp-withdrawal-overlay/fmp-withdrawal-ov
 export { TokenSelectOverlay } from './token-select-overlay/token-select-overlay'
 export { PoolSelectOverlay } from './pool-select-overlay/pool-select-overlay'
 export { TradingOverlay } from './trading-overlay/trading-overlay'
-export { NotificationOverlay } from './notification-overlay/notification-overlay'
+export { ErrorNotificationOverlay } from 'trading-widget/components/widget/widget-overlay/error-notification-overlay/error-notification-overlay'
+export { LimitSellsOverlay } from './limit-sells-overlay/limit-sells-overlay'

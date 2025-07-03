@@ -22,6 +22,10 @@ export const TradingSummary: FC = () => {
     return <>{t.claimLabel}</>
   }
 
+  if (action === 'create_limit_sell_order') {
+    return <>{t.createLimitSellOrder}</>
+  }
+
   return (
     <VaultTransactionSummary
       action={action}
