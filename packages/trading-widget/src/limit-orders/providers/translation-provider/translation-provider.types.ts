@@ -16,6 +16,8 @@ export type TranslationMap = {
   lowerLimitSubtitle: string
   upperLimitLabel: string
   upperLimitSubtitle: string
+  partialSellLabel: string
+  partialSellSubtitle: string
   price: string
   currentPrice: string
   limitOrderTerms: string

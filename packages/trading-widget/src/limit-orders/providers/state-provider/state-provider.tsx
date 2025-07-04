@@ -50,6 +50,7 @@ export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
   setUpperLimitPrice: noop,
   setLowerLimitPrice: noop,
   setTermsAccepted: noop,
+  setSellPercentage: noop,
   reset: noop,
   setPendingTransaction: noop,
 })
@@ -78,6 +79,10 @@ export const LimitOrderStateProvider: FC<
     dispatch({ type: 'SET_TERMS_ACCEPTED', payload })
   }, [])
 
+  const setSellPercentage = useCallback((payload: string) => {
+    dispatch({ type: 'SET_SELL_PERCENTAGE', payload })
+  }, [])
+
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' })
   }, [])
@@ -95,6 +100,7 @@ export const LimitOrderStateProvider: FC<
       setIsModalOpen,
       setLowerLimitPrice,
       setTermsAccepted,
+      setSellPercentage,
       reset,
       setPendingTransaction,
       onTransactionSuccess: callbackActions?.onTransactionSuccess,
@@ -106,6 +112,7 @@ export const LimitOrderStateProvider: FC<
       setIsModalOpen,
       setLowerLimitPrice,
       setTermsAccepted,
+      setSellPercentage,
       reset,
       setPendingTransaction,
       callbackActions?.onTransactionSuccess,

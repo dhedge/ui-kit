@@ -7,6 +7,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   lowerLimitSubtitle: 'Sells when price drops',
   upperLimitLabel: 'Upper limit',
   upperLimitSubtitle: 'Sells when price rises',
+  partialSellLabel: 'Partial sell',
+  partialSellSubtitle: 'Sells a portion when price hits limits',
   price: 'price',
   currentPrice: 'Current {symbol} price',
   limitOrderTerms: 'I understand and accept limit orders are not guaranteed',

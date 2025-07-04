@@ -4,19 +4,11 @@ import { useState } from 'react'
 import { LimitOrderAbi } from 'core-kit/abi'
 import { AddressZero, DEFAULT_PRECISION, MaxUint256 } from 'core-kit/const'
 import { usePoolTokenPrice } from 'core-kit/hooks/pool'
-import {
-  useAccount,
-  useBalance,
-  useContractFunction,
-} from 'core-kit/hooks/web3'
+import { useAccount, useContractFunction } from 'core-kit/hooks/web3'
 import { EstimationError } from 'core-kit/models'
-import {
-  formatEther,
-  formatToUsd,
-  parseContractErrorMessage,
-  shiftBy,
-} from 'core-kit/utils'
+import { formatToUsd, parseContractErrorMessage, shiftBy } from 'core-kit/utils'
 import { useLimitOrderState } from 'limit-orders/hooks/state'
+import { useLimitOrderCoveredVaultAmount } from 'limit-orders/hooks/use-limit-order-covered-vault-amount'
 import { useOnLimitOrderSettled } from 'limit-orders/hooks/use-on-limit-order-settled'
 import { useUserLimitOrder } from 'limit-orders/hooks/use-user-limit-order'
 import { useTranslationContext } from 'limit-orders/providers/translation-provider'
@@ -37,16 +29,13 @@ export const useLimitOrderButton = () => {
     pendingTransaction,
     minAmountInUsd,
   } = useLimitOrderState()
+  const vaultAmount = useLimitOrderCoveredVaultAmount()
   const { data: limitOrder } = useUserLimitOrder({
     userAddress: account,
     vaultAddress,
     chainId: vaultChainId,
   })
-  const { data: balance } = useBalance({
-    address: account,
-    token: vaultAddress,
-    chainId: vaultChainId,
-  })
+
   const vaultPrice = usePoolTokenPrice({
     address: vaultAddress,
     chainId: vaultChainId,
@@ -59,16 +48,15 @@ export const useLimitOrderButton = () => {
     functionName: limitOrder ? 'modifyLimitOrder' : 'createLimitOrder',
   })
 
-  const vaultBalanceInUsd = new BigNumber(
-    formatEther(balance?.value ?? BigInt(0)),
-  ).multipliedBy(vaultPrice ?? '0')
+  const vaultBalanceInUsd = new BigNumber(vaultAmount.formatted).multipliedBy(
+    vaultPrice ?? '0',
+  )
   const isAmountSufficient = vaultBalanceInUsd.gte(minAmountInUsd)
 
   const disabled = !termsAccepted || !isAmountSufficient
   const isPending = !!pendingTransaction
 
   const modifyLimitOrder = async () => {
-    const amount = balance?.value ?? BigInt(0)
     const lowerLimitPriceD18 = lowerLimitPrice
       ? BigInt(shiftBy(lowerLimitPrice, DEFAULT_PRECISION))
       : BigInt(0)
@@ -77,7 +65,7 @@ export const useLimitOrderButton = () => {
       : MaxUint256
 
     const args = [
-      amount,
+      vaultAmount.raw,
       lowerLimitPriceD18,
       upperLimitPriceD18,
       account,
