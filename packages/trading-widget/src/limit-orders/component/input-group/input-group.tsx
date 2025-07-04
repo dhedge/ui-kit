@@ -1,10 +1,12 @@
 import type { FC } from 'react'
 
 import { AssetPricePanel } from 'limit-orders/component/common/asset-price-panel'
+import { PercentageInput } from 'limit-orders/component/common/percentage-input'
 import { PriceInput } from 'limit-orders/component/common/price-input'
 import { SwitchPanel } from 'limit-orders/component/common/switch-panel'
 import { useInputGroup } from 'limit-orders/component/input-group/input-group.hooks'
 import { TermsContent } from 'limit-orders/component/input-group/terms-content'
+import { DEFAULT_SELL_PERCENTAGE } from 'limit-orders/constants'
 import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 import { CheckBox } from 'trading-widget/components/common/checkbox/checkbox'
 
@@ -24,6 +26,11 @@ export const InputGroup: FC = () => {
     lowerLimitPriceDifference,
     pricingAssetSymbol,
     inputSuffix,
+    sellPercentage,
+    setSellPercentage,
+    onDisableSellPercentage,
+    coveredVaultAmount,
+    vaultSymbol,
   } = useInputGroup()
 
   return (
@@ -59,6 +66,29 @@ export const InputGroup: FC = () => {
             percentage={lowerLimitPriceDifference}
             symbol={pricingAssetSymbol}
             suffix={inputSuffix}
+          />
+        </SwitchPanel>
+        <SwitchPanel
+          title={t.partialSellLabel}
+          subtitle={t.partialSellSubtitle}
+          defaultEnabled={!!sellPercentage}
+          onDisable={onDisableSellPercentage}
+        >
+          <PercentageInput
+            inputValue={sellPercentage}
+            onInputChange={setSellPercentage}
+            suffix="%"
+            placeholder={DEFAULT_SELL_PERCENTAGE}
+            postfix={
+              <div className="dtw-flex dtw-flex-col dtw-items-end dtw-justify-center dtw-text-sm">
+                <span className="dtw-text-[color:var(--limit-order-primary-content-color)]">
+                  {coveredVaultAmount}
+                </span>
+                <span className="dtw-text-[color:var(--limit-order-secondary-content-color)]">
+                  {vaultSymbol}
+                </span>
+              </div>
+            }
           />
         </SwitchPanel>
       </div>
