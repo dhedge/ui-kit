@@ -101,6 +101,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim Assets',
+  createLimitSellOrder: 'Create limit sell order',
   swapAndClaimTo: 'Swap and claim assets to',
   initWithdrawDescription: 'Unroll',
   initWithdrawTooltip: 'Unroll prepares assets for single asset withdrawal.',
@@ -119,4 +120,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   batchTransactionsSwitchLabel: 'Batch',
   batchTransactionsTooltip:
     'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
+  openLimitOrderAfterBuySwitchLabel: 'Add limit sell',
 }

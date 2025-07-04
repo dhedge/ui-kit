@@ -7,6 +7,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   lowerLimitSubtitle: 'Sells when price drops',
   upperLimitLabel: 'Upper limit',
   upperLimitSubtitle: 'Sells when price rises',
+  partialSellLabel: 'Partial sell',
+  partialSellSubtitle: 'Sells a portion when price hits limits',
   price: 'price',
   currentPrice: 'Current {symbol} price',
   limitOrderTerms: 'I understand and accept limit orders are not guaranteed',
@@ -18,7 +20,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   minimumVaultBalanceRequired: 'Minimum vault balance required: {amount}',
   limitOrdersTitle: 'Set limit orders',
   termsPoint1:
-    'Once a limit order is placed, the associated vault token balance must remain unchanged. Any transfers or manual withdrawals will prevent the order from being executed.',
+    'A limit order requires an unchanged vault token balance — any transfers or withdrawals may block execution.',
   termsPoint2:
     'Revoking token approval after placing an order will prevent the order from being executed.',
   termsPoint3:

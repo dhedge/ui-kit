@@ -82,6 +82,7 @@ export type TranslationMap = {
   swapAction: string
   claimAction: string
   claimLabel: string
+  createLimitSellOrder: string
   swapAndClaimTo: string
   initWithdrawDescription: string
   initWithdrawTooltip: string
@@ -98,6 +99,7 @@ export type TranslationMap = {
   batchTransactionsLabel: string
   batchTransactionsSwitchLabel: string
   batchTransactionsTooltip: string
+  openLimitOrderAfterBuySwitchLabel: string
   [key: string]: string
 }
 

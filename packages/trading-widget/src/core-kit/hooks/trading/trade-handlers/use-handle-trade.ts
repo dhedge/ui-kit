@@ -85,7 +85,7 @@ export const useHandleTrade = (trade: ContractActionFunc) => {
         dispatch({
           type: 'MERGE_OVERLAY',
           payload: {
-            type: OVERLAY.NOTIFICATION,
+            type: OVERLAY.ERROR_NOTIFICATION,
             isOpen: true,
             meta: {
               error: error.message,

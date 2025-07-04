@@ -19,6 +19,7 @@ export interface ConfigProviderParams {
   isCustomDepositOptionsDisabled?: boolean
   aaveOffchainWithdrawMinValue: number
   getFallbackIconPath: (tokenName: string) => string
+  minLimitOrderValue: number
 }
 
 export interface ConfigProviderActions {

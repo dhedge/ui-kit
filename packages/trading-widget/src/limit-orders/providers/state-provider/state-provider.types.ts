@@ -11,6 +11,7 @@ export interface LimitOrderState {
     upperLimitPrice: string
     lowerLimitPrice: string
     termsAccepted: boolean
+    sellPercentage: string
   }
   pricingAsset: {
     address: Address
@@ -34,6 +35,7 @@ export type LimitOrderActionsState = LimitOrderCallbacks & {
   setUpperLimitPrice: (payload: string) => void
   setLowerLimitPrice: (payload: string) => void
   setTermsAccepted: (payload: boolean) => void
+  setSellPercentage: (payload: string) => void
   setPendingTransaction: (payload: Hash | null) => void
   reset: () => void
 }
@@ -49,6 +51,7 @@ export type LimitOrderAction =
     }
   | { type: 'SET_IS_MODAL_OPEN'; payload: boolean }
   | { type: 'SET_TERMS_ACCEPTED'; payload: boolean }
+  | { type: 'SET_SELL_PERCENTAGE'; payload: string }
   | { type: 'RESET' }
   | { type: 'SET_PENDING_TRANSACTION'; payload: Hash | null }
 

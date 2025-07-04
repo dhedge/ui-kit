@@ -6,6 +6,7 @@ import type {
 export const DEFAULT_FORM_DATA = {
   upperLimitPrice: '',
   lowerLimitPrice: '',
+  sellPercentage: '',
   termsAccepted: false,
 }
 
@@ -23,6 +24,11 @@ export const reducer = (
       return {
         ...state,
         form: { ...state.form, lowerLimitPrice: action.payload },
+      }
+    case 'SET_SELL_PERCENTAGE':
+      return {
+        ...state,
+        form: { ...state.form, sellPercentage: action.payload },
       }
     case 'SET_IS_MODAL_OPEN':
       return {

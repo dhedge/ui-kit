@@ -43,6 +43,7 @@ export type TransactionAction =
   | 'swap'
   | 'claim'
   | 'single_withdraw_and_claim'
+  | 'create_limit_sell_order'
 
 export type SwapEntity = 'token' | 'pool'
 

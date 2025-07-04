@@ -7,7 +7,7 @@ const EASY_SWAPPER_ERRORS = EasySwapperV2Abi.filter(
   ({ type }) => type === 'error',
 ).map(({ name }) => name)
 
-export const useNotificationOverlay = ({ type }: OverlayProps) => {
+export const useErrorNotificationOverlay = ({ type }: OverlayProps) => {
   const { handleReject, meta } = useOverlayHandlers({ type })
 
   return {

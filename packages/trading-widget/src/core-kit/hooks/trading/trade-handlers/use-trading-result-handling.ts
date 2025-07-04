@@ -15,6 +15,7 @@ import {
 } from 'core-kit/hooks/web3'
 import type { Address, Hex } from 'core-kit/types/web3.types'
 import { getExplorerLink } from 'core-kit/utils'
+import { useOpenLimitSellsOverlay } from 'trading-widget/hooks'
 
 const useBatchTransactionHandling = ({
   batchId,
@@ -53,6 +54,9 @@ export const useTradingResultHandling = () => {
   const { invalidateTradingQueries, invalidateAllowanceQueries } =
     useInvalidateTradingQueries()
 
+  //open the limit sells overlay after a successful buy transaction
+  const openLimitSellsOverlay = useOpenLimitSellsOverlay()
+
   useBatchTransactionHandling({ batchId, updatePendingTransactions })
 
   const { data, error } = useWaitForTransactionReceipt({
@@ -70,6 +74,10 @@ export const useTradingResultHandling = () => {
         updateTradingModal({ link, status: 'Success', action })
         updatePendingTransactions({ type: 'remove', status: 'success', txHash })
         onTransactionSuccess?.(data, action, link)
+
+        if (action === 'deposit') {
+          openLimitSellsOverlay()
+        }
       }
 
       isTokenApproveTransaction
@@ -86,6 +94,7 @@ export const useTradingResultHandling = () => {
     updateTradingModal,
     invalidateAllowanceQueries,
     invalidateTradingQueries,
+    openLimitSellsOverlay,
   ])
 
   useEffect(() => {

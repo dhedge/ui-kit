@@ -8,9 +8,10 @@ import { TABS } from 'trading-widget/constants/tab'
 import { OVERLAY } from 'trading-widget/types'
 
 import {
+  ErrorNotificationOverlay,
   FmpWithdrawalOverlay,
   HighSlippageOverlay,
-  NotificationOverlay,
+  LimitSellsOverlay,
   OverlaySwitch,
   PoolSelectOverlay,
   TermsOfUseOverlay,
@@ -41,13 +42,14 @@ export const Widget: FC = () => {
         </TabPanels>
       </TabGroup>
       <OverlaySwitch>
-        <NotificationOverlay type={OVERLAY.NOTIFICATION} />
+        <ErrorNotificationOverlay type={OVERLAY.ERROR_NOTIFICATION} />
         <TermsOfUseOverlay type={OVERLAY.TERMS_OF_USE} />
         <HighSlippageOverlay type={OVERLAY.HIGH_SLIPPAGE} />
         <FmpWithdrawalOverlay type={OVERLAY.FMP_WITHDRAWAL} />
         <TokenSelectOverlay type={OVERLAY.TOKEN_SELECT} searchQuery="" />
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
         <TradingOverlay type={OVERLAY.TRADING} />
+        <LimitSellsOverlay type={OVERLAY.LIMIT_SELLS} />
       </OverlaySwitch>
     </div>
   )

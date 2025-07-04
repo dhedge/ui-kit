@@ -8,12 +8,16 @@ export const LimitOrderApproveButton: FC<PropsWithChildren> = ({
   children,
 }) => {
   const t = useTranslationContext()
-  const { isApproved, approveLimitOrder, isApprovePending } =
+  const { isApproved, approveLimitOrder, isApprovePending, disabled } =
     useLimitOrderApproveButton()
 
   if (!isApproved) {
     return (
-      <ActionButton onClick={approveLimitOrder} loading={isApprovePending}>
+      <ActionButton
+        onClick={approveLimitOrder}
+        loading={isApprovePending}
+        disabled={disabled}
+      >
         {t.approve}
       </ActionButton>
     )

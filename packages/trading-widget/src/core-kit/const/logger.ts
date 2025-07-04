@@ -13,6 +13,7 @@ export const TRADING_PANEL_LOG_EVENT = {
   TRADING_SETTINGS_OPENED: 'trading_settings_opened',
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
   BATCH_TRANSACTIONS_CHANGE: 'batch_transactions_change',
+  CREATE_LIMIT_SELL_ORDER: 'create_limit_sell_order',
 }
 
 export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
@@ -35,6 +36,7 @@ export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
   ],
   claim: [TRADING_PANEL_LOG_EVENT.CLAIM],
   swap: [TRADING_PANEL_LOG_EVENT.SWAP],
+  create_limit_sell_order: [TRADING_PANEL_LOG_EVENT.CREATE_LIMIT_SELL_ORDER],
 }
 
 /**

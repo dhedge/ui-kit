@@ -1,5 +1,7 @@
 import type { FC, PropsWithChildren } from 'react'
 
+import type { ThemeProviderConfigProps } from 'limit-orders/providers/theme-provider'
+
 import type { ComponentProviderProps } from './component-provider'
 import { ComponentProvider } from './component-provider'
 import type { ConfigProviderProps } from './config-provider'
@@ -15,6 +17,7 @@ export interface ProvidersProps {
   config?: ConfigProviderProps['config']
   components?: ComponentProviderProps['config']
   translation?: TranslationProviderProps['config']
+  limitOrderThemeConfig?: ThemeProviderConfigProps
 }
 
 export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
@@ -23,6 +26,7 @@ export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
   theme,
   components,
   translation,
+  // limitOrderThemeConfig, TODO: add config into ConfigProvider
 }) => (
   <TranslationProvider config={translation}>
     <ThemeProvider config={theme}>
