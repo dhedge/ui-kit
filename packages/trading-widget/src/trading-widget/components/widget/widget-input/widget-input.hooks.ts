@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react'
 import { useMemo, useRef } from 'react'
 
 import { formatToUsd, getConventionalTokenPriceDecimals } from 'core-kit/utils'
@@ -58,9 +59,9 @@ export const useWidgetInput = ({
     inputRef.current?.focus()
   }
 
-  const handleInputChange = (_formatted: string, raw: string) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onInputChange) {
-      onInputChange(raw)
+      onInputChange(e.target.value)
     }
   }
 
