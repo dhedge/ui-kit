@@ -21,6 +21,7 @@ export type TranslationMap = {
   price: string
   currentPrice: string
   limitOrderTerms: string
+  create: string
   modify: string
   delete: string
   cancel: string

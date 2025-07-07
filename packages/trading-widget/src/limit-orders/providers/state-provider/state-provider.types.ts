@@ -2,6 +2,11 @@ import type { Address, Hash } from 'viem'
 
 import type { UseWriteContractParameters } from 'core-kit/types/web3.types'
 
+export type PendingTransaction = {
+  hash: Hash
+  action: 'approve' | 'create' | 'remove'
+}
+
 export interface LimitOrderState {
   isModalOpen: boolean
   vaultAddress: Address
@@ -17,7 +22,7 @@ export interface LimitOrderState {
     address: Address
     symbol: string
   }
-  pendingTransaction: Hash | null
+  pendingTransaction: PendingTransaction | null
 }
 
 export type OnLimitOrderSettled = NonNullable<
@@ -28,6 +33,7 @@ export type LimitOrderCallbacks = {
   onTransactionSuccess?: (transaction: Address) => void
   onTransactionError?: (transaction: Address) => void
   onTransactionSettled?: OnLimitOrderSettled
+  onLog?: (eventName: string, payload?: Record<string, unknown>) => void
 }
 
 export type LimitOrderActionsState = LimitOrderCallbacks & {
@@ -36,7 +42,7 @@ export type LimitOrderActionsState = LimitOrderCallbacks & {
   setLowerLimitPrice: (payload: string) => void
   setTermsAccepted: (payload: boolean) => void
   setSellPercentage: (payload: string) => void
-  setPendingTransaction: (payload: Hash | null) => void
+  setPendingTransaction: (payload: PendingTransaction | null) => void
   reset: () => void
 }
 
@@ -53,7 +59,7 @@ export type LimitOrderAction =
   | { type: 'SET_TERMS_ACCEPTED'; payload: boolean }
   | { type: 'SET_SELL_PERCENTAGE'; payload: string }
   | { type: 'RESET' }
-  | { type: 'SET_PENDING_TRANSACTION'; payload: Hash | null }
+  | { type: 'SET_PENDING_TRANSACTION'; payload: PendingTransaction | null }
 
 export interface LimitOrderContextConfig {
   initialState: Pick<

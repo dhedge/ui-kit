@@ -53,6 +53,7 @@ export const LimitOrderActionsContext = createContext<LimitOrderActionsState>({
   setSellPercentage: noop,
   reset: noop,
   setPendingTransaction: noop,
+  onLog: noop,
 })
 
 export const LimitOrderStateProvider: FC<
@@ -106,6 +107,7 @@ export const LimitOrderStateProvider: FC<
       onTransactionSuccess: callbackActions?.onTransactionSuccess,
       onTransactionError: callbackActions?.onTransactionError,
       onTransactionSettled: callbackActions?.onTransactionSettled,
+      onLog: callbackActions?.onLog,
     }),
     [
       setUpperLimitPrice,
@@ -118,6 +120,7 @@ export const LimitOrderStateProvider: FC<
       callbackActions?.onTransactionSuccess,
       callbackActions?.onTransactionError,
       callbackActions?.onTransactionSettled,
+      callbackActions?.onLog,
     ],
   )
 

@@ -1,25 +1,36 @@
 import { useCallback } from 'react'
 
 import { useLimitOrderActions } from 'limit-orders/hooks/state'
-import type { OnLimitOrderSettled } from 'limit-orders/providers/state-provider/state-provider.types'
+import type {
+  OnLimitOrderSettled,
+  PendingTransaction,
+} from 'limit-orders/providers/state-provider/state-provider.types'
 
-export const useOnLimitOrderSettled = (): OnLimitOrderSettled => {
+export const useOnLimitOrderSettled = (
+  action: PendingTransaction['action'],
+): OnLimitOrderSettled => {
   const { setIsModalOpen, reset, setPendingTransaction, onTransactionSettled } =
     useLimitOrderActions()
 
   return useCallback<OnLimitOrderSettled>(
     (...params) => {
-      const [transaction] = params
+      const [hash] = params
       onTransactionSettled?.(...params)
 
-      if (!transaction) {
+      if (!hash) {
         return setPendingTransaction(null)
       }
 
-      setPendingTransaction(transaction)
+      setPendingTransaction({ hash, action })
       setIsModalOpen(false)
       reset()
     },
-    [reset, setIsModalOpen, setPendingTransaction, onTransactionSettled],
+    [
+      onTransactionSettled,
+      setPendingTransaction,
+      action,
+      setIsModalOpen,
+      reset,
+    ],
   )
 }

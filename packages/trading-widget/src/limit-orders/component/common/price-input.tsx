@@ -79,12 +79,12 @@ export const PriceInput: FC<PriceInputProps> = (props) => {
           placeholder={placeholder}
         />
         {suffix ? (
-          <span className="dtw-font-light dtw-whitespace-nowrap dtw-text-[color:var(--limit-order-secondary-content-color)]">
+          <span className="dtw-font-light dtw-whitespace-nowrap dtw-text-[length:var(--limit-order-input-suffix-font-size,var(--limit-order-font-size-sm))] dtw-text-[color:var(--limit-order-secondary-content-color)]">
             {suffix}
           </span>
         ) : null}
         {percentage ? (
-          <span className="dtw-font-light dtw-text-[color:var(--limit-order-secondary-content-color)]">
+          <span className="dtw-font-light dtw-text-[length:var(--limit-order-input-suffix-font-size,var(--limit-order-font-size-sm))] dtw-text-[color:var(--limit-order-secondary-content-color)]">
             {percentage}
           </span>
         ) : null}

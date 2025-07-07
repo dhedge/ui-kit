@@ -96,6 +96,7 @@ export interface ThemeProviderConfigProps {
         tokenLineHeight?: string
         tokenFontSizeSm?: string
         tokenLineHeightSm?: string
+        suffixFontSize?: string
         buttonPx?: string
         buttonPy?: string
         buttonFontSize?: string

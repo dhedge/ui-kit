@@ -130,6 +130,8 @@ UI configuration provider. Manages params to configure custom styling, component
 > | `chainConfig`                      | `Partial<Record<ChainId, { name: string; iconPath: string }>>` | `{}`                         | Sets map of chain `name` and `iconPath`                                                                                                            |
 > | `aaveOffchainWithdrawMinValue`     | `number`                                                       | `50`                         | Value in USD when off-chain Aave withdrawal is enabled                                                                                             |
 > | `getFallbackIconPath`              | `(tokenName: string) => string`                                | `buildIconLink`              | Fallback token icon path getter                                                                                                                    |
+> | `minLimitOrderValue`               | `number`                                                       | `0`                          | Minimum USD value required to create a limit sell order                                                                                            |
+> | `limitOrderThemeConfig`            | `ThemeProviderConfigProps`                                     | `{}`                         | Limit sell overlay content theme config                                                                                                            |
 
 ##### actions
 
