@@ -19,8 +19,8 @@ export const useLimitOrderApproveTransaction = () => {
     contractId: 'erc20',
     dynamicContractAddress: vaultAddress,
     functionName: 'approve',
-    onSettled(transaction) {
-      setPendingTransaction(transaction ?? null)
+    onSettled(hash) {
+      setPendingTransaction(hash ? { hash, action: 'approve' } : null)
       setIsLoading(false)
     },
   })

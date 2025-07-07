@@ -17,7 +17,9 @@ const tradingContractCalls = [
   'allowance',
   'getExitRemainingCooldown',
   'tokenPrice',
+  'limitOrders',
 ]
+
 const allowanceContractCalls = ['allowance']
 
 const filterQueries = (

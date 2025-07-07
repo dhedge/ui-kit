@@ -74,7 +74,9 @@ export const PercentageInput: FC<PercentageInputProps> = (props) => {
           disabled={disabled}
           placeholder={placeholder}
         />
-        {postfix}
+        <div className="dtw-font-light dtw-text-[length:var(--limit-order-input-suffix-font-size,var(--limit-order-font-size-sm))] dtw-text-[color:var(--limit-order-secondary-content-color)]">
+          {postfix}
+        </div>
       </div>
     </div>
   )

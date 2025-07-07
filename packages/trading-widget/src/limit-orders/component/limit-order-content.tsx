@@ -10,9 +10,13 @@ import { useTranslationContext } from 'limit-orders/providers/translation-provid
 
 interface LimitOrderContentProps {
   onClose?: () => void
+  hideDeleteButton?: boolean
 }
 
-export const LimitOrderContent: FC<LimitOrderContentProps> = ({ onClose }) => {
+export const LimitOrderContent: FC<LimitOrderContentProps> = ({
+  onClose,
+  hideDeleteButton,
+}) => {
   const t = useTranslationContext()
 
   return (
@@ -22,7 +26,7 @@ export const LimitOrderContent: FC<LimitOrderContentProps> = ({ onClose }) => {
         <LimitOrderApproveButton>
           <LimitOrderButton />
         </LimitOrderApproveButton>
-        <LimitOrderDeleteButton />
+        {!hideDeleteButton && <LimitOrderDeleteButton />}
       </NetworkCheckButton>
       <ActionButton highlighted={false} onClick={onClose}>
         {t.cancel}

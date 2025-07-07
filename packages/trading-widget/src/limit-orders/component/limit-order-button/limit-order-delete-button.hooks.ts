@@ -6,6 +6,8 @@ import { useLimitOrderState } from 'limit-orders/hooks/state'
 import { useOnLimitOrderSettled } from 'limit-orders/hooks/use-on-limit-order-settled'
 import { useUserLimitOrder } from 'limit-orders/hooks/use-user-limit-order'
 
+const action = 'remove'
+
 export const useLimitOrderDeleteButton = () => {
   const { account = AddressZero } = useAccount()
   const { vaultAddress, vaultChainId, pendingTransaction } =
@@ -16,7 +18,7 @@ export const useLimitOrderDeleteButton = () => {
     chainId: vaultChainId,
   })
 
-  const onSettled = useOnLimitOrderSettled()
+  const onSettled = useOnLimitOrderSettled(action)
   const { send } = useContractFunction({
     onSettled,
     contractId: 'limitOrder',

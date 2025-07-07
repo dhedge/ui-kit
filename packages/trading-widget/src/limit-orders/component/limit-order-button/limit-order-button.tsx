@@ -13,6 +13,7 @@ export const LimitOrderButton: FC = () => {
     isPending,
     minAmount,
     isAmountSufficient,
+    isModifyTransaction,
   } = useLimitOrderButton()
 
   return (
@@ -33,7 +34,7 @@ export const LimitOrderButton: FC = () => {
         disabled={disabled}
         loading={isPending}
       >
-        {t.modify}
+        {isModifyTransaction ? t.modify : t.create}
       </ActionButton>
     </div>
   )

@@ -18,6 +18,8 @@ const LIMIT_ORDER_ERRORS = LimitOrderAbi.filter(
   ({ type }) => type === 'error',
 ).map(({ name }) => name)
 
+const action = 'create'
+
 export const useLimitOrderButton = () => {
   const translationMap = useTranslationContext()
   const { account = AddressZero } = useAccount()
@@ -41,11 +43,12 @@ export const useLimitOrderButton = () => {
     chainId: vaultChainId,
   })
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const onSettled = useOnLimitOrderSettled()
+  const onSettled = useOnLimitOrderSettled(action)
+  const isModifyTransaction = !!limitOrder
   const { send } = useContractFunction({
     onSettled,
     contractId: 'limitOrder',
-    functionName: limitOrder ? 'modifyLimitOrder' : 'createLimitOrder',
+    functionName: isModifyTransaction ? 'modifyLimitOrder' : 'createLimitOrder',
   })
 
   const vaultBalanceInUsd = new BigNumber(vaultAmount.formatted).multipliedBy(
@@ -100,5 +103,6 @@ export const useLimitOrderButton = () => {
       maximumFractionDigits: 0,
       minimumFractionDigits: 0,
     }),
+    isModifyTransaction,
   }
 }

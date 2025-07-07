@@ -61,6 +61,7 @@ export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   aaveOffchainWithdrawMinValue: 50,
   getFallbackIconPath: buildIconLink,
   minLimitOrderValue: 0,
+  limitOrderThemeConfig: {},
 }
 
 export const useConfigProviderDefaultActions = (): ConfigProviderActions => {

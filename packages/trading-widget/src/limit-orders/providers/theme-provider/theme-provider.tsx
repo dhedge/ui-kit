@@ -301,6 +301,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.input?.size?.lineHeightLg ??
           'var(--limit-order-line-height-lg)'
         }`,
+        '--limit-order-input-suffix-font-size': `${
+          config?.component?.input?.size?.suffixFontSize ??
+          'var(--limit-order-font-size-sm)'
+        }`,
         '--limit-order-input-font-weight': `${
           config?.component?.input?.style?.fontWeight ??
           'var(--limit-order-font-weight-light)'

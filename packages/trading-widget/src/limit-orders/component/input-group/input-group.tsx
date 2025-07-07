@@ -80,7 +80,7 @@ export const InputGroup: FC = () => {
             suffix="%"
             placeholder={DEFAULT_SELL_PERCENTAGE}
             postfix={
-              <div className="dtw-flex dtw-flex-col dtw-items-end dtw-justify-center dtw-text-sm">
+              <div className="dtw-flex dtw-flex-col dtw-items-end dtw-justify-center">
                 <span className="dtw-text-[color:var(--limit-order-primary-content-color)]">
                   {coveredVaultAmount}
                 </span>

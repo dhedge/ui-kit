@@ -12,6 +12,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   price: 'price',
   currentPrice: 'Current {symbol} price',
   limitOrderTerms: 'I understand and accept limit orders are not guaranteed',
+  create: 'Create',
   modify: 'Modify',
   delete: 'Delete',
   cancel: 'Cancel',

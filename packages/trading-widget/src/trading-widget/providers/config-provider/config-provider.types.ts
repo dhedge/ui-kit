@@ -1,4 +1,5 @@
 import type { ChainId } from 'core-kit/types'
+import type { ThemeProviderConfigProps } from 'limit-orders/providers/theme-provider'
 
 export interface ConfigProviderParams {
   isGeoBlocked: boolean
@@ -20,6 +21,7 @@ export interface ConfigProviderParams {
   aaveOffchainWithdrawMinValue: number
   getFallbackIconPath: (tokenName: string) => string
   minLimitOrderValue: number
+  limitOrderThemeConfig?: ThemeProviderConfigProps
 }
 
 export interface ConfigProviderActions {

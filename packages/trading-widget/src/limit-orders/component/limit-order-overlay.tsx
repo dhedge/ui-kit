@@ -18,17 +18,18 @@ export type LimitOrderOverlayProps = {
   translation?: TranslationProviderProps['config']
   actions?: LimitOrderCallbacks
   themeConfig?: ThemeProviderConfigProps
+  onClose?: () => void
 } & Pick<LimitOrderState, 'vaultAddress' | 'vaultChainId' | 'pricingAsset'> &
   Partial<Pick<LimitOrderState, 'minAmountInUsd'>>
 
 const LimitOrderOverlayContent: FC<
-  Pick<LimitOrderOverlayProps, 'themeConfig'>
-> = ({ themeConfig }) => {
+  Pick<LimitOrderOverlayProps, 'themeConfig' | 'onClose'>
+> = ({ themeConfig, onClose }) => {
   useListenLimitOrderExecution()
 
   return (
     <ThemeProvider config={themeConfig}>
-      <LimitOrderContent />
+      <LimitOrderContent onClose={onClose} hideDeleteButton />
     </ThemeProvider>
   )
 }
@@ -41,6 +42,7 @@ export const LimitOrderOverlay: FC<LimitOrderOverlayProps> = ({
   minAmountInUsd = DEFAULT_MIN_ORDER_AMOUNT,
   actions,
   themeConfig,
+  onClose,
 }) => {
   const initialState = useMemo(
     () => ({
@@ -54,7 +56,7 @@ export const LimitOrderOverlay: FC<LimitOrderOverlayProps> = ({
   return (
     <TranslationProvider config={translation}>
       <LimitOrderStateProvider initialState={initialState} actions={actions}>
-        <LimitOrderOverlayContent themeConfig={themeConfig} />
+        <LimitOrderOverlayContent themeConfig={themeConfig} onClose={onClose} />
       </LimitOrderStateProvider>
     </TranslationProvider>
   )
