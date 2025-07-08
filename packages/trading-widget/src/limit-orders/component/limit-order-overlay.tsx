@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 
 import { LimitOrderContent } from 'limit-orders/component/limit-order-content'
 import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
+import { useExistingLimitOrderDefaultPrices } from 'limit-orders/hooks/use-existing-limit-order-default-prices'
 import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
 import { LimitOrderStateProvider } from 'limit-orders/providers/state-provider/state-provider'
 import type {
@@ -44,15 +45,33 @@ export const LimitOrderOverlay: FC<LimitOrderOverlayProps> = ({
   themeConfig,
   onClose,
 }) => {
+  const { isFetched, upperLimitPrice, lowerLimitPrice } =
+    useExistingLimitOrderDefaultPrices({ vaultAddress, vaultChainId })
   const initialState = useMemo(
     () => ({
       vaultAddress,
       vaultChainId,
       pricingAsset,
       minAmountInUsd,
+      form: {
+        upperLimitPrice,
+        lowerLimitPrice,
+      },
     }),
-    [vaultAddress, vaultChainId, pricingAsset, minAmountInUsd],
+    [
+      vaultAddress,
+      vaultChainId,
+      pricingAsset,
+      minAmountInUsd,
+      upperLimitPrice,
+      lowerLimitPrice,
+    ],
   )
+
+  if (!isFetched) {
+    return null
+  }
+
   return (
     <TranslationProvider config={translation}>
       <LimitOrderStateProvider initialState={initialState} actions={actions}>

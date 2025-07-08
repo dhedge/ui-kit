@@ -6,6 +6,7 @@ import { ModalDialog } from 'limit-orders/component/common/modal-dialog'
 import { LimitOrderContent } from 'limit-orders/component/limit-order-content'
 import { useLimitOrderModal } from 'limit-orders/component/limit-order-modal.hooks'
 import { DEFAULT_MIN_ORDER_AMOUNT } from 'limit-orders/constants'
+import { useExistingLimitOrderDefaultPrices } from 'limit-orders/hooks/use-existing-limit-order-default-prices'
 import { useListenLimitOrderExecution } from 'limit-orders/hooks/use-listen-limit-order-execution'
 import { LimitOrderStateProvider } from 'limit-orders/providers/state-provider/state-provider'
 import type {
@@ -77,6 +78,9 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
   themeConfig,
   isModalOpen,
 }) => {
+  const { isFetched, upperLimitPrice, lowerLimitPrice } =
+    useExistingLimitOrderDefaultPrices({ vaultAddress, vaultChainId })
+
   const initialState = useMemo(
     () => ({
       vaultAddress,
@@ -84,9 +88,26 @@ export const LimitOrderModal: FC<LimitOrderModalProps> = ({
       pricingAsset,
       minAmountInUsd,
       isModalOpen,
+      form: {
+        upperLimitPrice,
+        lowerLimitPrice,
+      },
     }),
-    [vaultAddress, vaultChainId, pricingAsset, minAmountInUsd, isModalOpen],
+    [
+      vaultAddress,
+      vaultChainId,
+      pricingAsset,
+      minAmountInUsd,
+      isModalOpen,
+      upperLimitPrice,
+      lowerLimitPrice,
+    ],
   )
+
+  if (!isFetched) {
+    return null
+  }
+
   return (
     <TranslationProvider config={translation}>
       <LimitOrderStateProvider initialState={initialState} actions={actions}>
