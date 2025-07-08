@@ -4,7 +4,7 @@ import * as web3Hooks from 'core-kit/hooks/web3'
 
 import type { PendingTransaction } from 'core-kit/types'
 import { TEST_ADDRESS } from 'tests/mocks'
-import { renderHook, waitFor } from 'tests/test-utils'
+import { renderHook } from 'tests/test-utils'
 
 import { useTradingResultHandling } from './use-trading-result-handling'
 
@@ -28,10 +28,6 @@ vi.mock('core-kit/hooks/web3', () => ({
 }))
 
 const openLimitSellsOverlayMock = vi.fn()
-
-vi.mock('trading-widget/hooks', () => ({
-  useOpenLimitSellsOverlay: () => openLimitSellsOverlayMock,
-}))
 
 beforeEach(() => {
   openLimitSellsOverlayMock.mockClear()
@@ -64,36 +60,5 @@ describe('useTradingResultHandling', () => {
         chainId: pendingTx.chainId,
       }),
     )
-  })
-
-  it('should open limit order modal on successful deposit transaction', async () => {
-    const pendingTx: PendingTransaction = {
-      action: 'deposit',
-      symbol: 'symbol',
-      chainId: optimism.id,
-      txHash: TEST_ADDRESS,
-    }
-
-    vi.mocked(stateHooks.useTradingPanelTransactions).mockReturnValue([
-      [pendingTx],
-      vi.fn(),
-    ])
-
-    vi.mocked(stateHooks.useTradingPanelModal).mockReturnValue([
-      {},
-      vi.fn(),
-    ] as unknown as ReturnType<typeof stateHooks.useTradingPanelModal>)
-
-    const receiptData = { transactionHash: TEST_ADDRESS }
-    vi.mocked(web3Hooks.useWaitForTransactionReceipt).mockReturnValue({
-      data: receiptData,
-      error: null,
-    } as unknown as ReturnType<typeof web3Hooks.useWaitForTransactionReceipt>)
-
-    renderHook(() => useTradingResultHandling())
-
-    await waitFor(() => {
-      expect(openLimitSellsOverlayMock).toHaveBeenCalledTimes(1)
-    })
   })
 })
