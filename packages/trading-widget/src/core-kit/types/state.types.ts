@@ -46,7 +46,6 @@ export interface TradingPanelState {
     availableAggregators: string[]
     selectedAggregators: string[]
     isBatchTransactionsEnabled: boolean
-    openLimitOrderModalAfterBuy: boolean
   }
   type: TradingPanelType
   input: {
