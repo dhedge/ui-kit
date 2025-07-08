@@ -66,6 +66,8 @@ export interface LimitOrderContextConfig {
     LimitOrderState,
     'vaultAddress' | 'vaultChainId' | 'pricingAsset' | 'minAmountInUsd'
   > &
-    Partial<Pick<LimitOrderState, 'isModalOpen'>>
+    Partial<Pick<LimitOrderState, 'isModalOpen'>> & {
+      form: Pick<LimitOrderState['form'], 'upperLimitPrice' | 'lowerLimitPrice'>
+    }
   actions?: LimitOrderCallbacks
 }

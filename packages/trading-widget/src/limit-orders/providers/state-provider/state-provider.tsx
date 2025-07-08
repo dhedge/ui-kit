@@ -26,7 +26,10 @@ export const getDefaultLimitOrderState = (
     vaultAddress: config.vaultAddress,
     vaultChainId: config.vaultChainId,
     isModalOpen: config.isModalOpen ?? false,
-    form: DEFAULT_FORM_DATA,
+    form: {
+      ...DEFAULT_FORM_DATA,
+      ...config.form,
+    },
     pendingTransaction: null,
     pricingAsset: config.pricingAsset,
     minAmountInUsd: config.minAmountInUsd,
@@ -42,6 +45,10 @@ export const LimitOrderStateContext = createContext<LimitOrderState>(
       symbol: '',
     },
     minAmountInUsd: DEFAULT_MIN_ORDER_AMOUNT,
+    form: {
+      lowerLimitPrice: '',
+      upperLimitPrice: '',
+    },
   }),
 )
 
