@@ -28,9 +28,11 @@ export const LimitOrderContent: FC<LimitOrderContentProps> = ({
         </LimitOrderApproveButton>
         {!hideDeleteButton && <LimitOrderDeleteButton />}
       </NetworkCheckButton>
-      <ActionButton highlighted={false} onClick={onClose}>
-        {t.cancel}
-      </ActionButton>
+      {!!onClose && (
+        <ActionButton highlighted={false} onClick={onClose}>
+          {t.cancel}
+        </ActionButton>
+      )}
     </div>
   )
 }

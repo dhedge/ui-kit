@@ -227,6 +227,7 @@ path: `global.color[name]`
 > | `colorTextLoading`       | string | `#ffffff99`                                  | Loading text color                    |
 > | `colorTextError`         | string | `#EF4444`                                    | Error text color                      |
 > | `colorTextWarning`       | string | `#AFA58D`                                    | Warning text color                    |
+> | `colorTextSuccess`       | string | `#73D393`                                    | Success text color                    |
 > | `colorIcon`              | string | `global?.color?.colorTextPrimary ?? #ffffff` | Icon color                            |
 > | `colorScrollbar`         | string | `#73D39380`                                  | Scrollbar color                       |
 
@@ -534,6 +535,7 @@ path: `component.meta[name]`
 > | `termOfUseDepositAuditRisk`         | string | Smart contracts are audited but a risk is still present                                                                                                                               |             |
 > | `termOfUseDepositAccept`            | string | Accept & Deposit                                                                                                                                                                      |             |
 > | `back`                              | string | Back                                                                                                                                                                                  |             |
+> | `done`                              | string | Done                                                                                                                                                                                  |             |
 > | `highSlippage`                      | string | High Slippage Alert                                                                                                                                                                   |             |
 > | `responsibleHighSlippage`           | string | By proceeding with this trade, you acknowledge and accept the possibility of experiencing high slippage, resulting in a potential difference between the expected and executed price. |             |
 > | `highSlippageListTitle`             | string | Please consider the following before confirming                                                                                                                                       |             |
@@ -558,7 +560,7 @@ path: `component.meta[name]`
 > | `unrollAndClaimAction`              | string | Claim                                                                                                                                                                                 |             |
 > | `claimAction`                       | string | Claim Without Swap                                                                                                                                                                    |             |
 > | `claimLabel`                        | string | Claim Assets                                                                                                                                                                          |             |
-> | `createLimitSellOrder`              | string | Create limit sell order                                                                                                                                                               |             |
+> | `createLimitSellOrder`              | string | Stop order set                                                                                                                                                                        |             |
 > | `swapAndClaimTo`                    | string | Swap and claim assets to                                                                                                                                                              |             |
 > | `initWithdrawDescription`           | string | Unroll                                                                                                                                                                                |             |
 > | `initWithdrawTooltip`               | string | Unroll prepares assets for single asset withdrawal                                                                                                                                    |             |
@@ -575,13 +577,25 @@ path: `component.meta[name]`
 > | `batchTransactionsLabel`            | string | Batch transactions                                                                                                                                                                    |             |
 > | `batchTransactionsSwitchLabel`      | string | Batch                                                                                                                                                                                 |             |
 > | `batchTransactionsTooltip`          | string | Group approve and trade calls into a single batch transaction. Disable if you prefer separate prompts.                                                                                |             |
-> | `openLimitOrderAfterBuySwitchLabel` | string | Add limit sell                                                                                                                                                                        |             |
+> | `openLimitOrderAfterBuySwitchLabel` | string | Add Stop Order                                                                                                                                                                        |             |
+> | `orderingLabel`                     | string | Ordering                                                                                                                                                                              |             |
+> | `paidLabel`                         | string | Paid                                                                                                                                                                                  |             |
+> | `priceLabel`                        | string | Price                                                                                                                                                                                 |             |
+> | `transactionLabel`                  | string | Transaction                                                                                                                                                                           |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
 ###### Default values: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.defaults.ts`
 
 </details>
+
+###### divider
+
+path: `component.divider[name]`
+
+> | name            | type   | default value                                                    | description              |
+> | --------------- | ------ | ---------------------------------------------------------------- | ------------------------ |
+> | `color.colorBg` | string | `global.color.colorBgNeutral` or `panel-secondary-content-color` | Divider background color |
 
 ## Local Development
 

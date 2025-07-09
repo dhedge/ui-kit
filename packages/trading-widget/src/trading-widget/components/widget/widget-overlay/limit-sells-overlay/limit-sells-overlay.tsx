@@ -15,6 +15,7 @@ export const LimitSellsOverlay: FC<OverlayProps> = (props) => {
     pricingAsset,
     minLimitOrderValue,
     actions,
+    closeAllOverlays,
   } = useLimitSellsOverlay(props)
 
   if (!pricingAsset) {
@@ -22,8 +23,13 @@ export const LimitSellsOverlay: FC<OverlayProps> = (props) => {
   }
 
   return (
-    <Layout.Overlay onClose={handleReject} className="!dtw-px-1">
-      <div className="dtw-mt-4 dtw-px-2 dtw-overflow-y-auto theme-scrollbar">
+    <Layout.Overlay
+      onClose={closeAllOverlays}
+      onBack={handleReject}
+      className="!dtw-px-2"
+      noPadding
+    >
+      <div className="dtw-mt-8 dtw-px-2 dtw-overflow-y-auto theme-scrollbar">
         <LimitOrderOverlay
           vaultAddress={address}
           vaultChainId={chainId}
@@ -31,7 +37,6 @@ export const LimitSellsOverlay: FC<OverlayProps> = (props) => {
           minAmountInUsd={minLimitOrderValue}
           actions={actions}
           themeConfig={limitOrderThemeConfig}
-          onClose={handleReject}
         />
       </div>
     </Layout.Overlay>
