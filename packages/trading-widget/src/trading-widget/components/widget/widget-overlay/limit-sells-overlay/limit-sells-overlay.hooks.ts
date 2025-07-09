@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import type { Address } from 'viem'
 
@@ -10,6 +10,7 @@ import {
 import { getExplorerLink } from 'core-kit/utils'
 import { useConfigContextParams } from 'trading-widget/providers/config-provider'
 import { useOverlayHandlers } from 'trading-widget/providers/overlay-provider'
+import { useCloseAllOverlays } from 'trading-widget/providers/overlay-provider/overlay-provider.hooks'
 import type { OverlayProps } from 'trading-widget/types'
 
 export const useLimitSellsOverlay = ({ type }: OverlayProps) => {
@@ -18,6 +19,7 @@ export const useLimitSellsOverlay = ({ type }: OverlayProps) => {
   const { handleReject } = useOverlayHandlers({ type })
   const updateTradingModal = useTradingPanelModal()[1]
   const updatePendingTransactions = useTradingPanelTransactions()[1]
+  const closeAll = useCloseAllOverlays()
 
   const actions = useMemo(
     () => ({
@@ -55,6 +57,11 @@ export const useLimitSellsOverlay = ({ type }: OverlayProps) => {
     ],
   )
 
+  const closeAllOverlays = useCallback(() => {
+    updateTradingModal({ isOpen: false })
+    closeAll()
+  }, [closeAll, updateTradingModal])
+
   return {
     handleReject,
     address,
@@ -62,5 +69,6 @@ export const useLimitSellsOverlay = ({ type }: OverlayProps) => {
     pricingAsset,
     minLimitOrderValue,
     actions,
+    closeAllOverlays,
   }
 }
