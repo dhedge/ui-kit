@@ -20,6 +20,7 @@ export interface PoolConfig {
   }
   withdrawParams: {
     customTokens: TradingToken[]
+    defaultWithdrawTokenSymbol?: string
   }
   deprecated?: boolean
   maintenance?: boolean

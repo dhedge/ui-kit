@@ -40,8 +40,16 @@ export const useOnTradingTypeChange = () => {
   }
 
   const onWithdrawSwitch = () => {
-    const [customWithdrawToken = MULTI_ASSET_TOKEN] =
-      poolConfig.withdrawParams.customTokens
+    const { customTokens, defaultWithdrawTokenSymbol } =
+      poolConfig.withdrawParams
+
+    const customWithdrawToken =
+      customTokens.find(
+        ({ symbol }) => symbol === defaultWithdrawTokenSymbol,
+      ) ??
+      customTokens[0] ??
+      MULTI_ASSET_TOKEN
+
     const withdrawToken = isCompleteWithdrawStep
       ? customWithdrawToken
       : hasSingleAssetWithdrawBlockers || isAllAssetsWithdrawOptionDefault

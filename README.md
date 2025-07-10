@@ -100,6 +100,28 @@ Top level provider component. Headless part of trading logic. API handles params
 
 </details>
 
+<details>
+<summary><code>PoolConfig</code> <code><b>/</b></code> <code>Vault configuration schema</code></summary>
+
+> | name                                        | type                                   | default value | description                                                                                                                             |
+> | ------------------------------------------- | -------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+> | `address`                                   | `Address`                              | —             | Vault contract address                                                                                                                  |
+> | `symbol`                                    | `string`                               | —             | Vault token symbol                                                                                                                      |
+> | `chainId`                                   | `ChainId`                              | —             | Chain identifier where the vault lives                                                                                                  |
+> | `depositParams.customTokens`                | `TradingToken[]`                       | `[]`          | List of additional assets accepted for deposits                                                                                         |
+> | `depositParams.defaultDepositTokenSymbol`   | `string`                               | `undefined`   | Symbol of token to pre-select by default when switching to the **Deposit** tab                                                          |
+> | `withdrawParams.customTokens`               | `TradingToken[]`                       | `[]`          | List of single-asset options available for withdrawals                                                                                  |
+> | `withdrawParams.defaultWithdrawTokenSymbol` | `string`                               | `undefined`   | Symbol of token to pre-select by default when switching to the **Withdraw** tab (falls back to first `customTokens` item if undefined). |
+> | `deprecated`                                | `boolean`                              | `false`       | Marks vault as deprecated and blocks trading operations                                                                                 |
+> | `maintenance`                               | `boolean`                              | `false`       | Enables global vault maintenance mode (blocks deposits & withdrawals)                                                                   |
+> | `maintenanceDeposits`                       | `boolean`                              | `false`       | Blocks only deposits                                                                                                                    |
+> | `maintenanceWithdrawals`                    | `boolean`                              | `false`       | Blocks only withdrawals                                                                                                                 |
+> | `pricingAsset`                              | `{ address: Address; symbol: string }` | `undefined`   | Pricing asset used for limit orders                                                                                                     |
+
+###### Source: `packages/trading-widget/src/core-kit/types/config.types.ts`
+
+</details>
+
 ### TradingWidget
 
 UI configuration provider. Manages params to configure custom styling, components, translations and basic trading params. Decomposed into `config`, `components`, `theme` and `translation` params. See below for more details
