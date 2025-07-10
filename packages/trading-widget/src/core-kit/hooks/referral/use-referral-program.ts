@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
 
+import { LOCAL_STORAGE_KEYS } from 'core-kit/const'
 import { useBrowserStorage } from 'core-kit/hooks/utils'
 import type { UseReferralProgramProps } from 'core-kit/types'
 
-const REFERRER = 'referrer'
-const REF_POOL = 'ref_pool'
 const REFERRAL_QUERY = 'ref'
 
 export const useReferralProgram = ({
@@ -16,16 +15,20 @@ export const useReferralProgram = ({
 }: UseReferralProgramProps) => {
   const [referredBy, setReferredBy] = useBrowserStorage(
     'localStorage',
-    REFERRER,
+    LOCAL_STORAGE_KEYS.REFERRER,
     '',
   )
-  const [refPool, setRefPool] = useBrowserStorage('localStorage', REF_POOL, '')
+  const [refPool, setRefPool] = useBrowserStorage(
+    'localStorage',
+    LOCAL_STORAGE_KEYS.REF_POOL,
+    '',
+  )
   const refQuery = query[REFERRAL_QUERY]
 
   useEffect(() => {
     if (!refQuery || typeof refQuery !== 'string') return
 
-    if (localStorage.getItem(REFERRER)) {
+    if (localStorage.getItem(LOCAL_STORAGE_KEYS.REFERRER)) {
       return
     }
     logEvent?.()

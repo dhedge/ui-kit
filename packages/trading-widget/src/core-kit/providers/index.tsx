@@ -15,6 +15,10 @@ import type {
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
 import { logTransactionByActionType } from 'core-kit/utils'
+import {
+  getStoredBatchTransactionsEnabled,
+  persistBatchTransactionsEnabled,
+} from 'core-kit/utils/batch-transactions'
 
 function noop() {
   return
@@ -54,9 +58,11 @@ export const getDefaultTradingPanelState = (
       isMultiAssetWithdrawalEnabled: true,
       isMaxSlippageLoading: false,
       availableAggregators: [],
-      isBatchTransactionsEnabled:
-        config?.settings?.isBatchTransactionsEnabled ?? false,
       ...config?.settings,
+      isBatchTransactionsEnabled:
+        getStoredBatchTransactionsEnabled() ??
+        config?.settings?.isBatchTransactionsEnabled ??
+        false,
       selectedAggregators: config?.settings?.availableAggregators ?? [],
     },
     type,
@@ -323,6 +329,11 @@ export const TradingPanelProvider: FC<
     (payload: Partial<TradingPanelState['settings']>) => {
       dispatch({ type: 'UPDATE_TRADING_SETTINGS', payload })
       onUpdateTradingSettings?.(payload)
+
+      // save `isBatchTransactionsEnabled` changes in localStorage
+      if (payload.isBatchTransactionsEnabled !== undefined) {
+        persistBatchTransactionsEnabled(payload.isBatchTransactionsEnabled)
+      }
     },
     [onUpdateTradingSettings],
   )
