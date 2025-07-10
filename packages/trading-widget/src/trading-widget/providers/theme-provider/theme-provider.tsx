@@ -85,9 +85,19 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.global?.color?.colorTextWarning ?? COLORS.AMBER['400']
         }`,
 
+        '--panel-success-content-color': `${
+          config?.global?.color?.colorTextSuccess ?? COLORS.GREEN.DEFAULT
+        }`,
+
         '--panel-border-color': `${
           config?.global?.color?.colorBorderPrimary ??
           `var(--panel-content-color)`
+        }`,
+
+        //divider
+        '--panel-divider-color': `${
+          config?.component?.divider?.color?.colorBg ??
+          'var(--panel-secondary-content-color)'
         }`,
 
         //scrollbar

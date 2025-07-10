@@ -19,6 +19,8 @@ export interface ThemeProviderConfigProps {
       //neutral
       colorTextNeutral?: string
       colorBgNeutral?: string
+      //success
+      colorTextSuccess?: string
       //loading
       colorTextLoading?: string
       //error
@@ -256,6 +258,11 @@ export interface ThemeProviderConfigProps {
       }
       style?: {
         radius?: string
+      }
+    }
+    divider?: {
+      color?: {
+        colorBg?: string
       }
     }
   }

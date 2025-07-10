@@ -58,6 +58,7 @@ export type TranslationMap = {
   termOfUseDepositAuditRisk: string
   termOfUseDepositAccept: string
   back: string
+  done: string
   highSlippage: string
   responsibleHighSlippage: string
   highSlippageListTitle: string
@@ -84,6 +85,10 @@ export type TranslationMap = {
   claimLabel: string
   createLimitSellOrder: string
   swapAndClaimTo: string
+  orderingLabel: string
+  paidLabel: string
+  priceLabel: string
+  transactionLabel: string
   initWithdrawDescription: string
   initWithdrawTooltip: string
   completeWithdrawDescription: string

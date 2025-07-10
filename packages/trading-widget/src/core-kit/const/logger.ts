@@ -14,6 +14,7 @@ export const TRADING_PANEL_LOG_EVENT = {
   INFINITE_ALLOWANCE_CHANGE: 'infinite_allowance_change',
   BATCH_TRANSACTIONS_CHANGE: 'batch_transactions_change',
   CREATE_LIMIT_SELL_ORDER: 'create_limit_sell_order',
+  OPEN_LIMIT_SELL_VIEW: 'open_limit_sell_view',
 }
 
 export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
@@ -51,4 +52,5 @@ export const TRADING_LOG_EVENT_PARAM = {
   CHAIN_ID: { NAME: 'chain_id', TYPE: 'number' },
   ADDRESS: { NAME: 'address', TYPE: 'string' },
   IS_BATCH_TRANSACTIONS_ENABLED: { NAME: 'is_batch_enabled', TYPE: 'number' },
+  SOURCE: { NAME: 'source', TYPE: 'string' },
 }
