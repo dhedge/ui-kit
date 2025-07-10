@@ -15,9 +15,15 @@ export const useDepositTradeButton = (tradeExecutor: ContractActionFunc) => {
   const { onAcceptTermsOfUse } = useConfigContextActions()
   const { termsOfUseAccepted } = useConfigContextParams()
 
-  const { disabled, label, handleTrade } = useHandleTrade(tradeExecutor)
-  const { isError: isSwapDataFetchingError } = useSwapDataBasedOnSendToken()
+  const {
+    disabled: tradeDisabled,
+    label,
+    handleTrade,
+  } = useHandleTrade(tradeExecutor)
+  const { isError: isSwapDataFetchingError, isLoading: isSwapDataLoading } =
+    useSwapDataBasedOnSendToken()
   const isLoading = useIsTransactionLoading('deposit')
+  const disabled = tradeDisabled || isSwapDataLoading
 
   const handleClick = () => {
     if (isSwapDataFetchingError) {
