@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE_KEYS } from 'core-kit/const'
 import { useBrowserStorage } from 'core-kit/hooks/utils'
 import { renderHook } from 'tests/test-utils'
 
@@ -39,13 +40,13 @@ describe('useReferralProgram', () => {
     expect(useBrowserStorage).toHaveBeenNthCalledWith(
       1,
       'localStorage',
-      'referrer',
+      LOCAL_STORAGE_KEYS.REFERRER,
       '',
     )
     expect(useBrowserStorage).toHaveBeenNthCalledWith(
       2,
       'localStorage',
-      'ref_pool',
+      LOCAL_STORAGE_KEYS.REF_POOL,
       '',
     )
     expect(logEvent).toHaveBeenCalledTimes(1)
