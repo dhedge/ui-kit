@@ -13,6 +13,7 @@ export const LimitOrderTransactionOverlay: FC<OverlayProps> = (props) => {
     <Layout.Overlay
       className="dtw-justify-between dtw-gap-y-4"
       onClose={onClose}
+      noPadding
     >
       {isProcessing ? (
         <LimitOrderProcessingContent />
