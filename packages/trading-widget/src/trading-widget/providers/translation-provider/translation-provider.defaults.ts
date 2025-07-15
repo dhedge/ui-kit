@@ -74,6 +74,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
     'Smart contracts are audited but a risk is still present',
   termOfUseDepositAccept: 'Accept & Deposit',
   back: 'Back',
+  done: 'Done',
   highSlippage: 'High Slippage Alert',
   responsibleHighSlippage:
     'By proceeding with this trade, you acknowledge and accept the possibility of experiencing high slippage, resulting in a potential difference between the expected and executed price.',
@@ -101,8 +102,12 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   swapAction: 'Swap',
   claimAction: 'Claim Without Swap',
   claimLabel: 'Claim Assets',
-  createLimitSellOrder: 'Create limit sell order',
+  createLimitSellOrder: 'Stop order set',
   swapAndClaimTo: 'Swap and claim assets to',
+  orderingLabel: 'Ordering',
+  paidLabel: 'Paid',
+  priceLabel: 'Price',
+  transactionLabel: 'Transaction',
   initWithdrawDescription: 'Unroll',
   initWithdrawTooltip: 'Unroll prepares assets for single asset withdrawal.',
   completeWithdrawDescription: 'Claim',
@@ -120,5 +125,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   batchTransactionsSwitchLabel: 'Batch',
   batchTransactionsTooltip:
     'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
-  openLimitOrderAfterBuySwitchLabel: 'Add limit sell',
+  openLimitOrderAfterBuySwitchLabel: 'Add Stop Order',
 }

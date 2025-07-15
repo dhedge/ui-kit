@@ -104,3 +104,16 @@ export const useOverlayHandlers = ({ type }: OverlayProps) => {
     meta,
   }
 }
+
+export const useCloseAllOverlays = () => {
+  const dispatch = useOverlayDispatchContext()
+
+  return () => {
+    Object.values(OVERLAY).forEach((type) => {
+      dispatch({
+        type: 'MERGE_OVERLAY',
+        payload: { type, isOpen: false, isPending: false },
+      })
+    })
+  }
+}

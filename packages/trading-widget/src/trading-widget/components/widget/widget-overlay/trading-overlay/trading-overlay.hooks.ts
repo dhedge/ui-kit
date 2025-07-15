@@ -14,6 +14,9 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
   const isSuccessTx = status == 'Success'
   const { handleReject } = useOverlayHandlers({ type })
   const showNextStepTip = action === 'single_withdraw' && isSuccessTx
+  const displaySuccessDepositOverlay = isSuccessTx && action === 'deposit'
+  const displayLimitOrderTransactionOverlay =
+    action === 'create_limit_sell_order'
 
   const statusMap = useMemo<Partial<Record<TradingModalStatus, string>>>(
     () => ({
@@ -35,5 +38,7 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
     link,
     onClose,
     showNextStepTip,
+    displaySuccessDepositOverlay,
+    displayLimitOrderTransactionOverlay,
   }
 }
