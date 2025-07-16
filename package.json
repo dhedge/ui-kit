@@ -1,16 +1,29 @@
 {
-  "name": "ui-kit",
-  "version": "0.0.0",
+  "name": "@dhedge/trading-widget",
+  "version": "3.19.0",
   "license": "MIT",
-  "private": true,
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
   "engines": {
     "pnpm": "^9.0.0"
   },
   "scripts": {
-    "build": "pnpx nx build trading-widget",
-    "lint": "pnpx nx lint trading-widget",
-    "test": "pnpx nx test trading-widget",
-    "storybook": "pnpx nx run trading-widget:storybook"
+    "build": "vite build --config vite.config.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0 --fix",
+    "test": "vitest run --config vite.config.ts",
+    "storybook": "storybook dev -p 4400 -c .storybook",
+    "prepare:package": "node scripts/prepare-package.mjs",
+    "release": "pnpm run lint && pnpm run test && pnpm run build && pnpm run prepare:package && pnpm publish --access public",
+    "prepare": "husky install"
+  },
+  "prepublishOnly": "pnpm run lint && pnpm run test && pnpm run build",
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "react": ">=18.2.0",
+    "viem": "^2.31.0",
+    "wagmi": "^2.15.0"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
@@ -24,21 +37,11 @@
     "react-popper-tooltip": "^4.4.2"
   },
   "devDependencies": {
-    "@nx/devkit": "21.1.3",
-    "@nx/eslint": "21.1.3",
-    "@nx/eslint-plugin": "21.1.3",
-    "@nx/react": "21.1.3",
-    "@nx/storybook": "21.1.3",
-    "@nx/vite": "21.1.3",
-    "@nx/workspace": "21.1.3",
     "@storybook/addon-essentials": "^7.6.20",
-    "@storybook/core-server": "^7.6.20",
     "@storybook/react": "^7.6.20",
     "@storybook/react-vite": "^7.6.20",
     "@swc-node/register": "^1.10.10",
     "@swc/core": "^1.11.31",
-    "@tanstack/react-query": "^5.81.2",
-    "@tanstack/react-query-devtools": "^5.81.2",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.1.2",
@@ -67,7 +70,6 @@
     "execa": "^7.2.0",
     "fs-extra": "^11.1.1",
     "jsdom": "^22.1.0",
-    "nx": "21.1.3",
     "postcss": "^8.4.31",
     "prettier": "^3.1.0",
     "react": "^18.2.0",
@@ -81,9 +83,24 @@
     "vite-plugin-dts": "~2.3.0",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.1",
-    "wagmi": "^2.15.6"
+    "wagmi": "^2.15.6",
+    "@tanstack/react-query": "^5.81.2",
+    "@tanstack/react-query-devtools": "^5.81.2",
+    "storybook": "^7.6.20",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0"
   },
-  "nx": {
-    "includedScripts": []
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": "prettier --write"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "directory": "dist"
   }
 }

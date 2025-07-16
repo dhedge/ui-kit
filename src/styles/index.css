@@ -1,0 +1,43 @@
+@import 'preflight.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .card-title {
+    @apply dtw-mb-1 dtw-text-sm dtw-text-themeGray-600;
+  }
+
+  .searchbar-suffix-icon {
+    @apply dtw-absolute dtw-right-1.5 dtw-top-1.5 dtw-h-6 dtw-rotate-90 dtw-text-white/60 peer-focus:dtw-text-themeGreen/70;
+  }
+
+  .theme-scrollbar::-webkit-scrollbar {
+    @apply dtw-w-1 dtw-bg-transparent;
+  }
+
+  .theme-scrollbar::-webkit-scrollbar-thumb {
+    @apply dtw-rounded-full;
+    background-color: var(--panel-scrollbar-color, var(--limit-order-scrollbar-color));
+  }
+
+  .transparent-scrollbar::-webkit-scrollbar {
+    @apply dtw-h-0 dtw-w-0 dtw-bg-transparent;
+  }
+
+  .tooltip-container[data-popper-interactive='false'] {
+    @apply dtw-pointer-events-none;
+  }
+}

@@ -17,27 +17,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
           scope: '@dhedge'
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run Lint
+      - name: Release (lint, test, build & publish)
         env:
           CI: true
           NODE_OPTIONS: '--max_old_space_size=4096'
-        run: pnpm lint
-      - name: Run Test
-        env:
-          CI: true
-          NODE_OPTIONS: '--max_old_space_size=4096'
-        run: pnpm test
-      - name: Run Build
-        env:
-          CI: true
-          NODE_OPTIONS: '--max_old_space_size=4096'
-        run: pnpm build
-      - run: pnpx nx publish trading-widget
-        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm run release
