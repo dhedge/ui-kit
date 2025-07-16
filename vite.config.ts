@@ -12,6 +12,17 @@ export default defineConfig({
   root: __dirname,
   cacheDir: 'node_modules/.vite',
 
+  resolve: {
+    alias: {
+      'trading-widget': path.resolve(__dirname, 'src/trading-widget'),
+      'core-kit': path.resolve(__dirname, 'src/core-kit'),
+      'limit-orders': path.resolve(__dirname, 'src/limit-orders'),
+      theme: path.resolve(__dirname, 'src/theme'),
+      styles: path.resolve(__dirname, 'src/styles'),
+      examples: path.resolve(__dirname, 'src/examples'),
+    },
+  },
+
   plugins: [
     viteTsConfigPaths(),
     dts({
@@ -30,7 +41,20 @@ export default defineConfig({
     },
     outDir: 'dist',
     rollupOptions: {
-      external: [...Object.keys(peerDependencies)],
+      external: [
+        ...Object.keys(peerDependencies),
+        'react/jsx-runtime',
+        'react-dom',
+        'scheduler',
+      ],
+      output: {
+        globals: {
+          react: 'React',
+          wagmi: 'wagmi',
+          viem: 'viem',
+          '@tanstack/react-query': 'ReactQuery',
+        },
+      },
     },
   },
 
@@ -44,4 +68,4 @@ export default defineConfig({
     setupFiles: ['./src/tests/setup.ts'],
     clearMocks: true,
   },
-}) 
+})

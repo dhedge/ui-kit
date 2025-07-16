@@ -17,9 +17,36 @@ async function run() {
   delete pkg.files; // not needed in dist manifest
 
   // Adjust paths so they are relative to dist root
-  if (typeof pkg.main === 'string') pkg.main = pkg.main.replace(/^dist\//, '');
-  if (typeof pkg.module === 'string') pkg.module = pkg.module.replace(/^dist\//, '');
-  if (typeof pkg.typings === 'string') pkg.typings = pkg.typings.replace(/^dist\//, '');
+  const trimDist = (p) => {
+    if (typeof p !== 'string') return p
+    // remove optional leading './' followed by 'dist/'
+    let withoutDist = p.replace(/^(?:\.\/)?dist\//, '')
+    // ensure the path is relative and starts with './'
+    if (!withoutDist.startsWith('./')) {
+      withoutDist = `./${withoutDist}`
+    }
+    return withoutDist
+  }
+  if (typeof pkg.main === 'string') pkg.main = trimDist(pkg.main)
+  if (typeof pkg.module === 'string') pkg.module = trimDist(pkg.module)
+  if (typeof pkg.typings === 'string') pkg.typings = trimDist(pkg.typings)
+
+  if (pkg.exports) {
+    for (const [key, value] of Object.entries(pkg.exports)) {
+      if (typeof value === 'string') {
+        pkg.exports[key] = trimDist(value)
+      } else if (typeof value === 'object' && value !== null) {
+        if (typeof value.import === 'string') value.import = trimDist(value.import)
+        if (typeof value.require === 'string') value.require = trimDist(value.require)
+        if (typeof value.types === 'string') value.types = trimDist(value.types)
+      }
+    }
+  }
+
+  // Trim paths in sideEffects array (if present)
+  if (Array.isArray(pkg.sideEffects)) {
+    pkg.sideEffects = pkg.sideEffects.map((p) => trimDist(p))
+  }
 
   await fs.mkdir(DIST, { recursive: true });
   await fs.writeFile(path.join(DIST, 'package.json'), JSON.stringify(pkg, null, 2));
