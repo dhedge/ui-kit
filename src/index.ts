@@ -1,6 +1,6 @@
 export { TradingWidget } from 'trading-widget/components'
 export type { ProvidersProps } from 'trading-widget/providers'
-export { TradingPanelProvider } from 'core-kit'
+export { TradingPanelProvider } from 'core-kit/index'
 export {
   erc20Abi,
   AaveLendingPoolAbi,
@@ -310,5 +310,27 @@ export {
   useIsBatchContractWritesSupported,
 } from 'core-kit/hooks/web3'
 
+export type {
+  ComponentProviderProps,
+  ImageProps,
+  ButtonProps,
+} from 'trading-widget/providers/component-provider'
+
+export type {
+  ConfigProviderParams,
+  ConfigProviderActions,
+  ConfigProviderProps,
+} from 'trading-widget/providers/config-provider'
+
+export type {
+  ThemeProviderConfigProps,
+  ThemeProviderProps,
+} from 'trading-widget/providers/theme-provider'
+
+export type {
+  TranslationMap,
+  TranslationProviderProps,
+} from 'trading-widget/providers/translation-provider'
+
 // Limit Orders
-export { LimitOrderModal, useUserLimitOrder } from 'limit-orders'
+export { LimitOrderModal, useUserLimitOrder } from 'limit-orders/index'
