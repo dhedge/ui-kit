@@ -1,0 +1,6 @@
+export { useHighSlippageCheck } from 'trading-widget/hooks/use-high-slippage-check'
+export { useGetThemeTypeBySlippage } from 'trading-widget/hooks/use-get-theme-type-by-slippage'
+export { useGetSlippagePlaceholder } from 'trading-widget/hooks/use-get-slippage-placeholder'
+export { useTradingTypeName } from 'trading-widget/hooks/use-trading-type-name'
+export { useCryptoIcon } from 'trading-widget/hooks/use-crypto-icon'
+export { useOpenLimitSellsOverlay } from 'trading-widget/hooks/use-open-limit-sells-overlay'

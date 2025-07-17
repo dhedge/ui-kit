@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "downlevelIteration": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "types": ["vitest/globals", "node"],
+    "paths": {
+      "core-kit/*": ["src/core-kit/*"],
+      "limit-orders/*": ["src/limit-orders/*"],
+      "trading-widget/*": ["src/trading-widget/*"],
+      "theme/*": ["src/theme/*"],
+      "tests/*": ["src/tests/*"],
+      "styles/*": ["src/styles/*"],
+      "examples/*": ["src/examples/*"]
+    }
+  },
+  "include": [
+    "src",
+    "vite.config.ts",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "src/**/*.stories.*",
+    ".storybook/**/*"
+  ]
+}
