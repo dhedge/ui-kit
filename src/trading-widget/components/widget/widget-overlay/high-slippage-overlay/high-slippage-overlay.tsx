@@ -21,7 +21,7 @@ export const HighSlippageOverlay: FC<OverlayProps> = ({ type }) => {
       </div>
       <p className="dtw-text-sm">{t.responsibleHighSlippage}</p>
       <p className="dtw-text-sm dtw-self-start">{t.highSlippageListTitle}:</p>
-      <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-max-h-28 dtw-overflow-y-auto">
+      <ul className="dtw-list-inside dtw-list-disc dtw-flex dtw-flex-col dtw-gap-y-1 dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-max-h-28 dtw-overflow-y-auto theme-scrollbar">
         <li>{t.termOfUseDepositAssetSlippage}</li>
         <li>{t.termOfUseDepositBugs}</li>
         <li>{t.termOfUseDepositDowntime}</li>

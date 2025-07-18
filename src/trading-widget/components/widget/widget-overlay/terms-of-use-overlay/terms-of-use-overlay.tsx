@@ -17,7 +17,7 @@ export const TermsOfUseOverlay: FC<OverlayProps> = ({ type }) => {
   })
 
   return (
-    <Layout.Overlay className="dtw-justify-between dtw-gap-y-1 dtw-overflow-y-auto">
+    <Layout.Overlay className="dtw-justify-between dtw-gap-y-1 dtw-overflow-y-auto theme-scrollbar">
       <div className="dtw-flex dtw-gap-1 dtw-items-center dtw-text-warning">
         <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
         <p>{t.termsOfUse}</p>
