@@ -26,7 +26,7 @@ export const ModalDialog: FC<BaseDialogProps> = ({
       initialFocus={dialogRef}
       as="div"
       className={classNames(
-        'dtw-relative dtw-z-20 dtw-overflow-y-auto',
+        'dtw-relative dtw-z-20 dtw-overflow-y-auto theme-scrollbar',
         className,
       )}
       onClose={onClose}
