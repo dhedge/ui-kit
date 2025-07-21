@@ -1,6 +1,6 @@
 {
   "name": "@dhedge/trading-widget",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.cjs",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "vite build --config vite.config.ts",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0 --fix",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
     "test": "vitest run --config vite.config.ts",
     "storybook": "storybook dev -p 4400 -c .storybook",
     "prepare:package": "node scripts/prepare-package.mjs",

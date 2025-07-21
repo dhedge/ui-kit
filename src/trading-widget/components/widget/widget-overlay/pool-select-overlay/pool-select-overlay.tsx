@@ -31,7 +31,7 @@ export const PoolSelectOverlay: FC<PoolSelectOverlayProps> = ({
       <span className="dtw-text-center dtw-text-[length:var(--panel-font-size-sm)] dtw-font-[var(--panel-font-weight-medium)]">
         {t.selectToken}
       </span>
-      <div className="theme-scrollbar dtw-grid dtw-gap-[calc(var(--panel-gap) * 0.5)] dtw-overflow-y-auto">
+      <div className="dtw-grid dtw-gap-[calc(var(--panel-gap) * 0.5)] dtw-overflow-y-auto theme-scrollbar">
         {poolList.map(({ chainId, configs }) => (
           <NetworkHeader key={chainId} chainId={chainId}>
             {configs.map(({ isActive, symbol, address }) => (
