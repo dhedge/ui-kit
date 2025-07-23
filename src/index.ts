@@ -336,4 +336,11 @@ export type {
 } from 'trading-widget/providers/translation-provider'
 
 // Limit Orders
-export { LimitOrderModal, useUserLimitOrder } from 'limit-orders/index'
+export {
+  LimitOrderModal,
+  useUserLimitOrder,
+  XRP_ORACLE_ARBITRUM,
+  DOGE_ORACLE_ARBITRUM,
+  BNB_ORACLE_ARBITRUM,
+  HYPE_ORACLE_ARBITRUM,
+} from 'limit-orders/index'
