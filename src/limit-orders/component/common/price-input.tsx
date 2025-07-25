@@ -12,13 +12,25 @@ export interface PriceInputProps {
   suffix?: string
 }
 
+const MAX_INTEGER_LENGTH = 7
+const MAX_FRACTION_LENGTH = 3
+
 const formatNumber = (num: string) => {
   if (!num) {
     return ''
   }
-  return num.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+  const [integer = '', fractional] = num.replace(/,/g, '').split('.')
+  const trimmedFractional =
+    fractional && fractional.length > MAX_FRACTION_LENGTH
+      ? fractional.slice(0, MAX_FRACTION_LENGTH)
+      : fractional
+
+  const formattedInteger = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return trimmedFractional !== undefined
+    ? `${formattedInteger}.${fractional}`
+    : formattedInteger
 }
-const MAX_PRICE_LENGTH = 7
 
 export const usePriceInput = ({
   inputValue = '',
@@ -33,14 +45,22 @@ export const usePriceInput = ({
   }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/,/g, '')
+    const rawValue = e.target.value
+      // Keep digits and a single decimal point
+      .replace(/[^\d.]/g, '')
+      // Remove extra decimal points beyond the first one
+      .replace(/(\..*)\./g, '$1')
+
+    const [integerPart = '', fractionalPart = ''] = rawValue.split('.')
+
     if (
-      !isNaN(Number(inputValue)) &&
       onInputChange &&
-      inputValue.length <= MAX_PRICE_LENGTH
+      integerPart.length <= MAX_INTEGER_LENGTH &&
+      fractionalPart.length <= MAX_FRACTION_LENGTH &&
+      /^\d*(\.\d*)?$/.test(rawValue) // basic numeric validation
     ) {
-      setDisplayValue(formatNumber(inputValue))
-      onInputChange(inputValue)
+      setDisplayValue(formatNumber(rawValue))
+      onInputChange(rawValue)
     }
   }
 

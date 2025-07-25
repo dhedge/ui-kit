@@ -3,10 +3,12 @@ import { useCallback } from 'react'
 import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
+import { isChainlinkOracleAddress } from 'limit-orders/constants/chainlink-oracles'
 import {
   useLimitOrderActions,
   useLimitOrderState,
 } from 'limit-orders/hooks/state'
+import { useChainlinkAssetPrice } from 'limit-orders/hooks/use-chainlink-asset-price'
 import { useLimitOrderCoveredVaultAmount } from 'limit-orders/hooks/use-limit-order-covered-vault-amount'
 import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 import {
@@ -27,11 +29,21 @@ export const useInputGroup = () => {
     setSellPercentage,
     setTermsAccepted,
   } = useLimitOrderActions()
-  const pricingAssetPrice = useAssetPrice({
+  const isChainlinkPriceSource = isChainlinkOracleAddress(pricingAsset.address)
+  const { data: pricingAssetPriceChainlink = '0' } = useChainlinkAssetPrice({
+    address: pricingAsset.address,
+    chainId: vaultChainId,
+  })
+  const pricingAssetPriceFactory = useAssetPrice({
     address: pricingAsset.address,
     chainId: vaultChainId,
     refetchInterval: SHORTEN_POLLING_INTERVAL,
+    disabled: isChainlinkPriceSource,
   })
+
+  const pricingAssetPrice = isChainlinkPriceSource
+    ? pricingAssetPriceChainlink
+    : pricingAssetPriceFactory
   const { formatted: coveredVaultAmount, symbol: vaultSymbol } =
     useLimitOrderCoveredVaultAmount()
 
@@ -75,8 +87,6 @@ export const useInputGroup = () => {
         ? null
         : formatToUsd({
             value: pricingAssetPrice,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
           }),
     upperLimitPriceDifference,
     lowerLimitPriceDifference,
