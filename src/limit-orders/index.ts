@@ -5,4 +5,5 @@ export {
   DOGE_ORACLE_ARBITRUM,
   BNB_ORACLE_ARBITRUM,
   HYPE_ORACLE_ARBITRUM,
+  CRV_ORACLE_ARBITRUM,
 } from 'limit-orders/constants/chainlink-oracles'
