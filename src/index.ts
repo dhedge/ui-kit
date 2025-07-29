@@ -204,6 +204,7 @@ export {
   transformAddressForAnalytics,
   isFmpAirdropVaultAddress,
   formatVaultBalance,
+  isAaveLendAndBorrowAsset,
 } from 'core-kit/utils'
 
 export {

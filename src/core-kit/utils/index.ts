@@ -1,3 +1,4 @@
+export * from 'core-kit/utils/aave'
 export * from 'core-kit/utils/common'
 export * from 'core-kit/utils/url'
 export * from 'core-kit/utils/web3'
