@@ -1,6 +1,6 @@
 import {
-  EASY_SWAPPER_TRANSACTION_ERRORS,
   LIMIT_ORDER_TRANSACTION_ERRORS,
+  TRANSACTION_ERRORS,
 } from 'core-kit/const'
 
 type ErrorWithMessage = {
@@ -73,7 +73,7 @@ export const parseContractErrorMessage = ({
     .map((s) => s.trim())
 
   return (
-    EASY_SWAPPER_TRANSACTION_ERRORS[reason ?? errorMessage] ??
+    TRANSACTION_ERRORS[reason ?? errorMessage] ??
     LIMIT_ORDER_TRANSACTION_ERRORS[reason ?? errorMessage] ?? {
       title: 'Transaction failed',
       hint: `${truncateError(shortMessage ?? '')} ${reason ? `: ${reason}` : ''}`,
