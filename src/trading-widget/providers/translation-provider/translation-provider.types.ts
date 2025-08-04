@@ -34,10 +34,7 @@ export type TranslationMap = {
   max: string
   allAssets: string
   all: string
-  payWith: string
-  buyEstimated: string
   sell: string
-  receiveEstimated: string
   confirmInWallet: string
   pending: string
   approve: string
@@ -105,6 +102,7 @@ export type TranslationMap = {
   batchTransactionsSwitchLabel: string
   batchTransactionsTooltip: string
   openLimitOrderAfterBuySwitchLabel: string
+  stopOrder: string
   [key: string]: string
 }
 
