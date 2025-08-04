@@ -47,7 +47,7 @@ export const TransactionDisclosureItem = ({
       className={classNames(
         'dtw-flex dtw-grow dtw-items-center dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))] dtw-font-[var(--panel-meta-font-weight,var(--panel-font-weight-light))] dtw-gap-x-1',
         {
-          'dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-text-[color:var(--panel-secondary-content-color)]':
+          'dtw-text-[length:var(--panel-label-font-size)] dtw-text-[color:var(--panel-secondary-content-color)]':
             !emphasised,
           'dtw-text-[length:var(--panel-input-label-font-size,var(--panel-font-size-sm))] dtw-text-[color:var(--panel-content-color)]':
             emphasised,

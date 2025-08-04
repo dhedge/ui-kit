@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import type { FC } from 'react'
+import type { FC, PropsWithChildren } from 'react'
 
 import { MaxBalanceButton, Spinner } from 'trading-widget/components/common'
 import { AllAssetsCompositionTable } from 'trading-widget/components/widget/widget-input/all-assets-composition-table/all-assets-composition-table'
@@ -11,7 +11,7 @@ import { useWidgetInput } from 'trading-widget/components/widget/widget-input/wi
 import { disableScrollForNumberInput } from 'trading-widget/components/widget/widget-input/widget-input.utils'
 import { THEME_TYPE } from 'trading-widget/types'
 
-export const WidgetInput: FC<WidgetInputProps> = (props) => {
+export const WidgetInput: FC<PropsWithChildren<WidgetInputProps>> = (props) => {
   const {
     inputRef,
     usdAmount,
@@ -30,6 +30,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
     displayCalculatedValue = false,
     type = THEME_TYPE.DEFAULT,
     isLoading = false,
+    children,
   } = props
 
   const textColorClassNames = classNames({
@@ -42,7 +43,7 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
   return (
     <div
       className={classNames(
-        'dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] focus-within:dtw-border-[var(--panel-input-focus-border-color)] focus-within:dtw-bg-[var(--panel-input-focus-bg)] dtw-shadow-md',
+        'dtw-relative dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] focus-within:dtw-border-[var(--panel-input-focus-border-color)] focus-within:dtw-bg-[var(--panel-input-focus-bg)] dtw-shadow-md',
         {
           'dtw-border-[var(--panel-input-border-color)]':
             type === THEME_TYPE.DEFAULT || isLoading,
@@ -54,44 +55,19 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
       )}
       onClick={onContainerClick}
     >
-      <div className="dtw-flex dtw-justify-between dtw-text-[length:var(--panel-input-label-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-label-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-label-font-weight,var(--panel-font-weight-light))] dtw-gap-x-2">
-        <span
-          className={classNames(textColorClassNames, {
-            'dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
-              isLoading || type === THEME_TYPE.DEFAULT,
-          })}
-        >
-          {label}
-        </span>
-        <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1">
-          {displayCalculatedValue && (
-            <>
-              {isLoading ? (
-                <div className="dtw-ml-auto dtw-h-[18px]">
-                  <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
-                </div>
-              ) : (
-                <input
-                  className={classNames(
-                    'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-text-right dtw-pointer-events-none dtw-flex-1 dtw-py-[1px]',
-                    {
-                      'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
-                        isLoading,
-                      '!dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] !dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
-                        !isLoading && type === THEME_TYPE.DEFAULT,
-                    },
-                    textColorClassNames,
-                  )}
-                  value={usdAmount}
-                  disabled
-                />
-              )}
-            </>
-          )}
-          {displayMax && <MaxBalanceButton onClick={onMaxBalanceClick} />}
-        </div>
-      </div>
-      <div className="dtw-flex dtw-items-center dtw-gap-x-2">
+      <span
+        className={classNames(textColorClassNames, {
+          'dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size)] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
+            isLoading || type === THEME_TYPE.DEFAULT,
+        })}
+      >
+        {label}
+      </span>
+      <div
+        className={classNames(
+          'dtw-flex dtw-justify-between dtw-items-center dtw-text-[length:var(--panel-input-label-font-size,var(--panel-font-size-sm))] dtw-leading-[var(--panel-input-label-line-height,var(--panel-line-height-sm))] dtw-font-[var(--panel-input-label-font-weight,var(--panel-font-weight-light))] dtw-gap-x-2',
+        )}
+      >
         <div className="transparent-scrollbar dtw-flex-1 dtw-overflow-x-auto">
           {assetSymbol === 'all' ? (
             <AllAssetsCompositionTable iconSize="sm" />
@@ -115,6 +91,36 @@ export const WidgetInput: FC<WidgetInputProps> = (props) => {
           )}
         </div>
         <TokenSelector symbol={assetSymbol} />
+      </div>
+      <div className="dtw-flex dtw-items-center dtw-justify-between dtw-gap-x-2">
+        <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1">
+          {displayCalculatedValue && (
+            <>
+              {isLoading ? (
+                <div className="dtw-h-[18px]">
+                  <Spinner className="dtw-stroke-[color:var(--panel-accent-from-color)] dtw-h-[var(--panel-icon-secondary-size)] sm:dtw-h-[var(--panel-icon-secondary-size-sm)] dtw-w-[var(--panel-icon-secondary-size)] sm:dtw-w-[var(--panel-icon-secondary-size-sm)]" />
+                </div>
+              ) : (
+                <input
+                  className={classNames(
+                    'dtw-appearance-none dtw-bg-transparent dtw-outline-none dtw-pointer-events-none dtw-flex-1 dtw-py-[1px]',
+                    {
+                      'dtw-text-[color:var(--panel-input-loading-content-color,var(--panel-loading-content-color))]':
+                        isLoading,
+                      '!dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-[length:var(--panel-label-font-size)] !dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))]':
+                        !isLoading && type === THEME_TYPE.DEFAULT,
+                    },
+                    textColorClassNames,
+                  )}
+                  value={usdAmount}
+                  disabled
+                />
+              )}
+            </>
+          )}
+        </div>
+        {children}
+        {displayMax && <MaxBalanceButton onClick={onMaxBalanceClick} />}
       </div>
     </div>
   )

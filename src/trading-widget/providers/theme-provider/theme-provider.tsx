@@ -147,7 +147,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //label
         //label-typography
         '--panel-label-font-size': `${
-          config?.global?.size?.labelFontSize ?? 'var(--panel-font-size-xs)'
+          config?.global?.size?.labelFontSize ?? 'var(--panel-font-size)'
         }`,
         '--panel-label-line-height': `${
           config?.global?.size?.labelLineHeight ?? 'var(--panel-line-height-xs)'
@@ -238,7 +238,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         //tab-content-spacing
         '--panel-content-pt': `${
           config?.component?.tabContent?.size?.pt ??
-          'calc(var(--panel-spacer) * 3)'
+          'calc(var(--panel-spacer) * 2)'
         }`,
         '--panel-content-pb': `calc(var(--panel-spacer) * 9)`,
         '--panel-content-px': `${
@@ -298,7 +298,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         // balance-color
         '--panel-balance-content-color': `${
           config?.component?.balance?.color?.colorText ??
-          'var(--panel-content-color)'
+          'var(--panel-secondary-content-color)'
         }`,
         '--panel-balance-price-content-color': `${
           config?.component?.balance?.color?.priceColorText ??
@@ -308,11 +308,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         // balance-typography
         '--panel-balance-font-size': `${
           config?.component?.balance?.size?.fontSize ??
-          'var(--panel-font-size-lg)'
+          'var(--panel-font-size-xs)'
         }`,
         '--panel-balance-line-height': `${
           config?.component?.balance?.size?.lineHeight ??
-          'var(--panel-line-height-lg)'
+          'var(--panel-line-height-xs)'
         }`,
         '--panel-balance-price-font-size': `${
           config?.component?.balance?.size?.priceFontSize ??
@@ -324,12 +324,41 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         }`,
 
         //inputs
+        //inputs-size
         '--panel-inputs-group-gap': `${
           config?.component?.inputGroup?.size?.gap ?? 'var(--panel-gap)'
         }`,
         '--panel-inputs-group-px': `${
           config?.component?.inputGroup?.size?.px ??
           'calc(var(--panel-spacer) * 6)'
+        }`,
+        '--panel-inputs-group-px-arrow': `${
+          config?.component?.inputGroup?.size?.pxArrow ?? 'var(--panel-spacer)'
+        }`,
+        '--panel-inputs-group-py-arrow': `${
+          config?.component?.inputGroup?.size?.pyArrow ?? 'var(--panel-spacer)'
+        }`,
+        '--panel-inputs-group-arrow-size': `${
+          config?.component?.inputGroup?.size?.arrowSize ??
+          'var(--panel-input-token-icon-size)'
+        }`,
+        //inputs-color
+        '--panel-inputs-arrow-bg': `${
+          config?.component?.inputGroup?.color?.colorBgArrow ??
+          'var(--panel-input-bg)'
+        }`,
+        '--panel-inputs-arrow-color': `${
+          config?.component?.inputGroup?.color?.colorArrow ??
+          'var(--panel-input-content-color)'
+        }`,
+        '--panel-inputs-arrow-border-color': `${
+          config?.component?.inputGroup?.color?.colorBorderArrow ??
+          'var(--panel-input-border-color)'
+        }`,
+        //inputs-style
+        '--panel-inputs-arrow-radius': `${
+          config?.component?.inputGroup?.style?.radiusArrow ??
+          'var(--panel-radius-secondary)'
         }`,
 
         //input

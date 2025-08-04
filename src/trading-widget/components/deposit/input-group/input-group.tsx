@@ -1,5 +1,10 @@
 import { useDepositInputGroup } from 'trading-widget/components/deposit/input-group/input-group.hooks'
-import { WidgetInput } from 'trading-widget/components/widget/widget-input'
+import {
+  InputArrow,
+  ReceiveTokenBalance,
+  SendTokenBalance,
+  WidgetInput,
+} from 'trading-widget/components/widget/widget-input'
 import { useGetThemeTypeBySlippage } from 'trading-widget/hooks'
 
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
@@ -21,7 +26,7 @@ export const DepositInputGroup = () => {
   return (
     <>
       <WidgetInput
-        label={t.payWith}
+        label={t.send}
         assetInput={sendToken.value}
         onInputChange={onInputChange}
         onInputFocus={onInputFocus}
@@ -32,9 +37,11 @@ export const DepositInputGroup = () => {
         maxBalance={sendToken.balance}
         displayCalculatedValue
         isLoading={sendToken.isLoading}
-      />
+      >
+        <SendTokenBalance />
+      </WidgetInput>
       <WidgetInput
-        label={t.buyEstimated}
+        label={t.receiveEstimated}
         assetInput={receiveToken.value}
         assetSymbol={receiveToken.symbol}
         assetPrice={receiveToken.price ?? ''}
@@ -43,7 +50,10 @@ export const DepositInputGroup = () => {
         tradingPriceDiff={tradingPriceDiff}
         type={type}
         isLoading={receiveToken.isLoading}
-      />
+      >
+        <ReceiveTokenBalance />
+        <InputArrow />
+      </WidgetInput>
     </>
   )
 }

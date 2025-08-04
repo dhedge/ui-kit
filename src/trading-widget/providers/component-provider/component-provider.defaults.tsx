@@ -19,4 +19,15 @@ export const DEFAULT_COMPONENT_PROVIDER_COMPONENTS: ComponentProviderProps['conf
         </span>
       </Alert>
     ),
+    AvailableLiquidityAlert: ({ liquidityAmount }) => (
+      <Alert>
+        <p className="dtw-text-error">
+          Liquidity is running low{' '}
+          {liquidityAmount ? `(${liquidityAmount})` : null}
+        </p>
+        <p className="dtw-text-sm dtw-text-error">
+          There is not enough capital to withdraw
+        </p>
+      </Alert>
+    ),
   }

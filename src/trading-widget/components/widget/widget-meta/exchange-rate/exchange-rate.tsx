@@ -24,7 +24,7 @@ export const ExchangeRate: FC<ExchangeRateProps> = ({ className }) => {
       )}
       <p
         className={classNames(
-          'dtw-text-right dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))] dtw-text-[color:var(--panel-secondary-content-color)] dtw-font-[var(--panel-meta-font-weight,var(--panel-font-weight-light))]',
+          'dtw-text-right dtw-text-[length:var(--panel-label-font-size)] dtw-leading-[var(--panel-label-line-height,var(--panel-line-height-xs))] dtw-text-[color:var(--panel-secondary-content-color)] dtw-font-[var(--panel-meta-font-weight,var(--panel-font-weight-light))]',
           {
             'dtw-text-[color:var(--panel-loading-content-color)]': isLoading,
           },

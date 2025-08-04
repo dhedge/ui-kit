@@ -40,13 +40,24 @@ const meta: Meta<typeof TradingWidgetComponent> = {
         },
         tabContent: {
           size: {
-            pt: '28px',
-            gap: '28px',
+            pt: '8px',
+            gap: '8px',
           },
         },
         balance: {
           size: {
-            fontSize: '22px',
+            fontSize: '12px',
+          },
+        },
+        inputGroup: {
+          color: {
+            colorBorderArrow: '#12171F',
+          },
+          style: {
+            radiusArrow: '8px',
+          },
+          size: {
+            gap: '8px',
           },
         },
         input: {

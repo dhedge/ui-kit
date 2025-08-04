@@ -146,12 +146,21 @@ export interface ThemeProviderConfigProps {
       style?: object
     }
     inputGroup?: {
-      color?: object
+      color?: {
+        colorBgArrow?: string
+        colorArrow?: string
+        colorBorderArrow?: string
+      }
       size?: {
         px?: string
+        pxArrow?: string
+        pyArrow?: string
         gap?: string
+        arrowSize?: string
       }
-      style?: object
+      style?: {
+        radiusArrow?: string
+      }
     }
     input?: {
       color?: {
