@@ -19,6 +19,10 @@ export interface ButtonProps {
   loading?: boolean
 }
 
+export interface AvailableLiquidityAlertProps {
+  liquidityAmount: string
+}
+
 export interface ComponentProviderProps {
   config?: {
     GeoBlockAlert?: ComponentType
@@ -30,5 +34,6 @@ export interface ComponentProviderProps {
     LogoSpinner?: ComponentType<SVGProps<SVGElement>>
     DepositTermsOfUse?: ComponentType
     ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
+    AvailableLiquidityAlert?: ComponentType<AvailableLiquidityAlertProps>
   }
 }

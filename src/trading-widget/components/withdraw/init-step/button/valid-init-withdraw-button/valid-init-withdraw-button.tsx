@@ -65,6 +65,7 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
           '{value}',
           leveragedCollateralValueFormatted,
         )}
+        withExternalPrompt={false}
       >
         {name}
       </DisabledButtonWithPrompt>

@@ -11,18 +11,21 @@ import { useComponentContext } from 'trading-widget/providers/component-provider
 
 interface DisabledButtonWithPromptProps {
   promptText: string
+  withExternalPrompt?: boolean
 }
 
 export const DisabledButtonWithPrompt: FC<
   PropsWithChildren<DisabledButtonWithPromptProps>
-> = ({ children, promptText }) => {
+> = ({ children, promptText, withExternalPrompt = true }) => {
   const { ActionButton: Button = ActionButton } = useComponentContext()
   return (
     <div>
-      <div className="md:dtw-hidden dtw-mb-4 dtw-flex dtw-items-center dtw-justify-center dtw-space-x-1 dtw-text-yellow-400">
-        <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
-        <div className="dtw-py-1 dtw-text-xs">{promptText}</div>
-      </div>
+      {withExternalPrompt && (
+        <div className="md:dtw-hidden dtw-mb-4 dtw-flex dtw-items-center dtw-justify-center dtw-space-x-1 dtw-text-[var(--panel-warning-content-color)]">
+          <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
+          <div className="dtw-py-1 dtw-text-xs">{promptText}</div>
+        </div>
+      )}
       <InfoTooltip text={promptText}>
         <Button disabled>
           <div className="dtw-flex dtw-items-center dtw-justify-center dtw-gap-2">
