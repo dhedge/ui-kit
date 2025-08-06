@@ -12,7 +12,7 @@ import type { IsLendAndBorrowAssetParams } from 'core-kit/utils'
 import {
   formatToUsd,
   getFlatMoneyCollateralByLeverageAddress,
-  getGmxCollateralByLeverageAddress,
+  getGmxWithdrawAssetByLeverageAddress,
   isAaveLendAndBorrowAsset,
   isEqualAddress,
   isFlatMoneyLeveragedAsset,
@@ -27,19 +27,19 @@ type CollateralInfo = {
 
 type LeveragedAssetConfig = {
   isLeveragedAsset: (address: Address) => boolean
-  getCollateralByLeverageAddress: (address: Address) => CollateralInfo
+  getWithdrawAssetByLeverageAddress: (address: Address) => CollateralInfo
   isLentAndBorrowedAsset: (params: IsLendAndBorrowAssetParams) => boolean
 }
 
 const LEVERAGED_ASSET_CONFIGS: LeveragedAssetConfig[] = [
   {
     isLeveragedAsset: isFlatMoneyLeveragedAsset,
-    getCollateralByLeverageAddress: getFlatMoneyCollateralByLeverageAddress,
+    getWithdrawAssetByLeverageAddress: getFlatMoneyCollateralByLeverageAddress,
     isLentAndBorrowedAsset: isAaveLendAndBorrowAsset,
   },
   {
     isLeveragedAsset: isGmxLeveragedAsset,
-    getCollateralByLeverageAddress: getGmxCollateralByLeverageAddress,
+    getWithdrawAssetByLeverageAddress: getGmxWithdrawAssetByLeverageAddress,
     isLentAndBorrowedAsset: () => false,
   },
 ]
@@ -81,21 +81,21 @@ export const useLeveragedWithdrawalChecks = () => {
     return DEFAULT_RESULT
   }
 
-  const collateralAddress = assetConfig.getCollateralByLeverageAddress(
+  const withdrawAssetAddress = assetConfig.getWithdrawAssetByLeverageAddress(
     leveragedPosition.tokenAddress as Address,
   ).address
 
-  const collateral = composition.find(({ tokenAddress }) =>
-    isEqualAddress(collateralAddress, tokenAddress),
+  const withdrawAsset = composition.find(({ tokenAddress }) =>
+    isEqualAddress(withdrawAssetAddress, tokenAddress),
   )
 
-  if (!collateral) {
+  if (!withdrawAsset) {
     return DEFAULT_RESULT
   }
 
   const sendTokenValue =
     Number(sendToken.value || '0') * Number(vaultTokenPrice)
-  const collateralValue = calculateAssetValue(collateral)
+  const withdrawAssetValue = calculateAssetValue(withdrawAsset)
 
   const lentAndBorrowedAsset = composition.find(({ tokenAddress, amount }) =>
     LEVERAGED_ASSET_CONFIGS.some(
@@ -113,11 +113,11 @@ export const useLeveragedWithdrawalChecks = () => {
       0,
     )
 
-    // % available withdraw liquidity = % collateral / (% collateral + % leverage position)
-    const collateralPercent = collateralValue / fullVaultValue
+    // % available withdraw liquidity = % withdrawAsset / (% withdrawAsset + % leverage position)
+    const withdrawAssetPercent = withdrawAssetValue / fullVaultValue
     const leveragedPercent = leveragedPositionValue / fullVaultValue
     const availableLiquidityPercent =
-      collateralPercent / (collateralPercent + leveragedPercent)
+      withdrawAssetPercent / (withdrawAssetPercent + leveragedPercent)
     const availableLiquidity = availableLiquidityPercent * fullVaultValue
 
     return {
@@ -129,7 +129,9 @@ export const useLeveragedWithdrawalChecks = () => {
   }
 
   return {
-    requiresLeveragedCollateralLiquidity: sendTokenValue > collateralValue,
-    leveragedCollateralValueFormatted: formatToUsd({ value: collateralValue }),
+    requiresLeveragedCollateralLiquidity: sendTokenValue > withdrawAssetValue,
+    leveragedCollateralValueFormatted: formatToUsd({
+      value: withdrawAssetValue,
+    }),
   }
 }

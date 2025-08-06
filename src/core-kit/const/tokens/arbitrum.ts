@@ -56,3 +56,10 @@ export const WSOL_ARBITRUM: TradingToken = {
   decimals: 9,
   value: '',
 }
+
+export const WBNB_ARBITRUM: TradingToken = {
+  address: '0xa9004a5421372e1d83fb1f85b0fc986c912f91f3',
+  symbol: 'WBNB',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
