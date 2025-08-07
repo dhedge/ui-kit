@@ -511,10 +511,7 @@ path: `component.meta[name]`
 > | `max`                               | string | Max                                                                                                                                                                                   |             |
 > | `allAssets`                         | string | All Assets                                                                                                                                                                            |             |
 > | `all`                               | string | All                                                                                                                                                                                   |             |
-> | `payWith`                           | string | Pay with                                                                                                                                                                              |             |
-> | `buyEstimated`                      | string | Buy (estimated)                                                                                                                                                                       |             |
 > | `sell`                              | string | Sell                                                                                                                                                                                  |             |
-> | `receiveEstimated`                  | string | Receive (estimated)                                                                                                                                                                   |             |
 > | `confirmInWallet`                   | string | Please confirm in wallet                                                                                                                                                              |             |
 > | `pending`                           | string | Pending...                                                                                                                                                                            |             |
 > | `approve`                           | string | Approve                                                                                                                                                                               |             |
@@ -582,6 +579,7 @@ path: `component.meta[name]`
 > | `paidLabel`                         | string | Paid                                                                                                                                                                                  |             |
 > | `priceLabel`                        | string | Price                                                                                                                                                                                 |             |
 > | `transactionLabel`                  | string | Transaction                                                                                                                                                                           |             |
+> | `stopOrder`                         | string | Stop Order                                                                                                                                                                            |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

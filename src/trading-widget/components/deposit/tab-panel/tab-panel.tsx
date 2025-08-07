@@ -2,7 +2,6 @@ import type { FC } from 'react'
 
 import { Layout } from 'trading-widget/components/common'
 
-import { DepositBalance } from 'trading-widget/components/deposit/balance/balance'
 import { ValidDepositButton } from 'trading-widget/components/deposit/button/valid-deposit-button/valid-deposit-button'
 import { DepositInputGroup } from 'trading-widget/components/deposit/input-group/input-group'
 import { DepositMeta } from 'trading-widget/components/deposit/meta/meta'
@@ -34,9 +33,6 @@ export const DepositTab: FC = () => {
 
   return (
     <>
-      <Layout.Balance>
-        <DepositBalance />
-      </Layout.Balance>
       <Layout.InputGroup>
         <DepositInputGroup />
       </Layout.InputGroup>

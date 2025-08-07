@@ -8,7 +8,6 @@ import type { ThemeType } from 'trading-widget/types'
 import { THEME_TYPE } from 'trading-widget/types'
 
 export interface WidgetInputProps {
-  label: string
   assetSymbol: string
   assetPrice: string
   assetInput: string
