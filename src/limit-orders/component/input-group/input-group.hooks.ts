@@ -75,8 +75,6 @@ export const useInputGroup = () => {
         ? null
         : formatToUsd({
             value: pricingAssetPrice,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
           }),
     upperLimitPriceDifference,
     lowerLimitPriceDifference,
