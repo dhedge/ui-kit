@@ -63,7 +63,10 @@ export const getDefaultTradingPanelState = (
         getStoredBatchTransactionsEnabled() ??
         config?.settings?.isBatchTransactionsEnabled ??
         false,
-      selectedAggregators: config?.settings?.availableAggregators ?? [],
+      selectedAggregators:
+        config?.settings?.selectedAggregators ??
+        config?.settings?.availableAggregators ??
+        [],
     },
     type,
     input: {
