@@ -165,3 +165,8 @@ export const LIMIT_ORDER_TRANSACTION_ERRORS: ErrorsMap = {
     title: INVALID_PRICES_LIMIT_ORDER_TITLE,
   },
 }
+
+export const TRANSACTION_ERROR_KEYS = [
+  ...Object.keys(TRANSACTION_ERRORS),
+  ...Object.keys(LIMIT_ORDER_TRANSACTION_ERRORS),
+]

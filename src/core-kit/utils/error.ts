@@ -1,6 +1,7 @@
 import {
   LIMIT_ORDER_TRANSACTION_ERRORS,
   TRANSACTION_ERRORS,
+  TRANSACTION_ERROR_KEYS,
 } from 'core-kit/const'
 
 type ErrorWithMessage = {
@@ -57,6 +58,13 @@ const truncateError = (error: string, maxLength = 150) => {
   }
   return error
 }
+
+const getErrorKey = (value: string) =>
+  TRANSACTION_ERROR_KEYS.find((key) => value.includes(key))
+
+const getErrorParams = (value: string) =>
+  TRANSACTION_ERRORS[value] ?? LIMIT_ORDER_TRANSACTION_ERRORS[value]
+
 export const parseContractErrorMessage = ({
   errorMessage,
   abiErrors,
@@ -67,16 +75,25 @@ export const parseContractErrorMessage = ({
   if (!errorMessage || errorMessage.includes('User rejected')) {
     return null
   }
-  const reason = abiErrors.find((e) => errorMessage.includes(e))
+
+  const errorName = abiErrors.find((e) => errorMessage.includes(e))
+
+  if (errorName && !!getErrorKey(errorName)) {
+    return getErrorParams(errorName)
+  }
+
+  const errorKey = getErrorKey(errorMessage)
+
+  if (errorKey) {
+    return getErrorParams(errorKey)
+  }
+
   const [shortMessage] = errorMessage
-    .split(reason ? '.' : 'Contract')
+    .split(errorName ? '.' : 'Contract')
     .map((s) => s.trim())
 
-  return (
-    TRANSACTION_ERRORS[reason ?? errorMessage] ??
-    LIMIT_ORDER_TRANSACTION_ERRORS[reason ?? errorMessage] ?? {
-      title: 'Transaction failed',
-      hint: `${truncateError(shortMessage ?? '')} ${reason ? `: ${reason}` : ''}`,
-    }
-  )
+  return {
+    title: 'Transaction failed',
+    hint: `${truncateError(shortMessage ?? '')} ${errorName ? `: ${errorName}` : ''}`,
+  }
 }

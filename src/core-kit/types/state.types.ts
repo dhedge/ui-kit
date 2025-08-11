@@ -167,11 +167,7 @@ export type TradingPanelAction =
 
 export interface TradingPanelContextConfig {
   actions: Partial<CallbackConfig> & Pick<CallbackConfig, 'getSwapData'>
-  initialState?: Partial<Omit<TradingPanelState, 'settings'>> & {
-    settings?: Partial<
-      Omit<TradingPanelState['settings'], 'selectedAggregators'>
-    >
-  }
+  initialState?: Partial<TradingPanelState>
 }
 
 export type TradingPanelActionsState = TradingPanelSetters & {
