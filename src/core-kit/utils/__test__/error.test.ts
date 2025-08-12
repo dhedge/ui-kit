@@ -1,6 +1,9 @@
+import { TRANSACTION_ERRORS } from 'core-kit/const'
 import {
+  getErrorKey,
   getErrorMessage,
   isErrorWithMessage,
+  parseContractErrorMessage,
   validateLoggerEventParams,
 } from 'core-kit/utils/error'
 
@@ -66,5 +69,37 @@ describe('core-kit/utils/validateLoggerEventParams', () => {
     )
 
     expect(() => validateLoggerEventParams(paramsMap)).not.toThrowError()
+  })
+})
+
+describe('core-kit/utils/getErrorKey', () => {
+  it('should find best full key match', () => {
+    expect(getErrorKey('dh2', ['dh1', 'dh2', 'dh26', 'dh266'])).toEqual('dh2')
+    expect(getErrorKey('dh26', ['dh1', 'dh2', 'dh26', 'dh266'])).toEqual('dh26')
+    expect(getErrorKey('dh1', ['dh1', 'dh2', 'dh26', 'dh266'])).toEqual('dh1')
+    expect(getErrorKey('dh26')).toEqual('dh26')
+  })
+})
+
+describe('core-kit/utils/parseContractErrorMessage', () => {
+  it('should resolve error hint and title params based on dh error code', () => {
+    expect(
+      parseContractErrorMessage({
+        errorMessage: 'something wrong dh26',
+        abiErrors: [],
+      }),
+    ).toEqual(TRANSACTION_ERRORS['dh26'])
+    expect(
+      parseContractErrorMessage({
+        errorMessage: 'something dh2 wrong',
+        abiErrors: [],
+      }),
+    ).toEqual(TRANSACTION_ERRORS['dh2'])
+    expect(
+      parseContractErrorMessage({
+        errorMessage: 'something wrong: high swap slippage',
+        abiErrors: [],
+      }),
+    ).toEqual(TRANSACTION_ERRORS['high swap slippage'])
   })
 })
