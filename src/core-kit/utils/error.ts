@@ -59,8 +59,13 @@ const truncateError = (error: string, maxLength = 150) => {
   return error
 }
 
-const getErrorKey = (value: string) =>
-  TRANSACTION_ERROR_KEYS.find((key) => value.includes(key))
+export const getErrorKey = (value: string, keys = TRANSACTION_ERROR_KEYS) => {
+  const lowerValue = value.toLowerCase()
+
+  return keys
+    .sort((a, b) => b.length - a.length)
+    .find((key) => lowerValue.includes(key.toLowerCase()))
+}
 
 const getErrorParams = (value: string) =>
   TRANSACTION_ERRORS[value] ?? LIMIT_ORDER_TRANSACTION_ERRORS[value]
