@@ -120,3 +120,13 @@ export const formatVaultBalance = (
     balanceInUsdNumber: 0,
   }
 }
+
+export const formatTokenBalance = ({
+  balance,
+  symbol,
+  precision,
+}: {
+  balance: string
+  symbol: string
+  precision: number
+}) => `${formatBalance(balance, precision)} ${symbol}`
