@@ -15,7 +15,7 @@ export interface PriceInputProps {
 const MAX_INTEGER_LENGTH = 7
 const MAX_FRACTION_LENGTH = 3
 
-const formatNumber = (num: string) => {
+export const formatNumber = (num: string) => {
   if (!num) {
     return ''
   }
@@ -28,7 +28,7 @@ const formatNumber = (num: string) => {
 
   const formattedInteger = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   return trimmedFractional !== undefined
-    ? `${formattedInteger}.${fractional}`
+    ? `${formattedInteger}.${trimmedFractional}`
     : formattedInteger
 }
 
