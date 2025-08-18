@@ -5,18 +5,7 @@ import {
 } from 'core-kit/const/tokens'
 import type { TradingToken } from 'core-kit/types'
 
-export type GmxMarketAsset =
-  | '0x09400d9db990d5ed3f35d7be61dfaeb900af03c9' // SOL
-  | '0x47c031236e19d024b42f8ae6780e44a573170703' // BTC
-  | '0x70d95587d40a2caf56bd97485ab3eec10bee6336' // WETH/WETH
-  | '0x450bb6774dd8a756274e0ab4107953259d2ac541' // WETH/USDC
-  | '0x6ecf2133e2c9751caadcb6958b9654bae198a797' // SUI
-  | '0x6853ea96ff216fab11d2d930ce3c508556a4bdc4' // DOGE
-  | '0x0ccb4faa6f1f1b30911619f1184082ab4e25813c' // XRP
-  | '0x0e46941f9bff8d0784bffa3d0d7883cdb82d7ae7' // CRV
-  | '0xbcb8fe13d02b023e8f94f6881cc0192fd918a5c0' // HYPE
-  | '0x2d340912aa47e33c90efb078e69e70efe2b34b9b' // BNB
-
+// Addresses should be lowercased
 export const GMX_MARKET_ASSETS_MAP = {
   SOL_ARBITRUM: '0x09400d9db990d5ed3f35d7be61dfaeb900af03c9',
   BTC_ARBITRUM: '0x47c031236e19d024b42f8ae6780e44a573170703',
@@ -28,9 +17,15 @@ export const GMX_MARKET_ASSETS_MAP = {
   CRV_ARBITRUM: '0x0e46941f9bff8d0784bffa3d0d7883cdb82d7ae7',
   HYPE_ARBITRUM: '0xbcb8fe13d02b023e8f94f6881cc0192fd918a5c0',
   BNB_ARBITRUM: '0x2d340912aa47e33c90efb078e69e70efe2b34b9b',
-} as const satisfies Record<string, GmxMarketAsset>
+  LINK_ARBITRUM: '0x7f1fa204bb700853d36994da19f830b6ad18455c',
+} as const
 
-export const GMX_MARKET_ASSETS = Object.values(GMX_MARKET_ASSETS_MAP)
+export type GmxMarketAsset =
+  (typeof GMX_MARKET_ASSETS_MAP)[keyof typeof GMX_MARKET_ASSETS_MAP]
+
+export const GMX_MARKET_ASSETS = Object.values(
+  GMX_MARKET_ASSETS_MAP,
+) as GmxMarketAsset[]
 
 export const GMX_WITHDRAW_ASSET_MAP: Record<GmxMarketAsset, TradingToken> = {
   [GMX_MARKET_ASSETS_MAP.SOL_ARBITRUM]: USDC_ARBITRUM,
@@ -43,4 +38,5 @@ export const GMX_WITHDRAW_ASSET_MAP: Record<GmxMarketAsset, TradingToken> = {
   [GMX_MARKET_ASSETS_MAP.CRV_ARBITRUM]: USDC_ARBITRUM,
   [GMX_MARKET_ASSETS_MAP.HYPE_ARBITRUM]: USDC_ARBITRUM,
   [GMX_MARKET_ASSETS_MAP.BNB_ARBITRUM]: USDC_ARBITRUM,
+  [GMX_MARKET_ASSETS_MAP.LINK_ARBITRUM]: USDC_ARBITRUM,
 }
