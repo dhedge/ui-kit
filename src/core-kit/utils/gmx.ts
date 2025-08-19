@@ -5,6 +5,7 @@ import {
   AddressZero,
   GMX_MARKET_ASSETS,
   GMX_WITHDRAW_ASSET_MAP,
+  GMX_WITHDRAW_ASSET_MAP_BY_VAULT_ADDRESS,
 } from 'core-kit/const'
 import { isEqualAddress } from 'core-kit/utils/web3'
 
@@ -17,3 +18,6 @@ export const getGmxWithdrawAssetByLeverageAddress = (address: string) =>
     decimals: 18,
     address: AddressZero,
   }
+
+export const getGmxWithdrawAssetByVaultAddress = (address: Address) =>
+  GMX_WITHDRAW_ASSET_MAP_BY_VAULT_ADDRESS[address.toLowerCase()]
