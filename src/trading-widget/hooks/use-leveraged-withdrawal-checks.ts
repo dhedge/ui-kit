@@ -13,6 +13,7 @@ import {
   formatToUsd,
   getFlatMoneyCollateralByLeverageAddress,
   getGmxWithdrawAssetByLeverageAddress,
+  getGmxWithdrawAssetByVaultAddress,
   isAaveLendAndBorrowAsset,
   isEqualAddress,
   isFlatMoneyLeveragedAsset,
@@ -28,6 +29,9 @@ type CollateralInfo = {
 type LeveragedAssetConfig = {
   isLeveragedAsset: (address: Address) => boolean
   getWithdrawAssetByLeverageAddress: (address: Address) => CollateralInfo
+  getWithdrawAssetByVaultAddress: (
+    address: Address,
+  ) => CollateralInfo | undefined
   isLentAndBorrowedAsset: (params: IsLendAndBorrowAssetParams) => boolean
 }
 
@@ -35,12 +39,14 @@ const LEVERAGED_ASSET_CONFIGS: LeveragedAssetConfig[] = [
   {
     isLeveragedAsset: isFlatMoneyLeveragedAsset,
     getWithdrawAssetByLeverageAddress: getFlatMoneyCollateralByLeverageAddress,
+    getWithdrawAssetByVaultAddress: () => undefined,
     isLentAndBorrowedAsset: isAaveLendAndBorrowAsset,
   },
   {
     isLeveragedAsset: isGmxLeveragedAsset,
     getWithdrawAssetByLeverageAddress: getGmxWithdrawAssetByLeverageAddress,
-    isLentAndBorrowedAsset: () => false,
+    getWithdrawAssetByVaultAddress: getGmxWithdrawAssetByVaultAddress,
+    isLentAndBorrowedAsset: isAaveLendAndBorrowAsset,
   },
 ]
 
@@ -81,9 +87,11 @@ export const useLeveragedWithdrawalChecks = () => {
     return DEFAULT_RESULT
   }
 
-  const withdrawAssetAddress = assetConfig.getWithdrawAssetByLeverageAddress(
-    leveragedPosition.tokenAddress as Address,
-  ).address
+  const withdrawAssetAddress =
+    assetConfig.getWithdrawAssetByVaultAddress(config.address)?.address ??
+    assetConfig.getWithdrawAssetByLeverageAddress(
+      leveragedPosition.tokenAddress as Address,
+    ).address
 
   const withdrawAsset = composition.find(({ tokenAddress }) =>
     isEqualAddress(withdrawAssetAddress, tokenAddress),

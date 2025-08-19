@@ -40,3 +40,11 @@ export const GMX_WITHDRAW_ASSET_MAP: Record<GmxMarketAsset, TradingToken> = {
   [GMX_MARKET_ASSETS_MAP.BNB_ARBITRUM]: USDC_ARBITRUM,
   [GMX_MARKET_ASSETS_MAP.LINK_ARBITRUM]: USDC_ARBITRUM,
 }
+
+// Addresses should be lowercased
+export const GMX_WITHDRAW_ASSET_MAP_BY_VAULT_ADDRESS: Record<
+  string,
+  TradingToken
+> = {
+  '0x9a916e55f5b67226734cd7b465d51bce1d11a89a': USDC_ARBITRUM, // USDmny Arbitrum
+}
