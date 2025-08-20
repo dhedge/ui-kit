@@ -8,6 +8,7 @@ import {
   useTradingPanelLogger,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
+import { persistBatchTransactionsEnabled } from 'core-kit/utils'
 
 export const useBatchTransactionsSwitch = (): [
   boolean,
@@ -21,6 +22,10 @@ export const useBatchTransactionsSwitch = (): [
   const setIsBatchTransactions = useCallback(
     (enabled: boolean) => {
       updateSettings({ isBatchTransactionsEnabled: enabled })
+
+      // save `isBatchTransactionsEnabled` changes in localStorage
+      persistBatchTransactionsEnabled(enabled)
+
       log?.(TRADING_PANEL_LOG_EVENT.BATCH_TRANSACTIONS_CHANGE, {
         [TRADING_LOG_EVENT_PARAM.IS_BATCH_TRANSACTIONS_ENABLED.NAME]: enabled
           ? 1

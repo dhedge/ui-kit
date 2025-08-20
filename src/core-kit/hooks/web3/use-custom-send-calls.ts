@@ -43,6 +43,7 @@ export const useCustomSendCalls = ({
     async (contracts: SendCallsParams[]) =>
       sendCalls({
         calls: contracts.map(prepareCallData),
+        forceAtomic: true,
       }),
     [sendCalls],
   )

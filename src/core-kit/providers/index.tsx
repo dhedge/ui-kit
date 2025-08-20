@@ -15,10 +15,7 @@ import type {
   UpdateTransactionsArguments,
 } from 'core-kit/types/trading-panel.types'
 import { logTransactionByActionType } from 'core-kit/utils'
-import {
-  getStoredBatchTransactionsEnabled,
-  persistBatchTransactionsEnabled,
-} from 'core-kit/utils/batch-transactions'
+import { getStoredBatchTransactionsEnabled } from 'core-kit/utils/batch-transactions'
 
 function noop() {
   return
@@ -332,11 +329,6 @@ export const TradingPanelProvider: FC<
     (payload: Partial<TradingPanelState['settings']>) => {
       dispatch({ type: 'UPDATE_TRADING_SETTINGS', payload })
       onUpdateTradingSettings?.(payload)
-
-      // save `isBatchTransactionsEnabled` changes in localStorage
-      if (payload.isBatchTransactionsEnabled !== undefined) {
-        persistBatchTransactionsEnabled(payload.isBatchTransactionsEnabled)
-      }
     },
     [onUpdateTradingSettings],
   )
