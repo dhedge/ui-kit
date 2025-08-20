@@ -63,3 +63,10 @@ export const WBNB_ARBITRUM: TradingToken = {
   decimals: DEFAULT_PRECISION,
   value: '',
 }
+
+export const LINK_ARBITRUM: TradingToken = {
+  address: '0xf97f4df75117a78c1a5a0dbb814af92458539fb4',
+  symbol: 'LINK',
+  decimals: DEFAULT_PRECISION,
+  value: '',
+}
