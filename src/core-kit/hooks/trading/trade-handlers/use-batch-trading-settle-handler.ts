@@ -7,6 +7,7 @@ import {
   useOnTradingSettleError,
   useSendTokenInput,
   useTradingPanelModal,
+  useTradingPanelSettings,
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import type { PendingTransaction } from 'core-kit/types/trading-panel.types'
@@ -21,12 +22,14 @@ export const useBatchTradingSettleHandler = (
   const [, updateTradingModal] = useTradingPanelModal()
   const [, updatePendingTransactions] = useTradingPanelTransactions()
   const [, updateSendToken] = useSendTokenInput()
+  const [, updateSettings] = useTradingPanelSettings()
 
   const onTradingSettleError = useOnTradingSettleError()
 
   return useCallback<BatchTradingSettleHandler>(
     (params, error) => {
       if (error) {
+        updateSettings({ isBatchTransactionsEnabled: false })
         updateTradingModal({
           isOpen: false,
           status: 'None',
@@ -53,6 +56,7 @@ export const useBatchTradingSettleHandler = (
       }
     },
     [
+      updateSettings,
       updateTradingModal,
       updatePendingTransactions,
       action,
