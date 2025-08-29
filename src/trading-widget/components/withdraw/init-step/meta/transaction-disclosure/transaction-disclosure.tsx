@@ -58,6 +58,12 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
       })
     }
 
+    items.push({
+      tooltipText: t.exchangeRate,
+      label: t.rate,
+      value: <ExchangeRate />,
+    })
+
     return items
   }, [
     slippageTooltipText,
@@ -66,6 +72,8 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     t.exitFeeExplanation,
     t.minReceiveAmount,
     t.minReceived,
+    t.exchangeRate,
+    t.rate,
     isMaxSlippageLoading,
     slippagePlaceholder,
     exitFee,
@@ -73,10 +81,5 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
     minReceivedText,
   ])
 
-  return (
-    <TransactionOverviewDisclosure
-      collapseItems={collapseItems}
-      buttonItemChildren={<ExchangeRate />}
-    />
-  )
+  return <TransactionOverviewDisclosure collapseItems={collapseItems} />
 }

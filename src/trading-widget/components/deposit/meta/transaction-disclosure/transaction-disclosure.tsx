@@ -89,6 +89,12 @@ export const DepositTransactionOverviewDisclosure = () => {
       })
     }
 
+    items.push({
+      tooltipText: t.exchangeRate,
+      label: t.rate,
+      value: <ExchangeRate />,
+    })
+
     return items
   }, [
     slippageTooltipText,
@@ -98,6 +104,8 @@ export const DepositTransactionOverviewDisclosure = () => {
     t.minReceived,
     t.minDepositUsd,
     t.minDeposit,
+    t.exchangeRate,
+    t.rate,
     isMaxSlippageLoading,
     slippagePlaceholder,
     showMinimumReceivedAmount,
@@ -112,7 +120,6 @@ export const DepositTransactionOverviewDisclosure = () => {
       staticItems={staticItems}
       collapseItems={collapseItems}
       themeType={themeType}
-      buttonItemChildren={<ExchangeRate />}
     >
       <p className="dtw-py-1">
         {t.tokensLockTime.replace('{lockTime}', lockTime)}

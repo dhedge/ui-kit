@@ -47,6 +47,7 @@ export const TransactionOverviewDisclosure: FC<
                 label={t.tradeDetails}
                 value=""
                 type={themeType}
+                emphasised
               >
                 {buttonItemChildren}
                 <ChevronDownIcon

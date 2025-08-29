@@ -33,7 +33,6 @@ export type TranslationMap = {
   max: string
   allAssets: string
   all: string
-  buyEstimated: string
   sell: string
   receiveEstimated: string
   confirmInWallet: string
@@ -105,6 +104,8 @@ export type TranslationMap = {
   openLimitOrderAfterBuySwitchLabel: string
   stopOrder: string
   send: string
+  rate: string
+  exchangeRate: string
   [key: string]: string
 }
 

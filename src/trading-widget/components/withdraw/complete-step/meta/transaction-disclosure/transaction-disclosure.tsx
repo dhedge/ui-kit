@@ -24,6 +24,11 @@ export const CompleteWithdrawTransactionOverviewDisclosure = () => {
         label: t.minReceived,
         value: minReceive,
       },
+      {
+        tooltipText: t.exchangeRate,
+        label: t.rate,
+        value: <ExchangeRate />,
+      },
     ]
 
     return items
@@ -34,12 +39,9 @@ export const CompleteWithdrawTransactionOverviewDisclosure = () => {
     t.maxSlippage,
     t.minReceiveAmount,
     t.minReceived,
+    t.exchangeRate,
+    t.rate,
   ])
 
-  return (
-    <TransactionOverviewDisclosure
-      collapseItems={collapseItems}
-      buttonItemChildren={<ExchangeRate />}
-    />
-  )
+  return <TransactionOverviewDisclosure collapseItems={collapseItems} />
 }

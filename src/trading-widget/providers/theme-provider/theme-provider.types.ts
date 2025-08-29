@@ -230,6 +230,10 @@ export interface ThemeProviderConfigProps {
       size?: {
         gap?: string
         px?: string
+        fontSize?: string
+        lineHeight?: string
+        emphasisedFontSize?: string
+        emphasisedLineHeight?: string
       }
       style?: object
     }

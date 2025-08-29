@@ -41,7 +41,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   max: 'Max',
   allAssets: 'All Assets',
   all: 'All',
-  buyEstimated: 'Buy (estimated)',
   sell: 'Sell',
   receiveEstimated: 'Receive (estimated)',
   confirmInWallet: 'Please confirm in wallet',
@@ -126,4 +125,6 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   openLimitOrderAfterBuySwitchLabel: 'Add Stop Order',
   stopOrder: 'Stop Order',
   send: 'Send',
+  rate: 'Rate',
+  exchangeRate: 'Exchange rate',
 }

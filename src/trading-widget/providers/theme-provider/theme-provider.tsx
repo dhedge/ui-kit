@@ -568,6 +568,22 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.meta?.color?.panelBgHover ??
           'var(--panel-neutral-color)'
         }`,
+        //meta-size
+        '--panel-meta-font-size': `${
+          config?.component?.meta?.size?.fontSize ?? 'var(--panel-font-size-xs)'
+        }`,
+        '--panel-meta-line-height': `${
+          config?.component?.meta?.size?.lineHeight ??
+          'var(--panel-line-height-xs)'
+        }`,
+        '--panel-meta-emphasised-font-size': `${
+          config?.component?.meta?.size?.emphasisedFontSize ??
+          'var(--panel-font-size-sm)'
+        }`,
+        '--panel-meta-emphasised-line-height': `${
+          config?.component?.meta?.size?.emphasisedLineHeight ??
+          'var(--panel-line-height-sm)'
+        }`,
 
         //tooltip
         //tooltip-color
