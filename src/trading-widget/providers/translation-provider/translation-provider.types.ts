@@ -106,6 +106,7 @@ export type TranslationMap = {
   send: string
   rate: string
   exchangeRate: string
+  cooldown: string
   [key: string]: string
 }
 

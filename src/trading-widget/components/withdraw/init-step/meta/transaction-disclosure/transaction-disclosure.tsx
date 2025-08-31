@@ -25,6 +25,11 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
     const items: TransactionDisclosureItemProps[] = [
       {
+        tooltipText: t.exchangeRate,
+        label: t.rate,
+        value: <ExchangeRate />,
+      },
+      {
         tooltipText: slippageTooltipText,
         label: t.maxSlippage,
         value: (
@@ -57,12 +62,6 @@ export const InitWithdrawTransactionOverviewDisclosure = () => {
         value: minReceivedText,
       })
     }
-
-    items.push({
-      tooltipText: t.exchangeRate,
-      label: t.rate,
-      value: <ExchangeRate />,
-    })
 
     return items
   }, [

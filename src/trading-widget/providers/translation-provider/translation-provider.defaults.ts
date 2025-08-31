@@ -127,4 +127,5 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   send: 'Send',
   rate: 'Rate',
   exchangeRate: 'Exchange rate',
+  cooldown: 'Cooldown',
 }

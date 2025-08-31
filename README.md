@@ -585,6 +585,7 @@ path: `component.meta[name]`
 > | `transactionLabel`                  | string | Transaction                                                                                                                                                                           |             |
 > | `stopOrder`                         | string | Stop Order                                                                                                                                                                            |             |
 > | `send`                              | string | Send                                                                                                                                                                                  |             |
+> | `cooldown`                          | string | Cooldown                                                                                                                                                                              |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 
