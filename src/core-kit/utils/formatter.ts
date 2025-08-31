@@ -121,12 +121,29 @@ export const formatVaultBalance = (
   }
 }
 
+export const truncateString = (str: string, first = 3, last = 2) => {
+  if (str.length <= 5) {
+    return str
+  }
+  const ellipsis = '...'
+
+  // If a string is too short, or truncation doesn't reduce length
+  if (str.length <= first + last + ellipsis.length) {
+    return str
+  }
+
+  return `${str.slice(0, first)}${ellipsis}${str.slice(-last)}`
+}
+
 export const formatTokenBalance = ({
   balance,
   symbol,
   precision,
+  truncateSymbol,
 }: {
   balance: string
   symbol: string
   precision: number
-}) => `${formatBalance(balance, precision)} ${symbol}`
+  truncateSymbol?: boolean
+}) =>
+  `${formatBalance(balance, precision)} ${truncateSymbol ? truncateString(symbol) : symbol}`

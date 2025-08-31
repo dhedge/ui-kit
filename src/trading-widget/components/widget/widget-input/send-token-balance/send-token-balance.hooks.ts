@@ -14,6 +14,8 @@ export const useSendTokenBalance = () => {
       balance,
       symbol,
       precision: isStableSymbol(symbol) ? stablePrecision : defaultPrecision,
+      truncateSymbol: true,
     }),
+    symbol,
   }
 }

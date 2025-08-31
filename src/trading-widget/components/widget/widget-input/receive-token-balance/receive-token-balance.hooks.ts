@@ -14,6 +14,8 @@ export const useReceiveTokenBalance = () => {
       balance,
       symbol,
       precision: isStableSymbol(symbol) ? stablePrecision : defaultPrecision,
+      truncateSymbol: true,
     }),
+    symbol,
   }
 }

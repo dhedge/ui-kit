@@ -3,6 +3,7 @@ import {
   formatNumeratorToPercentage,
   formatPercentage,
   formatToUsd,
+  truncateString,
 } from 'core-kit/utils/formatter'
 
 describe('formatToUsd', () => {
@@ -53,5 +54,14 @@ describe('formatBalance', () => {
     expect(formatBalance('0.000001', 6)).toEqual('0.000001')
     expect(formatBalance('56619.09556399', 6)).toEqual('56619.095563')
     expect(formatBalance('0', 6)).toEqual('0')
+  })
+})
+
+describe('truncateString', () => {
+  it('should truncate long string in middle part', () => {
+    expect(truncateString('USDy')).toEqual('USDy')
+    expect(truncateString('HYPEBULL2X')).toEqual('HYP...2X')
+    expect(truncateString('BTCBEAR1X')).toEqual('BTC...1X')
+    expect(truncateString('sUSDCy')).toEqual('sUSDCy')
   })
 })

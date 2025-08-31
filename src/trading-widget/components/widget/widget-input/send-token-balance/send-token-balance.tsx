@@ -5,7 +5,7 @@ import { Balance } from 'trading-widget/components/common'
 import { useSendTokenBalance } from './send-token-balance.hooks'
 
 export const SendTokenBalance: FC = () => {
-  const { formattedBalance } = useSendTokenBalance()
+  const { formattedBalance, symbol } = useSendTokenBalance()
 
-  return <Balance balance={formattedBalance} />
+  return <Balance balance={formattedBalance} symbol={symbol} />
 }
