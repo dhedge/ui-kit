@@ -93,7 +93,7 @@ export const WidgetInput: FC<PropsWithChildren<WidgetInputProps>> = (props) => {
         <TokenSelector symbol={assetSymbol} />
       </div>
       <div className="dtw-flex dtw-items-center dtw-justify-between dtw-gap-x-2">
-        <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1">
+        <div className="dtw-flex dtw-items-center dtw-gap-[var(--panel-input-price-gap,var(--panel-gap))] dtw-flex-1 dtw-overflow-x-auto transparent-scrollbar">
           {displayCalculatedValue && (
             <>
               {isLoading ? (
