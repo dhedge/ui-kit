@@ -100,7 +100,7 @@ export const AllAssetsCompositionTable = ({
           )}
 
           {showUnitWithdrawalTip && (
-            <p className="dtw-text-warning dtw-text-[length:var(--panel-label-font-size,var(--panel-font-size-xs))]">
+            <p className="dtw-text-warning dtw-text-[length:var(--panel-label-font-size)]">
               {unitSymbol} can be redeemed using{' '}
               <a
                 className="dtw-text-warning dtw-inline-flex dtw-gap-0.5"

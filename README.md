@@ -454,12 +454,16 @@ path: `component.actionButton[name]`
 
 path: `component.meta[name]`
 
-> | name                  | type   | default value                        | description          |
-> | --------------------- | ------ | ------------------------------------ | -------------------- |
-> | `size.gap`            | string | `global.size.gap`                    | Meta flex gap        |
-> | `size.px`             | string | `global.size.spacer * 3`             | Meta padding inline  |
-> | `color.linkTextColor` | string | `global.color.colorBgAccentFrom`     | Meta link text color |
-> | `color.panelBgHover`  | string | `config.global.color.colorBgNeutral` | Meta panel hover bg  |
+> | name                        | type   | default value                        | description                 |
+> | --------------------------- | ------ | ------------------------------------ | --------------------------- |
+> | `size.gap`                  | string | `global.size.gap`                    | Meta flex gap               |
+> | `size.px`                   | string | `global.size.spacer * 3`             | Meta padding inline         |
+> | `size.fontSize`             | string | `global.size.fontSizeXs`             | Meta font size              |
+> | `size.lineHeight`           | string | `global.size.lineHeightXs`           | Meta line height            |
+> | `size.emphasisedFontSize`   | string | `global.size.fontSizeSm`             | Meta font size emphasised   |
+> | `size.emphasisedLineHeight` | string | `global.size.lineHeightSm`           | Meta line height emphasised |
+> | `color.linkTextColor`       | string | `global.color.colorBgAccentFrom`     | Meta link text color        |
+> | `color.panelBgHover`        | string | `config.global.color.colorBgNeutral` | Meta panel hover bg         |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/theme-provider/theme-provider.tsx`
 
@@ -507,12 +511,9 @@ path: `component.meta[name]`
 > | `lengthenLockup`                    | string | Lengthen lockup to remove entry fee                                                                                                                                                   |             |
 > | `deposit`                           | string | Buy                                                                                                                                                                                   |             |
 > | `withdraw`                          | string | Sell                                                                                                                                                                                  |             |
-> | `yourBalance`                       | string | Your Balance                                                                                                                                                                          |             |
 > | `max`                               | string | Max                                                                                                                                                                                   |             |
 > | `allAssets`                         | string | All Assets                                                                                                                                                                            |             |
 > | `all`                               | string | All                                                                                                                                                                                   |             |
-> | `payWith`                           | string | Pay with                                                                                                                                                                              |             |
-> | `buyEstimated`                      | string | Buy (estimated)                                                                                                                                                                       |             |
 > | `sell`                              | string | Sell                                                                                                                                                                                  |             |
 > | `receiveEstimated`                  | string | Receive (estimated)                                                                                                                                                                   |             |
 > | `confirmInWallet`                   | string | Please confirm in wallet                                                                                                                                                              |             |
@@ -582,6 +583,9 @@ path: `component.meta[name]`
 > | `paidLabel`                         | string | Paid                                                                                                                                                                                  |             |
 > | `priceLabel`                        | string | Price                                                                                                                                                                                 |             |
 > | `transactionLabel`                  | string | Transaction                                                                                                                                                                           |             |
+> | `stopOrder`                         | string | Stop Order                                                                                                                                                                            |             |
+> | `send`                              | string | Send                                                                                                                                                                                  |             |
+> | `cooldown`                          | string | Cooldown                                                                                                                                                                              |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

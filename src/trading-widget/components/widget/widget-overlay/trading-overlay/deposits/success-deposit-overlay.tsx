@@ -8,8 +8,8 @@ import {
   ExternalLinkButton,
   Layout,
 } from 'trading-widget/components/common'
+import { LimitOrderButton } from 'trading-widget/components/widget/widget-buttons'
 import { useSuccessDepositOverlay } from 'trading-widget/components/widget/widget-overlay/trading-overlay/deposits/success-deposit-overlay.hooks'
-import { useOpenLimitSellsOverlay } from 'trading-widget/hooks'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 import type { OverlayProps } from 'trading-widget/types'
@@ -19,8 +19,6 @@ export const SuccessDepositOverlay: FC<OverlayProps> = (props) => {
   const { link, onClose, vaultSymbol, paidToken, txHash, vaultTokenPrice } =
     useSuccessDepositOverlay(props)
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { openLimitSellOverlay, displayLimitSellOverlay } =
-    useOpenLimitSellsOverlay()
 
   return (
     <Layout.Overlay className="dtw-justify-between dtw-gap-y-4" noPadding>
@@ -71,11 +69,9 @@ export const SuccessDepositOverlay: FC<OverlayProps> = (props) => {
       </div>
 
       <div className="dtw-flex dtw-flex-col dtw-gap-2 dtw-w-full">
-        {displayLimitSellOverlay && (
-          <Button onClick={openLimitSellOverlay}>
-            {t.openLimitOrderAfterBuySwitchLabel}
-          </Button>
-        )}
+        <LimitOrderButton>
+          {t.openLimitOrderAfterBuySwitchLabel}
+        </LimitOrderButton>
         <Button highlighted={false} onClick={onClose}>
           {t.done}
         </Button>

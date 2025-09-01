@@ -11,3 +11,5 @@ export const CURRENCY_DECIMALS_MAP: Record<ApyCurrency, number> = {
   ETH: 4,
   BTC: 6,
 }
+
+export const STABLE_TOKEN_SYMBOLS = ['USDC', 'USDT']

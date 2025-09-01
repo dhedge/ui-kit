@@ -47,6 +47,11 @@ export const DepositTransactionOverviewDisclosure = () => {
   const collapseItems = useMemo<TransactionDisclosureItemProps[]>(() => {
     const items: TransactionDisclosureItemProps[] = [
       {
+        tooltipText: t.exchangeRate,
+        label: t.rate,
+        value: <ExchangeRate />,
+      },
+      {
         tooltipText: slippageTooltipText,
         label: t.maxSlippage,
         value: (
@@ -89,6 +94,12 @@ export const DepositTransactionOverviewDisclosure = () => {
       })
     }
 
+    items.push({
+      tooltipText: t.tokensLockTime.replace('{lockTime}', lockTime),
+      label: t.cooldown,
+      value: lockTime,
+    })
+
     return items
   }, [
     slippageTooltipText,
@@ -98,6 +109,10 @@ export const DepositTransactionOverviewDisclosure = () => {
     t.minReceived,
     t.minDepositUsd,
     t.minDeposit,
+    t.exchangeRate,
+    t.rate,
+    t.tokensLockTime,
+    t.cooldown,
     isMaxSlippageLoading,
     slippagePlaceholder,
     showMinimumReceivedAmount,
@@ -105,6 +120,7 @@ export const DepositTransactionOverviewDisclosure = () => {
     entryFee,
     minDeposit,
     minReceive,
+    lockTime,
   ])
 
   return (
@@ -112,11 +128,6 @@ export const DepositTransactionOverviewDisclosure = () => {
       staticItems={staticItems}
       collapseItems={collapseItems}
       themeType={themeType}
-      buttonItemChildren={<ExchangeRate />}
-    >
-      <p className="dtw-py-1">
-        {t.tokensLockTime.replace('{lockTime}', lockTime)}
-      </p>
-    </TransactionOverviewDisclosure>
+    />
   )
 }

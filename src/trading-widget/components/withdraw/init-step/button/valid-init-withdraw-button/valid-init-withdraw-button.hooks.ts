@@ -8,7 +8,6 @@ import {
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 
 import { useHighSlippageCheck } from 'trading-widget/hooks'
-import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-withdrawal-checks'
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
 
@@ -32,11 +31,6 @@ export const useValidInitWithdrawButton = () => {
   const { requiresHighSlippageConfirm, confirmHighSlippage, slippageToBeUsed } =
     useHighSlippageCheck()
 
-  const {
-    requiresLeveragedCollateralLiquidity,
-    leveragedCollateralValueFormatted,
-  } = useLeveragedWithdrawalChecks()
-
   const handleHighSlippageClick = () => {
     dispatch({
       type: 'MERGE_OVERLAY',
@@ -57,8 +51,6 @@ export const useValidInitWithdrawButton = () => {
     dynamicCooldownEndsInTime,
     approve,
     handleHighSlippageClick,
-    requiresLeveragedCollateralLiquidity,
-    leveragedCollateralValueFormatted,
     maintenance: maintenance || maintenanceWithdrawals,
     poolSymbol: symbol,
   }

@@ -38,12 +38,9 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   reduceLockup: 'Reduce lockup to {customLockTime} by paying 0.1% fee',
   deposit: 'Buy',
   withdraw: 'Sell',
-  yourBalance: 'Your Balance',
   max: 'Max',
   allAssets: 'All Assets',
   all: 'All',
-  payWith: 'Pay with',
-  buyEstimated: 'Buy (estimated)',
   sell: 'Sell',
   receiveEstimated: 'Receive (estimated)',
   confirmInWallet: 'Please confirm in wallet',
@@ -126,4 +123,9 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   batchTransactionsTooltip:
     'Group transaction calls into a single batch transaction. Disable if you prefer separate prompts.',
   openLimitOrderAfterBuySwitchLabel: 'Add Stop Order',
+  stopOrder: 'Stop Order',
+  send: 'Send',
+  rate: 'Rate',
+  exchangeRate: 'Exchange rate',
+  cooldown: 'Cooldown',
 }

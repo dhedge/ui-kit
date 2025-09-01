@@ -26,8 +26,6 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     slippageToBeUsed,
     dynamicCooldownEndsInTime,
     approve,
-    requiresLeveragedCollateralLiquidity,
-    leveragedCollateralValueFormatted,
     handleHighSlippageClick,
     maintenance,
     poolSymbol,
@@ -52,19 +50,6 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
         promptText={t.withdrawCooldown
           .replace('{tokenSymbol}', sendTokenSymbol)
           .replace('{cooldownEndTime}', dynamicCooldownEndsInTime)}
-      >
-        {name}
-      </DisabledButtonWithPrompt>
-    )
-  }
-
-  if (requiresLeveragedCollateralLiquidity) {
-    return (
-      <DisabledButtonWithPrompt
-        promptText={t.withdrawalLiquidityDisabled.replace(
-          '{value}',
-          leveragedCollateralValueFormatted,
-        )}
       >
         {name}
       </DisabledButtonWithPrompt>

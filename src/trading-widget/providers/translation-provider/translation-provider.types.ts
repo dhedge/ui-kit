@@ -30,12 +30,9 @@ export type TranslationMap = {
   reduceLockup: string
   deposit: string
   withdraw: string
-  yourBalance: string
   max: string
   allAssets: string
   all: string
-  payWith: string
-  buyEstimated: string
   sell: string
   receiveEstimated: string
   confirmInWallet: string
@@ -105,6 +102,11 @@ export type TranslationMap = {
   batchTransactionsSwitchLabel: string
   batchTransactionsTooltip: string
   openLimitOrderAfterBuySwitchLabel: string
+  stopOrder: string
+  send: string
+  rate: string
+  exchangeRate: string
+  cooldown: string
   [key: string]: string
 }
 

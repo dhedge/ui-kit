@@ -19,7 +19,7 @@ export const DisabledButtonWithPrompt: FC<
   const { ActionButton: Button = ActionButton } = useComponentContext()
   return (
     <div>
-      <div className="md:dtw-hidden dtw-mb-4 dtw-flex dtw-items-center dtw-justify-center dtw-space-x-1 dtw-text-yellow-400">
+      <div className="md:dtw-hidden dtw-mb-4 dtw-flex dtw-items-center dtw-justify-center dtw-space-x-1 dtw-text-[var(--panel-warning-content-color)]">
         <ExclamationCircleIcon className="dtw-h-5 dtw-w-5" />
         <div className="dtw-py-1 dtw-text-xs">{promptText}</div>
       </div>
