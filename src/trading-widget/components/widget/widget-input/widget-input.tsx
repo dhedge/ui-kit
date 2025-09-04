@@ -43,8 +43,10 @@ export const WidgetInput: FC<PropsWithChildren<WidgetInputProps>> = (props) => {
   return (
     <div
       className={classNames(
-        'dtw-relative dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] focus-within:dtw-border-[var(--panel-input-focus-border-color)] focus-within:dtw-bg-[var(--panel-input-focus-bg)] dtw-shadow-md',
+        'dtw-relative dtw-flex dtw-flex-col dtw-gap-[var(--panel-input-group-gap,var(--panel-gap))] dtw-rounded-[var(--panel-input-radius,var(--panel-radius))] dtw-border dtw-bg-[var(--panel-input-bg,var(--panel-neutral-color))] dtw-py-[var(--panel-input-py)] dtw-px-[var(--panel-input-px)] dtw-shadow-md',
         {
+          'focus-within:dtw-border-[var(--panel-input-focus-border-color)] focus-within:dtw-bg-[var(--panel-input-focus-bg)]':
+            !disabled,
           'dtw-border-[var(--panel-input-border-color)]':
             type === THEME_TYPE.DEFAULT || isLoading,
           'dtw-border-[color:var(--panel-error-content-color)]':
