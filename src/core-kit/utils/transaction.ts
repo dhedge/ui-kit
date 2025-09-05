@@ -7,9 +7,13 @@ import {
   ComplexWithdrawalAssetSrcDataAbiItem,
   ComplexWithdrawalDataAbiItem,
 } from 'core-kit/abi'
-import type { useSwapsDataQuery } from 'core-kit/hooks/trading/use-swaps-data-query'
+import type {
+  fetchSwapsDataForAave,
+  useSwapsDataQuery,
+} from 'core-kit/hooks/trading/use-swaps-data-query'
 import type { useCompleteWithdrawTrackedAssets } from 'core-kit/hooks/trading/withdraw-v2/complete-step/use-complete-withdraw-tracked-assets'
 import type { CalculateSwapDataParamsResponse } from 'core-kit/types'
+import { buildSwapDataKeyForAave } from 'core-kit/utils/aave'
 
 /**
  * Calculates the slippage tolerance for withdrawSafe.
@@ -114,7 +118,7 @@ export const buildAaveWithdrawAssetTransactionData = ({
 }: {
   assetAddress: Address
   swapParams: CalculateSwapDataParamsResponse | undefined
-  swapData: ReturnType<typeof useSwapsDataQuery>['data']
+  swapData: Awaited<ReturnType<typeof fetchSwapsDataForAave>>
   slippageToleranceForContractTransaction: bigint
 }) => {
   if (!swapParams) {
@@ -127,7 +131,13 @@ export const buildAaveWithdrawAssetTransactionData = ({
 
   const { srcData, dstData } = swapParams
   const srcDataToEncode = srcData.map(({ asset, amount }) => {
-    const assetSwapData = swapData?.[asset]
+    const assetSwapData =
+      swapData?.[
+        buildSwapDataKeyForAave({
+          sourceAddress: asset,
+          amount: amount.toString(),
+        })
+      ]
     return {
       asset,
       amount,
