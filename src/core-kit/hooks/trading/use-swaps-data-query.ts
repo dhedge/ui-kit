@@ -31,8 +31,7 @@ export const fetchSwapsDataForAave = async ({
     assets,
     getSwapData,
     signal,
-    buildKey: ({ sourceAddress, amount }) =>
-      buildSwapDataKeyForAave({ sourceAddress, amount }),
+    buildKey: buildSwapDataKeyForAave,
   })
 
 export const fetchSwapsData = async ({
