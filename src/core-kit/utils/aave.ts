@@ -1,4 +1,4 @@
-import type { Address, ChainId } from 'core-kit/types'
+import type { Address, ChainId, SwapDataRequest } from 'core-kit/types'
 import { getContractAddressById, isEqualAddress } from 'core-kit/utils/web3'
 
 export interface IsLendAndBorrowAssetParams {
@@ -17,3 +17,9 @@ export const isAaveLendAndBorrowAsset = ({
 
   return isEqualAddress(address, aaveLendingPoolV3Address)
 }
+
+export const buildSwapDataKeyForAave = ({
+  sourceAddress,
+  amount,
+}: Pick<SwapDataRequest, 'sourceAddress' | 'amount'>) =>
+  `${sourceAddress}_${amount}`

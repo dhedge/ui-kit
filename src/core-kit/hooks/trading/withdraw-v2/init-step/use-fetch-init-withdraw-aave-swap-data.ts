@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { AddressZero } from 'core-kit/const'
 import { useGetSwapData } from 'core-kit/hooks/state'
-import { fetchSwapsData } from 'core-kit/hooks/trading/use-swaps-data-query'
+import { fetchSwapsDataForAave } from 'core-kit/hooks/trading/use-swaps-data-query'
 import { useAccount } from 'core-kit/hooks/web3'
 import type {
   CalculateSwapDataParamsResponse,
@@ -37,7 +37,7 @@ export const useFetchInitWithdrawAaveSwapData = ({
         }
       })
 
-      return fetchSwapsData({
+      return fetchSwapsDataForAave({
         assets,
         getSwapData,
         signal: dummySignal,
