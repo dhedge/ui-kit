@@ -13,7 +13,11 @@ import { useIsMultiAssetWithdraw } from 'core-kit/hooks/trading/withdraw-v2/init
 import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2/use-applied-withdraw-slippage'
 import { useDebounce } from 'core-kit/hooks/utils'
 import type { InitWithdrawTransactionArguments } from 'core-kit/types'
-import { formatEther, formatNumberToLimitedDecimals } from 'core-kit/utils'
+import {
+  formatEther,
+  formatNumberToLimitedDecimals,
+  getSlippageToleranceForContractTransaction,
+} from 'core-kit/utils'
 
 interface UseGetInitWithdrawTransactionArguments {
   debounceTime?: number
@@ -67,6 +71,7 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
   const poolConfig = useTradingPanelPoolConfig()
   const isMultiAssetsWithdraw = useIsMultiAssetWithdraw()
   const [sendToken] = useSendTokenInput()
+  const slippage = useAppliedWithdrawSlippage()
 
   const { data: { getSupportedAssets: supportedVaultAssets } = {} } =
     usePoolManagerDynamic(poolConfig)
@@ -79,11 +84,13 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
   )
 
   return useMemo(() => {
+    const slippageTolerance =
+      getSlippageToleranceForContractTransaction(slippage)
     const withdrawAmountD18 = BigInt(withdrawAmountDebouncedD18)
     const complexAssetData = (supportedVaultAssets ?? []).map((asset) => ({
       supportedAsset: asset,
       withdrawData: '',
-      slippageTolerance: BigInt(0),
+      slippageTolerance,
     }))
 
     if (isMultiAssetsWithdraw) {
@@ -92,6 +99,7 @@ export const useInitWithdrawTransactionArgumentsForSimulationOnly = ({
 
     return [poolConfig.address, withdrawAmountD18, complexAssetData]
   }, [
+    slippage,
     withdrawAmountDebouncedD18,
     supportedVaultAssets,
     isMultiAssetsWithdraw,
