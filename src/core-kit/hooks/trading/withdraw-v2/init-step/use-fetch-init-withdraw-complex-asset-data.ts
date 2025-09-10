@@ -50,9 +50,8 @@ export const useFetchInitWithdrawComplexAssetData = ({
       return await Promise.all(
         (supportedVaultAssets ?? []).map(async (asset) => {
           const isAaveAsset = isEqualAddress(asset, aaveLendingPoolV3Address)
-          const slippageTolerance = isAaveAsset
-            ? getSlippageToleranceForContractTransaction(slippage)
-            : BigInt(0)
+          const slippageTolerance =
+            getSlippageToleranceForContractTransaction(slippage)
 
           if (isOffchainAaveWithdrawSupported && isAaveAsset) {
             try {
