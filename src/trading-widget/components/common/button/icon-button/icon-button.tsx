@@ -26,7 +26,7 @@ export const IconButton: FC<IconButtonProps> = ({
   >
     <Icon
       className={classNames(
-        'dtw-text-[color:var(--panel-icon-color)] group-hover:dtw-text-white',
+        'dtw-text-[color:var(--panel-icon-color)] group-hover:dtw-text-[color:var(--panel-icon-color-hover))]',
         className,
       )}
     />

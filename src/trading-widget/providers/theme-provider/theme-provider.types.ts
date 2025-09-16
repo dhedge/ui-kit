@@ -28,6 +28,7 @@ export interface ThemeProviderConfigProps {
       //warning
       colorTextWarning?: string
       colorIcon?: string
+      colorIconHover?: string
       //scrollbar
       colorScrollbar?: string
     }

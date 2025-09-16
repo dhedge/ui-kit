@@ -167,6 +167,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         '--panel-icon-color': `${
           config?.global?.color?.colorIcon ?? 'var(--panel-content-color)'
         }`,
+        '--panel-icon-color-hover': `${
+          config?.global?.color?.colorIconHover ??
+          'var(--panel-content-hover-color)'
+        }`,
 
         //notification
         '--panel-notification-bg': `${
