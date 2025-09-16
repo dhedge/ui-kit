@@ -229,6 +229,7 @@ path: `global.color[name]`
 > | `colorTextWarning`       | string | `#AFA58D`                                    | Warning text color                    |
 > | `colorTextSuccess`       | string | `#73D393`                                    | Success text color                    |
 > | `colorIcon`              | string | `global?.color?.colorTextPrimary ?? #ffffff` | Icon color                            |
+> | `colorIconHover`         | string | `global?.color?.colorIconHover ?? #ffffffCC` | Icon hover color                      |
 > | `colorScrollbar`         | string | `#73D39380`                                  | Scrollbar color                       |
 
 ###### size

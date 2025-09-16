@@ -13,14 +13,14 @@ export interface TooltipIconProps extends InfoTooltipProps {
 export const TooltipIcon: FC<TooltipIconProps> = ({
   text,
   placement,
-  iconClassName = 'dtw-text-grey-dark',
+  iconClassName = 'dtw-text-[color:var(--panel-secondary-content-color)]',
   Icon = QuestionMarkCircleIcon,
 }) => {
   return (
     <InfoTooltip text={text} placement={placement}>
       <Icon
         className={classNames(
-          'dtw-h-4 dtw-w-4 dtw-cursor-help hover:dtw-text-white',
+          'dtw-h-4 dtw-w-4 dtw-cursor-help hover:dtw-text-[color:var(--panel-icon-color-hover))]',
           iconClassName,
         )}
       />
