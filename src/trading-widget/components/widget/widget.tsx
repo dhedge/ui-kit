@@ -9,6 +9,7 @@ import {
   ErrorNotificationOverlay,
   FmpWithdrawalOverlay,
   HighSlippageOverlay,
+  LimitOrderWithdrawOverlay,
   LimitSellsOverlay,
   OverlaySwitch,
   PoolSelectOverlay,
@@ -53,6 +54,7 @@ export const Widget: FC = () => {
         <PoolSelectOverlay type={OVERLAY.POOL_SELECT} searchQuery="" />
         <TradingOverlay type={OVERLAY.TRADING} />
         <LimitSellsOverlay type={OVERLAY.LIMIT_SELLS} />
+        <LimitOrderWithdrawOverlay type={OVERLAY.LIMIT_ORDER_WITHDRAW} />
       </OverlaySwitch>
     </div>
   )

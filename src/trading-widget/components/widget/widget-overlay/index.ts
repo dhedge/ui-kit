@@ -7,3 +7,4 @@ export { PoolSelectOverlay } from 'trading-widget/components/widget/widget-overl
 export { TradingOverlay } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-overlay'
 export { ErrorNotificationOverlay } from 'trading-widget/components/widget/widget-overlay/error-notification-overlay/error-notification-overlay'
 export { LimitSellsOverlay } from 'trading-widget/components/widget/widget-overlay/limit-sells-overlay/limit-sells-overlay'
+export { LimitOrderWithdrawOverlay } from 'trading-widget/components/widget/widget-overlay/limit-order-withdraw-overlay/limit-order-withdraw-overlay'

@@ -7,6 +7,7 @@ export const OVERLAY = {
   TRADING: 'TRADING',
   ERROR_NOTIFICATION: 'ERROR_NOTIFICATION',
   LIMIT_SELLS: 'LIMIT_SELLS',
+  LIMIT_ORDER_WITHDRAW: 'LIMIT_ORDER_WITHDRAW',
 } as const
 
 export type OverlayType = (typeof OVERLAY)[keyof typeof OVERLAY]
