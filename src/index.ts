@@ -341,4 +341,8 @@ export type {
 } from 'trading-widget/providers/translation-provider'
 
 // Limit Orders
-export { LimitOrderModal, useUserLimitOrder } from 'limit-orders/index'
+export {
+  LimitOrderModal,
+  useUserLimitOrder,
+  useInvalidateLimitOrderQuery,
+} from 'limit-orders/index'
