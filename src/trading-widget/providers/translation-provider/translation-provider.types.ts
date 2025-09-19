@@ -56,6 +56,9 @@ export type TranslationMap = {
   termOfUseDepositAccept: string
   back: string
   done: string
+  termOfUseWithdrawAcceptLabel: string
+  termOfUseWithdrawPoint1: string
+  termOfUseWithdrawPoint2: string
   highSlippage: string
   responsibleHighSlippage: string
   highSlippageListTitle: string
@@ -91,6 +94,7 @@ export type TranslationMap = {
   completeWithdrawDescription: string
   completeWithdrawTooltip: string
   unrollAndClaimDescription: string
+  limitOrderWithdrawDescription: string
   total: string
   showAll: string
   hide: string
@@ -107,6 +111,11 @@ export type TranslationMap = {
   rate: string
   exchangeRate: string
   cooldown: string
+  delete: string
+  withdrawalRequest: string
+  deleteWithdrawalRequest: string
+  pendingWithdrawalRequest: string
+  insufficientBalance: string
   [key: string]: string
 }
 

@@ -5,8 +5,10 @@ import {
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
+import { useIsLimitOrderWithdraw } from 'core-kit/hooks/trading/limit-order-withdraw/use-is-limit-order-withdraw'
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 
+import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import { useHighSlippageCheck } from 'trading-widget/hooks'
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
@@ -16,6 +18,8 @@ export const useValidInitWithdrawButton = () => {
     useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const dispatch = useOverlayDispatchContext()
+  const isLimitOrderWithdraw = useIsLimitOrderWithdraw()
+  const insufficientBalance = useIsInsufficientBalance()
 
   const { data: dynamicCooldownMs = 0 } = usePoolDynamicExitRemainingCooldown({
     address,
@@ -53,5 +57,7 @@ export const useValidInitWithdrawButton = () => {
     handleHighSlippageClick,
     maintenance: maintenance || maintenanceWithdrawals,
     poolSymbol: symbol,
+    isLimitOrderWithdraw,
+    insufficientBalance,
   }
 }
