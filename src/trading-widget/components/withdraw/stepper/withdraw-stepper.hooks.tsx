@@ -7,6 +7,7 @@ import {
   useIsUnrollAndClaimTransaction,
 } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 import { TooltipIcon } from 'trading-widget/components/common'
+import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-withdrawal-checks'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
 const APPROVE_STEP_INDEX = 0
@@ -20,6 +21,9 @@ export const useWithdrawStepper = () => {
   const { canSpend } = useInitWithdrawAllowance()
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
+
+  const { requiresLeveragedCollateralLiquidity } =
+    useLeveragedWithdrawalChecks()
 
   const steps = useMemo(() => {
     const steps = [
@@ -73,5 +77,9 @@ export const useWithdrawStepper = () => {
       ? INIT_STEP_INDEX
       : APPROVE_STEP_INDEX
 
-  return { hideStepper: isMultiAssetWithdraw, activeStepIndex, steps }
+  return {
+    hideStepper: isMultiAssetWithdraw || requiresLeveragedCollateralLiquidity,
+    activeStepIndex,
+    steps,
+  }
 }

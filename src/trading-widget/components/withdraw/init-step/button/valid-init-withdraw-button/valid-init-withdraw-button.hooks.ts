@@ -8,14 +8,25 @@ import {
 import { useInitWithdrawAllowance } from 'core-kit/hooks/trading/withdraw-v2/init-step'
 
 import { useHighSlippageCheck } from 'trading-widget/hooks'
+import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-withdrawal-checks'
 import { useOverlayDispatchContext } from 'trading-widget/providers/overlay-provider'
 import { OVERLAY } from 'trading-widget/types'
 
 export const useValidInitWithdrawButton = () => {
-  const { address, chainId, maintenance, maintenanceWithdrawals, symbol } =
-    useTradingPanelPoolConfig()
+  const {
+    address,
+    chainId,
+    maintenance,
+    maintenanceWithdrawals,
+    symbol,
+    pricingAsset,
+  } = useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
   const dispatch = useOverlayDispatchContext()
+  const { requiresLeveragedCollateralLiquidity } =
+    useLeveragedWithdrawalChecks()
+  const limitOrderWithdrawalEnabled =
+    requiresLeveragedCollateralLiquidity && !!pricingAsset
 
   const { data: dynamicCooldownMs = 0 } = usePoolDynamicExitRemainingCooldown({
     address,
@@ -53,5 +64,6 @@ export const useValidInitWithdrawButton = () => {
     handleHighSlippageClick,
     maintenance: maintenance || maintenanceWithdrawals,
     poolSymbol: symbol,
+    limitOrderWithdrawalEnabled,
   }
 }
