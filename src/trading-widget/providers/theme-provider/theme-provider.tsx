@@ -7,9 +7,11 @@ import type { ThemeProviderProps } from 'trading-widget/providers/theme-provider
 export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   children,
   config,
+  className,
 }) => {
   return (
     <div
+      className={className}
       style={{
         //global-style
         // add custom CSS variables to d.ts
@@ -93,6 +95,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.global?.color?.colorBorderPrimary ??
           `var(--panel-content-color)`
         }`,
+
+        //widget
+        //widget-style
+        '--widget-radius': `${config?.component?.widget?.style?.radius ?? 'var(--panel-radius)'}`,
+        '--widget-radius-md': `${config?.component?.widget?.style?.radiusMd ?? 'var(--panel-radius)'}`,
 
         //divider
         '--panel-divider-color': `${
@@ -244,7 +251,8 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.tabContent?.size?.pt ??
           'calc(var(--panel-spacer) * 2)'
         }`,
-        '--panel-content-pb': `calc(var(--panel-spacer) * 9)`,
+        '--panel-content-pb': `${config?.component?.tabContent?.size?.pb ?? `calc(var(--panel-spacer) * 9)`}`,
+        '--panel-content-pb-md': `${config?.component?.tabContent?.size?.pbMd ?? `var(--panel-content-pb)`}`,
         '--panel-content-px': `${
           config?.component?.tabContent?.size?.px ?? '0px'
         }`,

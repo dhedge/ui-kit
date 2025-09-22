@@ -61,6 +61,12 @@ export interface ThemeProviderConfigProps {
     }
   }
   component?: {
+    widget?: {
+      style?: {
+        radius?: string
+        radiusMd?: string
+      }
+    }
     notification?: {
       color?: {
         colorBg?: string
@@ -110,6 +116,7 @@ export interface ThemeProviderConfigProps {
         pt?: string
         px?: string
         pb?: string
+        pbMd?: string
         gap?: string
       }
       style?: object
@@ -284,4 +291,5 @@ export interface ThemeProviderConfigProps {
 
 export interface ThemeProviderProps {
   config?: ThemeProviderConfigProps
+  className?: string
 }

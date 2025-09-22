@@ -1,4 +1,5 @@
 export { TradingWidget } from 'trading-widget/components'
+export { ConfigProvider } from 'trading-widget/providers/config-provider/config-provider'
 export type { ProvidersProps } from 'trading-widget/providers'
 export { TradingPanelProvider } from 'core-kit/index'
 export {
@@ -315,6 +316,7 @@ export {
   useWaitForTransactionReceipt,
   useIsBatchContractWritesSupported,
 } from 'core-kit/hooks/web3'
+export { useOnTradingTypeChange } from 'core-kit/hooks/component'
 
 export type {
   ComponentProviderProps,

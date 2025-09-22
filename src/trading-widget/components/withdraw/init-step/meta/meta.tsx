@@ -22,7 +22,7 @@ export const InitWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
       )}
       <InitWithdrawTransactionOverviewDisclosure />
       {WithdrawMetaInfo && <WithdrawMetaInfo />}
-      {children}
+      <div className="dtw-mt-auto dtw-mb-0">{children}</div>
     </Layout.Meta>
   )
 }
