@@ -7,7 +7,7 @@ export const CompleteWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Layout.Meta>
       <CompleteWithdrawTransactionOverviewDisclosure />
-      {children}
+      <div className="dtw-mt-auto dtw-mb-0">{children}</div>
     </Layout.Meta>
   )
 }

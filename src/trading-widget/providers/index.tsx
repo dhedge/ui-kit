@@ -15,6 +15,7 @@ export interface ProvidersProps {
   config?: ConfigProviderProps['config']
   components?: ComponentProviderProps['config']
   translation?: TranslationProviderProps['config']
+  className?: string
 }
 
 export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
@@ -23,9 +24,10 @@ export const Providers: FC<PropsWithChildren<ProvidersProps>> = ({
   theme,
   components,
   translation,
+  className,
 }) => (
   <TranslationProvider config={translation}>
-    <ThemeProvider config={theme}>
+    <ThemeProvider config={theme} className={className}>
       <ConfigProvider config={config}>
         <ComponentProvider config={components}>
           <OverlayProvider>{children}</OverlayProvider>
