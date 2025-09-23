@@ -6,6 +6,7 @@ import { LimitOrderApproveButton } from 'limit-orders/component/limit-order-butt
 import { LimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button'
 import { LimitOrderDeleteButton } from 'limit-orders/component/limit-order-button/limit-order-delete-button'
 import { NetworkCheckButton } from 'limit-orders/component/limit-order-button/network-check-button'
+import { useLimitOrderContent } from 'limit-orders/component/limit-order-content.hooks'
 import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 
 interface LimitOrderContentProps {
@@ -18,13 +19,14 @@ export const LimitOrderContent: FC<LimitOrderContentProps> = ({
   hideDeleteButton,
 }) => {
   const t = useTranslationContext()
+  const { limitOrderButtonDisabled } = useLimitOrderContent()
 
   return (
     <div className="dtw-flex dtw-flex-col dtw-gap-2">
       <InputGroup />
       <NetworkCheckButton>
         <LimitOrderApproveButton>
-          <LimitOrderButton />
+          <LimitOrderButton disabled={limitOrderButtonDisabled} />
         </LimitOrderApproveButton>
         {!hideDeleteButton && <LimitOrderDeleteButton />}
       </NetworkCheckButton>
