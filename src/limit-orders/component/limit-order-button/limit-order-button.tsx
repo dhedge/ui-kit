@@ -4,11 +4,15 @@ import { ActionButton } from 'limit-orders/component/common/action-button'
 import { useLimitOrderButton } from 'limit-orders/component/limit-order-button/limit-order-button.hooks'
 import { useTranslationContext } from 'limit-orders/providers/translation-provider'
 
-export const LimitOrderButton: FC = () => {
+interface LimitOrderButtonProps {
+  disabled?: boolean
+}
+
+export const LimitOrderButton: FC<LimitOrderButtonProps> = ({ disabled }) => {
   const t = useTranslationContext()
   const {
     modifyLimitOrder,
-    disabled,
+    disabled: buttonDisabled,
     error,
     isPending,
     minAmount,
@@ -31,7 +35,7 @@ export const LimitOrderButton: FC = () => {
       )}
       <ActionButton
         onClick={modifyLimitOrder}
-        disabled={disabled}
+        disabled={disabled || buttonDisabled}
         loading={isPending}
       >
         {isModifyTransaction ? t.modify : t.create}
