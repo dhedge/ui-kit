@@ -580,6 +580,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
           config?.component?.meta?.color?.panelBgHover ??
           'var(--panel-neutral-color)'
         }`,
+        '--panel-meta-action-panel-bg': `${
+          config?.component?.meta?.color?.actionPanelBg ??
+          'var(--panel-background-color)'
+        }`,
         //meta-size
         '--panel-meta-font-size': `${
           config?.component?.meta?.size?.fontSize ?? 'var(--panel-font-size-xs)'

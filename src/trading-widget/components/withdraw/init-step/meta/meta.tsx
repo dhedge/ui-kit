@@ -22,7 +22,9 @@ export const InitWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
       )}
       <InitWithdrawTransactionOverviewDisclosure />
       {WithdrawMetaInfo && <WithdrawMetaInfo />}
-      <div className="dtw-mt-auto dtw-mb-0">{children}</div>
+      <div className="dtw-sticky dtw-bottom-0 dtw-bg-[var(--panel-meta-action-panel-bg)]">
+        {children}
+      </div>
     </Layout.Meta>
   )
 }
