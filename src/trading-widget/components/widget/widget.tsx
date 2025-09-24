@@ -39,7 +39,7 @@ export const Widget: FC = () => {
             <WidgetSettings tradingType={type} />
           </div>
         </WidgetTabs>
-        <TabPanels className="dtw-flex-1">
+        <TabPanels className="dtw-flex-1 dtw-overflow-y-auto">
           <DepositTabPanel />
           <WithdrawTabPanel />
         </TabPanels>

@@ -12,7 +12,9 @@ export const DepositMeta: FC<PropsWithChildren> = ({ children }) => {
     <Layout.Meta>
       <DepositTransactionOverviewDisclosure />
       {DepositMetaInfo && <DepositMetaInfo />}
-      <div className="dtw-mt-auto dtw-mb-0">{children}</div>
+      <div className="dtw-sticky dtw-bottom-0 dtw-bg-[var(--panel-meta-action-panel-bg)]">
+        {children}
+      </div>
     </Layout.Meta>
   )
 }

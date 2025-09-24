@@ -234,6 +234,7 @@ export interface ThemeProviderConfigProps {
       color?: {
         linkTextColor?: string
         panelBgHover?: string
+        actionPanelBg?: string
       }
       size?: {
         gap?: string
