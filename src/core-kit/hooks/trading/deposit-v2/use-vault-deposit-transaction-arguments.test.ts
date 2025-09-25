@@ -35,7 +35,7 @@ vi.mock('./use-vault-deposit-token-amount', () => ({
 
 describe('useVaultDepositTransactionArguments', () => {
   const sendToken = { value: '100', decimals: 0, address: '0x123' }
-  const vaultDepositTokenAmount = '101'
+  const vaultDepositTokenAmount = '100'
   const swapData = {
     rawTransaction: {
       data: '0x123123123123123',

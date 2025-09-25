@@ -23,7 +23,7 @@ import { buildIconLink } from 'trading-widget/utils/icon'
 export const DEFAULT_CONFIG_PARAMS: ConfigProviderParams = {
   isGeoBlocked: false,
   isSanctioned: false,
-  depositQuoteDiffWarningThreshold: 1,
+  depositQuoteDiffWarningThreshold: 1.5,
   depositQuoteDiffErrorThreshold: 3,
   defaultWithdrawSlippage: DEFAULT_WITHDRAW_SLIPPAGE,
   defaultLockTime: DEFAULT_LOCK_TIME,
