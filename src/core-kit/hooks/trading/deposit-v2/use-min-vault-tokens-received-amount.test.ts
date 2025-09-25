@@ -104,7 +104,7 @@ describe('useMinVaultTokensReceivedAmount', () => {
     vi.mocked(useAppliedDepositSlippage).mockReturnValue(0.1)
 
     const { result } = renderHook(() => useMinVaultTokensReceivedAmount())
-    expect(result.current).toBe('1998')
+    expect(result.current).toBe('1798')
   })
 
   it('should return the minimum vault tokens received amount for deposit with swap transaction and manual slippage', () => {

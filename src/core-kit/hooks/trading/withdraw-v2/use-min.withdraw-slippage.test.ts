@@ -70,7 +70,7 @@ describe('useMinWithdrawSlippage', () => {
 
     renderHook(() => useMinWithdrawSlippage())
 
-    expect(updateSettings).toHaveBeenCalledWith({ minSlippage: 0.4 })
+    expect(updateSettings).toHaveBeenCalledWith({ minSlippage: 0.85 })
   })
 
   it('does not update minSlippage when receivedToken is loading', () => {

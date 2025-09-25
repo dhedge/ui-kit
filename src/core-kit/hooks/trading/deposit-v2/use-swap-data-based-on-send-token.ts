@@ -10,7 +10,6 @@ import {
   useSendTokenDebouncedValue,
   useSwapDataQuery,
 } from 'core-kit/hooks/trading'
-import { useAppliedDepositSlippage } from 'core-kit/hooks/trading/deposit-v2/use-applied-deposit-slippage'
 import { useIsDepositWithSwapTransaction } from 'core-kit/hooks/trading/deposit-v2/use-is-deposit-with-swap-transaction'
 import { useVaultDepositParams } from 'core-kit/hooks/trading/deposit-v2/use-vault-deposit-params'
 import { useAccount } from 'core-kit/hooks/web3'
@@ -23,7 +22,6 @@ export const useSwapDataBasedOnSendToken = () => {
 
   const { vaultDepositTokenAddress } = useVaultDepositParams()
   const isDepositWithSwapTransaction = useIsDepositWithSwapTransaction()
-  const slippage = useAppliedDepositSlippage()
 
   return useSwapDataQuery(
     {
@@ -33,7 +31,7 @@ export const useSwapDataBasedOnSendToken = () => {
         .shiftedBy(sendToken.decimals)
         .toFixed(0),
       chainId,
-      slippage: slippage.toString(),
+      slippage: '33', // hardcode 33% slippage to get a quote due to api quotes being unrealistically high, actual slippage is handled by buildZapDepositTransactionArguments and useMinVaultTokensReceivedAmount
       walletAddress,
     },
     {
