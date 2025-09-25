@@ -88,11 +88,14 @@ describe('useSwapDataBasedOnSendToken', () => {
         amount: '1000',
         chainId,
         destinationAddress: vaultDepositTokenAddress,
-        slippage: '1',
+        slippage: '33',
         sourceAddress: '0x123',
         walletAddress: account,
       },
-      expect.objectContaining({ enabled: true }),
+      {
+        enabled: true,
+        refetchInterval: 20000,
+      },
     )
   })
 

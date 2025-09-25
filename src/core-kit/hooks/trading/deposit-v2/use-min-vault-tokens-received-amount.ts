@@ -44,11 +44,7 @@ export const useMinVaultTokensReceivedAmount = () => {
     const expectedReceivedVaultTokensAmount = sendValue / vaultTokenPrice
 
     // when slippage is manual use expectedReceivedVaultTokensAmount
-    return new BigNumber(
-      isAutoSlippage
-        ? receiveToken.value || expectedReceivedVaultTokensAmount
-        : expectedReceivedVaultTokensAmount,
-    )
+    return new BigNumber(expectedReceivedVaultTokensAmount)
       .shiftedBy(receiveToken.decimals)
       .times(1 - depositSlippage / 100)
       .toFixed(0)
