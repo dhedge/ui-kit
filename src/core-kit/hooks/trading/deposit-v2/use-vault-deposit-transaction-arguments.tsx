@@ -42,7 +42,7 @@ export const useVaultDepositTransactionArguments = ({
           vaultDepositTokenAddress,
           swapData: swapData?.rawTransaction.data ?? '0x',
           routerKey: swapData?.routerKey,
-          swapDestinationAmount: swapData?.destinationAmount ?? '0',
+          swapDestinationAmount: vaultDepositTokenAmount,
           swapSlippage: depositSlippage,
         })
       : []
@@ -79,7 +79,6 @@ export const useVaultDepositTransactionArguments = ({
     vaultDepositTokenAddress,
     swapData?.rawTransaction.data,
     swapData?.routerKey,
-    swapData?.destinationAmount,
     depositSlippage,
     vaultDepositTokenAmount,
   ])
