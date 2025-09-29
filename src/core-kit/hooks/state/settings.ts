@@ -2,6 +2,7 @@ import {
   useTradingPanelActions,
   useTradingPanelState,
 } from 'core-kit/hooks/state/context'
+import type { ChainId, TradingToken } from 'core-kit/types'
 import type {
   TradingPanelActionsState,
   TradingPanelState,
@@ -13,4 +14,12 @@ export const useTradingPanelSettings = (): [
 ] => [
   useTradingPanelState().settings,
   useTradingPanelActions().updateTradingSettings,
+]
+
+export const useCustomDepositTokensPerChain = (): [
+  Partial<Record<ChainId, TradingToken[]>> | undefined,
+  TradingPanelActionsState['updateCustomDepositTokensPerChain'],
+] => [
+  useTradingPanelState().customDepositTokensPerChain,
+  useTradingPanelActions().updateCustomDepositTokensPerChain,
 ]

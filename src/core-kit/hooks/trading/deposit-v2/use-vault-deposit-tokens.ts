@@ -10,6 +10,7 @@ import {
 } from 'core-kit/const'
 import { usePoolComposition } from 'core-kit/hooks/pool'
 import {
+  useCustomDepositTokensPerChain,
   useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from 'core-kit/hooks/state'
@@ -33,6 +34,7 @@ export const useVaultDepositTokens = (): TradingToken[] => {
   const poolComposition = usePoolComposition({ address, chainId })
   const isDhedgeVaultConnected = useIsDhedgeVaultConnected()
   const [{ isCustomDepositOptionsDisabled }] = useTradingPanelSettings()
+  const [customDepositTokensPerChain] = useCustomDepositTokensPerChain()
 
   const depositTokens = useMemo(
     () =>
@@ -47,10 +49,13 @@ export const useVaultDepositTokens = (): TradingToken[] => {
             })),
           ...(isCustomDepositOptionsDisabled
             ? []
-            : depositParams.customTokens.map((token) => ({
-                ...token,
-                address: token.address.toLowerCase() as Address,
-              }))),
+            : [
+                ...depositParams.customTokens.map((token) => ({
+                  ...token,
+                  address: token.address.toLowerCase() as Address,
+                })),
+                ...(customDepositTokensPerChain?.[chainId] ?? []),
+              ]),
         ],
         'address',
       ),
@@ -58,6 +63,8 @@ export const useVaultDepositTokens = (): TradingToken[] => {
       poolComposition,
       isCustomDepositOptionsDisabled,
       depositParams.customTokens,
+      customDepositTokensPerChain,
+      chainId,
     ],
   )
 

@@ -16,6 +16,7 @@ export {
   useGetSwapData,
   useUpdatePoolConfig,
   useAddPoolConfig,
+  useUpdateCustomDepositTokensPerChain,
 } from 'core-kit/hooks/state/action'
 export {
   useTradingPanelPoolAddress,
@@ -28,7 +29,10 @@ export {
   useSendTokenInput,
   useReceiveTokenInput,
 } from 'core-kit/hooks/state/input'
-export { useTradingPanelSettings } from 'core-kit/hooks/state/settings'
+export {
+  useTradingPanelSettings,
+  useCustomDepositTokensPerChain,
+} from 'core-kit/hooks/state/settings'
 export { useTradingPanelModal } from 'core-kit/hooks/state/modal'
 export {
   useTradingPanelType,
