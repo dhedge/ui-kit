@@ -157,6 +157,14 @@ export const TRANSACTION_ERRORS: ErrorsMap = {
     title: 'Invalid flash loan sender',
     hint: 'If you believe this is a bug, contact the team on Discord.',
   },
+  dh31: {
+    title: 'Only PoolManagerLogic contract allowed',
+    hint: 'If you believe this is a bug, contact the team on Discord.',
+  },
+  dh32: {
+    title: 'Maximum supply cap reached',
+    hint: 'Cannot mint such amount of vault tokens as it would exceed the maximum supply cap.',
+  },
 }
 
 export const INVALID_PRICES_LIMIT_ORDER_TITLE = 'Invalid limit order prices'
