@@ -1,3 +1,7 @@
 export const LIMIT_ORDER_READ_FUNCTION_NAME = 'limitOrders'
 export const DEFAULT_MIN_ORDER_AMOUNT = 0
 export const DEFAULT_SELL_PERCENTAGE = '100'
+
+export const PRICE_SMALL_THRESHOLD = 1
+export const PRICE_SMALL_MAX_FRACTION_DIGITS = 5
+export const PRICE_DEFAULT_MAX_FRACTION_DIGITS = 2

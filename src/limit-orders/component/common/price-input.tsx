@@ -13,7 +13,7 @@ export interface PriceInputProps {
 }
 
 const MAX_INTEGER_LENGTH = 7
-const MAX_FRACTION_LENGTH = 3
+const MAX_FRACTION_LENGTH = 4
 
 export const formatNumber = (num: string) => {
   if (!num) {

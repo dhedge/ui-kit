@@ -1,5 +1,10 @@
-import { MaxUint256 } from 'core-kit/const'
 import { useLimitOrderState } from 'limit-orders/hooks/state'
+
+const isValidNumber = (value?: string | null) => {
+  const trimmed = value?.trim()
+  if (!trimmed) return false
+  return !isNaN(Number(trimmed))
+}
 
 export const useLimitOrderContent = () => {
   const {
@@ -7,9 +12,8 @@ export const useLimitOrderContent = () => {
   } = useLimitOrderState()
 
   const hasLowerLimitPriceD18 =
-    !!lowerLimitPrice && BigInt(lowerLimitPrice) !== BigInt(0)
-  const hasUpperLimitPriceD18 =
-    !!upperLimitPrice && BigInt(upperLimitPrice) !== MaxUint256
+    isValidNumber(lowerLimitPrice) && Number(lowerLimitPrice) !== 0
+  const hasUpperLimitPriceD18 = isValidNumber(upperLimitPrice)
 
   const limitOrderButtonDisabled =
     !hasLowerLimitPriceD18 && !hasUpperLimitPriceD18

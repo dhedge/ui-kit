@@ -4,6 +4,11 @@ import { SHORTEN_POLLING_INTERVAL } from 'core-kit/const'
 import { useAssetPrice } from 'core-kit/hooks/trading'
 import { formatToUsd } from 'core-kit/utils'
 import {
+  PRICE_DEFAULT_MAX_FRACTION_DIGITS,
+  PRICE_SMALL_MAX_FRACTION_DIGITS,
+  PRICE_SMALL_THRESHOLD,
+} from 'limit-orders/constants'
+import {
   useLimitOrderActions,
   useLimitOrderState,
 } from 'limit-orders/hooks/state'
@@ -32,6 +37,11 @@ export const useInputGroup = () => {
     chainId: vaultChainId,
     refetchInterval: SHORTEN_POLLING_INTERVAL,
   })
+
+  const maximumFractionDigits =
+    Number(pricingAssetPrice) < PRICE_SMALL_THRESHOLD
+      ? PRICE_SMALL_MAX_FRACTION_DIGITS
+      : PRICE_DEFAULT_MAX_FRACTION_DIGITS
   const { formatted: coveredVaultAmount, symbol: vaultSymbol } =
     useLimitOrderCoveredVaultAmount()
 
@@ -75,6 +85,7 @@ export const useInputGroup = () => {
         ? null
         : formatToUsd({
             value: pricingAssetPrice,
+            maximumFractionDigits,
           }),
     upperLimitPriceDifference,
     lowerLimitPriceDifference,
