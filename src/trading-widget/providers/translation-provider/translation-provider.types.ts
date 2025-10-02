@@ -114,8 +114,8 @@ export type TranslationMap = {
   delete: string
   withdrawalRequest: string
   deleteWithdrawalRequest: string
-  pendingWithdrawalRequest: string
   insufficientBalance: string
+  expectToReceiveUsdcSoon: string
   [key: string]: string
 }
 
