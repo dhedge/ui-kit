@@ -13,6 +13,7 @@ import { LimitOrderTransactionOverlay } from 'trading-widget/components/widget/w
 import type { TradingOverlayProps } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-overlay.hooks'
 import { useTradingOverlay } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-overlay.hooks'
 import { TradingSummary } from 'trading-widget/components/widget/widget-overlay/trading-overlay/trading-summary/trading-summary'
+import { LimitOrderWithdrawalOverlay } from 'trading-widget/components/widget/widget-overlay/trading-overlay/withdrawals/limit-order-withdrawal-overlay'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
 import { useTranslationContext } from 'trading-widget/providers/translation-provider'
 
@@ -25,6 +26,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
     showNextStepTip,
     displaySuccessDepositOverlay,
     displayLimitOrderTransactionOverlay,
+    displaySuccessWithdrawLimitOrderOverlay,
   } = useTradingOverlay({ type })
   const { LogoSpinner = Spinner } = useComponentContext()
   const t = useTranslationContext()
@@ -35,6 +37,10 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
 
   if (displaySuccessDepositOverlay) {
     return <SuccessDepositOverlay type={type} />
+  }
+
+  if (displaySuccessWithdrawLimitOrderOverlay) {
+    return <LimitOrderWithdrawalOverlay type={type} />
   }
 
   return (

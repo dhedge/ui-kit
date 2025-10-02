@@ -138,6 +138,7 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   delete: 'Delete',
   withdrawalRequest: 'Withdrawal request',
   deleteWithdrawalRequest: 'Delete withdrawal request',
-  pendingWithdrawalRequest: 'Pending withdrawal request',
   insufficientBalance: 'Insufficient Balance',
+  expectToReceiveUsdcSoon:
+    'Expect to receive your USDC over the next few minutes',
 }
