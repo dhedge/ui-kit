@@ -596,8 +596,8 @@ path: `component.meta[name]`
 > | `delete`                            | string | Delete                                                                                                                                                                                                     |             |
 > | `withdrawalRequest`                 | string | Withdrawal request                                                                                                                                                                                         |             |
 > | `deleteWithdrawalRequest`           | string | Delete withdrawal request                                                                                                                                                                                  |             |
-> | `pendingWithdrawalRequest`          | string | Pending withdrawal request                                                                                                                                                                                 |             |
 > | `insufficientBalance`               | string | Insufficient Balance                                                                                                                                                                                       |             |
+> | `expectToReceiveUsdcSoon`           | string | Expect to receive your USDC over the next few minutes                                                                                                                                                      |             |
 
 ###### Source: `packages/trading-widget/src/trading-widget/providers/translation-provider/translation-provider.tsx`
 

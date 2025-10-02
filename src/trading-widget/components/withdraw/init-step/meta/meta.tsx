@@ -3,7 +3,6 @@ import type { FC, PropsWithChildren } from 'react'
 import { useIsLimitOrderWithdraw } from 'core-kit/hooks/trading/limit-order-withdraw/use-is-limit-order-withdraw'
 import { Layout } from 'trading-widget/components/common'
 
-import { LimitOrderWithdrawAlert } from 'trading-widget/components/widget/widget-meta'
 import { InitWithdrawTransactionOverviewDisclosure } from 'trading-widget/components/withdraw/init-step/meta/transaction-disclosure/transaction-disclosure'
 import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-withdrawal-checks'
 import { useComponentContext } from 'trading-widget/providers/component-provider'
@@ -20,7 +19,6 @@ export const InitWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Layout.Meta>
       <div>
-        <LimitOrderWithdrawAlert className="dtw-mb-2" />
         {!requiresLeveragedCollateralLiquidity ? null : isLimitOrderWithdraw ? (
           <>{!!OnDemandWithdrawAlert && <OnDemandWithdrawAlert />}</>
         ) : (
