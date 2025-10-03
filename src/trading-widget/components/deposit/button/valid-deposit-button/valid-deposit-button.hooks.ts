@@ -8,6 +8,7 @@ import {
   useIsVaultDepositLocked,
   useRequiresMinDeposit,
 } from 'core-kit/hooks/trading/deposit-v2'
+import { useIsInsufficientBalance } from 'core-kit/hooks/user'
 import { useHighSlippageCheck } from 'trading-widget/hooks'
 
 export const useValidDepositButton = () => {
@@ -15,6 +16,7 @@ export const useValidDepositButton = () => {
   const { deprecated, symbol, maintenance, maintenanceDeposits } =
     useTradingPanelPoolConfig()
   const [sendToken] = useSendTokenInput()
+  const insufficientBalance = useIsInsufficientBalance()
 
   const { isVaultDepositLocked, isAccountWhitelisted } =
     useIsVaultDepositLocked()
@@ -38,5 +40,6 @@ export const useValidDepositButton = () => {
     slippageToBeUsed,
     maintenance: maintenance || maintenanceDeposits,
     isBatchContractWritesTrading,
+    insufficientBalance,
   }
 }

@@ -15,6 +15,8 @@ export const TRADING_PANEL_LOG_EVENT = {
   BATCH_TRANSACTIONS_CHANGE: 'batch_transactions_change',
   CREATE_LIMIT_SELL_ORDER: 'create_limit_sell_order',
   OPEN_LIMIT_SELL_VIEW: 'open_limit_sell_view',
+  LIMIT_ORDER_WITHDRAW: 'limit_order_withdraw',
+  LIMIT_ORDER_WITHDRAW_DELETE: 'limit_order_withdraw_delete',
 }
 
 export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
@@ -38,6 +40,10 @@ export const LOG_EVENT_BY_TRANSACTION_ACTION_MAP: Record<
   claim: [TRADING_PANEL_LOG_EVENT.CLAIM],
   swap: [TRADING_PANEL_LOG_EVENT.SWAP],
   create_limit_sell_order: [TRADING_PANEL_LOG_EVENT.CREATE_LIMIT_SELL_ORDER],
+  limit_order_withdraw: [TRADING_PANEL_LOG_EVENT.LIMIT_ORDER_WITHDRAW],
+  delete_limit_order_withdraw: [
+    TRADING_PANEL_LOG_EVENT.LIMIT_ORDER_WITHDRAW_DELETE,
+  ],
 }
 
 /**

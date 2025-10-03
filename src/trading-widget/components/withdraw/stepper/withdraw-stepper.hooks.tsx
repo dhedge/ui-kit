@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { useIsLimitOrderWithdraw } from 'core-kit/hooks/trading/limit-order-withdraw/use-is-limit-order-withdraw'
 import { useIsCompleteWithdrawStep } from 'core-kit/hooks/trading/withdraw-v2/complete-step'
 import {
   useInitWithdrawAllowance,
@@ -20,6 +21,7 @@ export const useWithdrawStepper = () => {
   const { canSpend } = useInitWithdrawAllowance()
   const isMultiAssetWithdraw = useIsMultiAssetWithdraw()
   const isUnrollAndClaimTransaction = useIsUnrollAndClaimTransaction()
+  const isLimitOrderWithdraw = useIsLimitOrderWithdraw()
 
   const steps = useMemo(() => {
     const steps = [
@@ -73,5 +75,9 @@ export const useWithdrawStepper = () => {
       ? INIT_STEP_INDEX
       : APPROVE_STEP_INDEX
 
-  return { hideStepper: isMultiAssetWithdraw, activeStepIndex, steps }
+  return {
+    hideStepper: isMultiAssetWithdraw || isLimitOrderWithdraw,
+    activeStepIndex,
+    steps,
+  }
 }

@@ -26,6 +26,10 @@ export const TradingSummary: FC = () => {
     return <>{t.createLimitSellOrder}</>
   }
 
+  if (action === 'delete_limit_order_withdraw') {
+    return <>{t.deleteWithdrawalRequest}</>
+  }
+
   return (
     <VaultTransactionSummary
       action={action}

@@ -84,7 +84,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         }`,
 
         '--panel-warning-content-color': `${
-          config?.global?.color?.colorTextWarning ?? COLORS.AMBER['400']
+          config?.global?.color?.colorTextWarning ?? COLORS.WARNING
         }`,
 
         '--panel-success-content-color': `${
@@ -608,6 +608,29 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
         }`,
         '--panel-tooltip-color': `${
           config?.component?.tooltip?.color?.colorText ?? COLORS.WHITE.DEFAULT
+        }`,
+
+        // alert
+        '--panel-alert-error-bg': `${
+          config?.component?.alert?.color?.errorBg ?? `${COLORS.ERROR}4D`
+        }`,
+        '--panel-alert-warning-bg': `${
+          config?.component?.alert?.color?.warningBg ?? `${COLORS.WARNING}4D`
+        }`,
+        '--panel-alert-info-bg': `${
+          config?.component?.alert?.color?.infoBg ?? `${COLORS.INFO}4D`
+        }`,
+        '--panel-alert-error-color': `${
+          config?.component?.alert?.color?.errorTextColor ??
+          'var(--panel-error-content-color)'
+        }`,
+        '--panel-alert-warning-color': `${
+          config?.component?.alert?.color?.warningTextColor ??
+          'var(--panel-warning-content-color)'
+        }`,
+        '--panel-alert-info-color': `${
+          config?.component?.alert?.color?.infoTextColor ??
+          'var(--panel-content-color)'
         }`,
 
         //switch
