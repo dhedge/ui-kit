@@ -17,6 +17,7 @@ import { renderHook } from 'tests/test-utils'
 vi.mock('core-kit/hooks/state', () => ({
   useTradingPanelPoolConfig: vi.fn(),
   useTradingPanelSettings: vi.fn(),
+  useCustomDepositTokensPerChain: vi.fn(),
 }))
 vi.mock('core-kit/hooks/pool', () => ({ usePoolComposition: vi.fn() }))
 vi.mock('core-kit/hooks/user', () => ({ useIsDhedgeVaultConnected: vi.fn() }))
@@ -45,6 +46,12 @@ describe('useVaultDepositTokens', () => {
           { isCustomDepositOptionsDisabled: false },
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [])
     vi.mocked(web3Hooks.useReadContracts).mockImplementation(
@@ -93,6 +100,12 @@ describe('useVaultDepositTokens', () => {
           { isCustomDepositOptionsDisabled: false },
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       {
@@ -165,6 +178,12 @@ describe('useVaultDepositTokens', () => {
           { isCustomDepositOptionsDisabled: false },
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
     )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
@@ -264,6 +283,12 @@ describe('useVaultDepositTokens', () => {
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
+    )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
     ])
@@ -352,6 +377,12 @@ describe('useVaultDepositTokens', () => {
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
+    )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       depositToken,
     ])
@@ -430,6 +461,12 @@ describe('useVaultDepositTokens', () => {
           vi.fn(),
         ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
     )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [undefined, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
+    )
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       defaultDepositToken,
     ])
@@ -459,6 +496,174 @@ describe('useVaultDepositTokens', () => {
         enabled: true,
       }),
     })
+    expect(result.current).toEqual([
+      {
+        address: defaultDepositToken.tokenAddress.toLowerCase(),
+        balance: 0.01,
+        decimals: 3,
+        symbol: 'WETH',
+        value: '',
+      },
+    ])
+  })
+
+  it('should include tokens from customDepositTokensPerChain along with depositParams.customTokens', () => {
+    const isPoolManagerAccount = false
+    const chainId = optimism.id
+    const defaultDepositToken = {
+      tokenName: 'WETH',
+      isDeposit: true,
+      tokenAddress: '0xWETH',
+      precision: 3,
+    } as unknown as PoolComposition
+    const defaultDepositTokenBalance = BigInt(1000) // 0.1 after decimals 3
+    const customDepositToken: TradingToken = {
+      symbol: 'USDC',
+      value: '',
+      address: '0xUSDC',
+      decimals: 3,
+    }
+    const perChainToken: TradingToken = {
+      symbol: 'DAI',
+      value: '',
+      address: '0xDAI',
+      decimals: 3,
+    }
+    const usdcBalance = BigInt(2000)
+    const daiBalance = BigInt(1000)
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementation(
+      () =>
+        ({
+          address: TEST_ADDRESS,
+          chainId,
+          depositParams: { customTokens: [customDepositToken] },
+        }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: false },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [{ [chainId]: [perChainToken] }, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
+    )
+    vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
+      defaultDepositToken,
+    ])
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
+      () => isPoolManagerAccount,
+    )
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+      () =>
+        ({
+          data: [
+            { result: defaultDepositTokenBalance },
+            { result: usdcBalance },
+            { result: daiBalance },
+          ],
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+    )
+
+    const { result } = renderHook(() => useVaultDepositTokens())
+
+    expect(result.current).toEqual([
+      {
+        address: customDepositToken.address.toLowerCase(),
+        balance: 2,
+        decimals: 3,
+        symbol: 'USDC',
+        value: '',
+      },
+      {
+        address: defaultDepositToken.tokenAddress.toLowerCase(),
+        balance: 1,
+        decimals: 3,
+        symbol: 'WETH',
+        value: '',
+      },
+      {
+        address: perChainToken.address,
+        balance: 1,
+        decimals: 3,
+        symbol: 'DAI',
+        value: '',
+      },
+      {
+        address: CHAIN_NATIVE_TOKENS[chainId]?.address ?? AddressZero,
+        symbol: CHAIN_NATIVE_TOKENS[chainId]?.nativeTokenSymbol ?? '',
+        decimals: CHAIN_NATIVE_TOKENS[chainId]?.decimals ?? DEFAULT_PRECISION,
+        value: '',
+      },
+    ])
+  })
+
+  it('should exclude customDepositTokensPerChain when isCustomDepositOptionsDisabled is true', () => {
+    const isPoolManagerAccount = true
+    const chainId = optimism.id
+    const defaultDepositToken = {
+      tokenName: 'WETH',
+      isDeposit: true,
+      tokenAddress: '0xWETH',
+      precision: 3,
+    } as unknown as PoolComposition
+    const defaultDepositTokenBalance = BigInt(10)
+    const perChainToken: TradingToken = {
+      symbol: 'USDC',
+      value: '',
+      address: '0xUSDC',
+      decimals: 6,
+    }
+
+    vi.mocked(web3Hooks.useAccount).mockImplementation(
+      () =>
+        ({ account: TEST_ADDRESS }) as ReturnType<typeof web3Hooks.useAccount>,
+    )
+    vi.mocked(stateHooks.useTradingPanelPoolConfig).mockImplementation(
+      () =>
+        ({
+          address: TEST_ADDRESS,
+          chainId,
+          depositParams: { customTokens: [] as TradingToken[] },
+        }) as ReturnType<typeof stateHooks.useTradingPanelPoolConfig>,
+    )
+    vi.mocked(stateHooks.useTradingPanelSettings).mockImplementation(
+      () =>
+        [
+          { isCustomDepositOptionsDisabled: true },
+          vi.fn(),
+        ] as unknown as ReturnType<typeof stateHooks.useTradingPanelSettings>,
+    )
+    vi.mocked(stateHooks.useCustomDepositTokensPerChain).mockImplementation(
+      () =>
+        [{ [chainId]: [perChainToken] }, vi.fn()] as unknown as ReturnType<
+          typeof stateHooks.useCustomDepositTokensPerChain
+        >,
+    )
+    vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
+      defaultDepositToken,
+    ])
+    vi.mocked(userHooks.useIsDhedgeVaultConnected).mockImplementation(
+      () => isPoolManagerAccount,
+    )
+    vi.mocked(web3Hooks.useReadContracts).mockImplementation(
+      () =>
+        ({
+          data: [{ result: defaultDepositTokenBalance }],
+        }) as ReturnType<typeof web3Hooks.useReadContracts>,
+    )
+
+    const { result } = renderHook(() => useVaultDepositTokens())
+
     expect(result.current).toEqual([
       {
         address: defaultDepositToken.tokenAddress.toLowerCase(),

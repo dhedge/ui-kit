@@ -85,6 +85,7 @@ export const getDefaultTradingPanelState = (
     },
     transactions: config?.transactions ?? [],
     poolFallbackData: { address: AddressZero, ...config?.poolFallbackData },
+    customDepositTokensPerChain: config?.customDepositTokensPerChain,
     defaultChainId: config?.defaultChainId,
   }
 }
@@ -106,6 +107,7 @@ export const TradingPanelActionsContext =
     updateTradingModal: noop,
     updateTransactions: noop,
     updatePoolFallbackData: noop,
+    updateCustomDepositTokensPerChain: noop,
     onTradingSettleError: noop,
     onTransactionError: noop,
     onTransactionSuccess: noop,
@@ -194,6 +196,15 @@ const createReducerWithLogger =
                 }),
                 state.poolConfigMap,
               ),
+          },
+        }
+      }
+      case 'UPDATE_CUSTOM_DEPOSIT_TOKENS_PER_CHAIN': {
+        return {
+          ...state,
+          customDepositTokensPerChain: {
+            ...(state.customDepositTokensPerChain ?? {}),
+            ...action.payload,
           },
         }
       }
@@ -361,6 +372,19 @@ export const TradingPanelProvider: FC<
     dispatch({ type: 'UPDATE_POOL_FALLBACK_DATA', payload })
   }, [])
 
+  const updateCustomDepositTokensPerChain = useCallback(
+    (
+      payload: TradingPanelActionsState['updateCustomDepositTokensPerChain'] extends (
+        p: infer P,
+      ) => void
+        ? P
+        : never,
+    ) => {
+      dispatch({ type: 'UPDATE_CUSTOM_DEPOSIT_TOKENS_PER_CHAIN', payload })
+    },
+    [],
+  )
+
   const updatePoolConfig = useCallback(
     (
       payload: Record<
@@ -390,6 +414,7 @@ export const TradingPanelProvider: FC<
       updateTradingModal,
       updateTransactions,
       updatePoolFallbackData,
+      updateCustomDepositTokensPerChain,
       onTransactionError,
       onTransactionSuccess,
       onTransactionEstimationError,
@@ -410,6 +435,7 @@ export const TradingPanelProvider: FC<
       updateTradingModal,
       updateTransactions,
       updatePoolFallbackData,
+      updateCustomDepositTokensPerChain,
       onTransactionError,
       onTransactionSuccess,
       onTransactionEstimationError,

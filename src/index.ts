@@ -263,6 +263,8 @@ export {
   useUpdateTradingSettings,
   useUpdatePoolConfig,
   useAddPoolConfig,
+  useCustomDepositTokensPerChain,
+  useUpdateCustomDepositTokensPerChain,
 } from 'core-kit/hooks/state'
 export {
   useProjectedEarningsCore,

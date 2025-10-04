@@ -75,3 +75,6 @@ export const useUpdatePoolConfig = () =>
   useTradingPanelActions().updatePoolConfig
 
 export const useAddPoolConfig = () => useTradingPanelActions().addPoolConfig
+
+export const useUpdateCustomDepositTokensPerChain = () =>
+  useTradingPanelActions().updateCustomDepositTokensPerChain
