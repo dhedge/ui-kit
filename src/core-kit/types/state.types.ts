@@ -58,6 +58,7 @@ export interface TradingPanelState {
   transactions: PendingTransaction[]
   poolFallbackData: PoolFallbackData
   defaultChainId?: ChainId
+  customDepositTokensPerChain?: Record<ChainId, TradingToken[]>
 }
 
 export interface TradingPanelSetters {
@@ -81,6 +82,9 @@ export interface TradingPanelSetters {
     >,
   ) => void
   addPoolConfig: (payload: PoolConfig) => void
+  updateCustomDepositTokensPerChain: (
+    payload: Record<ChainId, TradingToken[]>,
+  ) => void
 }
 
 export interface CallbackConfig {
@@ -163,6 +167,10 @@ export type TradingPanelAction =
   | {
       type: 'ADD_POOL_CONFIG'
       payload: PoolConfig
+    }
+  | {
+      type: 'UPDATE_CUSTOM_DEPOSIT_TOKENS_PER_CHAIN'
+      payload: Record<ChainId, TradingToken[]>
     }
 
 export interface TradingPanelContextConfig {
