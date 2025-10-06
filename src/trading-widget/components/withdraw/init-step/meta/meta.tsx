@@ -19,9 +19,10 @@ export const InitWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Layout.Meta>
       <div>
-        {!requiresLeveragedCollateralLiquidity ? null : isLimitOrderWithdraw ? (
+        {isLimitOrderWithdraw && (
           <>{!!OnDemandWithdrawAlert && <OnDemandWithdrawAlert />}</>
-        ) : (
+        )}
+        {requiresLeveragedCollateralLiquidity && !isLimitOrderWithdraw && (
           <>
             {!!AvailableLiquidityAlert && (
               <AvailableLiquidityAlert
