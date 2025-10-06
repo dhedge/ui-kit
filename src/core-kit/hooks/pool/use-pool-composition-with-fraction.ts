@@ -19,7 +19,7 @@ import {
 interface PoolCompositionParams {
   composition: PoolComposition[]
   vaultTokensAmount: string
-  totalSupply: string
+  totalSupplyD18: string
 }
 
 type PoolCompositionWithFractionParams = PoolContractCallParams & {
@@ -30,7 +30,7 @@ type PoolCompositionWithFractionParams = PoolContractCallParams & {
 export const formatPoolComposition = ({
   composition,
   vaultTokensAmount,
-  totalSupply,
+  totalSupplyD18,
 }: PoolCompositionParams): PoolCompositionWithFraction[] =>
   composition
     .reduce<PoolComposition[]>((acc, asset) => {
@@ -58,7 +58,7 @@ export const formatPoolComposition = ({
       const fraction = getPoolFraction(
         asset.amount,
         vaultTokensAmount,
-        totalSupply,
+        totalSupplyD18,
         asset.precision,
       )
       const fractionUsd = getPoolFraction(
@@ -67,7 +67,7 @@ export const formatPoolComposition = ({
           .shiftedBy(-asset.precision)
           .toFixed(),
         vaultTokensAmount,
-        totalSupply,
+        totalSupplyD18,
       )
       return {
         ...asset,
@@ -85,16 +85,16 @@ export const usePoolCompositionWithFraction = ({
   chainId,
 }: PoolCompositionWithFractionParams) => {
   const poolComposition = usePoolComposition({ address, chainId })
-  const { data: { totalSupply } = {} } = usePoolDynamic({ address, chainId })
+  const { data: { totalSupplyD18 } = {} } = usePoolDynamic({ address, chainId })
 
   return useMemo(() => {
-    if (!totalSupply) {
+    if (!totalSupplyD18) {
       return []
     }
     return formatPoolComposition({
       composition: poolComposition,
       vaultTokensAmount: shiftBy(vaultTokensAmount || 0),
-      totalSupply,
+      totalSupplyD18,
     })
-  }, [vaultTokensAmount, poolComposition, totalSupply])
+  }, [vaultTokensAmount, poolComposition, totalSupplyD18])
 }

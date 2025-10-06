@@ -50,7 +50,7 @@ describe('formatPoolComposition', () => {
       formatPoolComposition({
         composition: [poolComposition],
         vaultTokensAmount: 'assetAmount',
-        totalSupply: 'totalSupply',
+        totalSupplyD18: 'totalSupply',
       }),
     ).toEqual([
       {
@@ -95,7 +95,7 @@ describe('formatPoolComposition', () => {
       formatPoolComposition({
         composition: [poolComposition, zeroAmountPoolComposition],
         vaultTokensAmount: 'assetAmount',
-        totalSupply: 'totalSupply',
+        totalSupplyD18: 'totalSupply',
       }),
     ).toEqual([
       {
@@ -128,7 +128,7 @@ describe('usePoolCompositionWithFraction', () => {
       },
     }
     const vaultTokensAmount = '2'
-    const totalSupply = undefined
+    const totalSupplyD18 = undefined
 
     vi.mocked(poolHooks.usePoolComposition).mockImplementation(() => [
       poolComposition,
@@ -136,7 +136,7 @@ describe('usePoolCompositionWithFraction', () => {
     vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: { totalSupply },
+          data: { totalSupplyD18 },
         }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
@@ -164,7 +164,7 @@ describe('usePoolCompositionWithFraction', () => {
       },
     }
     const vaultTokensAmount = '2'
-    const totalSupply = '10'
+    const totalSupplyD18 = '10'
     const fraction = 1
     const fractionUsd = '2'
 
@@ -176,7 +176,7 @@ describe('usePoolCompositionWithFraction', () => {
     vi.mocked(poolMulticallHooks.usePoolDynamic).mockImplementation(
       () =>
         ({
-          data: { totalSupply },
+          data: { totalSupplyD18 },
         }) as unknown as ReturnType<typeof poolMulticallHooks.usePoolDynamic>,
     )
 
@@ -192,7 +192,7 @@ describe('usePoolCompositionWithFraction', () => {
       formatPoolComposition({
         composition: [poolComposition],
         vaultTokensAmount: shiftBy(vaultTokensAmount || 0),
-        totalSupply: totalSupply.toString(),
+        totalSupplyD18: totalSupplyD18.toString(),
       }),
     )
   })

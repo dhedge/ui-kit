@@ -36,7 +36,7 @@ const selector = ([tokenPrice, getFundSummary]: Data) => {
   return {
     tokenPrice: tokenPrice?.result?.toString(),
     totalValue: summary?.totalFundValue?.toString(),
-    totalSupply: summary?.totalSupply?.toString(),
+    totalSupplyD18: summary?.totalSupply?.toString(),
     isPrivateVault: summary?.privatePool,
     performanceFee: summary?.performanceFeeNumerator?.toString(),
     streamingFee: summary?.managerFeeNumerator?.toString(),

@@ -35,5 +35,6 @@ export interface ComponentProviderProps {
     DepositTermsOfUse?: ComponentType
     ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
     AvailableLiquidityAlert?: ComponentType<AvailableLiquidityAlertProps>
+    MaxSupplyReachedAlert?: ComponentType
   }
 }
