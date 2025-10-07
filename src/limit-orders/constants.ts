@@ -1,4 +1,5 @@
 export const LIMIT_ORDER_READ_FUNCTION_NAME = 'limitOrders'
+export const GET_ALL_LIMIT_ORDER_IDS_FUNCTION_NAME = 'getAllLimitOrderIds'
 export const DEFAULT_MIN_ORDER_AMOUNT = 0
 export const DEFAULT_SELL_PERCENTAGE = '100'
 

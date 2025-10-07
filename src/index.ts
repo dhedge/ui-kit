@@ -349,5 +349,6 @@ export {
   useUserLimitOrder,
   useInvalidateLimitOrderQuery,
   LIMIT_ORDER_READ_FUNCTION_NAME,
+  GET_ALL_LIMIT_ORDER_IDS_FUNCTION_NAME,
   getLimitOrderId,
 } from 'limit-orders/index'
