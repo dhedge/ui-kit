@@ -6,6 +6,10 @@ import type {
   ContractReadQueryKey,
   ContractReadsQueryKey,
 } from 'core-kit/types'
+import {
+  GET_ALL_LIMIT_ORDER_IDS_FUNCTION_NAME,
+  LIMIT_ORDER_READ_FUNCTION_NAME,
+} from 'limit-orders/constants'
 
 const tradingContractCalls = [
   'balanceOf',
@@ -17,7 +21,8 @@ const tradingContractCalls = [
   'allowance',
   'getExitRemainingCooldown',
   'tokenPrice',
-  'limitOrders',
+  LIMIT_ORDER_READ_FUNCTION_NAME,
+  GET_ALL_LIMIT_ORDER_IDS_FUNCTION_NAME,
 ]
 
 const allowanceContractCalls = ['allowance']

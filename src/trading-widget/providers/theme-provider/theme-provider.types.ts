@@ -67,6 +67,16 @@ export interface ThemeProviderConfigProps {
         radiusMd?: string
       }
     }
+    alert?: {
+      color?: {
+        errorBg?: string
+        warningBg?: string
+        infoBg?: string
+        errorTextColor?: string
+        warningTextColor?: string
+        infoTextColor?: string
+      }
+    }
     notification?: {
       color?: {
         colorBg?: string

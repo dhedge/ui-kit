@@ -10,6 +10,7 @@ export {
   PoolManagerLogicAbi,
   RewardDistributionAbi,
   EasySwapperV2Abi,
+  LimitOrderAbi,
 } from 'core-kit/abi'
 
 export type { GmxMarketAsset } from 'core-kit/const'
@@ -343,4 +344,11 @@ export type {
 } from 'trading-widget/providers/translation-provider'
 
 // Limit Orders
-export { LimitOrderModal, useUserLimitOrder } from 'limit-orders/index'
+export {
+  LimitOrderModal,
+  useUserLimitOrder,
+  useInvalidateLimitOrderQuery,
+  LIMIT_ORDER_READ_FUNCTION_NAME,
+  GET_ALL_LIMIT_ORDER_IDS_FUNCTION_NAME,
+  getLimitOrderId,
+} from 'limit-orders/index'
