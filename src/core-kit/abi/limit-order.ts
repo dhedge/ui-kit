@@ -116,6 +116,25 @@ export const LimitOrderAbi = [
     type: 'event',
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'destTokenAmountReceived',
+        type: 'uint256',
+      },
+    ],
+    name: 'SettlementOrderExecuted',
+    type: 'event',
+  },
+  {
     inputs: [],
     name: 'SLIPPAGE_DENOMINATOR',
     outputs: [{ internalType: 'uint16', name: '', type: 'uint16' }],
