@@ -8,12 +8,12 @@ import { useComponentContext } from 'trading-widget/providers/component-provider
 
 export const DepositMeta: FC<PropsWithChildren> = ({ children }) => {
   const { DepositMetaInfo, MaxSupplyReachedAlert } = useComponentContext()
-  const isMaxSupplyCapReached = useIsMaxSupplyCapReached()
+  const { isMaxSupplyCapReached, supplyCapInUsd } = useIsMaxSupplyCapReached()
 
   return (
     <Layout.Meta>
       {isMaxSupplyCapReached && !!MaxSupplyReachedAlert && (
-        <MaxSupplyReachedAlert />
+        <MaxSupplyReachedAlert supplyCapInUsd={supplyCapInUsd} />
       )}
       <DepositTransactionOverviewDisclosure />
       {DepositMetaInfo && <DepositMetaInfo />}

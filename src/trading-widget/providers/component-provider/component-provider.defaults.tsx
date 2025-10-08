@@ -27,11 +27,11 @@ export const DEFAULT_COMPONENT_PROVIDER_COMPONENTS: ComponentProviderProps['conf
         <p className="dtw-text-sm dtw-text-center">Sell a smaller amount</p>
       </Alert>
     ),
-    MaxSupplyReachedAlert: () => (
-      <Alert type="error">
-        <p className="dtw-text-center dtw-text-base">Max supply reached</p>
+    MaxSupplyReachedAlert: ({ supplyCapInUsd }) => (
+      <Alert type="warning">
+        <p className="dtw-text-center dtw-text-base">Supply caps reached</p>
         <p className="dtw-text-sm dtw-text-center">
-          Deposit at this size will not go through
+          Can only buy {supplyCapInUsd} more
         </p>
       </Alert>
     ),
