@@ -1,6 +1,7 @@
 import { DEFAULT_PRECISION, optimism } from 'core-kit/const'
 import * as poolHooks from 'core-kit/hooks/pool'
 import * as multicallHooks from 'core-kit/hooks/pool/multicall'
+import * as availableFeeHook from 'core-kit/hooks/pool/use-available-manager-fee'
 import * as stateHooks from 'core-kit/hooks/state'
 import { useIsMaxSupplyCapReached } from 'core-kit/hooks/trading/deposit-v2/use-is-max-supply-cap-reached'
 import { formatToUsd, shiftBy } from 'core-kit/utils'
@@ -21,6 +22,10 @@ vi.mock('core-kit/hooks/pool', () => ({
   usePoolTokenPrice: vi.fn(),
 }))
 
+vi.mock('core-kit/hooks/pool/use-available-manager-fee', () => ({
+  useAvailableManagerFee: vi.fn(),
+}))
+
 const toD18String = (value: string | number) =>
   shiftBy(value, DEFAULT_PRECISION)
 
@@ -35,6 +40,11 @@ describe('useIsMaxSupplyCapReached', () => {
 
     // default token price = $1
     vi.mocked(poolHooks.usePoolTokenPrice).mockReturnValue('1')
+
+    // default available manager fee = 100 tokens
+    vi.mocked(availableFeeHook.useAvailableManagerFee).mockReturnValue({
+      data: 100,
+    } as unknown as ReturnType<typeof availableFeeHook.useAvailableManagerFee>)
   })
 
   it('returns false when maxSupplyCapD18 is zero', () => {
