@@ -6,7 +6,7 @@ export const getPercent = (numerator: number, denominator: number) =>
   (numerator / denominator) * 100
 
 export const normalizeNumber = (
-  value: string | number | BigNumber,
+  value: string | number | BigNumber | bigint,
   precision = DEFAULT_PRECISION,
 ): number => new BigNumber(value).shiftedBy(-precision).toNumber()
 

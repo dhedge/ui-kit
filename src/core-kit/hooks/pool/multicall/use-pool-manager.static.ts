@@ -38,6 +38,13 @@ const getContracts = ({
       args: [account ?? AddressZero],
       chainId,
     },
+    {
+      address,
+      abi: PoolManagerLogicAbi,
+      functionName: 'maxSupplyCap',
+      args: [],
+      chainId,
+    },
   ] as const
 
 type Data = MulticallReturnType<ReturnType<typeof getContracts>>
@@ -46,6 +53,7 @@ const selector = (data: Data) => ({
   getFeeIncreaseInfo: data[0].result,
   minDepositUSD: data[1].result,
   isMemberAllowed: data[2].result,
+  maxSupplyCapD18: data[3].result,
 })
 
 export const usePoolManagerStatic = ({

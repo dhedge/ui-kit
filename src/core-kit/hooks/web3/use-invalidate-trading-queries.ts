@@ -18,6 +18,7 @@ const tradingContractCalls = [
   'getExitRemainingCooldown',
   'tokenPrice',
   'limitOrders',
+  'calculateAvailableManagerFee',
 ]
 
 const allowanceContractCalls = ['allowance']

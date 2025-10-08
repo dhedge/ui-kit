@@ -30,7 +30,7 @@ export const useFlatmoneyPointsUserBalances =
     } = useTradingPanelPoolConfig()
     const { account = AddressZero } = useAccount()
     const balance = useUserTokenBalance({ symbol, address: vaultAddress })
-    const { data: { totalSupply } = {} } = usePoolDynamic({
+    const { data: { totalSupplyD18 } = {} } = usePoolDynamic({
       address: vaultAddress,
       chainId,
     })
@@ -48,10 +48,10 @@ export const useFlatmoneyPointsUserBalances =
     })
 
     return useMemo(() => {
-      const userVaultPortionInPercents = totalSupply
+      const userVaultPortionInPercents = totalSupplyD18
         ? new BigNumber(balance)
             .shiftedBy(DEFAULT_PRECISION)
-            .dividedBy(totalSupply)
+            .dividedBy(totalSupplyD18)
         : new BigNumber(0)
       const userPortionOfLockedPointsBalance = lockedVaultPointsBalance
         ? new BigNumber(lockedVaultPointsBalance.toString())
@@ -78,7 +78,7 @@ export const useFlatmoneyPointsUserBalances =
         isLoading,
       }
     }, [
-      totalSupply,
+      totalSupplyD18,
       balance,
       lockedVaultPointsBalance,
       unlockTaxInPercents,

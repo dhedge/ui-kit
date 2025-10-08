@@ -23,6 +23,10 @@ export interface AvailableLiquidityAlertProps {
   liquidityAmount: string
 }
 
+export interface MaxSupplyCapProps {
+  supplyCapInUsd: string
+}
+
 export interface ComponentProviderProps {
   config?: {
     GeoBlockAlert?: ComponentType
@@ -35,5 +39,6 @@ export interface ComponentProviderProps {
     DepositTermsOfUse?: ComponentType
     ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
     AvailableLiquidityAlert?: ComponentType<AvailableLiquidityAlertProps>
+    MaxSupplyReachedAlert?: ComponentType<MaxSupplyCapProps>
   }
 }
