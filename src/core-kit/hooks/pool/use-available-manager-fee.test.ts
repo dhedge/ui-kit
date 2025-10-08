@@ -37,12 +37,12 @@ describe('useAvailableManagerFee', () => {
     vi.mocked(wagmi.useReadContract).mockReset()
   })
 
-  it('disables query when no cap or total supply', () => {
+  it('disables query when no cap or total value', () => {
     vi.mocked(multicallHooks.usePoolManagerStatic).mockReturnValue({
       data: { maxSupplyCapD18: 0n },
     } as unknown as ReturnType<typeof multicallHooks.usePoolManagerStatic>)
     vi.mocked(multicallHooks.usePoolDynamic).mockReturnValue({
-      data: { totalSupplyD18: undefined },
+      data: { totalValueD18: undefined },
     } as unknown as ReturnType<typeof multicallHooks.usePoolDynamic>)
     vi.mocked(wagmi.useReadContract).mockImplementationOnce((args: any) => {
       expect(args.query?.enabled).toBe(false)
@@ -55,12 +55,12 @@ describe('useAvailableManagerFee', () => {
     expect(result.current.data).toBeUndefined()
   })
 
-  it('calls with totalSupply and rounds the result up', () => {
+  it('calls with totalValue and rounds the result up', () => {
     vi.mocked(multicallHooks.usePoolManagerStatic).mockReturnValue({
       data: { maxSupplyCapD18: BigInt(toD18String(1000)) },
     } as unknown as ReturnType<typeof multicallHooks.usePoolManagerStatic>)
     vi.mocked(multicallHooks.usePoolDynamic).mockReturnValue({
-      data: { totalSupplyD18: toD18String(123.4567) },
+      data: { totalValueD18: toD18String(123.4567) },
     } as unknown as ReturnType<typeof multicallHooks.usePoolDynamic>)
 
     let capturedArgs: any

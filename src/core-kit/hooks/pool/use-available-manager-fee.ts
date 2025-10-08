@@ -12,7 +12,7 @@ const select = (data: bigint) => Math.ceil(normalizeNumber(data))
 
 export const useAvailableManagerFee = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
-  const { data: { totalSupplyD18 } = {} } = usePoolDynamic({ address, chainId })
+  const { data: { totalValueD18 } = {} } = usePoolDynamic({ address, chainId })
   const { data: { maxSupplyCapD18 } = {} } = usePoolManagerStatic({
     address,
     chainId,
@@ -23,9 +23,9 @@ export const useAvailableManagerFee = () => {
     chainId,
     abi: PoolLogicAbi,
     functionName: 'calculateAvailableManagerFee',
-    args: [BigInt(totalSupplyD18 ?? '0')],
+    args: [BigInt(totalValueD18 ?? '0')],
     query: {
-      enabled: !!totalSupplyD18 && !!maxSupplyCapD18 && maxSupplyCapD18 > 0n,
+      enabled: !!totalValueD18 && !!maxSupplyCapD18 && maxSupplyCapD18 > 0n,
       select,
     },
   })
