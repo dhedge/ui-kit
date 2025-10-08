@@ -14,7 +14,10 @@ import type { OverlayProps } from 'trading-widget/types'
 export const LimitOrderWithdrawalOverlay: FC<OverlayProps> = (props) => {
   const t = useTranslationContext()
   const { ActionButton: Button = ActionButton } = useComponentContext()
-  const { onClose, link } = useLimitOrderWithdrawalOverlay(props)
+  const { onClose, link, isSuccessTx } = useLimitOrderWithdrawalOverlay(props)
+
+  if (!isSuccessTx) return null
+
   return (
     <Layout.Overlay
       className="dtw-justify-between dtw-gap-y-4"

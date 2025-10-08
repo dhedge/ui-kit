@@ -17,8 +17,7 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
   const displaySuccessDepositOverlay = isSuccessTx && action === 'deposit'
   const displayLimitOrderTransactionOverlay =
     action === 'create_limit_sell_order'
-  const displaySuccessWithdrawLimitOrderOverlay =
-    isSuccessTx && action === 'limit_order_withdraw'
+  const displayWithdrawLimitOrderOverlay = action === 'limit_order_withdraw'
 
   const statusMap = useMemo<Partial<Record<TradingModalStatus, string>>>(
     () => ({
@@ -42,6 +41,6 @@ export const useTradingOverlay = ({ type }: TradingOverlayProps) => {
     showNextStepTip,
     displaySuccessDepositOverlay,
     displayLimitOrderTransactionOverlay,
-    displaySuccessWithdrawLimitOrderOverlay,
+    displayWithdrawLimitOrderOverlay,
   }
 }

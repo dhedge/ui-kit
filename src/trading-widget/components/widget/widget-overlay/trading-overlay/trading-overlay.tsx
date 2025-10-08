@@ -26,7 +26,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
     showNextStepTip,
     displaySuccessDepositOverlay,
     displayLimitOrderTransactionOverlay,
-    displaySuccessWithdrawLimitOrderOverlay,
+    displayWithdrawLimitOrderOverlay,
   } = useTradingOverlay({ type })
   const { LogoSpinner = Spinner } = useComponentContext()
   const t = useTranslationContext()
@@ -39,7 +39,7 @@ export const TradingOverlay: FC<TradingOverlayProps> = ({ type }) => {
     return <SuccessDepositOverlay type={type} />
   }
 
-  if (displaySuccessWithdrawLimitOrderOverlay) {
+  if (displayWithdrawLimitOrderOverlay) {
     return <LimitOrderWithdrawalOverlay type={type} />
   }
 
