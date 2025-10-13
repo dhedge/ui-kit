@@ -1,4 +1,5 @@
 import { PoolLogicAbi } from 'core-kit/abi'
+import { DEFAULT_VAULT_TOKEN_PRICE } from 'core-kit/const'
 import { useReadContracts } from 'core-kit/hooks/web3'
 import type {
   MulticallReturnType,
@@ -34,7 +35,10 @@ const selector = ([tokenPrice, getFundSummary]: Data) => {
   const summary = getFundSummary?.result
 
   return {
-    tokenPrice: tokenPrice?.result?.toString(),
+    tokenPrice:
+      tokenPrice?.result !== BigInt(0)
+        ? tokenPrice?.result?.toString()
+        : DEFAULT_VAULT_TOKEN_PRICE,
     totalValueD18: summary?.totalFundValue?.toString(),
     totalSupplyD18: summary?.totalSupply?.toString(),
     isPrivateVault: summary?.privatePool,
