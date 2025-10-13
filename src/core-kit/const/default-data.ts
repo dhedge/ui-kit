@@ -7,6 +7,8 @@ import type { DepositMethodName } from 'core-kit/types/trading.types'
 
 export const DEFAULT_PRECISION = 18
 
+export const DEFAULT_VAULT_TOKEN_PRICE = '1000000000000000000' // 1e18
+
 export const EXTENDED_POLLING_INTERVAL = 59_000
 export const DEFAULT_POLLING_INTERVAL = 30_000
 export const SHORTEN_POLLING_INTERVAL = 15_000
