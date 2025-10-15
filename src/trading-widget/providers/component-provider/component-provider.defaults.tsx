@@ -35,4 +35,13 @@ export const DEFAULT_COMPONENT_PROVIDER_COMPONENTS: ComponentProviderProps['conf
         </p>
       </Alert>
     ),
+    OnDemandWithdrawAlert: () => (
+      <Alert type="info">
+        <p className="dtw-text-center">On demand sell</p>
+        <p className="dtw-text-sm dtw-text-[color:var(--panel-secondary-content-color)] dtw-text-center">
+          Sell will happen automatically over time as liquidity is made
+          available
+        </p>
+      </Alert>
+    ),
   }

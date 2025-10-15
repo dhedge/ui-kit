@@ -6,6 +6,7 @@ import {
 } from 'trading-widget/components/common'
 import { ApproveButton } from 'trading-widget/components/widget/widget-buttons'
 
+import { LimitOrderWithdrawButton } from 'trading-widget/components/withdraw/init-step/button/limit-order-withdraw-button/limit-order-withdraw-button'
 import { useValidInitWithdrawButton } from 'trading-widget/components/withdraw/init-step/button/valid-init-withdraw-button/valid-init-withdraw-button.hooks'
 import { useTradingTypeName } from 'trading-widget/hooks'
 
@@ -29,6 +30,8 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
     handleHighSlippageClick,
     maintenance,
     poolSymbol,
+    isLimitOrderWithdraw,
+    insufficientBalance,
   } = useValidInitWithdrawButton()
 
   if (maintenance) {
@@ -54,6 +57,14 @@ export const ValidInitWithdrawButton: FC<PropsWithChildren> = ({
         {name}
       </DisabledButtonWithPrompt>
     )
+  }
+
+  if (insufficientBalance) {
+    return <Button disabled>{t.insufficientBalance}</Button>
+  }
+
+  if (isLimitOrderWithdraw) {
+    return <LimitOrderWithdrawButton />
   }
 
   if (requiresApprove) {

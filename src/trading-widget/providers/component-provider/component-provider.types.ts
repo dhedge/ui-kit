@@ -40,5 +40,6 @@ export interface ComponentProviderProps {
     ActionButton?: ComponentType<PropsWithChildren<ButtonProps>>
     AvailableLiquidityAlert?: ComponentType<AvailableLiquidityAlertProps>
     MaxSupplyReachedAlert?: ComponentType<MaxSupplyCapProps>
+    OnDemandWithdrawAlert?: ComponentType
   }
 }

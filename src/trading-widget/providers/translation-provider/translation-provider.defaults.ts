@@ -72,6 +72,11 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   termOfUseDepositAccept: 'Accept & Deposit',
   back: 'Back',
   done: 'Done',
+  termOfUseWithdrawAcceptLabel: 'I understand and accept the withdraw terms',
+  termOfUseWithdrawPoint1:
+    'Withdrawal requests are intended to settle in USDC. In rare cases where market conditions or high slippage prevent a USDC swap, the order may be settled in the underlying tokens of the respective vault.',
+  termOfUseWithdrawPoint2:
+    'Revoking token approval after placing an order will prevent the order from being executed.',
   highSlippage: 'High Slippage Alert',
   responsibleHighSlippage:
     'By proceeding with this trade, you acknowledge and accept the possibility of experiencing high slippage, resulting in a potential difference between the expected and executed price.',
@@ -111,6 +116,8 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   completeWithdrawTooltip:
     'This final step swaps all assets to a single asset and sends it to your wallet.',
   unrollAndClaimDescription: 'Claim',
+  limitOrderWithdrawDescription:
+    'You are about to create a withdrawal request. Your vault tokens will be withdrawn within a few minutes.',
   total: 'Total:',
   showAll: 'Show all',
   hide: 'Hide',
@@ -128,4 +135,10 @@ export const DEFAULT_TRANSLATION_DATA: TranslationMap = {
   rate: 'Rate',
   exchangeRate: 'Exchange rate',
   cooldown: 'Cooldown',
+  delete: 'Delete',
+  withdrawalRequest: 'Withdrawal request',
+  deleteWithdrawalRequest: 'Delete withdrawal request',
+  insufficientBalance: 'Insufficient Balance',
+  expectToReceiveUsdcSoon:
+    'Expect to receive your USDC over the next few minutes',
 }

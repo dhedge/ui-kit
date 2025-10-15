@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from 'react'
 
+import { useIsLimitOrderWithdraw } from 'core-kit/hooks/trading/limit-order-withdraw/use-is-limit-order-withdraw'
 import { Layout } from 'trading-widget/components/common'
 
 import { InitWithdrawTransactionOverviewDisclosure } from 'trading-widget/components/withdraw/init-step/meta/transaction-disclosure/transaction-disclosure'
@@ -7,19 +8,29 @@ import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged
 import { useComponentContext } from 'trading-widget/providers/component-provider'
 
 export const InitWithdrawMeta: FC<PropsWithChildren> = ({ children }) => {
-  const { WithdrawMetaInfo, AvailableLiquidityAlert } = useComponentContext()
+  const { WithdrawMetaInfo, AvailableLiquidityAlert, OnDemandWithdrawAlert } =
+    useComponentContext()
   const {
     requiresLeveragedCollateralLiquidity,
     leveragedCollateralValueFormatted,
   } = useLeveragedWithdrawalChecks()
+  const isLimitOrderWithdraw = useIsLimitOrderWithdraw()
 
   return (
     <Layout.Meta>
-      {requiresLeveragedCollateralLiquidity && !!AvailableLiquidityAlert && (
-        <AvailableLiquidityAlert
-          liquidityAmount={leveragedCollateralValueFormatted}
-        />
-      )}
+      <div>
+        {!requiresLeveragedCollateralLiquidity ? null : isLimitOrderWithdraw ? (
+          <>{!!OnDemandWithdrawAlert && <OnDemandWithdrawAlert />}</>
+        ) : (
+          <>
+            {!!AvailableLiquidityAlert && (
+              <AvailableLiquidityAlert
+                liquidityAmount={leveragedCollateralValueFormatted}
+              />
+            )}
+          </>
+        )}
+      </div>
       <InitWithdrawTransactionOverviewDisclosure />
       {WithdrawMetaInfo && <WithdrawMetaInfo />}
       <div className="dtw-sticky dtw-bottom-0 dtw-bg-[var(--panel-meta-action-panel-bg)]">

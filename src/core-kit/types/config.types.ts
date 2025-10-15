@@ -27,6 +27,7 @@ export interface PoolConfig {
   maintenanceDeposits?: boolean
   maintenanceWithdrawals?: boolean
   pricingAsset?: PricingAsset
+  onDemandWithdrawalEnabled?: boolean
 }
 
 export interface PoolFallbackData {

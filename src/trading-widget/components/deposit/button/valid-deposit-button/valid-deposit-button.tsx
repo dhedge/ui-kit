@@ -33,6 +33,7 @@ export const ValidDepositButton: FC = () => {
     confirmHighSlippage,
     maintenance,
     isBatchContractWritesTrading,
+    insufficientBalance,
   } = useValidDepositButton()
 
   if (requiresMinDeposit) {
@@ -57,6 +58,10 @@ export const ValidDepositButton: FC = () => {
         {name}
       </DisabledButtonWithPrompt>
     )
+  }
+
+  if (insufficientBalance) {
+    return <Button disabled>{t.insufficientBalance}</Button>
   }
 
   if (requiresHighSlippageConfirm) {
