@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import { DEFAULT_PRECISION } from 'core-kit/const'
+import { DEFAULT_PRECISION, DEFAULT_RECEIVED_VALUE_GAP } from 'core-kit/const'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
@@ -24,6 +24,7 @@ export const useCompleteWithdrawExpectedAmount = () => {
     .toFixed(0, BigNumber.ROUND_DOWN)
 
   const minExpectedReceiveAmount = new BigNumber(expectedReceiveAmount)
+    .times(1 - DEFAULT_RECEIVED_VALUE_GAP / 100)
     .times(1 - slippage / 100)
     .toFixed(0, BigNumber.ROUND_DOWN)
 
