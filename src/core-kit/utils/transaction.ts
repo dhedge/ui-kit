@@ -68,12 +68,10 @@ export const buildZapDepositTransactionArguments = ({
 
 export const buildSwapWithdrawTransactionData = ({
   receiveAssetAddress,
-  slippage,
   assets,
   swapData,
 }: {
   receiveAssetAddress: Address
-  slippage: number
   assets: ReturnType<typeof useCompleteWithdrawTrackedAssets>['data']
   swapData: ReturnType<typeof useSwapsDataQuery>['data']
 }) => {
@@ -81,7 +79,7 @@ export const buildSwapWithdrawTransactionData = ({
     srcData: [] as unknown[],
     destAmount: new BigNumber('0'),
   }
-  const { srcData, destAmount } =
+  const { srcData } =
     assets?.reduce((acc, asset) => {
       const assetSwapData = swapData?.[asset.address]
 
@@ -105,7 +103,9 @@ export const buildSwapWithdrawTransactionData = ({
     srcData,
     [
       receiveAssetAddress,
-      destAmount.times(1 - slippage / 100).toFixed(0, BigNumber.ROUND_DOWN),
+      // destAmount.times(1 - slippage / 100).toFixed(0, BigNumber.ROUND_DOWN),
+      // Use 0 to allow swaps with incorrectly increased destination amounts. Slippage protection is handled at a higher level using minExpectedReceiveAmount.
+      '0',
     ],
   ]
 }

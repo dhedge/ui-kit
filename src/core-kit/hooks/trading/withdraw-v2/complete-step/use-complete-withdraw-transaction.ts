@@ -7,7 +7,6 @@ import {
   useTradingPanelTransactions,
 } from 'core-kit/hooks/state'
 import { useTradingSettleHandler } from 'core-kit/hooks/trading'
-import { useAppliedWithdrawSlippage } from 'core-kit/hooks/trading/withdraw-v2'
 import {
   useCompleteWithdrawExpectedAmount,
   useCompleteWithdrawSwapData,
@@ -31,7 +30,6 @@ export const useCompleteWithdrawTransaction = ({
   const { data: swapData } = useCompleteWithdrawSwapData()
   const [receiveToken] = useReceiveTokenInput()
   const { minExpectedReceiveAmount } = useCompleteWithdrawExpectedAmount()
-  const slippage = useAppliedWithdrawSlippage()
 
   const updatePendingTransactions = useTradingPanelTransactions()[1]
 
@@ -53,7 +51,6 @@ export const useCompleteWithdrawTransaction = ({
     const transactionSwapData = buildSwapWithdrawTransactionData({
       assets,
       swapData,
-      slippage,
       receiveAssetAddress: receiveToken.address,
     })
     return [transactionSwapData, minExpectedReceiveAmount]
@@ -62,7 +59,6 @@ export const useCompleteWithdrawTransaction = ({
     isClaim,
     assets,
     swapData,
-    slippage,
     receiveToken.address,
     minExpectedReceiveAmount,
   ])

@@ -28,22 +28,22 @@ describe('useCompleteWithdrawExpectedAmount', () => {
     vi.mocked(useCompleteWithdrawTotalUsdValue).mockReturnValue(1000)
   })
 
-  it('should calculate expectedReceiveAmount and minExpectedReceiveAmount correctly', () => {
+  it('should calculate expectedReceiveAmount and minExpectedReceiveAmount correctly including DEFAULT_RECEIVED_VALUE_GAP', () => {
     const { result } = renderHook(() => useCompleteWithdrawExpectedAmount())
 
     expect(result.current.expectedReceiveAmount).toBe('10000000000000000000000')
     expect(result.current.minExpectedReceiveAmount).toBe(
-      '9900000000000000000000',
+      '9898020000000000000000',
     )
   })
 
-  it('should handle slippage being 0', () => {
+  it('should handle slippage being 0 including DEFAULT_RECEIVED_VALUE_GAP', () => {
     vi.mocked(useAppliedWithdrawSlippage).mockReturnValue(0)
     const { result } = renderHook(() => useCompleteWithdrawExpectedAmount())
 
     expect(result.current.expectedReceiveAmount).toBe('10000000000000000000000')
     expect(result.current.minExpectedReceiveAmount).toBe(
-      '10000000000000000000000',
+      '9998000000000000000000',
     )
   })
 
