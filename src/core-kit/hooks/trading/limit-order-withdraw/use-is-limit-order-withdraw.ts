@@ -1,4 +1,5 @@
 import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import { useIsDhedgeVaultConnected } from 'core-kit/hooks/user'
 import { useLeveragedWithdrawalChecks } from 'trading-widget/hooks/use-leveraged-withdrawal-checks'
 
 export const useIsLimitOrderWithdraw = () => {
@@ -6,10 +7,12 @@ export const useIsLimitOrderWithdraw = () => {
     useTradingPanelPoolConfig()
   const { requiresLeveragedCollateralLiquidity } =
     useLeveragedWithdrawalChecks()
+  const isVaultConnected = useIsDhedgeVaultConnected()
 
   return (
     requiresLeveragedCollateralLiquidity &&
     !!pricingAsset &&
-    !!onDemandWithdrawalEnabled
+    !!onDemandWithdrawalEnabled &&
+    !isVaultConnected
   )
 }
