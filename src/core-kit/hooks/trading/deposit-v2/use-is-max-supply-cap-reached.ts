@@ -1,47 +1,35 @@
-import { usePoolTokenPrice } from 'core-kit/hooks/pool'
-import {
-  usePoolDynamic,
-  usePoolManagerStatic,
-} from 'core-kit/hooks/pool/multicall'
-import { useAvailableManagerFee } from 'core-kit/hooks/pool/use-available-manager-fee'
+import { useVaultSupplyCap } from 'core-kit/hooks/pool'
 import {
   useReceiveTokenInput,
   useTradingPanelPoolConfig,
 } from 'core-kit/hooks/state'
-import { formatToUsd, normalizeNumber } from 'core-kit/utils'
+import { formatToUsd } from 'core-kit/utils'
 
 export const useIsMaxSupplyCapReached = () => {
   const { address, chainId } = useTradingPanelPoolConfig()
-  const { data: { maxSupplyCapD18 } = {} } = usePoolManagerStatic({
-    address,
-    chainId,
-  })
-  const { data: { totalSupplyD18 } = {} } = usePoolDynamic({ address, chainId })
+  const vaultSupplyInfo = useVaultSupplyCap({ address, chainId })
   const [receiveToken] = useReceiveTokenInput()
-  const tokenPrice = usePoolTokenPrice({ address, chainId })
-  const { data: availableManagerFee = 0 } = useAvailableManagerFee()
 
-  if (!maxSupplyCapD18 || maxSupplyCapD18 === 0n) {
+  if (!vaultSupplyInfo) {
     return { isMaxSupplyCapReached: false, supplyCapInUsd: '' }
   }
 
-  const totalSupply = Math.ceil(normalizeNumber(totalSupplyD18 ?? 0))
+  const { totalSupplyNumber, maxSupplyCapNumber, remainingSupplyCapInUsd } =
+    vaultSupplyInfo
 
-  const depositAmount = Number(receiveToken.value || '0')
-  const maxSupplyCap = normalizeNumber(maxSupplyCapD18)
+  const depositAmountNumber = Number(receiveToken.value || '0')
 
-  const effectiveMaxSupplyCap = Math.max(0, maxSupplyCap - availableManagerFee)
-  const remainingCapInTokens = Math.max(0, effectiveMaxSupplyCap - totalSupply)
-  const remainingCapInUsdNumber = remainingCapInTokens * Number(tokenPrice)
+  const isMaxSupplyCapReached =
+    totalSupplyNumber + depositAmountNumber > maxSupplyCapNumber
+
   const supplyCapInUsd = formatToUsd({
-    value: remainingCapInUsdNumber,
+    value: remainingSupplyCapInUsd,
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   })
 
   return {
-    isMaxSupplyCapReached:
-      Number(totalSupply) + Number(depositAmount) > effectiveMaxSupplyCap,
+    isMaxSupplyCapReached,
     supplyCapInUsd,
   }
 }
