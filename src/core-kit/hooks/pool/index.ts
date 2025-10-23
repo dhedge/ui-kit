@@ -12,3 +12,5 @@ export { useHasSingleAssetWithdrawBlockers } from 'core-kit/hooks/pool/use-has-s
 export { usePoolDynamicExitRemainingCooldown } from 'core-kit/hooks/pool/use-pool-dynamic-exit-remaining-cooldown'
 export { useUserVaultsBalances } from 'core-kit/hooks/pool/use-user-vaults-balances'
 export { useUserVaultBalance } from 'core-kit/hooks/pool/use-user-vault-balance'
+export { useAvailableManagerFee } from 'core-kit/hooks/pool/use-available-manager-fee'
+export { useVaultSupplyCap } from 'core-kit/hooks/pool/use-vault-supply-cap'

@@ -225,6 +225,8 @@ export {
   useHasSingleAssetWithdrawBlockers,
   useUserVaultBalance,
   useUserVaultsBalances,
+  useAvailableManagerFee,
+  useVaultSupplyCap,
 } from 'core-kit/hooks/pool'
 export {
   usePoolDynamic,

@@ -5,13 +5,22 @@ import {
   usePoolDynamic,
   usePoolManagerStatic,
 } from 'core-kit/hooks/pool/multicall'
-import { useTradingPanelPoolConfig } from 'core-kit/hooks/state'
+import type { Address, ChainId } from 'core-kit/types'
 import { normalizeNumber } from 'core-kit/utils'
 
-const select = (data: bigint) => Math.ceil(normalizeNumber(data))
+interface UseAvailableManagerFeeParams<T = number> {
+  address: Address
+  chainId: ChainId
+  select?: (data: bigint) => T
+}
 
-export const useAvailableManagerFee = () => {
-  const { address, chainId } = useTradingPanelPoolConfig()
+const defaultSelect = (data: bigint) => Math.ceil(normalizeNumber(data))
+
+export const useAvailableManagerFee = <T = number>({
+  address,
+  chainId,
+  select = defaultSelect as (data: bigint) => T,
+}: UseAvailableManagerFeeParams<T>) => {
   const { data: { totalValueD18 } = {} } = usePoolDynamic({ address, chainId })
   const { data: { maxSupplyCapD18 } = {} } = usePoolManagerStatic({
     address,
